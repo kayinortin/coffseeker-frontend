@@ -9,7 +9,7 @@ const menuItems = [
     label: '線上購物',
     href: '/product',
     children: [
-      { id: 11, label: '全站商品', href: '/product/all' },
+      { id: 11, label: '全站商品', href: '/product/' },
       { id: 12, label: '咖啡球', href: '/product/01' },
       { id: 13, label: '濾掛包', href: '/product/02' },
       { id: 14, label: '咖啡豆', href: '/product/03' },

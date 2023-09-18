@@ -6,16 +6,23 @@ export default function Header() {
   const currentRoute = '/product'
   return (
     <>
-      <header style={{ backgroundColor: '#F2F3EE', height: '63px' }}>
+      <header style={{ backgroundColor: '#F2F3EE', height: '90px' }}>
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <img
-                src="../coffseeker-logo-desktop.png"
-                alt="logo"
-                width={258}
-                height={58}
-              />
+              <div
+                className="d-flex align-items-center"
+                style={{ height: '90px' }}
+              >
+                <a href="/">
+                  <img
+                    src="../coffseeker-logo-desktop.png"
+                    alt="logo"
+                    width={258}
+                    height={58}
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
