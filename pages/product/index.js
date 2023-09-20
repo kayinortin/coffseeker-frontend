@@ -9,12 +9,12 @@ function ProductsList() {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:3005/api/products')
+        console.log(response.data)
         setData(response.data)
       } catch (error) {
         console.error('資料獲取失敗:', error)
       }
     }
-
     fetchData()
   }, [])
 
@@ -27,7 +27,7 @@ function ProductsList() {
             {data.products.map((product) => (
               <div className="col-md-4 mb-4" key={product.product_id}>
                 <div className="card">
-                  <img
+                  <Image
                     src={`http://localhost:3005/uploads/${product.product_image}`}
                     alt={product.product_name}
                     className="card-img-top"
