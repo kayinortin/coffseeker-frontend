@@ -15,10 +15,8 @@ export default function DefaultLayout({ title = '', children }) {
       <Header></Header>
       <Navbar />
       <main className="">
-        <div className="container">
-          {/* <NextBreadCrumb isHomeIcon isChevron bgClass="" /> */}
-          {children}
-        </div>
+        {/* <NextBreadCrumb isHomeIcon isChevron bgClass="" /> */}
+        {children}
       </main>
       <Footer />
     </>
