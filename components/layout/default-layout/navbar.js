@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import MegaMenu from './mega-menu'
-import styles from './menubar.module.scss'
 
 const menuItems = [
   {
@@ -111,9 +110,7 @@ function Navbar(currentRoute) {
                     <li className="nav-item ed-padding-x" key={v.id}>
                       <Link
                         className={`nav-link ${
-                          currentRoute === v.href
-                            ? 'active ' + styles['custom-active']
-                            : ''
+                          currentRoute === v.href ? 'active ' : ''
                         }`}
                         aria-current="page"
                         href={v.href}
@@ -126,14 +123,11 @@ function Navbar(currentRoute) {
 
                 // 以下為有下拉選單的選單項目
                 return (
-                  <li
-                    className={`nav-item dropdown ed-padding-x ${styles['dropdown']}`}
-                    key={v.id}
-                  >
+                  <li className={`nav-item dropdown ed-padding-x `} key={v.id}>
                     <Link
                       className={`nav-link dropdown-toggle ${
                         v.children.find((v) => v.href === currentRoute)
-                          ? 'active ' + styles['custom-active']
+                          ? 'active '
                           : ''
                       }`}
                       href={v.href}
@@ -143,9 +137,7 @@ function Navbar(currentRoute) {
                     >
                       {v.label}
                     </Link>
-                    <ul
-                      className={`dropdown-menu ${styles['slideIn']} ${styles['dropdown-menu']}`}
-                    >
+                    <ul className={`dropdown-menu `}>
                       {v.children.map((v2) => {
                         return (
                           <li key={v2.id}>
