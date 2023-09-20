@@ -51,6 +51,19 @@ export default function User() {
                 <div className={'form-title border-bottom border-dark p-3'}>
                   會員中心
                 </div>
+                <div className={'d-flex flex-column px-5'}>
+                  {sidebar.map((list) => {
+                    return (
+                      <>
+                        <div className={'border-bottom p-2'}>
+                          <Link href="/" className={'sidebar-title'}>
+                            {list}
+                          </Link>
+                        </div>
+                      </>
+                    )
+                  })}
+                </div>
               </div>
             </div>
           </div>
