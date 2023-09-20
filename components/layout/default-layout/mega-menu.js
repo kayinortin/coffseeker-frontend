@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './mega-menu.module.scss'
+// import styles from './mega-menu.module.scss'
 import Link from 'next/link'
 
 export default function MegaMenu({ megaMenuItems = {}, currentRoute }) {
@@ -7,7 +7,7 @@ export default function MegaMenu({ megaMenuItems = {}, currentRoute }) {
 
   return (
     <>
-      <li className={`nav-item dropdown ${styles['dropdown']}`}>
+      <li className={`nav-item dropdown`}>
         <Link
           //class="nav-link dropdown-toggle"
           // 尋找是否有符合 currentRoute 的 section與 section.children href
@@ -21,7 +21,7 @@ export default function MegaMenu({ megaMenuItems = {}, currentRoute }) {
               // else find children
               return !!v.children.find((v2) => v2.href === currentRoute)
             })
-              ? 'active ' + styles['custom-active']
+              ? 'active '
               : ''
           }`}
           href={megaMenuItems.href}
@@ -32,10 +32,7 @@ export default function MegaMenu({ megaMenuItems = {}, currentRoute }) {
         >
           {megaMenuItems.label}
         </Link>
-        <div
-          className={`dropdown-menu ${styles['dropdown-menu']} ${styles['slideIn']}`}
-          aria-labelledby="navbarDropdown"
-        >
+        <div className={`dropdown-menu `} aria-labelledby="navbarDropdown">
           {megaMenuItems.sections.map((v) => {
             return (
               <ul key={v.id}>

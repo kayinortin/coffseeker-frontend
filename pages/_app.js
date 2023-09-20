@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import '@/styles/globals.scss'
+import '../index.scss'
 import DefaultLayout from '@/components/layout/default-layout/index'
 
 export default function MyApp({ Component, pageProps }) {
