@@ -27,7 +27,7 @@ function ProductsList() {
             {data.products.map((product) => (
               <div className="col-md-4 mb-4" key={product.product_id}>
                 <div className="card">
-                  <Image
+                  <img
                     src={`http://localhost:3005/uploads/${product.product_image}`}
                     alt={product.product_name}
                     className="card-img-top"
