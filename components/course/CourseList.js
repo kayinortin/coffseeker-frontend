@@ -3,21 +3,38 @@ import data from '@/data/course/course.json'
 import Card from './Card'
 
 export default function CourseList() {
-  console.log(data)
+  // console.log(data)
   return (
-    <div>
-      <ul>
+    <div className="">
+      <h3 className="text-center">課程列表</h3>
+      <span>BreadCrumbs here</span>
+      <ul className="d-flex row row-cols-3  flex-wrap">
         {data.map((v, i) => {
+          let {
+            name,
+            price,
+            start_date,
+            end_date,
+            capacity,
+            description,
+            image,
+          } = v
+          console.log(v)
           return (
-            <li key={v.id}>
-              <h2>{v.name}</h2>
-              <p>價格: {v.price}</p>
-              <p>開始日期: {v.start_date}</p>
-              <p>結束日期: {v.end_date}</p>
-              <p>容量: {v.capacity}</p>
-              <p>描述: {v.description}</p>
-              <img src={v.image} alt={v.name} />
-            </li>
+            <>
+              <li className="col">
+                <Card
+                  key={i}
+                  name={name}
+                  price={price}
+                  start_date={start_date}
+                  end_date={end_date}
+                  capacity={capacity}
+                  description={description}
+                  image={image}
+                />
+              </li>
+            </>
           )
         })}
       </ul>

@@ -11,10 +11,10 @@ export default function Index() {
     <>
       <div className="">
         <Image src={banner} alt="banner" className="img-fluid" />
-        <div className="container-lg">
+        <div className="container-lg mt-5">
           <section className="d-flex">
             <SideBar />
-            <CourseList />
+            <CourseList className="d-flex" />
           </section>
         </div>
       </div>
