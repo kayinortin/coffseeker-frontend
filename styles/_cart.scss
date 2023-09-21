@@ -1,0 +1,50 @@
+//color
+$white: #fff;
+$black: #000;
+$light-gray: #808080;
+//圓角
+$border-radius: 100%;
+//寬度
+$width-small: 60px;
+$width-medium: 80px;
+$width-large: 100px;
+//文字大小
+
+
+
+
+.step{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stepTop{
+    display: flex;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+}   
+.stepCircle{
+    width: $width-small;
+    height: $width-small;
+    background-color: $primary;
+    border-radius: $border-radius;
+}
+.setNum{
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 700;
+    color: $white;
+    text-align: center;
+}
+.stepFont{
+    color: $primary;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.circle-gray{
+    background-color: $light-gray;
+}
