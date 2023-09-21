@@ -1,0 +1,55 @@
+/* news.module.scss */
+//卡片區
+.news-link{
+  text-decoration: none;
+}
+.card-container {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto;
+  // max-width: 1400px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card {
+  width: 575px;
+  // height: 470px;
+  margin: 1%;
+  margin-inline: 30px;
+  margin-block: 20px;
+
+  &:hover {
+    // cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 5px 5px 5px 5px lightgrey;
+  }
+//卡片圖片高度
+  .custom-image {
+    height: 328px;
+  }
+}
+//卡片日期設定
+.create-at {
+  font-size: 12px;
+  font-weight: 100;
+}
+
+//分類按鈕區
+.btn-container {
+  margin-inline: 45px;
+  button {
+    padding-block: 9px;
+    padding-inline: 18px;
+    background: #f2f3ee;
+    color: black;
+    border: 1px solid #1c262c;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .active {
+    background-color: #1c262c;
+    color: white;
+    font-weight: bold;
+    border: 0px;
+  }
+}
