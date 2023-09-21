@@ -14,7 +14,8 @@
 }
 
 .content{
-    height: 100vh;
+    // height: 100vh;
+    width: 650px;
     // background: cyan;
 }
 
@@ -52,4 +53,26 @@
     font-weight: bold;
     color: $primary;
     font-family: 'Noto Sans TC', sans-serif;
+}
+
+
+// 登入頁面
+.login{
+    width: 650px;
+    input.form-control{
+        height: 60px;
+        border: black solid 1px;
+        background: none;
+    }
+}
+
+.btn-login{
+    cursor: pointer;
+    color: #ffffff;
+    background:$secondary;
+    font-family: "Noto Sans TC";
+    font-size: 18px;
+    height: 48px;
+    width: 650px;
+    
 }
