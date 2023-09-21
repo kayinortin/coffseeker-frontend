@@ -28,6 +28,7 @@
             color: $secondary;
         }
     }
+    
 }
 
 // 麵包屑 End
@@ -64,6 +65,11 @@
         border: black solid 1px;
         background: none;
     }
+    select.form-select{
+        height: 60px;
+        border: black solid 1px;
+        background: none;
+    }
 }
 
 .btn-login{
@@ -75,4 +81,27 @@
     height: 48px;
     width: 650px;
     
+}
+
+.ask-for-regester{
+    font-size: 20px;
+    font-family: "Noto Sans TC";
+    span{
+        color: #a7a7a7;
+    }
+    a{
+        text-decoration: none;
+    }
+}
+
+.forget-password{
+    font-size: 16px;
+    font-family: "Noto Sans TC";
+    color: #a7a7a7;
+    text-decoration: none;
+    
+}
+
+.birthday-selector{
+    visibility: hidden;
 }
