@@ -1,4 +1,6 @@
 import React from 'react'
+import Link from 'next/link'
+import { FaFacebook, FaGoogle, FaTwitter } from 'react-icons/fa'
 
 export default function LoginForm() {
   return (
@@ -33,22 +35,53 @@ export default function LoginForm() {
                 id="exampleInputPassword1"
               />
             </div>
-            <div className="mb-3 form-check">
+            <div className={'mb-3 form-check'}>
               <input
                 type="checkbox"
-                className="form-check-input"
+                className={'form-check-input'}
                 id="exampleCheck1"
               />
-              <label className="form-check-label" htmlFor="exampleCheck1">
+              <label className={'form-check-label'} htmlFor="exampleCheck1">
                 記住密碼
               </label>
             </div>
           </form>
         </div>
       </div>
-      <div className={'container d-flex justify-content-center pb-5'}>
-        <div className="btn-login text-center d-flex justify-content-center flex-column">
+      <div className={'container d-flex justify-content-center'}>
+        <div
+          className={
+            'btn-login text-center d-flex justify-content-center flex-column'
+          }
+        >
           <span>登入</span>
+        </div>
+      </div>
+      <div
+        className={
+          'container d-flex justify-content-center mt-4 mb-3 align-items-center'
+        }
+      >
+        <FaFacebook className={'h1 me-5'} />
+        <FaGoogle className={'h1'} />
+        <FaTwitter className={'h1 ms-5'} />
+      </div>
+      <div className={'container d-flex justify-content-center'}>
+        <div className={'ask-for-regester'}>
+          <span className="me-3">還不是會員嗎?</span>
+          <Link href="/" className={'text-secondary ms-3'}>
+            加入會員?
+          </Link>
+        </div>
+      </div>
+      <div className={'container d-flex justify-content-center  pb-5'}>
+        <div className={'content d-flex justify-content-between'}>
+          <Link href="/" className={'forget-password'}>
+            會員隱私條款
+          </Link>
+          <Link href="/" className={'forget-password'}>
+            忘記密碼
+          </Link>
         </div>
       </div>
     </>
