@@ -1,0 +1,30 @@
+/* news.module.scss */
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 500px; 
+  margin: 1%; 
+  margin-inline: 30px;
+  margin-block: 20px;
+  transition: transform 0.3s ease; /* 設定卡片展開/關閉的過渡效果 */
+
+  &.expanded-card {
+    width: 75%; 
+    z-index: 1; 
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02); /* 滑鼠懸停時微縮放效果 */
+    box-shadow: 5px 5px 5px 5px lightgrey;
+  }
+  .created-at{
+    color: lightgrey;
+  }
+  
+}
