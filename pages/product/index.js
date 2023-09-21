@@ -9,12 +9,12 @@ function ProductsList() {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:3005/api/products')
+        console.log(response.data)
         setData(response.data)
       } catch (error) {
         console.error('資料獲取失敗:', error)
       }
     }
-
     fetchData()
   }, [])
 
