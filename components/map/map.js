@@ -12,13 +12,26 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 //icon import
-import { FaMapMarkerAlt } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaGlobeAmericas } from 'react-icons/fa'
 import { IoIosWifi } from 'react-icons/io'
 import { LiaChairSolid } from 'react-icons/lia'
 import { IoEarOutline, IoStarSharp } from 'react-icons/io5'
 import { TbCurrentLocation } from 'react-icons/tb'
-import { PiCoffee } from 'react-icons/pi'
-import { BsPlugin, BsXLg, BsCheckLg, BsQuestionLg } from 'react-icons/bs'
+import {
+  PiCoffee,
+  PiCurrencyDollarSimpleBold,
+  PiMusicNotesFill,
+} from 'react-icons/pi'
+import {
+  BsPlugin,
+  BsXLg,
+  BsCheckLg,
+  BsQuestionLg,
+  BsHourglassSplit,
+  BsDashLg,
+  BsClock,
+  BsGlobeAsiaAustralia,
+} from 'react-icons/bs'
 
 import testData from '@/data/map/taoyuanCafe.json'
 
@@ -150,90 +163,56 @@ export default function Map() {
     return (
       <>
         {/* 全部LIST */}
-        <div className="cafeList">
-          {cafes.map((cafe) => {
-            return (
-              <>
-                <div className="cafeItem">
-                  <h4 key={cafe.id}>{cafe.name}</h4>
-                  <h6>
-                    <FaMapMarkerAlt />
-                    {cafe.address}
-                  </h6>
-                  <p>
-                    <span>
-                      <IoIosWifi />
-                      {cafe.wifi}
-                      <IoStarSharp />
-                    </span>
-                    <span>
-                      <LiaChairSolid />
-                      {cafe.seat}
-                      <IoStarSharp />
-                    </span>
-                    <span>
-                      <IoEarOutline />
-                      {cafe.quiet}
-                      <IoStarSharp />
-                    </span>
-                    <span>
-                      <PiCoffee />
-                      {cafe.tasty}
-                      <IoStarSharp />
-                    </span>
-                    <span>
-                      <BsPlugin />
-                      {checkValue(cafe.socket)}
-                    </span>
-                  </p>
-                </div>
-              </>
-            )
-          })}
+        <div className={`cafeList ${asideInfoIndex === 'all' ? '' : 'd-none'}`}>
+          <CafeList cafes={cafes} />
         </div>
         {/* 單間咖啡廳 */}
-        <div className="cafeInfo">
+        <div
+          className={`cafeInfo ${asideInfoIndex === 'cafe' ? '' : 'd-none'}`}
+        >
           <h4 key={cafeData.id}>{cafeData.name}</h4>
-          <div className="rating">
+          <div className="cafeRating">
             <span>
               <div>
                 <IoIosWifi />
                 網路穩定
               </div>
-              <div>
-                {cafeData.wifi}
-                <IoStarSharp />
-              </div>
+              <div>{cafeData.wifi}★</div>
             </span>
             <span>
               <div>
                 <LiaChairSolid />
                 座位充足
               </div>
-              <div>
-                {cafeData.seat}
-                <IoStarSharp />
-              </div>
+              <div>{cafeData.seat}★</div>
             </span>
             <span>
               <div>
                 <IoEarOutline />
                 安靜程度
               </div>
-              <div>
-                {cafeData.quiet}
-                <IoStarSharp />
-              </div>
+              <div>{cafeData.quiet}★</div>
             </span>
             <span>
               <div>
                 <PiCoffee />
                 咖啡好喝
               </div>
-              {cafeData.tasty}
+              <div>{cafeData.tasty}★</div>
+            </span>
+            <span>
               <div>
-                <IoStarSharp />
+                <PiCurrencyDollarSimpleBold />
+                價格實惠
               </div>
+              <div>{cafeData.cheap}★</div>
+            </span>
+            <span>
+              <div>
+                <PiMusicNotesFill />
+                裝潢音樂
+              </div>
+              <div>{cafeData.music}★</div>
             </span>
             <span>
               <div>
@@ -242,12 +221,45 @@ export default function Map() {
               </div>
               <div>{checkValue(cafeData.socket)}</div>
             </span>
+            <span>
+              <div>
+                <BsHourglassSplit />
+                有無限時
+              </div>
+              <div>{checkValue(cafeData.limited_time)}</div>
+            </span>
           </div>
-          <h6>
-            <FaMapMarkerAlt />
-            {cafeData.address}
-          </h6>
+          <div className="cafeInfos">
+            <h5>店家資訊</h5>
+            <div className="d-flex justify-content-between ">
+              <FaMapMarkerAlt />
+              <h6>{cafeData.address}</h6>
+            </div>
+
+            <div
+              className={`d-flex justify-content-between ${
+                cafeData.open_time ? '' : 'd-none'
+              }`}
+            >
+              <BsClock />
+              <h6>{cafeData.open_time}</h6>
+            </div>
+            <div
+              className={`d-flex justify-content-between ${
+                cafeData.url ? '' : 'd-none'
+              }`}
+            >
+              <FaGlobeAmericas />
+              <h6>
+                <a href={cafeData.url} target="_blank">
+                  {cafeData.url}{' '}
+                </a>
+              </h6>
+            </div>
+          </div>
+          <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
         </div>
+        {/* 篩選 */}
       </>
     )
   }
@@ -262,13 +274,60 @@ export default function Map() {
       case 'maybe':
         return <BsQuestionLg />
       default:
-        return <span>未知</span>
+        return <BsDashLg />
     }
   }
 
   function handelChangeCafe(cafe) {
     setAsideInfoIndex('cafe')
     setCafeData(cafe)
+  }
+
+  function CafeList({ cafes }) {
+    return (
+      <>
+        {cafes.map((cafe) => {
+          return (
+            <>
+              <button
+                className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
+                onClick={() => {
+                  handelChangeCafe(cafe)
+                }}
+              >
+                <h4 key={cafe.id}>{cafe.name}</h4>
+                <h6>
+                  <FaMapMarkerAlt />
+                  {cafe.address}
+                </h6>
+                <p>
+                  <span>
+                    <IoIosWifi />
+                    {cafe.wifi}★
+                  </span>
+                  <span>
+                    <LiaChairSolid />
+                    {cafe.seat}★
+                  </span>
+                  <span>
+                    <IoEarOutline />
+                    {cafe.quiet}★
+                  </span>
+                  <span>
+                    <PiCoffee />
+                    {cafe.tasty}★
+                  </span>
+                  <span>
+                    <BsPlugin />
+                    {checkValue(cafe.socket)}
+                  </span>
+                </p>
+              </button>
+            </>
+          )
+        })}
+      </>
+    )
   }
 
   //整體return
