@@ -15,7 +15,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="">
-        <img className="img-fluid" src="../banner-father'sDay.png" alt="" />
+        <Image
+          className="img-fluid"
+          src="http://localhost:3000/banner-father'sDay.png"
+          alt=""
+          width={1920}
+          height={780}
+          style={{ display: 'block' }}
+        />
       </div>
     </>
   )

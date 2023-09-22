@@ -68,7 +68,7 @@ button {
   font-style: normal;
   font-family: "Inter", "Noto Sans TC", sans-serif;
   letter-spacing: $letter-spacing;
-  line-height: 110%;
+  line-height: 2.5rem;
   color: $color__font;
 }
 
@@ -112,6 +112,7 @@ h5 {
 
 h6 {
   @include heading;
+  color: #ffffff;
   font-weight: 500;
   font-size: 1rem;
 }

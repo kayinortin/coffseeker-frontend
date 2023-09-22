@@ -1,15 +1,14 @@
 // 全域樣式
-@import "./styles/variables.scss";
-@import "./styles/reset.scss";
-@import "./styles/global.scss";
-@import "./styles/common.scss";
+@import "./styles/variables";
+@import "./styles/reset";
+@import "./styles/global";
+@import "./styles/common";
 
 
 // 導覽列表
 @import './styles/mega-menu.module';
 @import './styles/menubar.module';
 @import './styles/home.module';
-@import './styles/custom';
 
 // 購物車
 @import './styles/cart';
