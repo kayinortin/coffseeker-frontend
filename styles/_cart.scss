@@ -1,50 +1,106 @@
-//color
-$white: #fff;
-$black: #000;
-$light-gray: #808080;
+//變數設定
+//primary
+$primary: #1C262C;
+$secondary: #FF9B1A;
+$success: #FF9B1A;
+$danger: #845635;
+//basic-color
+$color-white: #fff;
+$color-black: #000;
+$color-gray: #808080;
+$color-lightgray:#E0E0E0;
 //圓角
-$border-radius: 100%;
+$border-circle: 100%;
 //寬度
-$width-small: 60px;
-$width-medium: 80px;
-$width-large: 100px;
-//文字大小
+$width-sm: 60px;
+$width-md: 80px;
+$width-lg: 100px;
+//文字
+$fs-sm: 1rem;
+$fs-md: 1.25rem;
+$fs-lg: 1.5rem;
+$fs-xl: 2rem;
+$fw-regular:400;
+$fw-bold:700;
+$fw-black:900;
 
 
-
-
-.step{
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+*{
+    box-sizing: border-box;
+    position: relative;
+}
+.background{
+    background-color: #69782e
 }
 
-.stepTop{
+.steps{
     display: flex;
-    padding: 0px;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-}   
-.stepCircle{
-    width: $width-small;
-    height: $width-small;
-    background-color: $primary;
-    border-radius: $border-radius;
+    gap: 2rem;
+    border: 1px solid rgb(86, 83, 157);
+  
+    .step{
+        padding: 1.5rem;
+
+        .stepTop{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 1rem;
+    
+            .stepCircle{
+                width: $width-sm;
+                height: $width-sm;
+                border-radius: $border-circle;
+            }
+            .circleBlue{
+                background-color: $primary;
+            }
+            .circleGray{
+                background-color: $color-lightgray;
+                border: 2px solid $color-gray;
+            }
+    
+            .setNum{
+                position: absolute;
+                font-size: $fs-xl;
+                font-weight: $fw-bold;
+                text-align: center;
+            }
+            .setnumWhite{
+                color: $color-white;
+            }
+            .setnumGray{
+                color: $color-gray;
+            }
+        }  
+    
+        .stepFont{
+            font-size: $fs-md;
+            font-weight: $fw-regular;
+        }
+        .stepfontBlue{
+            color: $primary;
+        }
+        .stepfontGray{
+            color: $color-gray;
+        }
+    }
+
+    .arrow{
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+    .arrowBlue{
+        color: $primary;
+    }
+    .arrowGray{
+        color: $color-lightgray;
+    }
 }
-.setNum{
-    position: absolute;
-    font-size: 2rem;
-    font-weight: 700;
-    color: $white;
-    text-align: center;
-}
-.stepFont{
-    color: $primary;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-.circle-gray{
-    background-color: $light-gray;
-}
+
+
+
+
