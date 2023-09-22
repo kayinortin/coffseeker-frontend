@@ -38,11 +38,6 @@ const menuItems = [
     id: 4,
     label: '課程預約',
     href: '/course',
-    children: [
-      { id: 41, label: '課程介紹', href: '/course/list' },
-      { id: 42, label: '師資介紹', href: '/course/teacher' },
-      { id: 43, label: '課程選購', href: '/course/appoint' },
-    ],
   },
   {
     id: 5,

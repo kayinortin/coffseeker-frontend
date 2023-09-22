@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import { FaFacebook, FaGoogle, FaTwitter } from 'react-icons/fa'
+import { FaFacebook, FaGoogle } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 
 export default function LoginForm() {
   return (
@@ -64,13 +65,13 @@ export default function LoginForm() {
       >
         <FaFacebook className={'h1 me-5'} />
         <FaGoogle className={'h1'} />
-        <FaTwitter className={'h1 ms-5'} />
+        <FaXTwitter className={'h1 ms-5'} />
       </div>
       <div className={'container d-flex justify-content-center'}>
         <div className={'ask-for-regester'}>
           <span className="me-3">還不是會員嗎?</span>
-          <Link href="/" className={'text-secondary ms-3'}>
-            加入會員?
+          <Link href="./register" className={'text-secondary ms-3'}>
+            加入會員
           </Link>
         </div>
       </div>

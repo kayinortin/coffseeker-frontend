@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-import SignUpForm from '@/components/member/SignUpForm'
-export default function SignUp() {
+import ForgetPassword from '@/components/member/ForgetPassword'
+import ChangeForgetPassword from '@/components/member/ChangeForgetPassword'
+export default function Forget() {
   return (
     <>
       <div className={'background'}>
@@ -15,14 +16,21 @@ export default function SignUp() {
                     首頁
                   </Link>
                 </li>
-                <li className={'breadcrumb-item'}>會員登入</li>
+                <li className={'breadcrumb-item'}>
+                  <Link href="./login" className={'link'}>
+                    會員登入
+                  </Link>
+                </li>
+                <li className={'breadcrumb-item'}>忘記密碼</li>
               </ol>
             </nav>
           </div>
         </div>
         {/* 麵包屑結束 */}
 
-        <SignUpForm />
+        <ForgetPassword />
+
+        {/* <ChangeForgetPassword /> */}
       </div>
     </>
   )
