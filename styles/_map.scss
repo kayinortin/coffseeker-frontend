@@ -18,7 +18,7 @@
   right: 80px;
   top: 10px;
 }
-.asideBar {
+.mapAsideBar {
   width: 70px;
   height: 100px;
 
@@ -31,22 +31,46 @@
   }
 }
 
-.asideInfo {
+.mapAsideInfo {
   overflow-y: auto;
   width: 408px;
   height: 100%;
   padding: 20px 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   .cafeList {
-    .cafeinfo {
+    display: none;
+    .cafeItem {
       margin-block: 10px;
-      
       cursor: pointer;
       border-bottom: solid 1px black;
       p {
         margin-top: 10px;
-        
+        display: flex;
+        justify-content: space-between;
+        svg {
+          margin-right: 3px;
+        }
       }
+    }
+  }
+  .cafeInfo {
+    h4 {
+      padding-block: 10px;
+      border-bottom: solid 1px black;
+    }
+    .rating {
+      width: 100%;
+      margin-top: 10px;
+      display: block;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    span {
+      display: flex;
+      flex-direction: row;
+      min-width: 50%;
+      justify-content: space-between;
+      padding:5px;
     }
   }
 }
