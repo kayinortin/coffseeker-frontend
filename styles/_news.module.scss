@@ -1,9 +1,13 @@
+$color--primary: #1c262c;
+$color--background: #f2f2f2;
+$color--black: #000000;
 /* news.module.scss */
-//卡片區
-.news-link{
+// 卡片區
+.news-link {
   text-decoration: none;
 }
-.card-container {
+
+.ei-card-container {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0 auto;
   // max-width: 1400px;
@@ -11,45 +15,51 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-.card {
-  width: 575px;
-  // height: 470px;
-  margin: 1%;
-  margin-inline: 30px;
-  margin-block: 20px;
 
+.ei-card {
+  width: 550px;
+  margin-inline: 30px; 
+  margin-block: 30px;
+  box-sizing: border-box; 
   &:hover {
     // cursor: pointer;
     transform: scale(1.02);
     box-shadow: 5px 5px 5px 5px lightgrey;
   }
-//卡片圖片高度
+
+  // 卡片圖片高度
   .custom-image {
     height: 328px;
   }
 }
-//卡片日期設定
-.create-at {
+
+// 卡片日期設定
+.ei-create-at {
   font-size: 12px;
   font-weight: 100;
+  color: $color--black;
 }
 
-//分類按鈕區
-.btn-container {
-  margin-inline: 45px;
+// 分類按鈕區
+.ei-btn-container {
+  margin-inline: 55px;
   button {
     padding-block: 9px;
     padding-inline: 18px;
-    background: #f2f3ee;
+    background: $color--background;
     color: black;
-    border: 1px solid #1c262c;
+    border: 1px solid $color--primary;
     font-weight: bold;
     font-size: 14px;
   }
   .active {
-    background-color: #1c262c;
+    background-color: $color--primary;
     color: white;
     font-weight: bold;
     border: 0px;
   }
+}
+
+.card-title{
+  color: $color--primary;
 }
