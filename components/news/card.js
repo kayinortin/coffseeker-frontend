@@ -39,16 +39,16 @@ export default function Card() {
 
   return (
     <a href="" className="news-link">
-      <div className="card-container">
+      <div className="ei-card-container">
         {newsData.map((news, index) => (
-          <div key={index} className={`${styles.card}`}>
+          <div key={index} className={`${styles['ei-card']}`}>
             <img
               src={news.imageUrl}
               className={`card-img-top img-fluid ${styles['custom-image']}`}
               alt="..."
             />
             <div className="card-body text-left ms-2">
-              <p className="create-at my-2">{news.date}</p>
+              <p className="ei-create-at my-2">{news.date}</p>
               <h5 className="card-title fw-bold mb-2">
                 <span className="me-2">|</span> {news.title}
                 <span className="ms-2">|</span>

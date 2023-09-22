@@ -22,11 +22,16 @@
 @import './styles/_news.module';
 
 // 關於我們
-
+@import './styles/about.module';
 
 //課程相關
+
 @import './styles/course';
 @import './styles/about.module';
+=======
+@import './styles/course'
+
+
 
 
 // 最重要的要放最後一個
