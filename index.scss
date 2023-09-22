@@ -1,8 +1,9 @@
 // 全域樣式
-@import './styles/reset';
-@import './styles/global';
-@import './styles/common';
-@import './styles/variable';
+@import "./styles/variables.scss";
+@import "./styles/reset.scss";
+@import "./styles/global.scss";
+@import "./styles/common.scss";
+
 
 // 導覽列表
 @import './styles/mega-menu.module';

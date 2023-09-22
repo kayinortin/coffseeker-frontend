@@ -4,11 +4,11 @@ import React from 'react'
 export default function Footer() {
   return (
     <div style={{ backgroundColor: '#1C262C' }}>
-      <div className="container mt-5 pb-5 pt-5">
+      <div className="container pb-5 pt-5">
         <div className="row">
           <div className="col-lg-3 mb-4 mb-md-0">
             <div className="d-flex justify-content-center">
-              <a href="/">
+              <a href="http://localhost:3000">
                 <img src="../coffseeker-logo-footer.png" alt="" width={200} />
               </a>
             </div>
