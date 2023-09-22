@@ -24,9 +24,9 @@ const menuItems = [
     label: '咖啡資訊',
     href: '/infomation',
     children: [
-      { id: 21, label: '烘焙介紹', href: '/infomation/baked' },
-      { id: 22, label: '手沖資訊', href: '/infomation/handbrewed' },
-      { id: 23, label: '咖啡占卜', href: '/infomation/divination' },
+      { id: 21, label: '咖啡占卜', href: '/infomation/divination' },
+      { id: 22, label: '烘焙介紹', href: '/infomation/baked' },
+      { id: 23, label: '手沖資訊', href: '/infomation/handbrewed' },
     ],
   },
   {
@@ -51,34 +51,11 @@ const menuItems = [
   },
 ]
 
-function Navbar(currentRoute) {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true)
-
-  function handleDocumentClick(event) {
-    const navMenu = document.querySelector('.navbar-light')
-
-    if (
-      !navMenu.contains(event.target) &&
-      !event.target.matches('.navbar-toggler')
-    ) {
-      setIsNavCollapsed(true)
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('click', handleDocumentClick)
-
-    return () => {
-      document.removeEventListener('click', handleDocumentClick)
-    }
-  }, [])
-
+export default function Navbar(currentRoute) {
   return (
     <>
       <nav
-        className={`navbar navbar-expand-lg bg-transparent navbar-light bg-dark ${
-          isNavCollapsed ? 'collapsed' : ''
-        }`}
+        className={`navbar navbar-expand-lg bg-transparent navbar-light bg-dark fixed-top`}
       >
         <div className="container">
           <button
@@ -87,17 +64,11 @@ function Navbar(currentRoute) {
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
             aria-controls="navbarNav"
-            aria-expanded={!isNavCollapsed ? true : false}
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div
-            className={`collapse navbar-collapse ${
-              isNavCollapsed ? 'justify-content-center' : ''
-            }`}
-            id="navbarNav"
-          >
+          <div className={`collapse navbar-collapse`} id="navbarNav">
             <ul className="navbar-nav">
               {menuItems.map((v) => {
                 if (!v.children) {
@@ -118,7 +89,7 @@ function Navbar(currentRoute) {
 
                 // 以下為有下拉選單的選單項目
                 return (
-                  <li className={`nav-item dropdown ed-padding-x `} key={v.id}>
+                  <li className={`nav-item dropdown ed-padding-x`} key={v.id}>
                     <Link
                       className={`nav-link dropdown-toggle ${
                         v.children.find((v) => v.href === currentRoute)
@@ -128,7 +99,6 @@ function Navbar(currentRoute) {
                       href={v.href}
                       role="button"
                       data-bs-toggle="dropdown"
-                      aria-expanded={!isNavCollapsed ? true : false}
                     >
                       {v.label}
                     </Link>
@@ -159,5 +129,3 @@ function Navbar(currentRoute) {
     </>
   )
 }
-
-export default Navbar
