@@ -2,8 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import data from '@/data/course/course.json'
 import CTAButton from '../common/cta-button'
-import { width } from '@mui/system'
 import style from '@/styles/_course.module.scss'
+import { AddCartBtn, BuyBtn } from './BuyBtn'
 
 export default function Card({
   name,
@@ -12,7 +12,6 @@ export default function Card({
   start_date,
   end_date,
   capacity,
-  description,
 }) {
   return (
     <div className="card">
@@ -20,17 +19,20 @@ export default function Card({
         src={`/course-image/${image}`}
         className="card-img-top"
         alt="..."
-        width={100}
-        height={100}
+        width={50}
+        height={230}
       />
       <div className="card-body">
         <h5>{name}</h5>
-        <p>價格: {price}</p>
-        <p>課程開始日期: {start_date}</p>
-        <p>課程結束日期: {end_date}</p>
+        <p>
+          課程日期: {start_date} 至 {end_date}
+        </p>
+        {/* <p>課程結束日期: </p> */}
         <p>人數: {capacity}</p>
-        {/* <p>描述: {description}</p> */}
-        <CTAButton />
+        <div className="d-flex justify-content-between">
+          <p className="text-success fs-5 my-auto">NT$: {price}</p>
+          <AddCartBtn />
+        </div>
       </div>
     </div>
   )
