@@ -3,7 +3,7 @@
 
 * {
   box-sizing: border-box;
-  // outline: 1px red solid;
+  outline: 1px red solid;
 
 // 按鈕圓角邊 button radius
 $border-radius: 0em;
@@ -36,6 +36,13 @@ body {
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   letter-spacing: $letter-spacing;
   color: $color__font;
+}
+
+.bg-primary-color {
+  background-color: #1C262C;
+}
+.footer-p-color {
+  color: $color--gray3;
 }
 
 a {
@@ -73,7 +80,7 @@ button {
   font-style: normal;
   font-family: "Inter", "Noto Sans TC", sans-serif;
   letter-spacing: $letter-spacing;
-  line-height: 2.5rem;
+  // line-height: 2.5rem;
   color: $color__font;
 }
 
@@ -88,7 +95,7 @@ button {
 h1 {
   @include heading;
   font-weight: 500;
-  font-size: 3.75rem;
+  font-size: 3.25rem;
 }
 
 h2 {
@@ -117,9 +124,9 @@ h5 {
 
 h6 {
   @include heading;
-  color: #ffffff;
   font-weight: 500;
   font-size: 1rem;
+  line-height: 2rem;
 }
 
 @mixin h1 {
