@@ -1,12 +1,15 @@
 // Due to fixed-top navbar
 // add margin-top to the next element
+// Notice: when using bootstrap margin feature, it will be invalid
 // 請特別注意，當使用bootstrap 內建 margin 功能，會讓這條失效
-
 .fixed-top {
   + * {
     margin-top: 166px;
   }
 } 
+
+
+
  // header setting
   .ed-bg-setting{
     display:flex;
