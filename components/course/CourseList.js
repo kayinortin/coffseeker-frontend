@@ -8,7 +8,7 @@ export default function CourseList() {
     <div className="">
       <h3 className="text-center">課程列表</h3>
       <span>BreadCrumbs here</span>
-      <ul className="d-flex row row-cols-3  flex-wrap">
+      <ul className="d-flex row row-cols-3 flex-wrap list-unstyled">
         {data.map((v, i) => {
           let {
             name,
@@ -19,10 +19,12 @@ export default function CourseList() {
             description,
             image,
           } = v
-          console.log(v)
+          {
+            /* console.log(v) */
+          }
           return (
             <>
-              <li className="col">
+              <li className="col course-li">
                 <Card
                   key={i}
                   name={name}
