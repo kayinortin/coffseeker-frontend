@@ -12,7 +12,7 @@ export default function DefaultLayout({ title = '', children }) {
         <title>{title}</title>
         <meta name="viewport" content="width=device-width" />
       </Head>
-      <Header></Header>
+      <Header />
       <Navbar />
       <main className="">
         {/* <NextBreadCrumb isHomeIcon isChevron bgClass="" /> */}

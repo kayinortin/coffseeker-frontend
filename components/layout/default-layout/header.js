@@ -1,9 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import Navbar from './navbar'
 
 export default function Header() {
-  const currentRoute = '/product'
   return (
     <>
       <header style={{ backgroundColor: '#F2F3EE', height: '90px' }}>
@@ -14,7 +12,7 @@ export default function Header() {
                 className="d-flex align-items-center"
                 style={{ height: '90px' }}
               >
-                <a href="/">
+                <a href="http://localhost:3000">
                   <img
                     src="../coffseeker-logo-desktop.png"
                     alt="logo"

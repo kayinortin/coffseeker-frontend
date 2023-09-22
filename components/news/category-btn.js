@@ -6,7 +6,7 @@ export default function CategoryBtn() {
 
   return (
     <>
-      <div className="btn-container">
+      <div className="ei-btn-container">
         <button
           className={`me-3 ${activeButton === 'allnews' ? 'active' : ''}`}
           onClick={() => setActiveButton('allnews')}
