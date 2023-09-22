@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 // import styles from '@/styles/home.module.scss'
-import Cart from '@/components/cart/index'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,9 +15,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="">
-        <img className="img-fluid" src="../banner-father'sDay.png" alt="" />
+        <Image
+          className="img-fluid"
+          src="http://localhost:3000/banner-father'sDay.png"
+          alt=""
+          width={1920}
+          height={780}
+          style={{ display: 'block' }}
+        />
       </div>
-      <Cart />
     </>
   )
 }
