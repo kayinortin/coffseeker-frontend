@@ -39,7 +39,6 @@ $fw-black:900;
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    border: 1px solid rgb(86, 83, 157);
   
     .step{
         padding: 1.5rem;
@@ -101,6 +100,45 @@ $fw-black:900;
     }
 }
 
+.carts{
 
+    .cartLabels{
+        border: 1.5px solid $primary;
+        background-color: $color-lightgray;
+
+        tr{
+            th{
+                color:$color-black;
+                font-size: $fs-md;
+                font-weight: $fw-bold;
+                padding: 1rem;
+            }
+        }
+       
+    }
+
+    .cartProduct{
+        
+
+        tr{
+            // display: flex;
+            // padding-inline: 4rem;
+            // padding-block: 1rem;
+            // flex-wrap: wrap;
+            // gap: 1rem;
+            // text-align: center;
+            // align-items: center;
+
+            .item{
+                
+            }
+
+        }
+
+        
+    }
+    
+
+}
 
 
