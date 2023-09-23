@@ -1,6 +1,6 @@
 .mapArea {
-  height: calc(100vh - 166px); // 166px = header + footer height
-  background-color: #f2f3ee;
+  height: calc(100vh - 146px);
+  background-color: $color--background;
   position: relative;
   display: flex;
   overflow: hidden;
@@ -19,25 +19,46 @@
   top: 10px;
 }
 .mapAsideBar {
-  width: 80px;
+  width: 72px;
+  flex-shrink: 0;
   height: 100px;
 
   button {
+    transition: 0.3s;
+    width: 100%;
+    background-color: transparent;
     padding: 10px 10px;
     margin: 20px 0px;
     justify-content: center;
     align-items: flex-start;
     border: none;
+    border-right: 3px solid transparent;
+    &.active {
+      border-right: 3px solid $color--primary;
+    }
   }
 }
 
 .mapAsideInfo {
   overflow-y: auto;
-  min-width: 360px;
-  max-width: 360px;
+  scrollbar-gutter: stable;
+  width: 360px;
+  z-index: 1;
+  flex-shrink: 0;
   height: 100%;
-  padding: 20px 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  > div {
+    display: none;
+    padding: 20px 24px;
+    width: 360px;
+  }
+  > div.active {
+    display: block;
+    transition: 0.3s;
+    opacity: 1;
+  }
+
   select {
     border: none;
   }
@@ -45,6 +66,7 @@
     * {
       cursor: pointer !important;
     }
+    transition: 0.3s;
     background: none;
     text-align: start;
     width: 100%;
@@ -64,6 +86,8 @@
   }
 
   .cafeInfo {
+    transition: 0.3s;
+
     svg {
       width: 27px;
       height: 27px;
@@ -104,10 +128,13 @@
       h6 {
         width: 280px;
         word-wrap: break-word;
+        word-break: break-all;
       }
     }
   }
   .cafeFilter {
+    transition: 0.3s;
+
     .cafeFilterForm {
       display: flex;
       flex-wrap: wrap;
