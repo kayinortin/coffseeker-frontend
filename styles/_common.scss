@@ -1,0 +1,107 @@
+// Due to fixed-top navbar
+// add margin-top to the next element
+// Notice: when using bootstrap margin feature, it will be invalid
+// 請特別注意，當使用bootstrap 內建 margin 功能，會讓這條失效
+.fixed-top {
+  + * {
+    margin-top: 166px;
+  }
+} 
+
+
+
+ // header setting
+  .ed-bg-setting{
+    display:flex;
+    align-items: center;
+    background-color: #F2F3EE;
+    height: 100px;
+  }
+  .header{
+    position: relative;
+  }
+
+  @media (max-width: 600px){
+    .fixed-top {
+      + * {
+        margin-top: 120px;
+      }
+    } 
+    .ed-bg-setting{
+      height: 120px;
+    }
+    .mobile-justify-content-center{
+      justify-content: center;
+    }
+  }
+
+  // index setting
+  .ed-position-relative {
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .ed-position-absolute {
+    display: block;
+    width: 20vw !important;
+    height: auto;
+    position: absolute;
+    top: calc(50% - 180px);
+    left: calc(50% - 150px);
+    z-index: 2;
+  }  
+  .img-container {
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+  }
+  
+  .img-container img {
+    width: 100%;
+    height: auto;
+  }
+
+  .ed-img-size-1{
+    display: block;
+    width: 960px;
+  }
+  .ed-img-size-2{
+    display: block;
+    width: 943.8px;
+  }
+
+  #company-buy{
+    width: 1940px;
+  }
+
+  @media (max-width: 600px) {
+    #banner-image {
+      content: url("http://localhost:3000/index-image/banner-father'sDay-mobile.png");
+    }
+    #activity-image{
+      content: url("http://localhost:3000/index-image/activity_01-mobile.png");
+    }
+    .ed-position-absolute {
+      width: 280px !important;
+      height: auto;
+      top: calc(50% - 150px);
+      left: calc(50% - 140px);
+    }
+    .ed-img-size-1{
+      width: 390px;
+    }
+    .ed-img-size-2{
+      width: 390px;
+    }
+    #company-buy{
+      width: 390px;
+      content: url("http://localhost:3000/index-image/company-buy-mobile.png");
+    }  
+  }
+  
+  
+  
+  
+  
+  

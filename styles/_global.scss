@@ -1,30 +1,19 @@
-// 檔案位置: styles/global.scss
-// 變數覆蓋用 (Variable overrides)
-// 全站配色 colors
-$primary: #1C262C;
-$secondary: #FF9B1A;
-$success: #FF9B1A;
-$danger: #845635;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Style+Script&display=swap");
 
+* {
+  box-sizing: border-box;
+  // outline: 1px red solid;
 
 // 按鈕圓角邊 button radius
 $border-radius: 0em;
 $border-radius-sm: 0em;
 $border-radius-lg: 0em;
+$form-select-bg: #F2F3EE;
+}
 
-// ↑↑↑  變數覆蓋(Variable overrides) 要寫在這行"上面"  ↑↑↑
-// 導入所有 bootstrap 樣式
-@import '~bootstrap/scss/bootstrap';
-// ↓↓↓  其它客製樣式要寫在這行的"下面檔案內" ↓↓↓
-
-
-
-// google Noto Sans TC 字體
-@import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap';
-
-// 定義中文字體用
 body {
-  font-family: 'Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
+  font-family: 'Noto Sans','Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
     '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',
     // Cross-platform generic font family (default user interface font)
     system-ui,
@@ -45,4 +34,376 @@ body {
     // Emoji fonts
     'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  letter-spacing: $letter-spacing;
+  color: $color__font;
+}
+
+.bg-primary-color {
+  background-color: #1C262C;
+}
+.footer-p-color {
+  color: $color--gray3;
+}
+.btn-outline-light{
+  color: $color--gray3;
+  border-color: $color--gray3;
+  border-radius: 0;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.breadcrumb{
+  a{
+    color: $color--gray4;
+  }
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div {
+  cursor: default;
+}
+
+button {
+  letter-spacing: $letter-spacing;
+}
+
+[list]::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
+
+@mixin heading {
+  font-style: normal;
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  letter-spacing: $letter-spacing;
+  // line-height: 2.5rem;
+  color: $color__font;
+}
+
+@mixin text {
+  font-style: normal;
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  letter-spacing: $letter-spacing;
+  line-height: 140%;
+  color: $color__font;
+}
+
+h1 {
+  @include heading;
+  font-weight: 500;
+  font-size: 3.25rem;
+}
+
+h2 {
+  @include heading;
+  font-weight: 500;
+  font-size: 2.5rem;
+}
+
+h3 {
+  @include heading;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+h4 {
+  @include heading;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+h5 {
+  @include heading;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+h6 {
+  @include heading;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 2rem;
+}
+
+@mixin h1 {
+  @include heading;
+  font-weight: 500;
+  font-size: 3.75rem;
+}
+
+@mixin h2 {
+  @include heading;
+  font-weight: 500;
+  font-size: 2.5rem;
+}
+
+@mixin h3 {
+  @include heading;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+@mixin h4 {
+  @include heading;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+@mixin h5 {
+  @include heading;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+@mixin h6 {
+  @include heading;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+@mixin text--large {
+  @include text;
+  font-weight: normal;
+  font-size: 1.25rem;
+}
+
+@mixin text--large-bold {
+  @include text;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+@mixin text--medium {
+  @include text;
+  font-weight: normal;
+  font-size: 1.125rem;
+}
+
+@mixin text--medium-bold {
+  @include text;
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+@mixin text--normal {
+  @include text;
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+@mixin text--normal-bold {
+  @include text;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+@mixin text--small {
+  @include text;
+  font-weight: normal;
+  font-size: 0.875rem;
+}
+
+@mixin text--small-bold {
+  @include text;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+@mixin text--extra-small {
+  @include text;
+  font-weight: normal;
+  font-size: 0.75rem;
+}
+
+@mixin text--extra-small-bold {
+  @include text;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+@mixin clear__btn {
+  background: transparent;
+  border: none;
+
+  @include cursor(pointer);
+}
+
+@mixin interaction__link {
+  transition: $transition;
+
+  &:hover {
+    color: $color--hover;
+  }
+
+  &:focus,
+  &:active {
+    color: $color--active;
+  }
+}
+
+@mixin interaction__btn {
+  transition: $transition;
+
+  &:hover {
+    color: $color--light;
+    background: $color--hover;
+
+    i {
+      color: $color--light;
+    }
+  }
+
+  &:focus,
+  &:active {
+    color: $color--light;
+    background: $color--active;
+
+    i {
+      color: $color--light;
+    }
+  }
+}
+
+@mixin interaction__tab {
+  transition: $transition;
+
+  &:hover {
+    color: $color--primary;
+    background: $color--opacity;
+
+    i {
+      color: $color--primary;
+    }
+  }
+
+  &:focus,
+  &:active {
+    color: $color--primary;
+    background: $color--opacity;
+
+    i {
+      color: $color--primary;
+    }
+  }
+}
+
+@mixin icon--absolute($content) {
+  content: $content;
+  width: max-content;
+  height: max-content;
+
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.5rem;
+
+  position: absolute;
+}
+
+@mixin cursor($cursor) {
+  cursor: pointer;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  div,
+  label,
+  input {
+    cursor: $cursor;
+  }
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color--gray5;
+    border-radius: 10rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color--primary;
+    border-radius: 10rem;
+    background-clip: content-box;
+    transition: $transition;
+    &:hover {
+      background: $color--hover;
+    }
+  }
+}
+
+@mixin scrollbar--hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin placeholder__rec($margin) {
+  width: 100%;
+  margin: $margin;
+  border-radius: $border-radius__btn;
+}
+
+@mixin placeholder__text {
+  width: 100%;
+  height: 1.5rem;
+}
+
+@mixin text--truncate($line) {
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+@mixin clear__number-arrow {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+.ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; //行數
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow: hidden;
+
+  &--3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; //行數
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow: hidden;
+  }
 }

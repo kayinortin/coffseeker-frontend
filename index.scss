@@ -1,14 +1,11 @@
 // 全域樣式
-@import './styles/reset';
-@import './styles/global';
-@import './styles/common';
-@import './styles/variable';
+@import "./styles/variables";
+@import "./styles/reset";
+@import "./styles/global";
+@import "./styles/common";
 
 // 導覽列表
 @import './styles/mega-menu.module';
-@import './styles/menubar.module';
-@import './styles/home.module';
-@import './styles/custom';
 
 // 購物車
 @import './styles/cart';
@@ -17,6 +14,7 @@
 @import './styles/member';
 
 // 商品頁面
+@import './styles/product';
 
 //最新消息
 @import './styles/_news.module';
@@ -28,6 +26,10 @@
 
 @import './styles/course';
 @import './styles/about.module';
+
+
+//地圖
+@import './styles/map';
 
 
 
