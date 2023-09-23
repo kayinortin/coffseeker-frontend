@@ -3,7 +3,7 @@
 
 * {
   box-sizing: border-box;
-  outline: 1px red solid;
+  // outline: 1px red solid;
 
 // 按鈕圓角邊 button radius
 $border-radius: 0em;
@@ -40,7 +40,7 @@ body {
 }
 
 .bg-primary-color {
-  background-color: #1C262C;
+  background-color: $color--primary;
 }
 .footer-p-color {
   color: $color--gray3;

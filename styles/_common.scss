@@ -69,6 +69,36 @@
   }
 
   // index setting
+  .slick-slider {
+    width: 100%;
+    height: calc(100vh - 166px);
+    overflow: hidden;
+  }
+  
+  .slick-dots {
+    right: -700px;
+    bottom: 4%; 
+    transform: translateY(50%);
+    flex-direction: column;
+    left: auto;
+  
+    & li {
+    margin-inline:10px;
+  
+    & button:before{
+      font-size: 20px; 
+    }
+    & button:hover:before{
+      color: #EEE5D0;
+    }
+  
+    &.slick-active{
+      & button:before{
+        color: #EEE5D0;
+      }
+    }
+  }
+  }
   .ed-position-relative {
     display: block;
     position: relative;
@@ -139,12 +169,57 @@
 }
 
   @media (max-width: 576px) {
-    #banner-image {
-      content: url("http://localhost:3000/index-image/banner-father'sDay-mobile.png");
+    .slick-slider {
+      width: 390px;
+      height: calc(100vh - 132px);
+      overflow: hidden;
     }
-    #activity-image{
-      content: url("http://localhost:3000/index-image/activity_01-mobile.png");
+
+    .slick-dots {
+      right: 0px;
+      bottom: 4%; 
+      transform: translateY(50%);
+      flex-direction: column;
+      left: auto;
+    
+      & li {
+      margin-inline:7px;
+    
+      & button:before{
+        font-size: 16px; 
+      }
+      & button:hover:before{
+        color: #EEE5D0;
+      }
+    
+      &.slick-active{
+        & button:before{
+          color: #EEE5D0;
+        }
+      }
     }
+    }
+
+    #s1 {
+      content: url("http://localhost:3000/index-image/s1-m.png");
+    }
+    #s2 {
+      content: url("http://localhost:3000/index-image/s2-m.png");
+    }
+    #s3 {
+      content: url("http://localhost:3000/index-image/s3-m.png");
+    }
+    #s4 {
+      content: url("http://localhost:3000/index-image/s4-m.png");
+    }
+    #s5 {
+      content: url("http://localhost:3000/index-image/s5-m.png");
+    }
+    #s6 {
+      content: url("http://localhost:3000/index-image/s6-m.png");
+    }
+
+
     .ed-position-absolute {
       width: 280px !important;
       height: auto;
