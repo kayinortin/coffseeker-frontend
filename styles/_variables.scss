@@ -148,5 +148,10 @@ $xl: 1199px;
 $xxl: 1399px;
 
 /* bootstrap */
+$accordion-button-focus-border-color: #fff;
+$accordion-button-focus-box-shadow: #fff;
+$accordion-button-active-bg: #fff;
+
+
 @import "~bootstrap/scss/bootstrap.scss";
 

@@ -24,7 +24,7 @@ export default function CourseList() {
           }
           return (
             <>
-              <li className="col course-li">
+              <li key={i} className="col course-li">
                 <Card
                   key={i}
                   name={name}

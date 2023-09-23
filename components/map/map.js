@@ -15,7 +15,7 @@ import 'leaflet/dist/leaflet.css'
 import { FaMapMarkerAlt, FaGlobeAmericas } from 'react-icons/fa'
 import { IoIosWifi } from 'react-icons/io'
 import { LiaChairSolid } from 'react-icons/lia'
-import { IoEarOutline, IoStarSharp } from 'react-icons/io5'
+import { IoEarOutline } from 'react-icons/io5'
 import { TbCurrentLocation } from 'react-icons/tb'
 import {
   PiCoffee,
@@ -30,7 +30,6 @@ import {
   BsHourglassSplit,
   BsDashLg,
   BsClock,
-  BsGlobeAsiaAustralia,
 } from 'react-icons/bs'
 
 import testData from '@/data/map/taoyuanCafe.json'
@@ -90,9 +89,28 @@ export default function Map() {
     mrt: '',
     open_time: '主要是六日營業，其他以教學為主',
   })
-  //側面欄顯示
+  //側面欄顯示(全部/單間/篩選)
   const [asideInfoIndex, setAsideInfoIndex] = useState('all')
 
+  //咖啡篩選條件
+  const [criteriaValues, setCriteriaValues] = useState({
+    wifi: '',
+    seat: '',
+    quiet: '',
+    tasty: '',
+    socket: '',
+  })
+  useEffect(() => {
+    console.log(criteriaValues)
+  }, [criteriaValues])
+
+  const criteria = [
+    { icon: <IoIosWifi />, label: '網路', name: 'wifi' },
+    { icon: <LiaChairSolid />, label: '座位', name: 'seat' },
+    { icon: <IoEarOutline />, label: '安靜', name: 'quiet' },
+    { icon: <PiCoffee />, label: '好喝', name: 'tasty' },
+    { icon: <BsPlugin />, label: '插座', name: 'socket' },
+  ]
   useEffect(() => {
     console.log(asideInfoIndex)
   }, [asideInfoIndex])
@@ -101,22 +119,20 @@ export default function Map() {
   function CafesMarker() {
     return (
       <>
-        {cafes.map((cafe, i) => {
-          return (
-            <Marker
-              key={i}
-              position={[cafe.latitude, cafe.longitude]}
-              icon={cafesMarker}
-              eventHandlers={{
-                click: () => {
-                  handelChangeCafe(cafe)
-                },
-              }}
-            >
-              <Popup>{cafe.name}</Popup>
-            </Marker>
-          )
-        })}
+        {cafes.map((cafe, i) => (
+          <Marker
+            key={i}
+            position={[cafe.latitude, cafe.longitude]}
+            icon={cafesMarker}
+            eventHandlers={{
+              click: () => {
+                handelChangeCafe(cafe)
+              },
+            }}
+          >
+            <Popup>{cafe.name}</Popup>
+          </Marker>
+        ))}
       </>
     )
   }
@@ -260,11 +276,57 @@ export default function Map() {
           <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
         </div>
         {/* 篩選 */}
+        <div
+          className={`cafeFilter  ${
+            asideInfoIndex === 'filter' ? '' : 'd-none'
+          }`}
+        >
+          <h4>篩選條件</h4>
+          <div className="cafeFilterForm py-3">
+            {criteria.map((item) => (
+              <div key={item.name}>
+                <div className="d-flex align-items-center">
+                  {item.icon}
+                  <p className="">{item.label}</p>
+                </div>
+                <select
+                  name={item.name}
+                  id=""
+                  onChange={handleCriteriaChange}
+                  value={criteriaValues[item.name]}
+                >
+                  <option defaultValue>不限</option>
+                  {item.name === 'socket' ? ( // 只为 'socket' 的Select渲染特定选项
+                    <>
+                      <option value="yes">充足</option>
+                      <option value="maybe">也許</option>
+                      <option value="no">很少</option>
+                    </>
+                  ) : (
+                    [5, 4, 3, 2, 1].map((value) => (
+                      <option key={value} value={value}>
+                        {value}★
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+            ))}
+          </div>
+          <h4 className="my-3">篩選結果</h4>
+          <div className="">
+            <CafeList cafes={cafes} />
+          </div>
+        </div>
       </>
     )
   }
 
   //輔助用函式
+  const handleCriteriaChange = (e) => {
+    const { name, value } = e.target
+    setCriteriaValues({ ...criteriaValues, [name]: value })
+  }
   function checkValue(value) {
     switch (value) {
       case 'yes':
@@ -282,50 +344,47 @@ export default function Map() {
     setAsideInfoIndex('cafe')
     setCafeData(cafe)
   }
-
+  //咖啡店LIST生成
   function CafeList({ cafes }) {
     return (
       <>
-        {cafes.map((cafe) => {
-          return (
-            <>
-              <button
-                className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
-                onClick={() => {
-                  handelChangeCafe(cafe)
-                }}
-              >
-                <h4 key={cafe.id}>{cafe.name}</h4>
-                <h6>
-                  <FaMapMarkerAlt />
-                  {cafe.address}
-                </h6>
-                <p>
-                  <span>
-                    <IoIosWifi />
-                    {cafe.wifi}★
-                  </span>
-                  <span>
-                    <LiaChairSolid />
-                    {cafe.seat}★
-                  </span>
-                  <span>
-                    <IoEarOutline />
-                    {cafe.quiet}★
-                  </span>
-                  <span>
-                    <PiCoffee />
-                    {cafe.tasty}★
-                  </span>
-                  <span>
-                    <BsPlugin />
-                    {checkValue(cafe.socket)}
-                  </span>
-                </p>
-              </button>
-            </>
-          )
-        })}
+        {cafes.map((cafe) => (
+          <button
+            key={cafe.id}
+            className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
+            onClick={() => {
+              handelChangeCafe(cafe)
+            }}
+          >
+            <h4>{cafe.name}</h4>
+            <h6>
+              <FaMapMarkerAlt />
+              {cafe.address}
+            </h6>
+            <p>
+              <span>
+                <IoIosWifi />
+                {cafe.wifi}★
+              </span>
+              <span>
+                <LiaChairSolid />
+                {cafe.seat}★
+              </span>
+              <span>
+                <IoEarOutline />
+                {cafe.quiet}★
+              </span>
+              <span>
+                <PiCoffee />
+                {cafe.tasty}★
+              </span>
+              <span>
+                <BsPlugin />
+                {checkValue(cafe.socket)}
+              </span>
+            </p>
+          </button>
+        ))}
       </>
     )
   }
