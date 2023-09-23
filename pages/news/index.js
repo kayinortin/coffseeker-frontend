@@ -7,19 +7,19 @@ export default function News() {
   return (
     <main>
       <section className="background">
-        <div className={'container'}>
+        <div className="container-lg">
           {/* 麵包屑*/}
-          <div className={'row ms-4 mt-1'}>
-            <nav className={'nav-breadcrumb ms-4'}>
-              <ol className={'breadcrumb m-3 '}>
-                <li className={'breadcrumb-item'}>
+          <div className="row ms-4 ei-breadcrumb-container d-none d-sm-block">
+            <nav className="nav-breadcrumb">
+              <ol className="breadcrumb m-3 ">
+                <li className="breadcrumb-item">
                   <Link href="/" className="link ">
                     首頁
                   </Link>
                 </li>
                 <Link
                   href="/news"
-                  className="breadcrumb-item text-decoration-none"
+                  className="breadcrumb-item text-decoration-none link"
                 >
                   最新消息
                 </Link>
@@ -29,12 +29,12 @@ export default function News() {
 
           {/* 標題區 */}
           <div className="d-flex justify-content-center mb-2">
-            <h4 className="text-center me-3">—————</h4>
-            <h4 className="text-center news-title">最新消息</h4>
-            <h4 className="text-center ms-3">—————</h4>
+            {/* <h4 className="text-center me-3">—————</h4> */}
+            <h3 className="text-center news-title">最新消息</h3>
+            {/* <h4 className="text-center ms-3">—————</h4> */}
           </div>
-          <div className="ms-3">
-            <CategoryBtn />
+          <div className="">
+            <CategoryBtn className="" />
           </div>
 
           <Card />
