@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import style from '@/styles/_course.module.scss'
+import 'bootstrap/scss/bootstrap.scss'
 
 function Accordion({ title, content }) {
   const [isOpen, setIsOpen] = useState(false)
