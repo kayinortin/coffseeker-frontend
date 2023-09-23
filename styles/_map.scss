@@ -38,29 +38,31 @@
   height: 100%;
   padding: 20px 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  .cafeList {
-    .cafeItem {
-      * {
-        cursor: pointer !important;
-      }
-      background: none;
-      text-align: start;
+  select {
+    border: none;
+  }
+  .cafeItem {
+    * {
+      cursor: pointer !important;
+    }
+    background: none;
+    text-align: start;
+    width: 100%;
+    &:hover {
+      background-color: rgba(186, 200, 206, 0.3);
+    }
+    // margin-block: 10px;
+    // border-bottom: solid 1px black;
+    p {
       width: 100%;
-      &:hover {
-        background-color: rgba(186, 200, 206, 0.3);
-      }
-      // margin-block: 10px;
-      // border-bottom: solid 1px black;
-      p {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        svg {
-          margin-right: 3px;
-        }
+      display: flex;
+      justify-content: space-between;
+      svg {
+        margin-right: 3px;
       }
     }
   }
+
   .cafeInfo {
     svg {
       width: 27px;
@@ -102,6 +104,25 @@
       h6 {
         width: 280px;
         word-wrap: break-word;
+      }
+    }
+  }
+  .cafeFilter {
+    .cafeFilterForm {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 14px;
+      border-bottom: solid 1px black;
+      > div {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        padding-inline: 7px;
+      }
+      svg {
+        width: 24px;
+        height: 24px;
+        margin: 3px;
       }
     }
   }
