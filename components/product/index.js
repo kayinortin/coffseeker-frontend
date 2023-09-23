@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import ProductDataFetcher from '../../components/product/ProductDataFetcher'
+import React, { useState } from 'react'
+import ProductDataFetcher from '../../components/product/PopularProducts'
 
-export default function ProductsList() {
+export default function PopularProducts() {
   const [data, setData] = useState(null)
 
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
   }
-
   return (
     <>
-      <div className="ed-pd-bg-setting p-4">
+      <div>
+        <h4>最熱門的商品</h4>
         {data && data.products && data.products.length > 0 ? (
           <div>
             <h4>產品列表 (抓資料庫測試) 共有 {data.products.length} 筆資料</h4>
