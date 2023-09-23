@@ -9,14 +9,17 @@ export default function PopularProducts() {
   }
   return (
     <>
-      <div>
-        <h4>最熱門的商品</h4>
+      <div className="container ed-index-product">
+        <div className="hot-product-wrapper">
+          <div className="line"></div>
+          <div className="hot-product">熱銷商品</div>
+          <div className="line"></div>
+        </div>
         {data && data.products && data.products.length > 0 ? (
           <div>
-            <h4>產品列表 (抓資料庫測試) 共有 {data.products.length} 筆資料</h4>
-            <div className="row">
+            <div className="row p-5">
               {data.products.map((product) => (
-                <div className="col-md-2 mb-4" key={product.product_id}>
+                <div className="col-md-3 mb-4" key={product.product_id}>
                   <div className="card card-small">
                     <img
                       src={`http://localhost:3005/uploads/${product.product_image}`}
@@ -41,7 +44,9 @@ export default function PopularProducts() {
             </div>
           </div>
         ) : (
-          <p>目前沒有可用的產品。</p>
+          <div className="container">
+            <div className="hot-product">目前沒有可用的產品。</div>
+          </div>
         )}
       </div>
       <ProductDataFetcher onDataFetched={onDataFetched} />

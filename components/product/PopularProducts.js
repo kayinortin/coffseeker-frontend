@@ -6,7 +6,7 @@ export default function PopularProducts({ onDataFetched }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:3005/api/popular-products/hot'
+          'http://localhost:3005/api/popular-products'
         )
         console.log(response.data)
         // const top8PopularProducts = response.data.slice(0, 8)

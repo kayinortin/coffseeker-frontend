@@ -1,9 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Hot from '../components/product/index'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
@@ -20,18 +17,20 @@ export default function Home() {
         <Image
           className="img-fluid ed-position-relative"
           src="http://localhost:3000/index-image/banner-father'sDay.png"
-          alt=""
+          alt="father's Day Activity"
           width={1920}
           height={780}
           id="banner-image"
+          priority
         />
         <Image
           className="img-fluid ed-position-absolute"
           src="http://localhost:3000/index-image/activity_01.png"
-          alt=""
+          alt="father's Day Activity"
           width={600}
           height={200}
           id="activity-image"
+          priority
         />
       </div>
       {/* 此處製作商城與課程的按鈕 */}
@@ -52,7 +51,7 @@ export default function Home() {
         </a>
       </div>
       {/* 此處從後端專取熱銷商品，並提供前八名的商品資訊 */}
-      <div className='container'>
+      <div className="container">
         <Hot />
       </div>
       {/* 此處放置團體購買的圖片 */}
@@ -60,7 +59,7 @@ export default function Home() {
         <img
           className="img-fluid d-block"
           src="http://localhost:3000/index-image/company-buy.png"
-          alt=""
+          alt="團體購買優惠方案"
           id="company-buy"
         />
       </div>

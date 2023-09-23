@@ -2,10 +2,17 @@ nav{
   height: 66px;
   top: -66px !important;
 }
+
+a.dropdown-item.active{
+  background-color: $color--primary !important;
+  color: #ffffff !important;
+}
+
 @media screen and (min-width: 600px) {
-  nav.bg-dark{
+nav.bg-dark{
   background-color: $color--primary !important;
 }
+
 
 }
 a.nav-link {
@@ -82,6 +89,7 @@ a.nav-link {
     background-color: rgba($color: #000000, $alpha: 1.0)
   }
   a.nav-link {
+      padding-block: 10px;
       margin-bottom: 0.5em;
       color: #1C262C !important; 
       &:hover {
@@ -97,8 +105,8 @@ a.nav-link {
   .ed-padding-x{
       padding-left: 1em;
       padding-right: 0em;
-      margin-top: 1em;
-      margin-bottom: 1em;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
       border-bottom: black solid 0.5px;
     }
     button.navbar-toggler {
@@ -124,6 +132,10 @@ a.nav-link {
           color:$color--primary;
         }
       }
+    }
+    .offcanvas-backdrop{
+      top:93px;
+      z-index: 4 !important;
     }
 }
 

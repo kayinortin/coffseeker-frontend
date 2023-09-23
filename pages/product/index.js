@@ -17,7 +17,7 @@ export default function ProductsList() {
             <h4>產品列表 (抓資料庫測試) 共有 {data.products.length} 筆資料</h4>
             <div className="row">
               {data.products.map((product) => (
-                <div className="col-md-2 mb-4" key={product.product_id}>
+                <div className="col-md-3 mb-4 px-5" key={product.product_id}>
                   <div className="card card-small">
                     <img
                       src={`http://localhost:3005/uploads/${product.product_image}`}

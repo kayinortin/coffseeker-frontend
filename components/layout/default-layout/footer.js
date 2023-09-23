@@ -20,8 +20,9 @@ export default function Footer() {
                 <Image
                   src="http://localhost:3000/coffseeker-logo-footer.png"
                   alt="COFFSEEKER"
-                  width={200}
-                  height={126.72}
+                  width={312.5}
+                  height={184.5}
+                  priority
                 />
                 <Image
                   src="http://localhost:3000/coffseeker-logo-inline.png"
