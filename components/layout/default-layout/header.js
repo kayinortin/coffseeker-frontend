@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 export default function Header() {
   return (
@@ -9,8 +10,8 @@ export default function Header() {
             <div className="col-12">
               <div className="d-flex align-items-center mobile-justify-content-center">
                 <a href="http://localhost:3000">
-                  <img
-                    src="../coffseeker-logo-desktop.png"
+                  <Image
+                    src="http://localhost:3000/coffseeker-logo-desktop.png"
                     alt="logo"
                     width={258}
                     height={58}
