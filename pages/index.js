@@ -63,6 +63,44 @@ export default function Home() {
           id="company-buy"
         />
       </div>
+      {/* 此處為咖啡產地的介紹 */}
+      <div className="container ed-index-product">
+        <div className="hot-product-wrapper">
+          <div className="line"></div>
+          <div className="hot-product">咖啡與它們的產地</div>
+          <div className="line"></div>
+        </div>
+      </div>
+      <div className="d-flex flex-column flex-md-row my-md-5 my-3 justify-content-md-center">
+        <div className="d-flex flex-column col-md-4">
+          <div className="d-flex justify-content-center">
+            <Image
+              className="d-block ed-orgin-img"
+              src="http://localhost:3000/index-image/origin.png"
+              alt="COFFSEEKER"
+              width={400}
+              height={80}
+              lazy
+            />
+          </div>
+          <h4 className="ed-orgin-text mt-md-5 mt-3">
+            哥倫比亞，這片位於南美洲的土地，是咖啡文化的重要發源地之一。它的高海拔山脈，孕育了無數優質的咖啡樹，帶給世界無盡的美味。
+            <br />
+            <br />
+            在哥倫比亞的咖啡產區，咖啡農們經歷著漫長而辛苦的日子，細心照料每一棵咖啡樹，等待著最佳的收成時機。他們的辛勞，正是一杯香醇咖啡背後的故事。
+          </h4>
+        </div>
+        <div className="">
+          <img
+            className="img-fluid d-block"
+            src="http://localhost:3000/index-image/world-map.svg"
+            alt="instagram"
+            id="instagram"
+            width={1200}
+            height={60}
+          />
+        </div>
+      </div>
     </>
   )
 }

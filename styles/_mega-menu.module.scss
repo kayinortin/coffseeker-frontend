@@ -110,7 +110,8 @@ a.nav-link {
       border-bottom: black solid 0.5px;
     }
     button.navbar-toggler {
-      margin-left: 4px;
+      // margin-left: 4px;
+      padding-inline: 0px;
       border: none;
     }
     ul.navbar-nav {

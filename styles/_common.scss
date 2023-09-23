@@ -97,11 +97,11 @@
 
   .ed-img-size-1{
     display: block;
-    width: 960px;
+    max-width: 100%;
   }
   .ed-img-size-2{
     display: block;
-    width: 943.8px;
+    max-width: 100%;
   }
 
   #company-buy{
@@ -131,7 +131,14 @@
   background-color: $color--gray3;
 }
 
-  @media (max-width: 600px) {
+.ed-orgin-text{
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 2px;
+  padding-inline: 80px;
+}
+
+  @media (max-width: 576px) {
     #banner-image {
       content: url("http://localhost:3000/index-image/banner-father'sDay-mobile.png");
     }
@@ -144,21 +151,27 @@
       top: calc(50% - 150px);
       left: calc(50% - 140px);
     }
-    .ed-img-size-1{
-      width: 390px;
-    }
-    .ed-img-size-2{
-      width: 390px;
-    }
     #company-buy{
       width: 390px;
       content: url("http://localhost:3000/index-image/company-buy-mobile.png");
+    }
+    .ed-index-product{
+      margin-top: 30px;
     }  
     .hot-product {
       font-size: 16px;
       text-align: center;
       padding: 20px;
       letter-spacing: 10px;
+  }
+  .ed-orgin-text{
+    font-size: 18px;
+    line-height: 30px;
+    letter-spacing: 2px;
+  }
+  .ed-orgin-img{
+    width: 70%;
+    height: auto;
   }
   }
   
