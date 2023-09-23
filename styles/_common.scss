@@ -1,64 +1,107 @@
-// navbar setting
-nav.bg-dark{
-    background-color: $color--primary !important;
+// Due to fixed-top navbar
+// add margin-top to the next element
+// Notice: when using bootstrap margin feature, it will be invalid
+// 請特別注意，當使用bootstrap 內建 margin 功能，會讓這條失效
+.fixed-top {
+  + * {
+    margin-top: 166px;
+  }
+} 
+
+
+
+ // header setting
+  .ed-bg-setting{
+    display:flex;
+    align-items: center;
+    background-color: #F2F3EE;
+    height: 100px;
+  }
+  .header{
+    position: relative;
   }
 
-a.nav-link {
-    color: #ffffff !important; 
-    &:hover {
-        color: #ffffff !important;
+  @media (max-width: 600px){
+    .fixed-top {
+      + * {
+        margin-top: 120px;
+      }
+    } 
+    .ed-bg-setting{
+      height: 120px;
     }
-    &:active{
-        color: #ffffff !important;
+    .mobile-justify-content-center{
+      justify-content: center;
     }
-    &:visited{
-        color: #ffffff !important;
-    }
-}
-.ed-padding-x{
-    padding-left: 4em;
-    padding-right: 3em;
   }
 
-@media screen and (max-width: 992px) {
-    nav.bg-dark{
-      background-color: #ffffff !important;
-    }
-    a.nav-link {
-        margin-bottom: 0.5em;
-        color: #1C262C !important; 
-        &:hover {
-            color: #1C262C !important;
-        }
-        &:active{
-            color: #1C262C !important;
-        }
-        &:visited{
-            color: #1C262C !important;
-        }
-    }
-    .ed-padding-x{
-        padding-left: 1em;
-        padding-right: 0em;
-        margin-top: 1em;
-        margin-bottom: 1em;
-        border-bottom: black solid 0.5px;
-      }
-      button.navbar-toggler {
-        margin-left: 4px;
-        border: none;
-      }
-      ul.navbar-nav {
-        width: 240px;
-        height: 940px;
-        position: absolute;
-        top: 0px;
-        background-color:rgba($color: #dadada, $alpha: 1);
-        z-index: 100;
-      }
-      .dropdown-menu {
-        border: none;
-        margin-bottom: 10px;
-        background-color:rgba($color: #000000, $alpha: 0);
-      }
+  // index setting
+  .ed-position-relative {
+    display: block;
+    position: relative;
+    z-index: 1;
   }
+  
+  .ed-position-absolute {
+    display: block;
+    width: 20vw !important;
+    height: auto;
+    position: absolute;
+    top: calc(50% - 180px);
+    left: calc(50% - 150px);
+    z-index: 2;
+  }  
+  .img-container {
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+  }
+  
+  .img-container img {
+    width: 100%;
+    height: auto;
+  }
+
+  .ed-img-size-1{
+    display: block;
+    width: 960px;
+  }
+  .ed-img-size-2{
+    display: block;
+    width: 943.8px;
+  }
+
+  #company-buy{
+    width: 1940px;
+  }
+
+  @media (max-width: 600px) {
+    #banner-image {
+      content: url("http://localhost:3000/index-image/banner-father'sDay-mobile.png");
+    }
+    #activity-image{
+      content: url("http://localhost:3000/index-image/activity_01-mobile.png");
+    }
+    .ed-position-absolute {
+      width: 280px !important;
+      height: auto;
+      top: calc(50% - 150px);
+      left: calc(50% - 140px);
+    }
+    .ed-img-size-1{
+      width: 390px;
+    }
+    .ed-img-size-2{
+      width: 390px;
+    }
+    #company-buy{
+      width: 390px;
+      content: url("http://localhost:3000/index-image/company-buy-mobile.png");
+    }  
+  }
+  
+  
+  
+  
+  
+  

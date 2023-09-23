@@ -1,5 +1,5 @@
 .mapArea {
-  height: calc(100vh - 146px);
+  height: calc(100vh - 166px); // 166px = header + footer height
   background-color: #f2f3ee;
   position: relative;
   display: flex;
@@ -19,7 +19,7 @@
   top: 10px;
 }
 .mapAsideBar {
-  width: 70px;
+  width: 80px;
   height: 100px;
 
   button {
@@ -33,44 +33,97 @@
 
 .mapAsideInfo {
   overflow-y: auto;
-  width: 408px;
+  min-width: 360px;
+  max-width: 360px;
   height: 100%;
   padding: 20px 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  .cafeList {
-    display: none;
-    .cafeItem {
-      margin-block: 10px;
-      cursor: pointer;
-      border-bottom: solid 1px black;
-      p {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        svg {
-          margin-right: 3px;
-        }
+  select {
+    border: none;
+  }
+  .cafeItem {
+    * {
+      cursor: pointer !important;
+    }
+    background: none;
+    text-align: start;
+    width: 100%;
+    &:hover {
+      background-color: rgba(186, 200, 206, 0.3);
+    }
+    // margin-block: 10px;
+    // border-bottom: solid 1px black;
+    p {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      svg {
+        margin-right: 3px;
       }
     }
   }
+
   .cafeInfo {
+    svg {
+      width: 27px;
+      height: 27px;
+      padding: 3px;
+    }
     h4 {
       padding-block: 10px;
-      border-bottom: solid 1px black;
     }
-    .rating {
+    .cafeRating {
+      border-top: solid 1px black;
+      border-bottom: solid 1px black;
+      padding: 20px 0px;
       width: 100%;
       margin-top: 10px;
-      display: block;
       display: flex;
       flex-wrap: wrap;
+      row-gap: 20px;
     }
     span {
       display: flex;
       flex-direction: row;
-      min-width: 50%;
+      width: 50%;
       justify-content: space-between;
-      padding:5px;
+      padding: 0px 5px;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+    .cafeInfos {
+      border-bottom: solid 1px black;
+      padding: 20px 0px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+      * {
+        align-items: center;
+      }
+      h6 {
+        width: 280px;
+        word-wrap: break-word;
+      }
+    }
+  }
+  .cafeFilter {
+    .cafeFilterForm {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 14px;
+      border-bottom: solid 1px black;
+      > div {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        padding-inline: 7px;
+      }
+      svg {
+        width: 24px;
+        height: 24px;
+        margin: 3px;
+      }
     }
   }
 }

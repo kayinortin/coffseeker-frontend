@@ -1,11 +1,21 @@
+// $accordion-button-focus-border-color: #fff;
+
+// @import "~bootstrap/scss/bootstrap.scss";
+
 //---------------------Card
 .course-li {
     list-style: none; 
     margin: 0; 
     padding: 0;
-    .course-pic{
-        width: 100%;
-    }
+    
   }
 
-  
+
+  //-------------------SideBar
+  .accordion-button:focus{
+    // border:none;
+    outline: none;
+    border:none;
+    color:red;
+    // border-color: #fff;
+  }
