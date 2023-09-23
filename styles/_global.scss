@@ -15,7 +15,7 @@ $form-select-bg: #F2F3EE;
 
 
 body {
-  font-family: 'Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
+  font-family: 'Noto Sans','Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
     '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',
     // Cross-platform generic font family (default user interface font)
     system-ui,
@@ -40,8 +40,26 @@ body {
   color: $color__font;
 }
 
+.bg-primary-color {
+  background-color: #1C262C;
+}
+.footer-p-color {
+  color: $color--gray3;
+}
+.btn-outline-light{
+  color: $color--gray3;
+  border-color: $color--gray3;
+  border-radius: 0;
+}
+
 a {
   text-decoration: none !important;
+}
+
+.breadcrumb{
+  a{
+    color: $color--gray4;
+  }
 }
 
 ul {
@@ -75,7 +93,7 @@ button {
   font-style: normal;
   font-family: "Inter", "Noto Sans TC", sans-serif;
   letter-spacing: $letter-spacing;
-  line-height: 2.5rem;
+  // line-height: 2.5rem;
   color: $color__font;
 }
 
@@ -90,7 +108,7 @@ button {
 h1 {
   @include heading;
   font-weight: 500;
-  font-size: 3.75rem;
+  font-size: 3.25rem;
 }
 
 h2 {
@@ -119,9 +137,9 @@ h5 {
 
 h6 {
   @include heading;
-  color: #ffffff;
   font-weight: 500;
   font-size: 1rem;
+  line-height: 2rem;
 }
 
 @mixin h1 {

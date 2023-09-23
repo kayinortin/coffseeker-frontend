@@ -1,15 +1,18 @@
 /* color */
 $color--primary: #1c262c;
 $color--secondary: #FF9B1A;
-$color--info: #1c262c;
+$color--info: #4A4E5C;
 $color--success: #FF9B1A;
 $color--warning: #fad08e;
-$color--light: #ffffff;
+$color--light: #4A4E5C;
+$color--white: #ffffff;
+$color--black: #000000;
+$color--background: #f2f2f2;
 
 $color--gray1: #333333;
 $color--gray2: #4f4f4f;
-$color--gray3: #828282;
-$color--gray4: #bdbdbd;
+$color--gray3: #808080;
+$color--gray4: #545454;
 $color--gray5: #e0e0e0;
 $color--gray6: #f2f2f2;
 $color--gray7: #fafafa;
@@ -146,3 +149,4 @@ $xxl: 1399px;
 
 /* bootstrap */
 @import "~bootstrap/scss/bootstrap.scss";
+

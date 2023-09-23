@@ -1,5 +1,5 @@
 import React from 'react'
-import banner from "@/public/banner-father'sDay.png"
+import banner from "@/public/index-image/banner-father'sDay.png"
 import Image from 'next/image'
 import Link from 'next/link'
 import SideBar from '@/components/course/SideBar'
