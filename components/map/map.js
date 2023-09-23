@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import _ from 'lodash'
 import {
   TileLayer,
   MapContainer,
@@ -33,7 +34,7 @@ import {
 } from 'react-icons/bs'
 
 import testData from '@/data/map/taoyuanCafe.json'
-
+//所在地的mark樣式
 const locationMarker = new L.Icon({
   iconUrl:
     'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
@@ -44,7 +45,7 @@ const locationMarker = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 })
-
+//咖啡廳們的mark樣式
 const cafesMarker = new L.Icon({
   iconUrl:
     'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
@@ -68,6 +69,8 @@ export default function Map() {
   const [triggerLocate, setTriggerLocate] = useState(false)
   //咖啡廳清單資料
   const [cafes, setCafes] = useState(testData)
+  //rating篩選後的咖啡廳清單資料
+  const [cafesFiltered, setCafesFiltered] = useState([])
   //單間咖啡廳資料
   const [cafeData, setCafeData] = useState({
     id: '5125fe57-2ad1-4b42-af15-f9bde1f08fc6',
@@ -89,21 +92,43 @@ export default function Map() {
     mrt: '',
     open_time: '主要是六日營業，其他以教學為主',
   })
-  //側面欄顯示(全部/單間/篩選)
+  //側面欄顯示(全部all/單間cafe/篩選filter)
   const [asideInfoIndex, setAsideInfoIndex] = useState('all')
-
-  //咖啡篩選條件
-  const [criteriaValues, setCriteriaValues] = useState({
+  //要生成Mark的資料預設
+  const [markData, setMarkData] = useState(cafes)
+  //咖啡rating篩選條件預設
+  const [filterValues, setFilterValuesValues] = useState({
     wifi: '',
     seat: '',
     quiet: '',
     tasty: '',
     socket: '',
   })
+  //監聽filterValues和cafes更改，Rating篩選咖啡店
   useEffect(() => {
-    console.log(criteriaValues)
-  }, [criteriaValues])
+    // 使用lodash的_.filter函數篩選咖啡店
+    const filteredCafes = _.filter(cafes, (cafe) => {
+      // 對每個條件進行篩選
+      return (
+        (filterValues.wifi === '' ||
+          cafe.wifi >= parseInt(filterValues.wifi)) &&
+        (filterValues.seat === '' ||
+          cafe.seat >= parseInt(filterValues.seat)) &&
+        (filterValues.quiet === '' ||
+          cafe.quiet >= parseInt(filterValues.quiet)) &&
+        (filterValues.tasty === '' ||
+          cafe.tasty >= parseInt(filterValues.tasty)) &&
+        (filterValues.socket === '' || cafe.socket === filterValues.socket)
+      )
+    })
 
+    // 將篩選後的咖啡店儲存到cafesFiltered狀態中
+    setCafesFiltered(filteredCafes)
+    //然後更新Marks渲染
+    setMarkData(filteredCafes)
+  }, [filterValues, cafes])
+
+  //篩選條件預設
   const criteria = [
     { icon: <IoIosWifi />, label: '網路', name: 'wifi' },
     { icon: <LiaChairSolid />, label: '座位', name: 'seat' },
@@ -111,12 +136,14 @@ export default function Map() {
     { icon: <PiCoffee />, label: '好喝', name: 'tasty' },
     { icon: <BsPlugin />, label: '插座', name: 'socket' },
   ]
+  //監聽aside切換顯示
   useEffect(() => {
     console.log(asideInfoIndex)
   }, [asideInfoIndex])
 
-  //產生cafeMarks
-  function CafesMarker() {
+  //生成系列，未來可拆component
+  //生成cafeMarks
+  function CafesMarker({ cafes }) {
     return (
       <>
         {cafes.map((cafe, i) => (
@@ -137,7 +164,7 @@ export default function Map() {
     )
   }
 
-  //產生定位Mark
+  //生成定位Mark
   function LocationMarker() {
     const map = useMapEvents({
       locationfound(e) {
@@ -168,23 +195,68 @@ export default function Map() {
       </Marker>
     )
   }
+  //生成咖啡店LIST
+  function CafeList({ cafes }) {
+    return (
+      <>
+        {cafes.length == 0 ? (
+          <p className="text-center">查無資料，請重設篩選條件</p>
+        ) : (
+          <p className="text-end">共{cafes.length}家</p>
+        )}
 
-  //啟動定位
-  function LocateBtn() {
-    setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
+        {cafes.map((cafe) => (
+          <button
+            key={cafe.id}
+            className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
+            onClick={() => {
+              handelChangeCafe(cafe)
+            }}
+          >
+            <h4>{cafe.name}</h4>
+            <h6>
+              <FaMapMarkerAlt />
+              {cafe.address}
+            </h6>
+            <p>
+              <span>
+                <IoIosWifi />
+                {cafe.wifi}★
+              </span>
+              <span>
+                <LiaChairSolid />
+                {cafe.seat}★
+              </span>
+              <span>
+                <IoEarOutline />
+                {cafe.quiet}★
+              </span>
+              <span>
+                <PiCoffee />
+                {cafe.tasty}★
+              </span>
+              <span>
+                <BsPlugin />
+                {checkValue(cafe.socket)}
+              </span>
+            </p>
+          </button>
+        ))}
+      </>
+    )
   }
 
-  //測欄資訊產生
+  //生成測欄資訊
   function AsideInfo() {
     return (
       <>
         {/* 全部LIST */}
-        <div className={`cafeList ${asideInfoIndex === 'all' ? '' : 'd-none'}`}>
+        <div className={`cafeList ${asideInfoIndex === 'all' ? 'active' : ''}`}>
           <CafeList cafes={cafes} />
         </div>
         {/* 單間咖啡廳 */}
         <div
-          className={`cafeInfo ${asideInfoIndex === 'cafe' ? '' : 'd-none'}`}
+          className={`cafeInfo ${asideInfoIndex === 'cafe' ? 'active' : ''}`}
         >
           <h4 key={cafeData.id}>{cafeData.name}</h4>
           <div className="cafeRating">
@@ -278,7 +350,7 @@ export default function Map() {
         {/* 篩選 */}
         <div
           className={`cafeFilter  ${
-            asideInfoIndex === 'filter' ? '' : 'd-none'
+            asideInfoIndex === 'filter' ? 'active' : ''
           }`}
         >
           <h4>篩選條件</h4>
@@ -291,11 +363,12 @@ export default function Map() {
                 </div>
                 <select
                   name={item.name}
-                  id=""
                   onChange={handleCriteriaChange}
-                  value={criteriaValues[item.name]}
+                  value={filterValues[item.name]}
                 >
-                  <option defaultValue>不限</option>
+                  <option defaultValue value="">
+                    不限
+                  </option>
                   {item.name === 'socket' ? ( // 只为 'socket' 的Select渲染特定选项
                     <>
                       <option value="yes">充足</option>
@@ -315,18 +388,42 @@ export default function Map() {
           </div>
           <h4 className="my-3">篩選結果</h4>
           <div className="">
-            <CafeList cafes={cafes} />
+            <CafeList cafes={cafesFiltered} />
           </div>
         </div>
       </>
     )
   }
-
-  //輔助用函式
+  //handle函式系列========================
+  //更改條件選擇時
   const handleCriteriaChange = (e) => {
     const { name, value } = e.target
-    setCriteriaValues({ ...criteriaValues, [name]: value })
+    setFilterValuesValues({ ...filterValues, [name]: value })
   }
+  //切換單間咖啡廳資料
+  function handelChangeCafe(cafe) {
+    handleAsideInfo('cafe')
+    setCafeData(cafe)
+  }
+  //切換Aside顯示事件
+  function handleAsideInfo(params) {
+    switch (params) {
+      case 'all':
+        setAsideInfoIndex('all')
+        setMarkData(cafes)
+        break
+      case 'filter':
+        setAsideInfoIndex('filter')
+        setMarkData(cafesFiltered)
+        break
+      case 'cafe':
+        setAsideInfoIndex('cafe')
+        break
+    }
+    console.log(asideInfoIndex)
+  }
+  //輔助用函式(不生成物件)==================================
+  //判斷打勾叉叉icon
   function checkValue(value) {
     switch (value) {
       case 'yes':
@@ -339,56 +436,10 @@ export default function Map() {
         return <BsDashLg />
     }
   }
-
-  function handelChangeCafe(cafe) {
-    setAsideInfoIndex('cafe')
-    setCafeData(cafe)
+  //啟動定位
+  function LocateBtn() {
+    setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
   }
-  //咖啡店LIST生成
-  function CafeList({ cafes }) {
-    return (
-      <>
-        {cafes.map((cafe) => (
-          <button
-            key={cafe.id}
-            className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
-            onClick={() => {
-              handelChangeCafe(cafe)
-            }}
-          >
-            <h4>{cafe.name}</h4>
-            <h6>
-              <FaMapMarkerAlt />
-              {cafe.address}
-            </h6>
-            <p>
-              <span>
-                <IoIosWifi />
-                {cafe.wifi}★
-              </span>
-              <span>
-                <LiaChairSolid />
-                {cafe.seat}★
-              </span>
-              <span>
-                <IoEarOutline />
-                {cafe.quiet}★
-              </span>
-              <span>
-                <PiCoffee />
-                {cafe.tasty}★
-              </span>
-              <span>
-                <BsPlugin />
-                {checkValue(cafe.socket)}
-              </span>
-            </p>
-          </button>
-        ))}
-      </>
-    )
-  }
-
   //整體return
   return (
     <>
@@ -400,15 +451,17 @@ export default function Map() {
         </div>
         <nav className="mapAsideBar">
           <button
+            className={`${asideInfoIndex === 'all' ? 'active' : ''}`}
             onClick={() => {
-              setAsideInfoIndex('all')
+              handleAsideInfo('all')
             }}
           >
             全部
           </button>
           <button
+            className={`${asideInfoIndex === 'filter' ? 'active' : ''}`}
             onClick={() => {
-              setAsideInfoIndex('filter')
+              handleAsideInfo('filter')
             }}
           >
             篩選
@@ -430,7 +483,7 @@ export default function Map() {
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png"
           />
           <ZoomControl position="topright" />
-          <CafesMarker />
+          <CafesMarker cafes={markData} />
           <LocationMarker />
         </MapContainer>
       </div>
