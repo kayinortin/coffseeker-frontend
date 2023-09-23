@@ -48,10 +48,9 @@ export default function Card() {
               alt="..."
             />
             <div className="card-body text-left ms-2">
-              <p className="ei-create-at my-2">{news.date}</p>
+              <p className="ei-create-at my-2 text-dark">{news.date}</p>
               <h5 className="card-title fw-bold mb-2">
-                <span className="me-2">|</span> {news.title}
-                <span className="ms-2">|</span>
+                <span className="me-2">| {news.title} |</span>
               </h5>
             </div>
           </div>

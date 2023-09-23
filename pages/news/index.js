@@ -10,8 +10,8 @@ export default function News() {
         <div className={'container'}>
           {/* 麵包屑*/}
           <div className={'row ms-4 mt-1'}>
-            <nav className={'nav-breadcrumb'}>
-              <ol className={'breadcrumb m-3'}>
+            <nav className={'nav-breadcrumb ms-4'}>
+              <ol className={'breadcrumb m-3 '}>
                 <li className={'breadcrumb-item'}>
                   <Link href="/" className="link ">
                     首頁
@@ -33,7 +33,10 @@ export default function News() {
             <h4 className="text-center news-title">最新消息</h4>
             <h4 className="text-center ms-3">—————</h4>
           </div>
-          <CategoryBtn />
+          <div className="ms-3">
+            <CategoryBtn />
+          </div>
+
           <Card />
         </div>
       </section>
