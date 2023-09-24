@@ -8,6 +8,8 @@ import {
   Popup,
   useMapEvents,
   ZoomControl,
+  Tooltip,
+  useMap,
 } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -47,6 +49,17 @@ const locationMarker = new L.Icon({
 })
 //咖啡廳們的mark樣式
 const cafesMarker = new L.Icon({
+  iconUrl:
+    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+  shadowUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+})
+//active咖啡廳的mark樣式
+const activeCafeMarker = new L.Icon({
   iconUrl:
     'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
   shadowUrl:
@@ -141,7 +154,7 @@ export default function Map() {
     console.log(asideInfoIndex)
   }, [asideInfoIndex])
 
-  //生成系列，未來可拆component
+  //生成系列，未來可拆component================
   //生成cafeMarks
   function CafesMarker({ cafes }) {
     return (
@@ -156,9 +169,7 @@ export default function Map() {
                 handelChangeCafe(cafe)
               },
             }}
-          >
-            <Popup>{cafe.name}</Popup>
-          </Marker>
+          ></Marker>
         ))}
       </>
     )
@@ -195,6 +206,27 @@ export default function Map() {
       </Marker>
     )
   }
+
+  //生成active咖啡Mark
+  function ActiveCafeMarker() {
+    const map = useMap()
+    if (asideInfoIndex == 'cafe') {
+      map.flyTo([cafeData.latitude, cafeData.longitude], 15)
+      return (
+        <Marker
+          key={cafeData.id}
+          position={[cafeData.latitude, cafeData.longitude]}
+          icon={activeCafeMarker}
+          zIndexOffset={2}
+        >
+          <Tooltip direction="top" offset={[0, -40]} opacity={1} permanent>
+            {cafeData.name}
+          </Tooltip>
+        </Marker>
+      )
+    }
+  }
+
   //生成咖啡店LIST
   function CafeList({ cafes }) {
     return (
@@ -484,6 +516,7 @@ export default function Map() {
           />
           <ZoomControl position="topright" />
           <CafesMarker cafes={markData} />
+          <ActiveCafeMarker />
           <LocationMarker />
         </MapContainer>
       </div>
