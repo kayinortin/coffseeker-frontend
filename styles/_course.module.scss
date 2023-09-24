@@ -1,19 +1,29 @@
 
-// @import '@/styles/variables';
-// @import "~bootstrap/scss/bootstrap";
 $color--secondary: #FF9B1A;
+$color--card-background:#CBB48B;
 
+
+
+.course-list{
+    // margin-top: ;
+}
 //---------------------Card
 .course-li {
     list-style: none; 
     margin: 0; 
     padding: 0;
-    
   }
 
-  .price{
+  .img-bg{
+    background-color: $color--card-background;
+}
+.price{
     color:$color--secondary
   }
+
+
+
+  
 
 
   //-------------------SideBar
