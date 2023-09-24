@@ -61,9 +61,9 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`navbar navbar-expand-lg bg-transparent navbar-light bg-dark fixed-top`}
+        className={`navbar navbar-expand-sm bg-transparent navbar-light bg-dark fixed-top`}
       >
-        <div className="container">
+        <div className="container-fluid">
           <button
             className="navbar-toggler"
             type="button"
@@ -73,14 +73,14 @@ export default function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className={`collapse navbar-collapse`} id="offcanvasNavbar">
-            <ul className="navbar-nav">
+          <div className="collapse navbar-collapse justify-content-center" id="offcanvasNavbar">
+            <ul className="navbar-nav slideIn">
               {menuItems.map((v) => {
                 if (!v.children) {
                   return (
                     <li className="nav-item ed-padding-x" key={v.id}>
                       <a
-                        className={`nav-link`}
+                        className={`nav-link ed-bar`}
                         aria-current="page"
                         href={v.href}
                       >
@@ -106,7 +106,7 @@ export default function Navbar() {
                       {v.label}
                     </a>
                     {dropdownOpen && (
-                      <ul className={`dropdown-menu `}>
+                      <ul className="dropdown-menu slideIn">
                         {v.children.map((v2) => {
                           // console.log('Current Route:', currentRoute)
                           // console.log('v2.href:', v2.href)
