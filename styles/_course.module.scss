@@ -1,6 +1,7 @@
-// $accordion-button-focus-border-color: #fff;
 
-// @import "~bootstrap/scss/bootstrap.scss";
+// @import '@/styles/variables';
+// @import "~bootstrap/scss/bootstrap";
+$color--secondary: #FF9B1A;
 
 //---------------------Card
 .course-li {
@@ -10,12 +11,18 @@
     
   }
 
+  .price{
+    color:$color--secondary
+  }
+
 
   //-------------------SideBar
-  .accordion-button:focus{
-    // border:none;
-    outline: none;
-    border:none;
-    color:red;
-    // border-color: #fff;
+
+
+
+  //-------------------btn
+  .btn-add{
+    background-color: $color--secondary;
   }
+
+ 

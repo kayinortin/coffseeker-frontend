@@ -1,13 +1,15 @@
 import React from 'react'
 import data from '@/data/course/course.json'
 import Card from './Card'
+import Breadcrumb from './BreadCrumbs'
 
 export default function CourseList() {
   // console.log(data)
   return (
     <div className="">
+      <Breadcrumb className="ms-5" />
       <h3 className="text-center">課程列表</h3>
-      <span>BreadCrumbs here</span>
+
       <ul className="d-flex row row-cols-3 flex-wrap list-unstyled">
         {data.map((v, i) => {
           let {
