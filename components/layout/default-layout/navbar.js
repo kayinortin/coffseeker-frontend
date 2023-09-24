@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import MegaMenu from './mega-menu'
 
 const menuItems = [
   {
     id: 1,
     label: '線上購物',
-    href: '/product',
     children: [
-      { id: 11, label: '全站商品', href: '/product/' },
+      { id: 11, label: '全站商品', href: '/product' },
       { id: 12, label: '咖啡球', href: '/product/01' },
       { id: 13, label: '濾掛包', href: '/product/02' },
       { id: 14, label: '咖啡豆', href: '/product/03' },
@@ -22,11 +21,10 @@ const menuItems = [
   {
     id: 2,
     label: '咖啡資訊',
-    href: '/infomation',
     children: [
-      { id: 21, label: '烘焙介紹', href: '/infomation/baked' },
-      { id: 22, label: '手沖資訊', href: '/infomation/handbrewed' },
-      { id: 23, label: '咖啡占卜', href: '/infomation/divination' },
+      { id: 21, label: '咖啡占卜', href: '/infomation/divination' },
+      { id: 22, label: '烘焙介紹', href: '/infomation/baked' },
+      { id: 23, label: '手沖資訊', href: '/infomation/handbrewed' },
     ],
   },
   {
@@ -51,75 +49,51 @@ const menuItems = [
   },
 ]
 
-function Navbar(currentRoute) {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true)
+export default function Navbar() {
+  const router = useRouter()
+  const currentRoute = router.pathname
 
-  function handleDocumentClick(event) {
-    const navMenu = document.querySelector('.navbar-light')
-
-    if (
-      !navMenu.contains(event.target) &&
-      !event.target.matches('.navbar-toggler')
-    ) {
-      setIsNavCollapsed(true)
-    }
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen)
   }
-
-  useEffect(() => {
-    document.addEventListener('click', handleDocumentClick)
-
-    return () => {
-      document.removeEventListener('click', handleDocumentClick)
-    }
-  }, [])
 
   return (
     <>
       <nav
-        className={`navbar navbar-expand-lg bg-transparent navbar-light bg-dark ${
-          isNavCollapsed ? 'collapsed' : ''
-        }`}
+        className={`navbar navbar-expand-lg bg-transparent navbar-light bg-dark fixed-top`}
       >
         <div className="container">
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded={!isNavCollapsed ? true : false}
-            aria-label="Toggle navigation"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div
-            className={`collapse navbar-collapse ${
-              isNavCollapsed ? 'justify-content-center' : ''
-            }`}
-            id="navbarNav"
-          >
+          <div className={`collapse navbar-collapse`} id="offcanvasNavbar">
             <ul className="navbar-nav">
               {menuItems.map((v) => {
                 if (!v.children) {
                   return (
                     <li className="nav-item ed-padding-x" key={v.id}>
-                      <Link
-                        className={`nav-link ${
-                          currentRoute === v.href ? 'active ' : ''
-                        }`}
+                      <a
+                        className={`nav-link`}
                         aria-current="page"
                         href={v.href}
                       >
                         {v.label}
-                      </Link>
+                      </a>
                     </li>
                   )
                 }
 
                 // 以下為有下拉選單的選單項目
                 return (
-                  <li className={`nav-item dropdown ed-padding-x `} key={v.id}>
-                    <Link
+                  <li className={`nav-item dropdown ed-padding-x`} key={v.id}>
+                    <a
                       className={`nav-link dropdown-toggle ${
                         v.children.find((v) => v.href === currentRoute)
                           ? 'active '
@@ -127,27 +101,30 @@ function Navbar(currentRoute) {
                       }`}
                       href={v.href}
                       role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded={!isNavCollapsed ? true : false}
+                      onClick={toggleDropdown}
                     >
                       {v.label}
-                    </Link>
-                    <ul className={`dropdown-menu `}>
-                      {v.children.map((v2) => {
-                        return (
-                          <li key={v2.id}>
-                            <Link
-                              className={`dropdown-item ${
-                                currentRoute === v2.href ? 'active' : ''
-                              }`}
-                              href={v2.href}
-                            >
-                              {v2.label}
-                            </Link>
-                          </li>
-                        )
-                      })}
-                    </ul>
+                    </a>
+                    {dropdownOpen && (
+                      <ul className={`dropdown-menu `}>
+                        {v.children.map((v2) => {
+                          // console.log('Current Route:', currentRoute)
+                          // console.log('v2.href:', v2.href)
+                          return (
+                            <li key={v2.id}>
+                              <a
+                                className={`dropdown-item ${
+                                  currentRoute === v2.href ? 'active' : ''
+                                }`}
+                                href={v2.href}
+                              >
+                                {v2.label}
+                              </a>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    )}
                   </li>
                 )
               })}
@@ -159,5 +136,3 @@ function Navbar(currentRoute) {
     </>
   )
 }
-
-export default Navbar

@@ -12,8 +12,9 @@ $border-radius-lg: 0em;
 $form-select-bg: #F2F3EE;
 }
 
+
 body {
-  font-family: 'Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
+  font-family: 'Noto Sans','Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
     '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',
     // Cross-platform generic font family (default user interface font)
     system-ui,
@@ -39,14 +40,25 @@ body {
 }
 
 .bg-primary-color {
-  background-color: #1C262C;
+  background-color: $color--primary;
 }
 .footer-p-color {
   color: $color--gray3;
 }
+.btn-outline-light{
+  color: $color--gray3;
+  border-color: $color--gray3;
+  border-radius: 0;
+}
 
 a {
   text-decoration: none !important;
+}
+
+.breadcrumb{
+  a{
+    color: $color--gray4;
+  }
 }
 
 ul {

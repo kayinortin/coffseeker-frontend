@@ -1,7 +1,16 @@
+$color--primary: #1c262c;
+$color--background: #f2f2f2;
+$color--black: #000000;
 /* news.module.scss */
 // 卡片區
 .news-link {
   text-decoration: none;
+  .p{
+    color: #1c262c;
+  }
+  .card-title{
+    color: #1c262c;
+  }
 }
 
 .ei-card-container {
@@ -14,7 +23,9 @@
 }
 
 .ei-card {
-  width: 550px;
+  // width: 94%;
+  max-width: 700;
+  height: 400px;
   margin-inline: 30px; 
   margin-block: 30px;
   box-sizing: border-box; 
@@ -34,6 +45,7 @@
 .ei-create-at {
   font-size: 12px;
   font-weight: 100;
+  color: $color--black;
 }
 
 // 分類按鈕區
@@ -42,16 +54,74 @@
   button {
     padding-block: 9px;
     padding-inline: 18px;
-    background: #f2f3ee;
+    background: $color--background;
     color: black;
-    border: 1px solid #1c262c;
+    border: 1px solid $color--primary;
     font-weight: bold;
     font-size: 14px;
   }
   .active {
-    background-color: #1c262c;
+    background-color: $color--primary;
     color: white;
     font-weight: bold;
     border: 0px;
+  }
+}
+
+.card-title{
+  color: $color--primary;
+}
+
+
+// 卡片RWD區
+@media (max-width: 430px) {
+  .ei-mobile-container {
+    width: 100%; 
+  }
+  .ei-btn-container{
+    margin-top: 10px;
+  }
+  .ei-mobile-category-btn {
+    width: 100%; 
+    justify-content: center; 
+  }
+  .ei-card {
+    max-width: 100%; 
+    &:hover{
+      transform: none;
+      box-shadow: none;
+    }
+  }
+  .ei-news-detail {
+    width: 100%;
+  }
+}
+// 在網頁版（非手機板）时将按钮放在左邊
+@media (min-width: 431px) {
+  .ei-btn-container {
+    text-align: left; // 将按钮文本左对齐
+  }
+}
+
+// 手機板上按钮容器右对齐
+@media (max-width: 430px) {
+  .ei-mobile-category-btn {
+    text-align: right; // 将按钮文本右对齐
+  }
+}
+
+
+// [nid].js頁面
+.news-detail{
+  width: 70%;
+  margin: 0 auto;
+  img{
+    width: 880px;
+  }
+  .ei-news-date{
+    font-size: 14px;
+  }
+  .ei-letter-spacing{
+    line-height: 1.2rem;
   }
 }

@@ -1,6 +1,6 @@
 .mapArea {
   height: calc(100vh - 146px);
-  background-color: #f2f3ee;
+  background-color: $color--background;
   position: relative;
   display: flex;
   overflow: hidden;
@@ -19,49 +19,75 @@
   top: 10px;
 }
 .mapAsideBar {
-  width: 80px;
+  width: 72px;
+  flex-shrink: 0;
   height: 100px;
 
   button {
+    transition: 0.3s;
+    width: 100%;
+    background-color: transparent;
     padding: 10px 10px;
     margin: 20px 0px;
     justify-content: center;
     align-items: flex-start;
     border: none;
+    border-right: 3px solid transparent;
+    &.active {
+      border-right: 3px solid $color--primary;
+    }
   }
 }
 
 .mapAsideInfo {
   overflow-y: auto;
-  min-width: 360px;
-  max-width: 360px;
+  scrollbar-gutter: stable;
+  width: 360px;
+  z-index: 1;
+  flex-shrink: 0;
   height: 100%;
-  padding: 20px 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  .cafeList {
-    .cafeItem {
-      * {
-        cursor: pointer !important;
-      }
-      background: none;
-      text-align: start;
+
+  > div {
+    display: none;
+    padding: 20px 24px;
+    width: 360px;
+  }
+  > div.active {
+    display: block;
+    transition: 0.3s;
+    opacity: 1;
+  }
+
+  select {
+    border: none;
+  }
+  .cafeItem {
+    * {
+      cursor: pointer !important;
+    }
+    transition: 0.3s;
+    background: none;
+    text-align: start;
+    width: 100%;
+    &:hover {
+      background-color: rgba(186, 200, 206, 0.3);
+    }
+    // margin-block: 10px;
+    // border-bottom: solid 1px black;
+    p {
       width: 100%;
-      &:hover {
-        background-color: rgba(186, 200, 206, 0.3);
-      }
-      // margin-block: 10px;
-      // border-bottom: solid 1px black;
-      p {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        svg {
-          margin-right: 3px;
-        }
+      display: flex;
+      justify-content: space-between;
+      svg {
+        margin-right: 3px;
       }
     }
   }
+
   .cafeInfo {
+    transition: 0.3s;
+
     svg {
       width: 27px;
       height: 27px;
@@ -102,6 +128,28 @@
       h6 {
         width: 280px;
         word-wrap: break-word;
+        word-break: break-all;
+      }
+    }
+  }
+  .cafeFilter {
+    transition: 0.3s;
+
+    .cafeFilterForm {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 14px;
+      border-bottom: solid 1px black;
+      > div {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        padding-inline: 7px;
+      }
+      svg {
+        width: 24px;
+        height: 24px;
+        margin: 3px;
       }
     }
   }

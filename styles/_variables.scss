@@ -7,11 +7,12 @@ $color--warning: #fad08e;
 $color--light: #4A4E5C;
 $color--white: #ffffff;
 $color--black: #000000;
+$color--background: #f2f2f2;
 
 $color--gray1: #333333;
 $color--gray2: #4f4f4f;
 $color--gray3: #808080;
-$color--gray4: #bdbdbd;
+$color--gray4: #545454;
 $color--gray5: #e0e0e0;
 $color--gray6: #f2f2f2;
 $color--gray7: #fafafa;
@@ -154,6 +155,7 @@ $xxl: 1399px;
 $primary: #fff;
 // :root {--bs-accordion-btn-focus-box-shadow :#00000000;}
 @import "~bootstrap/scss/bootstrap.scss";
+
 @import "~bootstrap/scss/accordion.scss";
 .accordion-button:focus{
   box-shadow: none !important;
@@ -163,3 +165,4 @@ $primary: #fff;
 }
 
 //bootstrap accordion 樣式修改移除藍色背景跟邊線
+

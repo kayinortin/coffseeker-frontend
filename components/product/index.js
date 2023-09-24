@@ -1,23 +1,25 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import ProductDataFetcher from '../../components/product/ProductDataFetcher'
+import React, { useState } from 'react'
+import ProductDataFetcher from '../../components/product/PopularProducts'
 
-export default function ProductsList() {
+export default function PopularProducts() {
   const [data, setData] = useState(null)
 
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
   }
-
   return (
     <>
-      <div className="ed-pd-bg-setting p-4">
+      <div className="container ed-index-product">
+        <div className="hot-product-wrapper">
+          <div className="line"></div>
+          <div className="hot-product">熱銷商品</div>
+          <div className="line"></div>
+        </div>
         {data && data.products && data.products.length > 0 ? (
           <div>
-            <h4>產品列表 (抓資料庫測試) 共有 {data.products.length} 筆資料</h4>
-            <div className="row">
+            <div className="row p-5">
               {data.products.map((product) => (
-                <div className="col-md-3 mb-4 px-5" key={product.product_id}>
+                <div className="col-md-3 mb-4" key={product.product_id}>
                   <div className="card card-small">
                     <img
                       src={`http://localhost:3005/uploads/${product.product_image}`}
@@ -42,7 +44,9 @@ export default function ProductsList() {
             </div>
           </div>
         ) : (
-          <p>目前沒有可用的產品。</p>
+          <div className="container">
+            <div className="hot-product">目前沒有可用的產品。</div>
+          </div>
         )}
       </div>
       <ProductDataFetcher onDataFetched={onDataFetched} />
