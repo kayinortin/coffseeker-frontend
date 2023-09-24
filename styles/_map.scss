@@ -15,8 +15,38 @@
 .mapControl {
   position: absolute;
   z-index: 1;
-  right: 80px;
+  right: 60px;
   top: 10px;
+  display: flex;
+  .rangeSelect {
+    border: 2px solid $color--primary;
+    background-color: $color--primary;
+
+    select {
+      padding-inline: 10px;
+      height: 100%;
+      border: none;
+      border-radius: 0;
+      &:focus-visible {
+        outline: none;
+      }
+      &:nth-child(odd) {
+        background-color: $color--primary;
+        color: #ffffff;
+        margin-right: 2px;
+      }
+    }
+  }
+  .locateBtn {
+    padding: 0;
+    background-color: $color--primary;
+    svg {
+      color: #ffffff;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+    }
+  }
 }
 .mapAsideBar {
   width: 72px;
@@ -40,27 +70,33 @@
 }
 
 .mapAsideInfo {
-  overflow-y: auto;
-  scrollbar-gutter: stable;
   width: 360px;
   z-index: 1;
   flex-shrink: 0;
   height: 100%;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
+  position: relative;
+  a {
+    color: #058db8;
+  }
   > div {
-    display: none;
+    background-color: $color--background;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    height: 100%;
+    position: absolute;
     padding: 20px 24px;
     width: 360px;
   }
   > div.active {
-    display: block;
+    z-index: 2;
     transition: 0.3s;
-    opacity: 1;
   }
 
   select {
-    border: none;
+    border: 1px solid $color--primary;
+    padding-inline: 5px;
+    text-align: center;
   }
   .cafeItem {
     * {
@@ -126,7 +162,7 @@
         align-items: center;
       }
       h6 {
-        width: 280px;
+        margin-left: 20px;
         word-wrap: break-word;
         word-break: break-all;
       }
@@ -150,6 +186,44 @@
         width: 24px;
         height: 24px;
         margin: 3px;
+      }
+    }
+  }
+}
+@media (max-width: 720px) {
+  .mapArea {
+    height: calc(100vh - 120px);
+    position: relative;
+    flex-direction: column-reverse;
+
+    .mapAsideBar {
+      background-color: $color--background;
+      height: 50px;
+      display: flex;
+      z-index: 3;
+      width: 100%;
+      box-shadow: -10px 0px 4px 0px rgba(0, 0, 0, 0.25);
+
+      button {
+        width: 100%;
+        margin: 0px;
+        align-items: flex-start;
+        border: none;
+        border-top: 3px solid transparent;
+        &.active {
+          border-top: 3px solid $color--primary;
+        }
+      }
+    }
+    .mapAsideInfo {
+      height: 50vh;
+      width: 100%;
+      padding: 0;
+      box-shadow: -10px 0px 4px 0px rgba(0, 0, 0, 0.25);
+
+      > div {
+        height: 50vh;
+        width: 100%;
       }
     }
   }
