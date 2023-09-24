@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import MegaMenu from './mega-menu'
 
 const menuItems = [
   {
@@ -73,7 +72,10 @@ export default function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse justify-content-center" id="offcanvasNavbar">
+          <div
+            className="collapse navbar-collapse justify-content-center"
+            id="offcanvasNavbar"
+          >
             <ul className="navbar-nav slideIn">
               {menuItems.map((v) => {
                 if (!v.children) {
@@ -106,7 +108,7 @@ export default function Navbar() {
                       {v.label}
                     </a>
                     {dropdownOpen && (
-                      <ul className="dropdown-menu slideIn">
+                      <ul className="dropdown-menu">
                         {v.children.map((v2) => {
                           // console.log('Current Route:', currentRoute)
                           // console.log('v2.href:', v2.href)
@@ -128,7 +130,6 @@ export default function Navbar() {
                   </li>
                 )
               })}
-              <MegaMenu currentRoute={currentRoute} />
             </ul>
           </div>
         </div>
