@@ -82,7 +82,7 @@ export default function Home() {
         </a>
         <a href="http://localhost:3000/course">
           <img
-            className="ed-img-size-2 d-none"
+            className="ed-img-size-2 d-none d-md-block"
             src="http://localhost:3000/index-image/course.png"
             alt="go-to-course"
           />
