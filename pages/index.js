@@ -118,7 +118,7 @@ export default function Home() {
               alt="COFFSEEKER"
               width={400}
               height={80}
-              lazy
+              lazy="true"
             />
           </div>
           <h4 className="ed-orgin-text mt-md-5 mt-3">
