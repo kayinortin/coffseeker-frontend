@@ -1,6 +1,5 @@
 import React from 'react'
-
-
+import BreadCrumbs from '@/components/course/BreadCrumbs'
 import Image from 'next/image'
 import Link from 'next/link'
 import SideBar from '@/components/course/SideBar'
@@ -11,14 +10,13 @@ export default function Index() {
   return (
     <>
       <div className="">
-        <div className="container-lg mt-5">
+        <div className="container-lg  course-list">
           <section>
+            {/* <BreadCrumbs className="ms-5" /> */}
             <div className="d-flex">
-              <SideBar />
+              <SideBar className="" />
               <CourseList className="d-flex mx-4" />
             </div>
-
-            <Pagination />
           </section>
         </div>
       </div>
