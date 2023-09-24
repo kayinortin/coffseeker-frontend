@@ -5,7 +5,6 @@ export async function checkLoginStatus() {
   console.log('accessToken:', token)
 
   if (!token) {
-    // 如果token不存在，可以直接返回false或進一步處理
     return false
   }
 
