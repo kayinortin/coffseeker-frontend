@@ -14,7 +14,7 @@ export default function Card({
   capacity,
 }) {
   return (
-    <div className="card">
+    <div className="card my-3">
       <Image
         src={`/course-image/${image}`}
         className="card-img-top"
@@ -30,7 +30,7 @@ export default function Card({
         {/* <p>課程結束日期: </p> */}
         <p>人數: {capacity}</p>
         <div className="d-flex justify-content-between">
-          <p className="text-success fs-5 my-auto">NT$: {price}</p>
+          <p className={`${style['price']} fs-4 my-auto`}>NT$: {price}</p>
           <AddCartBtn />
         </div>
       </div>
