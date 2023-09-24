@@ -1,6 +1,6 @@
 nav{
   height: 66px;
-  top: -66px !important;
+  top: -64px !important;
 }
 
 a.dropdown-item.active{
@@ -95,15 +95,15 @@ a.nav-link {
   a.nav-link {
       padding-block: 10px;
       margin-bottom: 0.5em;
-      color: #1C262C !important; 
+      color: white !important; 
       &:hover {
-          color: #1C262C !important;
+          color: white !important;
       }
       &:active{
-          color: #1C262C !important;
+          color: white !important;
       }
       &:visited{
-          color: #1C262C !important;
+          color: white !important;
       }
   }
   .ed-padding-x{
@@ -111,7 +111,7 @@ a.nav-link {
       padding-right: 0em;
       margin-top: 0.5em;
       margin-bottom: 0.5em;
-      border-bottom: black solid 0.5px;
+      border-bottom: white solid 0.1px;
     }
     button.navbar-toggler {
       margin-left: 6px;
@@ -122,9 +122,9 @@ a.nav-link {
       width: 300px;
       height: 940px;
       position: absolute;
-      top: 94px;
+      top: 91px;
       left: 0px;
-      background-color:rgba($color: #dadada, $alpha: 0.9);
+      background-color: #333333;
       z-index: 1000;
     }
     .dropdown-menu {
@@ -134,12 +134,12 @@ a.nav-link {
       z-index: 999;
       li{
         .dropdown-item{
-          color:$color--primary;
+          color:white;
         }
       }
     }
     .offcanvas-backdrop{
-      top:93px;
+      top:91px;
       z-index: 4 !important;
     }
 }
@@ -151,6 +151,24 @@ a.nav-link {
 }
  
 @keyframes slideIn {
+  0% {
+    transform: translateY(0rem);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+}
+
+@keyframes bar {
   0% {
     transform: translateY(0rem);
     opacity: 0;
