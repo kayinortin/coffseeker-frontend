@@ -1,0 +1,38 @@
+$color--primary: #1c262c;
+$color--background: #f2f2f2;
+$color--black: #000000;
+
+.about-div-width{
+    padding-inline: 125px;
+}
+.brand-story{
+    margin-top: 50px;
+}
+.ei-about{
+    padding-bottom: 30px !important;
+}
+.ei-line {
+    flex-grow: 0;
+    width: 100px;
+    height: 1px;
+    background-color: $color--primary;
+  }
+.brand-title{
+    color: #FF9B1A;
+}
+
+@media (max-width: 431px) {
+    .about-div-width{
+        padding-inline: 50px !important;
+    }
+    .brand-title{
+        text-align: center;
+        margin-top: 20px;
+    }
+    .mobile-about-image{
+        margin-right: 0 !important;
+        margin-left: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+  }
