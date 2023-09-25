@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import style from '../../styles/_about.module.scss'
+import ContactUs from '@/components/about/send-message'
 
 export default function About() {
   return (
@@ -109,6 +110,7 @@ export default function About() {
               </p>
             </div>
           </div>
+          <ContactUs />
         </div>
       </section>
     </>
