@@ -32,9 +32,6 @@ export default function Header() {
                     className="smaller-Logo"
                   />
                 </a>
-                {/* <div>
-                  <MemberShipButton />
-                </div> */}
               </div>
               <div className="d-flex align-items-center ed-icon-padding">
                 <a
