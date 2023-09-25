@@ -12,11 +12,11 @@ export function AccordionOption({ title, content }) {
 
   //   const options = ['拉花課程', '手沖課程', '烘豆課程']
 
-  const level = ['入門', '進階', '高階', '證照']
+  // const level = ['入門', '進階', '高階', '證照']
 
   const toggleAccordion = (title) => {
     // if(title===)
-    setIsOpen(!isOpen)
+    // setIsOpen(!isOpen)
   }
   return (
     <>
@@ -33,9 +33,9 @@ export function AccordionOption({ title, content }) {
         {isOpen && (
           <div className="accordion-content">
             <p>
-              {level.map((v, i) => {
+              {/* {level.map((v, i) => {
                 return <p key={i}>{v}</p>
-              })}
+              })} */}
             </p>
           </div>
         )}

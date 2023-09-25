@@ -10,6 +10,8 @@ import { AccordionOption } from './AccordionOption'
 
 function Accordion({ title, content }) {
   const [isOpen, setIsOpen] = useState(false)
+  const bsTarget = ['1', '2', '3']
+  const level = ['入門', '進階', '高階', '證照']
   return (
     // <>
     //   <AccordionOption title={title} />
@@ -17,16 +19,22 @@ function Accordion({ title, content }) {
     <div className={`accordion ${isOpen ? 'open' : ''}`} id="accordionExample">
       <div className="accordion-item">
         <h2 className="accordion-header">
-          <button
-            className="accordion-button"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseOne"
-            aria-expanded="true"
-            aria-controls="collapseOne"
-          >
-            {title}
-          </button>
+          {bsTarget.map((v, i) => {
+            return (
+              <button
+                key={i}
+                className="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                // data-bs-target="#collapseOne"
+                data-bs-target={`#collapse${v}`}
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                {title}
+              </button>
+            )
+          })}
         </h2>
         <div
           id="collapseOne"
