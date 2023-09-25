@@ -1,21 +1,40 @@
 // Due to fixed-top navbar
 // add margin-top to the next element
+// Notice: when using bootstrap margin feature, it will be invalid
 // 請特別注意，當使用bootstrap 內建 margin 功能，會讓這條失效
-
 .fixed-top {
   + * {
-    margin-top: 166px;
+    margin-top: 134px;
   }
 } 
+
  // header setting
   .ed-bg-setting{
     display:flex;
     align-items: center;
     background-color: #F2F3EE;
-    height: 100px;
+    height: 70px;
+    transition: background-color 0.5s, opacity 0.5s;
+    &.transparent{
+      background-color: rgba(242, 243, 238, 0.8);
+    }
   }
   .header{
     position: relative;
+  }
+
+  .ed-icon-padding{
+    padding:  10px;
+  }
+  .ed-icon-user{
+    font-size: 34px;
+    color: var(--bs-gray-700);
+    margin-inline: 10px;
+  }
+  .ed-icon-cart{
+    font-size: 30px;
+    color: var(--bs-gray-700);
+    margin-inline: 10px;
   }
 
   @media (max-width: 600px){
@@ -30,24 +49,54 @@
     .mobile-justify-content-center{
       justify-content: center;
     }
+    .smaller-Logo{
+      width: 200px;
+      height: auto;
+    }
+    .ed-icon-user{
+      font-size: 28px;
+      color: var(--bs-gray-700);
+      margin-inline: 6px;
+    }
+    .ed-icon-cart{
+      font-size: 28px;
+      color: var(--bs-gray-700);
+      margin-inline: 10px;
+    }
+  
   }
 
   // index setting
-  .ed-position-relative {
-    display: block;
-    position: relative;
-    z-index: 1;
+  .slick-slider {
+    width: 100%;
+    height: calc(100vh - 134px);
+    overflow: hidden;
   }
   
-  .ed-position-absolute {
-    display: block;
-    width: 20vw !important;
-    height: auto;
-    position: absolute;
-    top: calc(50% - 180px);
-    left: calc(50% - 150px);
-    z-index: 2;
-  }  
+  .slick-dots {
+    right: -700px;
+    bottom: 4%; 
+    transform: translateY(50%);
+    flex-direction: column;
+    left: auto;
+  
+    & li {
+    margin-inline:10px;
+  
+    & button:before{
+      font-size: 20px; 
+    }
+    & button:hover:before{
+      color: #EEE5D0;
+    }
+  
+    &.slick-active{
+      & button:before{
+        color: #EEE5D0;
+      }
+    }
+  }
+  }
   .img-container {
     position: relative;
     width: 100%;
@@ -61,40 +110,127 @@
 
   .ed-img-size-1{
     display: block;
-    width: 960px;
+    max-width: 100%;
   }
   .ed-img-size-2{
     display: block;
-    width: 943.8px;
+    max-width: 100%;
   }
 
   #company-buy{
     width: 1940px;
   }
 
-  @media (max-width: 600px) {
-    #banner-image {
-      content: url("http://localhost:3000/index-image/banner-father'sDay-mobile.png");
+.ed-index-product{
+  margin-top: 60px;
+}
+.hot-product {
+    font-size: 24px;
+    text-align: center;
+    padding: 20px;
+    letter-spacing: 10px;
+}
+
+.hot-product-wrapper {
+  display: flex;
+  max-width: 800px;
+  align-items: center;
+  margin: auto;
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: $color--gray3;
+}
+
+.ed-orgin-text{
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 2px;
+  padding-inline: 80px;
+}
+
+  @media (max-width: 576px) {
+    .slick-slider {
+      width: 390px;
+      height: calc(100vh - 120px);
+      overflow: hidden;
     }
-    #activity-image{
-      content: url("http://localhost:3000/index-image/activity_01-mobile.png");
+
+    .slick-dots {
+      right: 0px;
+      bottom: 4%; 
+      transform: translateY(50%);
+      flex-direction: column;
+      left: auto;
+    
+      & li {
+      margin-inline:7px;
+    
+      & button:before{
+        font-size: 16px; 
+      }
+      & button:hover:before{
+        color: #EEE5D0;
+      }
+    
+      &.slick-active{
+        & button:before{
+          color: #EEE5D0;
+        }
+      }
     }
+    }
+
+    #s1 {
+      content: url("http://localhost:3000/index-image/s1-m.png");
+    }
+    #s2 {
+      content: url("http://localhost:3000/index-image/s2-m.png");
+    }
+    #s3 {
+      content: url("http://localhost:3000/index-image/s3-m.png");
+    }
+    #s4 {
+      content: url("http://localhost:3000/index-image/s4-m.png");
+    }
+    #s5 {
+      content: url("http://localhost:3000/index-image/s5-m.png");
+    }
+    #s6 {
+      content: url("http://localhost:3000/index-image/s6-m.png");
+    }
+
+
     .ed-position-absolute {
       width: 280px !important;
       height: auto;
       top: calc(50% - 150px);
       left: calc(50% - 140px);
     }
-    .ed-img-size-1{
-      width: 390px;
-    }
-    .ed-img-size-2{
-      width: 390px;
-    }
     #company-buy{
       width: 390px;
       content: url("http://localhost:3000/index-image/company-buy-mobile.png");
+    }
+    .ed-index-product{
+      margin-top: 30px;
     }  
+    .hot-product {
+      font-size: 16px;
+      text-align: center;
+      padding: 20px;
+      letter-spacing: 10px;
+  }
+  .ed-orgin-text{
+    font-size: 18px;
+    line-height: 30px;
+    letter-spacing: 2px;
+  }
+  .ed-orgin-img{
+    width: 70%;
+    height: auto;
+  }
   }
   
   

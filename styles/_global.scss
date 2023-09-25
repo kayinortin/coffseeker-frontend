@@ -12,6 +12,7 @@ $border-radius-lg: 0em;
 $form-select-bg: #F2F3EE;
 }
 
+
 body {
   font-family: 'Noto Sans','Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
     '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',
@@ -39,7 +40,7 @@ body {
 }
 
 .bg-primary-color {
-  background-color: #1C262C;
+  background-color: $color--primary;
 }
 .footer-p-color {
   color: $color--gray3;
@@ -48,6 +49,15 @@ body {
   color: $color--gray3;
   border-color: $color--gray3;
   border-radius: 0;
+}
+
+header, nav {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0.9;
 }
 
 a {

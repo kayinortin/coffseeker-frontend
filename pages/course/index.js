@@ -1,20 +1,22 @@
 import React from 'react'
-import banner from "@/public/index-image/banner-father'sDay.png"
+import BreadCrumbs from '@/components/course/BreadCrumbs'
 import Image from 'next/image'
 import Link from 'next/link'
 import SideBar from '@/components/course/SideBar'
 import CourseList from '@/components/course/CourseList'
-// import { divIcon } from 'leaflet'
+import Pagination from '@/components/course/Pagination'
 
 export default function Index() {
   return (
     <>
       <div className="">
-        <Image src={banner} alt="banner" className="img-fluid" />
-        <div className="container-lg mt-5">
-          <section className="d-flex">
-            <SideBar />
-            <CourseList className="d-flex" />
+        <div className="container-lg  course-list">
+          <section>
+            {/* <BreadCrumbs className="ms-5" /> */}
+            <div className="d-flex">
+              <SideBar className="" />
+              <CourseList className="d-flex mx-4" />
+            </div>
           </section>
         </div>
       </div>

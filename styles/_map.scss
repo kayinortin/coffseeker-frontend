@@ -1,6 +1,6 @@
 .mapArea {
   height: calc(100vh - 146px);
-  background-color: #f2f3ee;
+  background-color: $color--background;
   position: relative;
   display: flex;
   overflow: hidden;
@@ -15,53 +15,115 @@
 .mapControl {
   position: absolute;
   z-index: 1;
-  right: 80px;
+  right: 60px;
   top: 10px;
+  display: flex;
+  .rangeSelect {
+    border: 2px solid $color--primary;
+    background-color: $color--primary;
+
+    select {
+      padding-inline: 10px;
+      height: 100%;
+      border: none;
+      border-radius: 0;
+      &:focus-visible {
+        outline: none;
+      }
+      &:nth-child(odd) {
+        background-color: $color--primary;
+        color: #ffffff;
+        margin-right: 2px;
+      }
+    }
+  }
+  .locateBtn {
+    padding: 0;
+    background-color: $color--primary;
+    svg {
+      color: #ffffff;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+    }
+  }
 }
 .mapAsideBar {
-  width: 80px;
+  width: 72px;
+  flex-shrink: 0;
   height: 100px;
 
   button {
+    transition: 0.3s;
+    width: 100%;
+    background-color: transparent;
     padding: 10px 10px;
     margin: 20px 0px;
     justify-content: center;
     align-items: flex-start;
     border: none;
+    border-right: 3px solid transparent;
+    &.active {
+      border-right: 3px solid $color--primary;
+    }
   }
 }
 
 .mapAsideInfo {
-  overflow-y: auto;
-  min-width: 360px;
-  max-width: 360px;
+  width: 360px;
+  z-index: 1;
+  flex-shrink: 0;
   height: 100%;
-  padding: 20px 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  .cafeList {
-    .cafeItem {
-      * {
-        cursor: pointer !important;
-      }
-      background: none;
-      text-align: start;
+  position: relative;
+  a {
+    color: #058db8;
+  }
+  > div {
+    background-color: $color--background;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    height: 100%;
+    position: absolute;
+    padding: 20px 24px;
+    width: 360px;
+  }
+  > div.active {
+    z-index: 2;
+    transition: 0.3s;
+  }
+
+  select {
+    border: 1px solid $color--primary;
+    padding-inline: 5px;
+    text-align: center;
+  }
+  .cafeItem {
+    * {
+      cursor: pointer !important;
+    }
+    transition: 0.3s;
+    background: none;
+    text-align: start;
+    width: 100%;
+    &:hover {
+      background-color: rgba(186, 200, 206, 0.3);
+    }
+    // margin-block: 10px;
+    // border-bottom: solid 1px black;
+    p {
       width: 100%;
-      &:hover {
-        background-color: rgba(186, 200, 206, 0.3);
-      }
-      // margin-block: 10px;
-      // border-bottom: solid 1px black;
-      p {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        svg {
-          margin-right: 3px;
-        }
+      display: flex;
+      justify-content: space-between;
+      svg {
+        margin-right: 3px;
       }
     }
   }
+
   .cafeInfo {
+    transition: 0.3s;
+
     svg {
       width: 27px;
       height: 27px;
@@ -100,8 +162,68 @@
         align-items: center;
       }
       h6 {
-        width: 280px;
+        margin-left: 20px;
         word-wrap: break-word;
+        word-break: break-all;
+      }
+    }
+  }
+  .cafeFilter {
+    transition: 0.3s;
+
+    .cafeFilterForm {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 14px;
+      border-bottom: solid 1px black;
+      > div {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        padding-inline: 7px;
+      }
+      svg {
+        width: 24px;
+        height: 24px;
+        margin: 3px;
+      }
+    }
+  }
+}
+@media (max-width: 720px) {
+  .mapArea {
+    height: calc(100vh - 120px);
+    position: relative;
+    flex-direction: column-reverse;
+
+    .mapAsideBar {
+      background-color: $color--background;
+      height: 50px;
+      display: flex;
+      z-index: 3;
+      width: 100%;
+      box-shadow: -10px 0px 4px 0px rgba(0, 0, 0, 0.25);
+
+      button {
+        width: 100%;
+        margin: 0px;
+        align-items: flex-start;
+        border: none;
+        border-top: 3px solid transparent;
+        &.active {
+          border-top: 3px solid $color--primary;
+        }
+      }
+    }
+    .mapAsideInfo {
+      height: 50vh;
+      width: 100%;
+      padding: 0;
+      box-shadow: -10px 0px 4px 0px rgba(0, 0, 0, 0.25);
+
+      > div {
+        height: 50vh;
+        width: 100%;
       }
     }
   }

@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
+import style from '@/styles/_course.module.scss'
+import 'bootstrap/scss/bootstrap.scss'
+import { AccordionOption } from './AccordionOption'
+
+// 按鈕會連動的原因是因為data-bs-target="#collapseOne"，這個id是固定的，所以會連動
+// 用到map 與 index 處理
+// 讓每個按鈕都有自己的id，所以要用到index
+// 這個檔案是AccordionOption.js的父元件
 
 function Accordion({ title, content }) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const options = ['拉花課程', '手沖課程', '烘豆課程']
-
-  const level = ['入門', '進階', '高階', '證照']
-
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen)
-  }
-
   return (
-    <div className="test accordion" id="accordionExample">
-      <div className="accordion-item border-0">
+    // <>
+    //   <AccordionOption title={title} />
+    // </>
+    <div className="accordion" id="accordionExample">
+      <div className="accordion-item">
         <h2 className="accordion-header">
           <button
             className="accordion-button"
@@ -23,7 +24,7 @@ function Accordion({ title, content }) {
             aria-expanded="true"
             aria-controls="collapseOne"
           >
-            拉花課程
+            {title}
           </button>
         </h2>
         <div
@@ -32,96 +33,12 @@ function Accordion({ title, content }) {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
-            {level.map((v, i) => {
-              return <p key={i}>{v}</p>
-            })}
-          </div>
-        </div>
-      </div>
-      <div className="accordion-item border-0">
-        <h2 className="accordion-header">
-          <button
-            className="accordion-button  collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseTwo"
-            aria-expanded="false"
-            aria-controls="collapseTwo"
-          >
-            手沖課程
-          </button>
-        </h2>
-        <div
-          id="collapseTwo"
-          className="accordion-collapse collapse"
-          data-bs-parent="#accordionExample"
-        >
-          <div className="accordion-body">
-            {level.map((v, i) => {
-              return <p key={i}>{v}</p>
-            })}
-          </div>
-        </div>
-      </div>
-      <div className="accordion-item border-0">
-        <h2 className="accordion-header">
-          <button
-            className="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseThree"
-            aria-expanded="false"
-            aria-controls="collapseThree"
-          >
-            烘豆課程
-          </button>
-        </h2>
-        <div
-          id="collapseThree"
-          className="accordion-collapse collapse"
-          data-bs-parent="#accordionExample"
-        >
-          <div className="accordion-body">
-            {level.map((v, i) => {
-              return <p key={i}>{v}</p>
-            })}
+            <AccordionOption content={content} />
+            sdgju
           </div>
         </div>
       </div>
     </div>
-    // <div className="accordion">
-    //   <div
-    //     className="accordion-header"
-    //     tabIndex={0}
-    //     role="button"
-    //     onKeyDown={toggleAccordion}
-    //     onClick={toggleAccordion}
-    //   >
-    //     {options.map((v, i) => {
-    //       return (
-    //         <div key={i}>
-    //           {v}
-    //           {isOpen && (
-    //             <div className="accordion-content">
-    //               {level.map((v, i) => {
-    //                 return <p key={i}>{v}</p>
-    //               })}
-    //             </div>
-    //           )}
-    //         </div>
-    //       )
-    //     })}
-
-    //     <span>{isOpen ? '-' : '+'}</span>
-    //   </div>
-    //   {isOpen && (
-    //     <div className="accordion-content">
-    //       {level.map((v, i) => {
-    //         return <p key={i}>{v}</p>
-    //       })}
-    //     </div>
-    //   )}
-    // </div>
   )
 }
 

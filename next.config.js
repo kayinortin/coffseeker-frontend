@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+module.exports = {
   reactStrictMode: false,
   images: {
     domains: ['via.placeholder.com', 'localhost'],
   },
+
   // comment for render twice issue
   // avoid cors with proxy
   // async rewrites() {
@@ -15,5 +17,3 @@ const nextConfig = {
   //   ]
   // },
 }
-
-module.exports = nextConfig

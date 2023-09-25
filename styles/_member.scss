@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+
+$primary: #1C262C;
+$secondary: #FF9B1A;
+$success: #FF9B1A;
+$danger: #845635;
+
 // 大標籤樣式變更
+
+.orange-text{
+    color: $secondary;
+}
 
 
 .background{
@@ -15,7 +25,7 @@
 
 .content{
     // height: 100vh;
-    max-width: 650px;
+    width: 650px;
     // background: cyan;
 }
 
@@ -23,6 +33,7 @@
 .nav-breadcrumb{
     --bs-breadcrumb-divider: '>';
     .link{
+        color: $primary;
         text-decoration: none;
         &:hover{
             color: $secondary;
@@ -68,6 +79,7 @@
     select.form-select{
         height: 60px;
         border: black solid 1px;
+        background-color:#ffffff00
         // background: #F2F3EE;
     }
 }
@@ -83,7 +95,7 @@
     
 }
 
-.ask-for-regester{
+.ask-for-register{
     font-size: 20px;
     font-family: "Noto Sans TC";
     span{

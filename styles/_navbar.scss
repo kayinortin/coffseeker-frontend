@@ -1,11 +1,22 @@
 nav{
   height: 66px;
-  top: -66px !important;
+  top: -64px !important;
 }
+
+a.dropdown-item.active{
+  background-color: $color--primary !important;
+  color: #ffffff !important;
+}
+
+.ed-bar{
+  white-space: nowrap;
+}
+
 @media screen and (min-width: 600px) {
-  nav.bg-dark{
+nav.bg-dark{
   background-color: $color--primary !important;
 }
+
 
 }
 a.nav-link {
@@ -38,8 +49,8 @@ a.nav-link {
         font-size: 1em;
         padding: 0.5em 1em;
         &:hover{
-          color: #ffffff;
-          background-color: $color--primary;
+          color: $color--primary;
+          background-color: #ffffff;
         }
       }
       &:first-child{
@@ -62,7 +73,7 @@ a.nav-link {
   ul.dropdown-menu{
     top: 74px;
   }
-  @media only screen and (min-width: 992px) {
+  @media screen and (min-width: 992px) {
     .dropdown:hover .dropdown-menu {
       display: flex;
     }
@@ -82,36 +93,38 @@ a.nav-link {
     background-color: rgba($color: #000000, $alpha: 1.0)
   }
   a.nav-link {
+      padding-block: 10px;
       margin-bottom: 0.5em;
-      color: #1C262C !important; 
+      color: white !important; 
       &:hover {
-          color: #1C262C !important;
+          color: white !important;
       }
       &:active{
-          color: #1C262C !important;
+          color: white !important;
       }
       &:visited{
-          color: #1C262C !important;
+          color: white !important;
       }
   }
   .ed-padding-x{
       padding-left: 1em;
       padding-right: 0em;
-      margin-top: 1em;
-      margin-bottom: 1em;
-      border-bottom: black solid 0.5px;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      border-bottom: white solid 0.1px;
     }
     button.navbar-toggler {
-      margin-left: 4px;
+      margin-left: 6px;
+      padding-inline: 0px;
       border: none;
     }
     ul.navbar-nav {
       width: 300px;
       height: 940px;
       position: absolute;
-      top: 93px;
+      top: 91px;
       left: 0px;
-      background-color:rgba($color: #dadada, $alpha: 0.9);
+      background-color: #808080;
       z-index: 1000;
     }
     .dropdown-menu {
@@ -121,9 +134,17 @@ a.nav-link {
       z-index: 999;
       li{
         .dropdown-item{
-          color:$color--primary;
+          color:white;
         }
       }
+    }
+    .offcanvas-backdrop{
+      top:91px;
+      z-index: 4 !important;
+    }
+    a.dropdown-item.active{
+      background-color: white !important;
+      color: $color--primary !important;
     }
 }
 
@@ -135,11 +156,11 @@ a.nav-link {
  
 @keyframes slideIn {
   0% {
-    transform: translateY(1rem);
+    transform: translateY(0rem);
     opacity: 0;
   }
+
   100% {
-    transform: translateY(0rem);
     opacity: 1;
   }
 }
@@ -147,13 +168,6 @@ a.nav-link {
 .slideIn {
   -webkit-animation-name: slideIn;
   animation-name: slideIn;
-  animation-duration: 0.3s;
+  animation-duration: 0.8s;
   animation-fill-mode: both;
-}
-
-// mobile disable animation
-@media only screen and (max-width: 992px) {
-  .slideIn {
-    animation: none !important;
-  }
 }
