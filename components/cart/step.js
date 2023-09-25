@@ -1,5 +1,5 @@
 import React from 'react'
-import { BiSolidRightArrow } from 'react-icons/Bi'
+import { BiSolidRightArrow } from 'react-icons/bi'
 
 export default function Step() {
   return (

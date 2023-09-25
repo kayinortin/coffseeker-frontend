@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "image": "latte_1_1.jpg",
+        "name": "烘焙咖啡豆",
+        "quantity": "3",
+        "price": 1000,
+        "discountPrice": 900,
+        "subtitle": 900
+    },
+    {
+        "id": 2,
+        "image": "cappuccino_2_1.jpg",
+        "name": "卡布奇諾咖啡豆",
+        "quantity": "2",
+        "price": 1200,
+        "discountPrice": 1100,
+        "subtitle": 1100
+    },
+    {
+        "id": 3,
+        "image": "espresso_3_1.jpg",
+        "name": "意式濃縮咖啡豆",
+        "quantity": "4",
+        "price": 900,
+        "discountPrice": 800,
+        "subtitle": 800
+    },
+    {
+        "id": 4,
+        "image": "mocha_4_1.jpg",
+        "name": "摩卡咖啡豆",
+        "quantity": "1",
+        "price": 1100,
+        "discountPrice": 1000,
+        "subtitle": 1000
+    },
+    {
+        "id": 5,
+        "image": "americano_5_1.jpg",
+        "name": "美式咖啡豆",
+        "quantity": "5",
+        "price": 800,
+        "discountPrice": 750,
+        "subtitle": 750
+    }
+]
