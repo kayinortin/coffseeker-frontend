@@ -30,7 +30,6 @@ export default function CourseList() {
                 price={price}
                 start_date={start_date}
                 end_date={end_date}
-                capacity={capacity}
                 description={description}
                 image={image}
               />
@@ -38,7 +37,7 @@ export default function CourseList() {
           )
         })}
       </ul>
-      <Pagination />
+      {/* <Pagination /> */}
     </div>
   )
 }
