@@ -13,35 +13,11 @@ export default function Card({
   capacity,
 }) {
   return (
-    // <div className="card course-card my-3">
-    //   <Image
-    //     src={`/course-image/${image}`}
-    //     className="card-img-top"
-    //     alt="..."
-    //     width={50}
-    //     height={230}
-    //   />
-    //   <div className="card-body">
-    //     <h5>{name}</h5>
-    //     <p>
-    //       課程日期: {start_date} 至 {end_date}
-    //     </p>
-    //     {/* <p>課程結束日期: </p> */}
-    //     <p>人數: {capacity}</p>
-    //     <div className="d-flex justify-content-between">
-    //       <p className={`${style['price']} fs-4 my-auto`}>NT$: {price}</p>
-    //       <AddCartBtn />
-    //     </div>
-    //   </div>
-    // </div>
-
-    // const { imageSrc, title, price } = props;
-
     <div
       style={{ width: '288px' }}
-      className="d-flex py-3 border flex-column align-items-center m-3"
+      className="d-flex py-3  flex-column align-items-center m-3"
     >
-      <div className={`img-bg ${style['img-bg']}`}>
+      <div className={` ${style['img-bg']}`}>
         <Image
           src={`/course-image/${image}`}
           alt={name}
@@ -51,10 +27,9 @@ export default function Card({
         />
       </div>
 
-      <div className="my-3">
-        <h5>{name}</h5>
+      <div className="d-flex w-100 my-3 ms-5 justify-content-start">
+        <h5 className="fs-5">{name}</h5>
       </div>
-
       <div className="d-flex w-100 align-items-center justify-content-around">
         <p className={`my-auto fs-6 ${style['price']}`}>價格: ${price}</p>
         <AddCartBtn />

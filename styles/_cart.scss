@@ -15,6 +15,7 @@ $fs-sm: 1rem;
 $fs-md: 1.25rem;
 $fs-lg: 1.5rem;
 $fs-xl: 2rem;
+
 $fw-regular:400;
 $fw-bold:700;
 $fw-black:900;
@@ -96,7 +97,7 @@ $fw-black:900;
 }
 
 .carts{
-
+    
     .cartLabels{
         border: 1.5px solid $color-black;
         background-color: $color-lightgray;
@@ -113,16 +114,28 @@ $fw-black:900;
     }
 
     .cartProduct{
-        
+        // display: flex;
 
         tr{
-            // display: flex;
-            // padding-inline: 4rem;
-            // padding-block: 1rem;
-            // flex-wrap: wrap;
-            // gap: 1rem;
-            // text-align: center;
-            // align-items: center;
+            border: 1px solid red;
+            padding: 1rem;
+
+            .item{
+                border: 1px solid green;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                .productDetail{
+                    .title{
+                        font-size: $fs-lg;
+                        font-weight: $fw-bold;
+                        padding-bottom: 1rem;
+
+                    }
+
+                }
+            }
 
           
         } 

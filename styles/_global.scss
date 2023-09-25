@@ -4,24 +4,15 @@
 * {
   box-sizing: border-box;
   // outline: 1px red solid;
-}
 
 // 按鈕圓角邊 button radius
 $border-radius: 0em;
 $border-radius-sm: 0em;
 $border-radius-lg: 0em;
-
-// ↑↑↑  變數覆蓋(Variable overrides) 要寫在這行"上面"  ↑↑↑
-// 導入所有 bootstrap 樣式
-@import '~bootstrap/scss/bootstrap';
-// ↓↓↓  其它客製樣式要寫在這行的"下面檔案內" ↓↓↓
+$form-select-bg: #F2F3EE;
+}
 
 
-
-// google Noto Sans TC 字體
-@import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap';
-
-// 定義中文字體用
 body {
   font-family: 'Noto Sans','Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
     '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',
