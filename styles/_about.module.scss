@@ -1,7 +1,6 @@
 $color--primary: #1c262c;
-$color--background: #F2F3EE;
+$color--background: #f2f3ee;
 $color--black: #000000;
-
 
 .about-div-width {
   padding-inline: 125px;
@@ -40,7 +39,7 @@ $color--black: #000000;
 
 // 聯絡我們
 #ei-wrap {
-  width: 530px;
+  max-width: 530px;
   margin: 20px auto 0;
   height: 850px;
 }
@@ -48,14 +47,14 @@ $color--black: #000000;
 .ei-h3 {
   margin-bottom: 20px;
   text-align: center;
-//   font-size: 35px;
+  //   font-size: 35px;
   font-family: tahoma;
   color: black;
   z-index: 0;
 }
-.ei-contact-us{
-    margin-top: 80px;
-    margin-bottom: 30px;
+.ei-contact-us {
+  margin-top: 80px;
+  margin-bottom: 30px;
 }
 
 #ei-form-wrap {
@@ -145,7 +144,7 @@ $color--black: #000000;
     textarea:focus,
     input[type='text']:focus {
       background: url('../public/about-image/letter_bg.svg');
-     color: $color--primary;
+      color: $color--primary;
     }
 
     input[type='submit'] {
@@ -172,16 +171,13 @@ $color--black: #000000;
 
 //聯絡我們RWD
 @media (max-width: 431px) {
-    #ei-wrap {
-        // max-width: 400px;
-        // margin: 20px auto 0;
-        // height: 850px;
-        display: none;
-      }
-      .mobile-contact-us{
-
-      }
-     
-      }
-      
+  #ei-wrap {
+   
+    // display: none;
+  }
+  .ei-contact-us{
+    margin-top: 50px;
+    margin-bottom: 0;
+  }
   
+}
