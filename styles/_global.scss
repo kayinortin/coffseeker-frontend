@@ -6,35 +6,18 @@
   // outline: 1px red solid;
 
 // 按鈕圓角邊 button radius
-$border-radius: 0em;
-$border-radius-sm: 0em;
-$border-radius-lg: 0em;
-$form-select-bg: #F2F3EE;
+// $border-radius: 0em;
+// $border-radius-sm: 0em;
+// $border-radius-lg: 0em;
+// $form-select-bg: #F2F3EE;
 }
 
 
 body {
   font-family: 'Noto Sans','Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
-    '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',
-    // Cross-platform generic font family (default user interface font)
-    system-ui,
-    // Safari for macOS and iOS (San Francisco)
-    -apple-system,
-    // Windows
-    'Segoe UI',
-    // Android
-    Roboto,
-    // Basic web fallback
-    'Helvetica Neue',
-    Arial,
-    // Linux
-    'Noto Sans',
-    'Liberation Sans',
-    // Sans serif fallback
-    sans-serif,
-    // Emoji fonts
-    'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',system-ui,
+    -apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',
+    sans-serif,'Apple Color Emoji','Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   letter-spacing: $letter-spacing;
   color: $color__font;
 }

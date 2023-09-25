@@ -1,0 +1,183 @@
+$color--primary: #1c262c;
+$color--background: #f2f3ee;
+$color--black: #000000;
+
+.about-div-width {
+  padding-inline: 125px;
+}
+.brand-story {
+  margin-top: 50px;
+}
+.ei-about {
+  padding-bottom: 30px !important;
+}
+.ei-line {
+  flex-grow: 0;
+  width: 100px;
+  height: 1px;
+  background-color: $color--primary;
+}
+.brand-title {
+  color: #ff9b1a;
+}
+
+@media (max-width: 431px) {
+  .about-div-width {
+    padding-inline: 50px !important;
+  }
+  .brand-title {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .mobile-about-image {
+    margin-right: 0 !important;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+}
+
+// 聯絡我們
+#ei-wrap {
+  max-width: 530px;
+  margin: 20px auto 0;
+  height: 850px;
+}
+
+.ei-h3 {
+  margin-bottom: 20px;
+  text-align: center;
+  //   font-size: 35px;
+  font-family: tahoma;
+  color: black;
+  z-index: 0;
+}
+.ei-contact-us {
+  margin-top: 80px;
+  margin-bottom: 30px;
+}
+
+#ei-form-wrap {
+  overflow: hidden;
+  height: 500px;
+  position: relative;
+  top: 0px;
+  transition: all 1s ease-in-out 0.3s;
+  background-color: $color--background;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 128px;
+    left: 0px;
+    background: url('../public/about-image/before.svg');
+    width: 530px;
+    height: 317px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    background: url('../public/about-image/after.svg');
+    width: 530px;
+    height: 259px;
+    border-color: $color--background;
+  }
+
+  &.hide:after,
+  &.hide:before {
+    display: none;
+  }
+
+  &:hover {
+    height: 777px;
+    top: 0px;
+    background-color: $color--background;
+  }
+
+  .ei-form {
+    background: url('../public/about-image/letter_bg.svg');
+    position: relative;
+    top: 200px;
+    overflow: hidden;
+    height: 200px;
+    width: 420px;
+    margin: 0px auto;
+    padding: 20px;
+    border: 1px solid white;
+    transition: all 1s ease-in-out 0.3s;
+    background-color: $color--background;
+
+    &:hover {
+      height: 530px;
+      background-color: $color--background;
+    }
+
+    label {
+      margin: 11px 20px 0 0;
+      font-size: 15px;
+      color: gray;
+      text-transform: uppercase;
+    }
+
+    input[type='text'],
+    textarea {
+      font: 14px normal uppercase, arial, serif;
+      color: dimgray;
+      background: none;
+      width: 380px;
+      height: 37px;
+      padding: 0px 10px;
+      margin: 0 0 10px 0;
+      border: 1px solid #bdbdbd;
+      border-radius: 5px;
+      background-color: $color--background;
+    }
+
+    textarea {
+      height: 80px;
+      padding-top: 14px;
+    }
+
+    textarea:focus,
+    input[type='text']:focus {
+      background: url('../public/about-image/letter_bg.svg');
+      color: $color--primary;
+    }
+
+    input[type='submit'] {
+      position: relative;
+      font-family: tahoma;
+      font-size: 24px;
+      color: black;
+      width: 300px;
+      text-align: center;
+      opacity: 0;
+      background: $color--primary;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: opacity 0.7s ease-in-out 0s;
+
+      &:hover {
+        z-index: 1;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out 1.3s;
+      }
+    }
+  }
+}
+
+//聯絡我們RWD
+@media (max-width: 431px) {
+  #ei-wrap {
+   
+    // display: none;
+  }
+  .ei-contact-us{
+    margin-top: 50px;
+    margin-bottom: 0;
+  }
+  
+}
