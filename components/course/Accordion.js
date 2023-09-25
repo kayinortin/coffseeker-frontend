@@ -29,7 +29,6 @@ function Accordion({ title, content }) {
         >
           <div className="accordion-body">
             <AccordionOption content={content} />
-            sdgju
           </div>
         </div>
       </div>
