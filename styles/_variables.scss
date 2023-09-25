@@ -157,6 +157,21 @@ $border-radius-sm: 0em;
 $border-radius-lg: 0em;
 $form-select-bg: #F2F3EE;
 
+// $accordion-button-focus-border-color: #fff;
+// $accordion-button-focus-box-shadow: #fff;
+// $accordion-button-active-bg: #fff;
 
+$primary: #fff;
+// :root {--bs-accordion-btn-focus-box-shadow :#00000000;}
 @import "~bootstrap/scss/bootstrap.scss";
+
+@import "~bootstrap/scss/accordion.scss";
+.accordion-button:focus{
+  box-shadow: none !important;
+}
+.accordion-button:not(.collapsed){
+  background-color: transparent !important;
+}
+
+//bootstrap accordion 樣式修改移除藍色背景跟邊線
 

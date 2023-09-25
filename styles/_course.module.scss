@@ -1,21 +1,38 @@
-// $accordion-button-focus-border-color: #fff;
 
-// @import "~bootstrap/scss/bootstrap.scss";
+$color--secondary: #FF9B1A;
+$color--card-background:#CBB48B;
 
+
+
+.course-list{
+    // margin-top: ;
+}
 //---------------------Card
 .course-li {
     list-style: none; 
     margin: 0; 
     padding: 0;
-    
   }
+
+  .img-bg{
+    background-color: $color--card-background;
+}
+.price{
+    color:$color--secondary
+  }
+
+
+
+  
 
 
   //-------------------SideBar
-  .accordion-button:focus{
-    // border:none;
-    outline: none;
-    border:none;
-    color:red;
-    // border-color: #fff;
+
+
+
+  //-------------------btn
+  .btn-add{
+    background-color: $color--secondary;
   }
+
+ 

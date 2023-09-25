@@ -1,6 +1,25 @@
 import React from 'react'
 import Link from 'next/link'
 
+// 這頁面map後的資料並沒有以key值呈現，因為沒有id，所以會出現警告
+// 建議在map後的資料加上id，例如：
+// const sidebar = [
+//   { id: 1, title: '會員中心' },
+//   { id: 2, title: '會員資料查詢/修改' },
+//   { id: 3, title: '修改密碼' },
+//   { id: 4, title: '訂單管理' },
+//   { id: 5, title: '我的收藏' },
+//   { id: 6, title: '優惠券' },
+//   { id: 7, title: '登出' },
+// ]
+
+// 取得資料後，map時加上key值
+// {sidebar.map((list) => {
+//   return (
+//     <div className={'border-bottom p-2'} key={list.id}>
+//       <Link href="/" className={'sidebar-title'}>
+//         {list.title}...
+
 export default function User() {
   const sidebar = [
     '會員中心',
@@ -20,7 +39,7 @@ export default function User() {
             <nav className={'nav-breadcrumb'}>
               <ol className={'breadcrumb my-3'}>
                 <li className={'breadcrumb-item'}>
-                  <Link href="/" className={'link'}>
+                  <Link href="http://localhost:3000/" className={'link'}>
                     首頁
                   </Link>
                 </li>
@@ -37,6 +56,7 @@ export default function User() {
                   return (
                     <>
                       <div className={'border-bottom p-2'}>
+                        {/* 未添加key值 */}
                         <Link href="/" className={'sidebar-title'}>
                           {list}
                         </Link>
@@ -56,6 +76,7 @@ export default function User() {
                     return (
                       <>
                         <div className={'border-bottom p-2'}>
+                          {/* 未添加key值 */}
                           <Link href="/" className={'sidebar-title'}>
                             {list}
                           </Link>
