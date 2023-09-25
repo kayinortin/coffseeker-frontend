@@ -2,10 +2,14 @@
 @import "./styles/variables";
 @import "./styles/reset";
 @import "./styles/global";
+
+// 首頁樣式
 @import "./styles/common";
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
 
 // 導覽列表
-@import './styles/mega-menu.module';
+@import './styles/navbar';
 
 // 購物車
 @import './styles//cart';
@@ -17,7 +21,7 @@
 @import './styles/product';
 
 //最新消息
-@import './styles/_news.module';
+@import './styles/news.module';
 
 // 關於我們
 @import './styles/about.module';

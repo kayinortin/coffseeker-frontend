@@ -1,8 +1,18 @@
+
+$color--secondary: #FF9B1A;
+$color--card-background:#CBB48B;
+
+
+
+.course-list{
+    // margin-top: ;
+}
 //---------------------Card
 .course-li {
     list-style: none; 
     margin: 0; 
     padding: 0;
+<<<<<<< HEAD
     
   }
 
@@ -12,3 +22,29 @@
     // border:none;
     display: none;
   }
+=======
+  }
+
+  .img-bg{
+    background-color: $color--card-background;
+}
+.price{
+    color:$color--secondary
+  }
+
+
+
+  
+
+
+  //-------------------SideBar
+
+
+
+  //-------------------btn
+  .btn-add{
+    background-color: $color--secondary;
+  }
+
+ 
+>>>>>>> upstream/dev

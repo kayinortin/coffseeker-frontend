@@ -4,23 +4,55 @@
 // 請特別注意，當使用bootstrap 內建 margin 功能，會讓這條失效
 .fixed-top {
   + * {
+<<<<<<< HEAD
     margin-top: 166px;
   }
 } 
 
 
 
+=======
+    margin-top: 134px;
+  }
+} 
+
+>>>>>>> upstream/dev
  // header setting
   .ed-bg-setting{
     display:flex;
     align-items: center;
     background-color: #F2F3EE;
+<<<<<<< HEAD
     height: 100px;
+=======
+    height: 70px;
+    transition: background-color 0.5s, opacity 0.5s;
+    &.transparent{
+      background-color: rgba(242, 243, 238, 0.8);
+    }
+>>>>>>> upstream/dev
   }
   .header{
     position: relative;
   }
 
+<<<<<<< HEAD
+=======
+  .ed-icon-padding{
+    padding:  10px;
+  }
+  .ed-icon-user{
+    font-size: 34px;
+    color: var(--bs-gray-700);
+    margin-inline: 10px;
+  }
+  .ed-icon-cart{
+    font-size: 30px;
+    color: var(--bs-gray-700);
+    margin-inline: 10px;
+  }
+
+>>>>>>> upstream/dev
   @media (max-width: 600px){
     .fixed-top {
       + * {
@@ -33,6 +65,7 @@
     .mobile-justify-content-center{
       justify-content: center;
     }
+<<<<<<< HEAD
   }
 
   // index setting
@@ -51,6 +84,56 @@
     left: calc(50% - 150px);
     z-index: 2;
   }  
+=======
+    .smaller-Logo{
+      width: 200px;
+      height: auto;
+    }
+    .ed-icon-user{
+      font-size: 28px;
+      color: var(--bs-gray-700);
+      margin-inline: 6px;
+    }
+    .ed-icon-cart{
+      font-size: 28px;
+      color: var(--bs-gray-700);
+      margin-inline: 10px;
+    }
+  
+  }
+
+  // index setting
+  .slick-slider {
+    width: 100%;
+    height: calc(100vh - 134px);
+    overflow: hidden;
+  }
+  
+  .slick-dots {
+    right: -700px;
+    bottom: 4%; 
+    transform: translateY(50%);
+    flex-direction: column;
+    left: auto;
+  
+    & li {
+    margin-inline:10px;
+  
+    & button:before{
+      font-size: 20px; 
+    }
+    & button:hover:before{
+      color: #EEE5D0;
+    }
+  
+    &.slick-active{
+      & button:before{
+        color: #EEE5D0;
+      }
+    }
+  }
+  }
+>>>>>>> upstream/dev
   .img-container {
     position: relative;
     width: 100%;
@@ -64,17 +147,26 @@
 
   .ed-img-size-1{
     display: block;
+<<<<<<< HEAD
     width: 960px;
   }
   .ed-img-size-2{
     display: block;
     width: 943.8px;
+=======
+    max-width: 100%;
+  }
+  .ed-img-size-2{
+    display: block;
+    max-width: 100%;
+>>>>>>> upstream/dev
   }
 
   #company-buy{
     width: 1940px;
   }
 
+<<<<<<< HEAD
   @media (max-width: 600px) {
     #banner-image {
       content: url("http://localhost:3000/index-image/banner-father'sDay-mobile.png");
@@ -82,12 +174,97 @@
     #activity-image{
       content: url("http://localhost:3000/index-image/activity_01-mobile.png");
     }
+=======
+.ed-index-product{
+  margin-top: 60px;
+}
+.hot-product {
+    font-size: 24px;
+    text-align: center;
+    padding: 20px;
+    letter-spacing: 10px;
+}
+
+.hot-product-wrapper {
+  display: flex;
+  max-width: 800px;
+  align-items: center;
+  margin: auto;
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: $color--gray3;
+}
+
+.ed-orgin-text{
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 2px;
+  padding-inline: 80px;
+}
+
+  @media (max-width: 576px) {
+    .slick-slider {
+      width: 390px;
+      height: calc(100vh - 120px);
+      overflow: hidden;
+    }
+
+    .slick-dots {
+      right: 0px;
+      bottom: 4%; 
+      transform: translateY(50%);
+      flex-direction: column;
+      left: auto;
+    
+      & li {
+      margin-inline:7px;
+    
+      & button:before{
+        font-size: 16px; 
+      }
+      & button:hover:before{
+        color: #EEE5D0;
+      }
+    
+      &.slick-active{
+        & button:before{
+          color: #EEE5D0;
+        }
+      }
+    }
+    }
+
+    #s1 {
+      content: url("http://localhost:3000/index-image/s1-m.png");
+    }
+    #s2 {
+      content: url("http://localhost:3000/index-image/s2-m.png");
+    }
+    #s3 {
+      content: url("http://localhost:3000/index-image/s3-m.png");
+    }
+    #s4 {
+      content: url("http://localhost:3000/index-image/s4-m.png");
+    }
+    #s5 {
+      content: url("http://localhost:3000/index-image/s5-m.png");
+    }
+    #s6 {
+      content: url("http://localhost:3000/index-image/s6-m.png");
+    }
+
+
+>>>>>>> upstream/dev
     .ed-position-absolute {
       width: 280px !important;
       height: auto;
       top: calc(50% - 150px);
       left: calc(50% - 140px);
     }
+<<<<<<< HEAD
     .ed-img-size-1{
       width: 390px;
     }
@@ -98,6 +275,30 @@
       width: 390px;
       content: url("http://localhost:3000/index-image/company-buy-mobile.png");
     }  
+=======
+    #company-buy{
+      width: 390px;
+      content: url("http://localhost:3000/index-image/company-buy-mobile.png");
+    }
+    .ed-index-product{
+      margin-top: 30px;
+    }  
+    .hot-product {
+      font-size: 16px;
+      text-align: center;
+      padding: 20px;
+      letter-spacing: 10px;
+  }
+  .ed-orgin-text{
+    font-size: 18px;
+    line-height: 30px;
+    letter-spacing: 2px;
+  }
+  .ed-orgin-img{
+    width: 70%;
+    height: auto;
+  }
+>>>>>>> upstream/dev
   }
   
   

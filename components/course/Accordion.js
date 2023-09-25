@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+<<<<<<< HEAD
 
 function Accordion({ title, content }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,6 +15,24 @@ function Accordion({ title, content }) {
   return (
     <div className="test accordion" id="accordionExample">
       <div className="accordion-item border-0">
+=======
+import style from '@/styles/_course.module.scss'
+import 'bootstrap/scss/bootstrap.scss'
+import { AccordionOption } from './AccordionOption'
+
+// 按鈕會連動的原因是因為data-bs-target="#collapseOne"，這個id是固定的，所以會連動
+// 用到map 與 index 處理
+// 讓每個按鈕都有自己的id，所以要用到index
+// 這個檔案是AccordionOption.js的父元件
+
+function Accordion({ title, content }) {
+  return (
+    // <>
+    //   <AccordionOption title={title} />
+    // </>
+    <div className="accordion" id="accordionExample">
+      <div className="accordion-item">
+>>>>>>> upstream/dev
         <h2 className="accordion-header">
           <button
             className="accordion-button"
@@ -23,7 +42,11 @@ function Accordion({ title, content }) {
             aria-expanded="true"
             aria-controls="collapseOne"
           >
+<<<<<<< HEAD
             拉花課程
+=======
+            {title}
+>>>>>>> upstream/dev
           </button>
         </h2>
         <div
@@ -32,6 +55,7 @@ function Accordion({ title, content }) {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
+<<<<<<< HEAD
             {level.map((v, i) => {
               return <p key={i}>{v}</p>
             })}
@@ -85,10 +109,15 @@ function Accordion({ title, content }) {
             {level.map((v, i) => {
               return <p key={i}>{v}</p>
             })}
+=======
+            <AccordionOption content={content} />
+            sdgju
+>>>>>>> upstream/dev
           </div>
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     // <div className="accordion">
     //   <div
     //     className="accordion-header"
@@ -122,6 +151,8 @@ function Accordion({ title, content }) {
     //     </div>
     //   )}
     // </div>
+=======
+>>>>>>> upstream/dev
   )
 }
 
