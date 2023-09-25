@@ -1,16 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
-$primary: #1C262C;
-$secondary: #FF9B1A;
-$success: #FF9B1A;
-$danger: #845635;
+// $color--secondary: #FF9B1A;
+
+// header的會員按鈕
+.z-1031{
+    z-index: 1031;
+}
 
 // 大標籤樣式變更
-
-.orange-text{
-    color: $secondary;
-}
 
 
 .background{
@@ -33,10 +31,10 @@ $danger: #845635;
 .nav-breadcrumb{
     --bs-breadcrumb-divider: '>';
     .link{
-        color: $primary;
+        color: $color--primary;
         text-decoration: none;
         &:hover{
-            color: $secondary;
+            color: $color--secondary;
         }
     }
     
@@ -49,11 +47,11 @@ $danger: #845635;
 .sidebar-title{
     font-size: 16px;
     font-weight: bold;
-    color: $primary;
+    color: $color--primary;
     font-family: 'Noto Sans TC', sans-serif;
     text-decoration: none;
         &:hover{
-            color: $secondary;
+            color: $color--secondary;
         }
 }
 // sideBar End
@@ -63,7 +61,7 @@ $danger: #845635;
 .form-title{
     background: #e0e0e0;
     font-weight: bold;
-    color: $primary;
+    color: $color--primary;
     font-family: 'Noto Sans TC', sans-serif;
 }
 
@@ -87,7 +85,7 @@ $danger: #845635;
 .btn-login{
     cursor: pointer;
     color: #ffffff;
-    background:$secondary;
+    background:$color--secondary;
     font-family: "Noto Sans TC";
     font-size: 18px;
     height: 48px;
@@ -102,6 +100,7 @@ $danger: #845635;
         color: #a7a7a7;
     }
     a{
+        color: $color--secondary;
         text-decoration: none;
     }
 }
@@ -134,5 +133,28 @@ $danger: #845635;
     .ask-for-login{
         display: flex;
         flex-direction: column
+    }
+}
+
+.membership-button{
+    svg{
+        cursor: pointer;
+        &:hover{
+         color: $color--secondary;   
+        }
+    }    
+}
+
+.member-dropdown{
+    background: white;
+    left: -92px;
+    text-wrap: nowrap;
+    .dropdown-option{
+        a{
+            color:$color--primary;
+        }
+        &:hover{
+            background: $color--secondary;
+        }
     }
 }

@@ -6,12 +6,11 @@
   // outline: 1px red solid;
 
 // 按鈕圓角邊 button radius
-$border-radius: 0em;
-$border-radius-sm: 0em;
-$border-radius-lg: 0em;
-$form-select-bg: #F2F3EE;
+// $border-radius: 0em;
+// $border-radius-sm: 0em;
+// $border-radius-lg: 0em;
+// $form-select-bg: #F2F3EE;
 }
-
 
 
 body {
@@ -41,7 +40,7 @@ body {
 }
 
 .bg-primary-color {
-  background-color: #1C262C;
+  background-color: $color--primary;
 }
 .footer-p-color {
   color: $color--gray3;
@@ -50,6 +49,15 @@ body {
   color: $color--gray3;
   border-color: $color--gray3;
   border-radius: 0;
+}
+
+header, nav {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0.9;
 }
 
 a {
