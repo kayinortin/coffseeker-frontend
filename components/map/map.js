@@ -33,10 +33,6 @@ import {
   BsHourglassSplit,
   BsDashLg,
   BsClock,
-<<<<<<< HEAD
-  BsGlobeAsiaAustralia,
-=======
->>>>>>> upstream/dev
 } from 'react-icons/bs'
 
 import testData from '@/data/map/taoyuanCafe.json'
@@ -109,14 +105,6 @@ export default function Map() {
     mrt: '',
     open_time: '主要是六日營業，其他以教學為主',
   })
-<<<<<<< HEAD
-  //側面欄顯示
-  const [asideInfoIndex, setAsideInfoIndex] = useState('all')
-
-  useEffect(() => {
-    console.log(asideInfoIndex)
-  }, [asideInfoIndex])
-=======
   //側面欄顯示(全部all/單間cafe/篩選filter)
   const [asideInfoIndex, setAsideInfoIndex] = useState('all')
   //要生成Mark的資料預設
@@ -146,7 +134,6 @@ export default function Map() {
         (filterValues.socket === '' || cafe.socket === filterValues.socket)
       )
     })
->>>>>>> upstream/dev
 
     // 將篩選後的咖啡店儲存到cafesFiltered狀態中
     setCafesFiltered(filteredCafes)
@@ -173,22 +160,6 @@ export default function Map() {
     return (
       <>
         {cafes.map((cafe, i) => {
-<<<<<<< HEAD
-          return (
-            <Marker
-              key={i}
-              position={[cafe.latitude, cafe.longitude]}
-              icon={cafesMarker}
-              eventHandlers={{
-                click: () => {
-                  handelChangeCafe(cafe)
-                },
-              }}
-            >
-              <Popup>{cafe.name}</Popup>
-            </Marker>
-          )
-=======
           if (parseFloat(cafe.latitude) !== 0) {
             return (
               <Marker
@@ -205,7 +176,6 @@ export default function Map() {
           } else {
             return null // 如果cafe.latitude等於0，則不建立Marker
           }
->>>>>>> upstream/dev
         })}
       </>
     )
@@ -263,110 +233,6 @@ export default function Map() {
     }
   }
 
-<<<<<<< HEAD
-  //測欄資訊產生
-  function AsideInfo() {
-    return (
-      <>
-        {/* 全部LIST */}
-        <div className={`cafeList ${asideInfoIndex === 'all' ? '' : 'd-none'}`}>
-          <CafeList cafes={cafes} />
-        </div>
-        {/* 單間咖啡廳 */}
-        <div
-          className={`cafeInfo ${asideInfoIndex === 'cafe' ? '' : 'd-none'}`}
-        >
-          <h4 key={cafeData.id}>{cafeData.name}</h4>
-          <div className="cafeRating">
-            <span>
-              <div>
-                <IoIosWifi />
-                網路穩定
-              </div>
-              <div>{cafeData.wifi}★</div>
-            </span>
-            <span>
-              <div>
-                <LiaChairSolid />
-                座位充足
-              </div>
-              <div>{cafeData.seat}★</div>
-            </span>
-            <span>
-              <div>
-                <IoEarOutline />
-                安靜程度
-              </div>
-              <div>{cafeData.quiet}★</div>
-            </span>
-            <span>
-              <div>
-                <PiCoffee />
-                咖啡好喝
-              </div>
-              <div>{cafeData.tasty}★</div>
-            </span>
-            <span>
-              <div>
-                <PiCurrencyDollarSimpleBold />
-                價格實惠
-              </div>
-              <div>{cafeData.cheap}★</div>
-            </span>
-            <span>
-              <div>
-                <PiMusicNotesFill />
-                裝潢音樂
-              </div>
-              <div>{cafeData.music}★</div>
-            </span>
-            <span>
-              <div>
-                <BsPlugin />
-                插座數量
-              </div>
-              <div>{checkValue(cafeData.socket)}</div>
-            </span>
-            <span>
-              <div>
-                <BsHourglassSplit />
-                有無限時
-              </div>
-              <div>{checkValue(cafeData.limited_time)}</div>
-            </span>
-          </div>
-          <div className="cafeInfos">
-            <h5>店家資訊</h5>
-            <div className="d-flex justify-content-between ">
-              <FaMapMarkerAlt />
-              <h6>{cafeData.address}</h6>
-            </div>
-
-            <div
-              className={`d-flex justify-content-between ${
-                cafeData.open_time ? '' : 'd-none'
-              }`}
-            >
-              <BsClock />
-              <h6>{cafeData.open_time}</h6>
-            </div>
-            <div
-              className={`d-flex justify-content-between ${
-                cafeData.url ? '' : 'd-none'
-              }`}
-            >
-              <FaGlobeAmericas />
-              <h6>
-                <a href={cafeData.url} target="_blank">
-                  {cafeData.url}{' '}
-                </a>
-              </h6>
-            </div>
-          </div>
-          <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
-        </div>
-        {/* 篩選 */}
-=======
   //生成咖啡店LIST
   function CafeList({ cafes }) {
     return (
@@ -420,14 +286,10 @@ export default function Map() {
             </button>
           )
         })}
->>>>>>> upstream/dev
       </>
     )
   }
 
-<<<<<<< HEAD
-  //輔助用函式
-=======
   //生成測欄資訊
   function AsideInfo() {
     return (
@@ -598,7 +460,6 @@ export default function Map() {
   }
   //輔助用函式(不生成物件)==================================
   //判斷打勾叉叉icon
->>>>>>> upstream/dev
   function checkValue(value) {
     switch (value) {
       case 'yes':
@@ -611,78 +472,15 @@ export default function Map() {
         return <BsDashLg />
     }
   }
-<<<<<<< HEAD
-
-  function handelChangeCafe(cafe) {
-    setAsideInfoIndex('cafe')
-    setCafeData(cafe)
-  }
-
-  function CafeList({ cafes }) {
-    return (
-      <>
-        {cafes.map((cafe) => {
-          return (
-            <>
-              <button
-                className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
-                onClick={() => {
-                  handelChangeCafe(cafe)
-                }}
-              >
-                <h4 key={cafe.id}>{cafe.name}</h4>
-                <h6>
-                  <FaMapMarkerAlt />
-                  {cafe.address}
-                </h6>
-                <p>
-                  <span>
-                    <IoIosWifi />
-                    {cafe.wifi}★
-                  </span>
-                  <span>
-                    <LiaChairSolid />
-                    {cafe.seat}★
-                  </span>
-                  <span>
-                    <IoEarOutline />
-                    {cafe.quiet}★
-                  </span>
-                  <span>
-                    <PiCoffee />
-                    {cafe.tasty}★
-                  </span>
-                  <span>
-                    <BsPlugin />
-                    {checkValue(cafe.socket)}
-                  </span>
-                </p>
-              </button>
-            </>
-          )
-        })}
-      </>
-    )
-  }
-
-=======
   //啟動定位
   function LocateBtn() {
     setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
   }
->>>>>>> upstream/dev
   //整體return
   return (
     <>
       <div className="mapArea">
         <div className="mapControl">
-<<<<<<< HEAD
-          <button type="button" onClick={LocateBtn}>
-            <TbCurrentLocation />
-          </button>
-        </div>
-        <nav className="mapAsideBar">
-=======
           <div className="rangeSelect me-3">
             <select>
               <option value="">顯示範圍</option>
@@ -698,15 +496,10 @@ export default function Map() {
           </button>
         </div>
         <div className="mapAsideBar">
->>>>>>> upstream/dev
           <button
             className={`${asideInfoIndex === 'all' ? 'active' : ''}`}
             onClick={() => {
-<<<<<<< HEAD
-              setAsideInfoIndex('all')
-=======
               handleAsideInfo('all')
->>>>>>> upstream/dev
             }}
           >
             全部
@@ -714,20 +507,12 @@ export default function Map() {
           <button
             className={`${asideInfoIndex === 'filter' ? 'active' : ''}`}
             onClick={() => {
-<<<<<<< HEAD
-              setAsideInfoIndex('filter')
-=======
               handleAsideInfo('filter')
->>>>>>> upstream/dev
             }}
           >
             篩選
           </button>
-<<<<<<< HEAD
-        </nav>
-=======
         </div>
->>>>>>> upstream/dev
         <aside className="mapAsideInfo">
           <AsideInfo />
         </aside>

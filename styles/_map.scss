@@ -1,10 +1,6 @@
 .mapArea {
   height: calc(100vh - 146px);
-<<<<<<< HEAD
-  background-color: #f2f3ee;
-=======
   background-color: $color--background;
->>>>>>> upstream/dev
   position: relative;
   display: flex;
   overflow: hidden;
@@ -19,16 +15,6 @@
 .mapControl {
   position: absolute;
   z-index: 1;
-<<<<<<< HEAD
-  right: 80px;
-  top: 10px;
-}
-.mapAsideBar {
-  width: 80px;
-  height: 100px;
-
-  button {
-=======
   right: 60px;
   top: 10px;
   display: flex;
@@ -71,55 +57,19 @@
     transition: 0.3s;
     width: 100%;
     background-color: transparent;
->>>>>>> upstream/dev
     padding: 10px 10px;
     margin: 20px 0px;
     justify-content: center;
     align-items: flex-start;
     border: none;
-<<<<<<< HEAD
-=======
     border-right: 3px solid transparent;
     &.active {
       border-right: 3px solid $color--primary;
     }
->>>>>>> upstream/dev
   }
 }
 
 .mapAsideInfo {
-<<<<<<< HEAD
-  overflow-y: auto;
-  min-width: 360px;
-  max-width: 360px;
-  height: 100%;
-  padding: 20px 24px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  .cafeList {
-    .cafeItem {
-      * {
-        cursor: pointer !important;
-      }
-      background: none;
-      text-align: start;
-      width: 100%;
-      &:hover {
-        background-color: rgba(186, 200, 206, 0.3);
-      }
-      // margin-block: 10px;
-      // border-bottom: solid 1px black;
-      p {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        svg {
-          margin-right: 3px;
-        }
-      }
-    }
-  }
-  .cafeInfo {
-=======
   width: 360px;
   z-index: 1;
   flex-shrink: 0;
@@ -174,7 +124,6 @@
   .cafeInfo {
     transition: 0.3s;
 
->>>>>>> upstream/dev
     svg {
       width: 27px;
       height: 27px;
@@ -213,10 +162,6 @@
         align-items: center;
       }
       h6 {
-<<<<<<< HEAD
-        width: 280px;
-        word-wrap: break-word;
-=======
         margin-left: 20px;
         word-wrap: break-word;
         word-break: break-all;
@@ -279,7 +224,6 @@
       > div {
         height: 50vh;
         width: 100%;
->>>>>>> upstream/dev
       }
     }
   }

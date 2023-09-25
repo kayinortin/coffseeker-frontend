@@ -48,13 +48,6 @@ const menuItems = [
   },
 ]
 
-<<<<<<< HEAD
-export default function Navbar(currentRoute) {
-  return (
-    <>
-      <nav
-        className={`navbar navbar-expand-lg bg-transparent navbar-light bg-dark fixed-top`}
-=======
 export default function Navbar() {
   const router = useRouter()
   const currentRoute = router.pathname
@@ -68,23 +61,11 @@ export default function Navbar() {
     <>
       <nav
         className={`navbar navbar-expand-sm bg-transparent navbar-light bg-dark fixed-top`}
->>>>>>> upstream/dev
       >
         <div className="container-fluid">
           <button
             className="navbar-toggler"
             type="button"
-<<<<<<< HEAD
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className={`collapse navbar-collapse`} id="navbarNav">
-            <ul className="navbar-nav">
-=======
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar"
@@ -96,7 +77,6 @@ export default function Navbar() {
             id="offcanvasNavbar"
           >
             <ul className="navbar-nav slideIn">
->>>>>>> upstream/dev
               {menuItems.map((v) => {
                 if (!v.children) {
                   return (
@@ -115,11 +95,7 @@ export default function Navbar() {
                 // 以下為有下拉選單的選單項目
                 return (
                   <li className={`nav-item dropdown ed-padding-x`} key={v.id}>
-<<<<<<< HEAD
-                    <Link
-=======
                     <a
->>>>>>> upstream/dev
                       className={`nav-link dropdown-toggle ${
                         v.children.find((v) => v.href === currentRoute)
                           ? 'active '
@@ -127,11 +103,7 @@ export default function Navbar() {
                       }`}
                       href={v.href}
                       role="button"
-<<<<<<< HEAD
-                      data-bs-toggle="dropdown"
-=======
                       onClick={toggleDropdown}
->>>>>>> upstream/dev
                     >
                       {v.label}
                     </a>

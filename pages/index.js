@@ -1,14 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
-<<<<<<< HEAD
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
-=======
 import Hot from '../components/product/index'
 import Slider from 'react-slick'
 // 手機版照片要置換成 390 * 724
->>>>>>> upstream/dev
 
 export default function Home() {
   const settings = {
@@ -30,26 +24,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-<<<<<<< HEAD
-      <div className="img-container">
-        <Image
-          className="img-fluid ed-position-relative"
-          src="http://localhost:3000/index-image/banner-father'sDay.png"
-          alt=""
-          width={1920}
-          height={780}
-          id="banner-image"
-        />
-        <Image
-          className="img-fluid ed-position-absolute"
-          src="http://localhost:3000/index-image/activity_01.png"
-          alt=""
-          width={600}
-          height={200}
-          id="activity-image"
-        />
-      </div>
-=======
       {/* 此處製作首頁幻燈片 */}
       <div>
         <Slider {...settings}>
@@ -98,7 +72,6 @@ export default function Home() {
         </Slider>
       </div>
       {/* 此處製作商城與課程的按鈕 */}
->>>>>>> upstream/dev
       <div className="d-md-flex d-flex-colum justify-content-center">
         <a href="http://localhost:3000/product">
           <img
@@ -109,34 +82,22 @@ export default function Home() {
         </a>
         <a href="http://localhost:3000/course">
           <img
-<<<<<<< HEAD
-            className="ed-img-size-2"
-=======
             className="ed-img-size-2 d-none d-md-block"
->>>>>>> upstream/dev
             src="http://localhost:3000/index-image/course.png"
             alt="go-to-course"
           />
         </a>
       </div>
-<<<<<<< HEAD
-=======
       {/* 此處製作後端抓取熱銷商品，並提供前八名的商品資訊 */}
       <div className="container">
         <Hot />
       </div>
       {/* 此處製作課程區 */}
       {/* 此處製作團體購買的圖片 */}
->>>>>>> upstream/dev
       <div className="img-container">
         <img
           className="img-fluid d-block"
           src="http://localhost:3000/index-image/company-buy.png"
-<<<<<<< HEAD
-          alt=""
-          id="company-buy"
-        />
-=======
           alt="團體購買優惠方案"
           id="company-buy"
         />
@@ -178,7 +139,6 @@ export default function Home() {
             height={60}
           />
         </div>
->>>>>>> upstream/dev
       </div>
     </>
   )

@@ -1,9 +1,5 @@
 import React from 'react'
-<<<<<<< HEAD
-import banner from "@/public/index-image/banner-father'sDay.png"
-=======
 import BreadCrumbs from '@/components/course/BreadCrumbs'
->>>>>>> upstream/dev
 import Image from 'next/image'
 import Link from 'next/link'
 import SideBar from '@/components/course/SideBar'

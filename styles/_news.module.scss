@@ -1,9 +1,6 @@
 $color--primary: #1c262c;
 $color--background: #f2f2f2;
 $color--black: #000000;
-<<<<<<< HEAD
-/* news.module.scss */
-=======
 
 //index.js區
 //標題直線
@@ -14,7 +11,6 @@ $color--black: #000000;
   background-color: $color--primary;
 }
 
->>>>>>> upstream/dev
 // 卡片區
 .news-link {
   text-decoration: none;
@@ -83,10 +79,6 @@ $color--black: #000000;
   }
 }
 
-<<<<<<< HEAD
-.card-title{
-  color: $color--primary;
-=======
 // 卡片RWD區
 @media (max-width: 430px) {
   .ei-mobile-container {
@@ -199,5 +191,4 @@ $color--black: #000000;
   &:hover {
     background-color: #f0f0f0;
   }
->>>>>>> upstream/dev
 }

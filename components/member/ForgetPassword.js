@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import Link from 'next/link'
-export default function ForgetPassword() {
-  return (
-    <>
-=======
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
@@ -74,7 +67,6 @@ export default function ForgetPassword() {
   return (
     <>
       <div>本頁面已經串好OTP by Edison</div>
->>>>>>> upstream/dev
       <div className={'container d-flex justify-content-center pb-3'}>
         <div className={'login border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
@@ -87,15 +79,6 @@ export default function ForgetPassword() {
               </label>
               <input
                 placeholder="請輸入信箱"
-<<<<<<< HEAD
-                type="email"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              <div id="emailHelp" className="form-text"></div>
-            </div>
-=======
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -104,7 +87,6 @@ export default function ForgetPassword() {
               <div id="emailHelp" className="form-text"></div>
             </div>
             <h5>{message}</h5>
->>>>>>> upstream/dev
           </form>
         </div>
       </div>
@@ -114,12 +96,6 @@ export default function ForgetPassword() {
             'btn-login text-center d-flex justify-content-center flex-column'
           }
         >
-<<<<<<< HEAD
-          <span>送出驗證信</span>
-        </div>
-      </div>
-
-=======
           <button onClick={getOtp}>
             {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
           </button>
@@ -146,7 +122,6 @@ export default function ForgetPassword() {
         <br />
         <button onClick={resetPassword}>重設密碼</button>
       </div>
->>>>>>> upstream/dev
       <div
         className={
           'container d-flex justify-content-between content p-0 align-items-center ask-for-login'

@@ -70,11 +70,7 @@ export default function LoginForm() {
       <div className={'container d-flex justify-content-center'}>
         <div className={'ask-for-register mb-2'}>
           <span className="me-3">還不是會員嗎?</span>
-<<<<<<< HEAD
-          <Link href="./register" className={'text-secondary ms-3'}>
-=======
           <Link href="./register" className={'orange-text ms-3'}>
->>>>>>> upstream/dev
             加入會員
           </Link>
         </div>

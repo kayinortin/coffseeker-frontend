@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import React, { useEffect } from 'react'
->>>>>>> upstream/dev
 import Head from 'next/head'
 import Header from './header'
 import Navbar from './navbar'
