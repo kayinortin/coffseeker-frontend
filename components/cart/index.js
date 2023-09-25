@@ -7,8 +7,6 @@ function Cart() {
     <>
       <div>購物車範例</div>
       <Cartlist />
-      <Cartlist />
-      <Cartlist />
       <Cartbtn />
     </>
   )
