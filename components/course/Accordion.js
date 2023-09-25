@@ -4,11 +4,12 @@ import 'bootstrap/scss/bootstrap.scss'
 import { AccordionOption } from './AccordionOption'
 
 function Accordion({ title, content }) {
+  const [isOpen, setIsOpen] = useState(false)
   return (
     // <>
     //   <AccordionOption title={title} />
     // </>
-    <div className="accordion" id="accordionExample">
+    <div className={`accordion ${isOpen ? 'open' : ''}`} id="accordionExample">
       <div className="accordion-item">
         <h2 className="accordion-header">
           <button

@@ -8,17 +8,18 @@ export function AccordionOption({ title, content }) {
 
   const level = ['入門', '進階', '高階', '證照']
 
-  const toggleAccordion = () => {
+  const toggleAccordion = (title) => {
+    // if(title===)
     setIsOpen(!isOpen)
   }
   return (
     <>
-      <div className={`accordion ${isOpen ? 'open' : ''}`}>
+      <div className={`accordion `}>
         <div
           className="accordion-header"
           role="button"
           tabIndex={0}
-          onKeyDown={toggleAccordion}
+          onKeyDown={toggleAccordion(title)}
           onClick={toggleAccordion}
         >
           <h5>{title}</h5>
