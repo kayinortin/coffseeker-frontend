@@ -42,7 +42,9 @@ export default function ProductsList() {
             </div>
           </div>
         ) : (
-          <p>目前沒有可用的產品。</p>
+          <div className="unavailable">
+            新品即將推出，<br className="d-md-none"></br>持續探索最佳風味 !{' '}
+          </div>
         )}
       </div>
       <ProductDataFetcher onDataFetched={onDataFetched} />

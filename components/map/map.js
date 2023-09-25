@@ -159,18 +159,24 @@ export default function Map() {
   function CafesMarker({ cafes }) {
     return (
       <>
-        {cafes.map((cafe, i) => (
-          <Marker
-            key={i}
-            position={[cafe.latitude, cafe.longitude]}
-            icon={cafesMarker}
-            eventHandlers={{
-              click: () => {
-                handelChangeCafe(cafe)
-              },
-            }}
-          ></Marker>
-        ))}
+        {cafes.map((cafe, i) => {
+          if (parseFloat(cafe.latitude) !== 0) {
+            return (
+              <Marker
+                key={i}
+                position={[cafe.latitude, cafe.longitude]}
+                icon={cafesMarker}
+                eventHandlers={{
+                  click: () => {
+                    handelChangeCafe(cafe)
+                  },
+                }}
+              ></Marker>
+            )
+          } else {
+            return null // 如果cafe.latitude等於0，則不建立Marker
+          }
+        })}
       </>
     )
   }
@@ -208,10 +214,10 @@ export default function Map() {
   }
 
   //生成active咖啡Mark
-  function ActiveCafeMarker() {
+  function ActiveCafeMarker({ cafeData }) {
     const map = useMap()
     if (asideInfoIndex == 'cafe') {
-      map.flyTo([cafeData.latitude, cafeData.longitude], 15)
+      map.panTo([cafeData.latitude, cafeData.longitude], 15)
       return (
         <Marker
           key={cafeData.id}
@@ -237,43 +243,49 @@ export default function Map() {
           <p className="text-end">共{cafes.length}家</p>
         )}
 
-        {cafes.map((cafe) => (
-          <button
-            key={cafe.id}
-            className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
-            onClick={() => {
-              handelChangeCafe(cafe)
-            }}
-          >
-            <h4>{cafe.name}</h4>
-            <h6>
-              <FaMapMarkerAlt />
-              {cafe.address}
-            </h6>
-            <p>
-              <span>
-                <IoIosWifi />
-                {cafe.wifi}★
-              </span>
-              <span>
-                <LiaChairSolid />
-                {cafe.seat}★
-              </span>
-              <span>
-                <IoEarOutline />
-                {cafe.quiet}★
-              </span>
-              <span>
-                <PiCoffee />
-                {cafe.tasty}★
-              </span>
-              <span>
-                <BsPlugin />
-                {checkValue(cafe.socket)}
-              </span>
-            </p>
-          </button>
-        ))}
+        {cafes.map((cafe) => {
+          if (parseFloat(cafe.latitude) === 0) {
+            return null // 如果cafe.latitude等於0，則不渲染按鈕
+          }
+
+          return (
+            <button
+              key={cafe.id}
+              className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
+              onClick={() => {
+                handelChangeCafe(cafe)
+              }}
+            >
+              <h4>{cafe.name}</h4>
+              <h6>
+                <FaMapMarkerAlt />
+                {cafe.address}
+              </h6>
+              <p>
+                <span>
+                  <IoIosWifi />
+                  {cafe.wifi}★
+                </span>
+                <span>
+                  <LiaChairSolid />
+                  {cafe.seat}★
+                </span>
+                <span>
+                  <IoEarOutline />
+                  {cafe.quiet}★
+                </span>
+                <span>
+                  <PiCoffee />
+                  {cafe.tasty}★
+                </span>
+                <span>
+                  <BsPlugin />
+                  {checkValue(cafe.socket)}
+                </span>
+              </p>
+            </button>
+          )
+        })}
       </>
     )
   }
@@ -351,24 +363,16 @@ export default function Map() {
           </div>
           <div className="cafeInfos">
             <h5>店家資訊</h5>
-            <div className="d-flex justify-content-between ">
+            <div className="d-flex ">
               <FaMapMarkerAlt />
               <h6>{cafeData.address}</h6>
             </div>
 
-            <div
-              className={`d-flex justify-content-between ${
-                cafeData.open_time ? '' : 'd-none'
-              }`}
-            >
+            <div className={`d-flex  ${cafeData.open_time ? '' : 'd-none'}`}>
               <BsClock />
               <h6>{cafeData.open_time}</h6>
             </div>
-            <div
-              className={`d-flex justify-content-between ${
-                cafeData.url ? '' : 'd-none'
-              }`}
-            >
+            <div className={`d-flex  ${cafeData.url ? '' : 'd-none'}`}>
               <FaGlobeAmericas />
               <h6>
                 <a href={cafeData.url} target="_blank">
@@ -477,11 +481,21 @@ export default function Map() {
     <>
       <div className="mapArea">
         <div className="mapControl">
-          <button type="button" onClick={LocateBtn}>
+          <div className="rangeSelect me-3">
+            <select>
+              <option value="">顯示範圍</option>
+              <option value="">顯示城市</option>
+            </select>
+            <select>
+              <option value="">附近1000公尺</option>
+              <option value="">附近500公尺</option>
+            </select>
+          </div>
+          <button className="locateBtn" type="button" onClick={LocateBtn}>
             <TbCurrentLocation />
           </button>
         </div>
-        <nav className="mapAsideBar">
+        <div className="mapAsideBar">
           <button
             className={`${asideInfoIndex === 'all' ? 'active' : ''}`}
             onClick={() => {
@@ -498,7 +512,7 @@ export default function Map() {
           >
             篩選
           </button>
-        </nav>
+        </div>
         <aside className="mapAsideInfo">
           <AsideInfo />
         </aside>
@@ -516,7 +530,7 @@ export default function Map() {
           />
           <ZoomControl position="topright" />
           <CafesMarker cafes={markData} />
-          <ActiveCafeMarker />
+          <ActiveCafeMarker cafeData={cafeData} />
           <LocationMarker />
         </MapContainer>
       </div>

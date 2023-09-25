@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { LiaUserAltSolid, LiaShoppingBagSolid } from 'react-icons/lia'
+import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
 
 export default function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  useEffect(() => {
+    async function fetchLoginStatus() {
+      const loggedIn = await checkLoginStatus()
+      setIsLoggedIn(loggedIn)
+    }
+
+    fetchLoginStatus()
+  }, [])
+
   return (
     <>
       <header className="ed-bg-setting fixed-top">
@@ -21,7 +33,13 @@ export default function Header() {
                 </a>
               </div>
               <div className="d-flex align-items-center ed-icon-padding">
-                <a href="http://localhost:3000/member">
+                <a
+                  href={
+                    isLoggedIn
+                      ? 'http://localhost:3000/member'
+                      : 'http://localhost:3000/member/login'
+                  }
+                >
                   <LiaUserAltSolid className="ed-icon-user" />
                 </a>
                 <a href="http://localhost:3000/cart">

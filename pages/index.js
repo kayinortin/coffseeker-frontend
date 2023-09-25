@@ -82,17 +82,18 @@ export default function Home() {
         </a>
         <a href="http://localhost:3000/course">
           <img
-            className="ed-img-size-2"
+            className="ed-img-size-2 d-none d-md-block"
             src="http://localhost:3000/index-image/course.png"
             alt="go-to-course"
           />
         </a>
       </div>
-      {/* 此處從後端專取熱銷商品，並提供前八名的商品資訊 */}
+      {/* 此處製作後端抓取熱銷商品，並提供前八名的商品資訊 */}
       <div className="container">
         <Hot />
       </div>
-      {/* 此處放置團體購買的圖片 */}
+      {/* 此處製作課程區 */}
+      {/* 此處製作團體購買的圖片 */}
       <div className="img-container">
         <img
           className="img-fluid d-block"
@@ -101,7 +102,7 @@ export default function Home() {
           id="company-buy"
         />
       </div>
-      {/* 此處為咖啡產地的介紹 */}
+      {/* 此處製作咖啡產地的介紹 */}
       <div className="container ed-index-product">
         <div className="hot-product-wrapper">
           <div className="line"></div>

@@ -4,18 +4,16 @@
 // 請特別注意，當使用bootstrap 內建 margin 功能，會讓這條失效
 .fixed-top {
   + * {
-    margin-top: 166px;
+    margin-top: 134px;
   }
 } 
-
-
 
  // header setting
   .ed-bg-setting{
     display:flex;
     align-items: center;
     background-color: #F2F3EE;
-    height: 100px;
+    height: 70px;
     transition: background-color 0.5s, opacity 0.5s;
     &.transparent{
       background-color: rgba(242, 243, 238, 0.8);
@@ -71,7 +69,7 @@
   // index setting
   .slick-slider {
     width: 100%;
-    height: calc(100vh - 166px);
+    height: calc(100vh - 134px);
     overflow: hidden;
   }
   
@@ -99,21 +97,6 @@
     }
   }
   }
-  .ed-position-relative {
-    display: block;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .ed-position-absolute {
-    display: block;
-    width: 20vw !important;
-    height: auto;
-    position: absolute;
-    top: calc(50% - 180px);
-    left: calc(50% - 150px);
-    z-index: 2;
-  }  
   .img-container {
     position: relative;
     width: 100%;
@@ -171,7 +154,7 @@
   @media (max-width: 576px) {
     .slick-slider {
       width: 390px;
-      height: calc(100vh - 132px);
+      height: calc(100vh - 120px);
       overflow: hidden;
     }
 

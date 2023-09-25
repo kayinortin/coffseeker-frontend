@@ -1,15 +1,24 @@
 $color--primary: #1c262c;
 $color--background: #f2f2f2;
 $color--black: #000000;
-/* news.module.scss */
+
+//index.js區
+//標題直線
+.ei-line {
+  flex-grow: 0;
+  width: 100px;
+  height: 1px;
+  background-color: $color--primary;
+}
+
 // 卡片區
 .news-link {
   text-decoration: none;
-  .p{
-    color: #1c262c;
+  .p {
+    color: $color--primary;
   }
-  .card-title{
-    color: #1c262c;
+  .ei-card-title {
+    color: $color--primary;
   }
 }
 
@@ -20,15 +29,17 @@ $color--black: #000000;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center !important;
 }
 
 .ei-card {
   // width: 94%;
   max-width: 700;
   height: 400px;
-  margin-inline: 30px; 
-  margin-block: 30px;
-  box-sizing: border-box; 
+  margin-inline: 30px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
   &:hover {
     // cursor: pointer;
     transform: scale(1.02);
@@ -68,60 +79,114 @@ $color--black: #000000;
   }
 }
 
-.card-title{
-  color: $color--primary;
-}
-
-
 // 卡片RWD區
 @media (max-width: 430px) {
   .ei-mobile-container {
-    width: 100%; 
+    width: 100%;
   }
-  .ei-btn-container{
+  .ei-btn-container {
     margin-top: 10px;
   }
   .ei-mobile-category-btn {
-    width: 100%; 
-    justify-content: center; 
+    width: 100%;
+    justify-content: center;
+    text-align: right;
   }
   .ei-card {
-    max-width: 100%; 
-    &:hover{
+    max-width: 100%;
+    margin-bottom: 40px;
+    &:hover {
       transform: none;
       box-shadow: none;
+    }
+    .ei-card-title {
+      line-height: 1.2rem;
     }
   }
   .ei-news-detail {
     width: 100%;
   }
+  .ei-mobile-card-margin {
+    margin-bottom: 15px !important;
+  }
 }
-// 在網頁版（非手機板）时将按钮放在左邊
-@media (min-width: 431px) {
+@media (min-width: 430px) {
   .ei-btn-container {
-    text-align: left; // 将按钮文本左对齐
+    text-align: left;
   }
 }
-
-// 手機板上按钮容器右对齐
-@media (max-width: 430px) {
-  .ei-mobile-category-btn {
-    text-align: right; // 将按钮文本右对齐
-  }
-}
-
+// @media screen and (max-width: 430px) {
+//   .ei-breadcrumb {
+//     display: none;
+//   }
+// }
 
 // [nid].js頁面
-.news-detail{
-  width: 70%;
+.ei-container-nid{
+  max-width: 90%;
+}
+.news-detail {
+  // width: 90%;
   margin: 0 auto;
-  img{
-    width: 880px;
+  padding-inline: 200px; /* 在大螢幕時設為 200 */
+  img {
+    width: 100%;
   }
-  .ei-news-date{
+  .ei-news-date {
     font-size: 14px;
   }
-  .ei-letter-spacing{
+  .ei-letter-spacing {
     line-height: 1.2rem;
+  }
+}
+
+// [nid].js  RWD區
+@media (max-width: 431px) {
+  .ei-container-nid{
+    padding: 0;
+    
+  }
+  .news-detail {
+    padding-inline: 10px; 
+  }
+  
+}
+
+// 分頁
+.ei-pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.ei-pagination {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 0px;
+}
+
+.page-item {
+  &.active {
+    font-weight: bold;
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.page-link {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f0f0f0;
   }
 }
