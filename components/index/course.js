@@ -132,7 +132,7 @@ export default function Course() {
             </div>
             <div className="container d-flex flex-column">
               <div className="my-4 d-md-flex justify-content-center align-items-center">
-                <a href="">
+                <a href="/course">
                   <button id="btn1" className="btn my-2 btn-color-1 me-md-5">
                     選豆課程
                   </button>
@@ -140,7 +140,7 @@ export default function Course() {
                 <h6 className="slogan">認識咖啡豆與產地差異</h6>
               </div>
               <div className="my-4 d-md-flex justify-content-center align-items-center">
-                <a href="">
+                <a href="/course">
                   <button id="btn2" className="btn my-2 btn-color-2 me-md-5">
                     烘豆課程
                   </button>

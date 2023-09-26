@@ -5,8 +5,10 @@ import InfoChangeForm from '@/components/member/InfoChangeForm'
 export default function info() {
   return (
     <>
-      <div className={'background'}>
+      {/* 麵包屑結束 */}
+      <section className={'background'}>
         <div className={'container'}>
+          {/* 麵包屑 */}
           {/* 麵包屑 */}
           <div className={'row'}>
             <nav className={'nav-breadcrumb'}>
@@ -25,38 +27,20 @@ export default function info() {
               </ol>
             </nav>
           </div>
-        </div>
-        {/* 麵包屑結束 */}
-        <section className={'background'}>
-          <div className={'container'}>
-            {/* 麵包屑 */}
-            <div className={'row'}>
-              <nav className={'nav-breadcrumb'}>
-                <ol className={'breadcrumb my-3'}>
-                  <li className={'breadcrumb-item'}>
-                    <Link href="http://localhost:3000/" className={'link'}>
-                      首頁
-                    </Link>
-                  </li>
-                  <li className={'breadcrumb-item'}>會員中心</li>
-                </ol>
-              </nav>
-            </div>
-            {/* 麵包屑結束 */}
+          {/* 麵包屑結束 */}
 
-            <div className={'row'}>
-              <div className={'col-3'}>
-                <MemSideBar />
-              </div>
-              <div className={'col-9 mb-5'}>
-                <div className={'px-5'}>
-                  <InfoChangeForm />
-                </div>
+          <div className={'row'}>
+            <div className={'col-3'}>
+              <MemSideBar />
+            </div>
+            <div className={'col-9 mb-5'}>
+              <div className={'px-5'}>
+                <InfoChangeForm />
               </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </>
   )
 }

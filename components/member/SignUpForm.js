@@ -216,10 +216,10 @@ export default function SignUpForm() {
           'container d-flex justify-content-center mt-4 mb-3 align-items-center'
         }
       >
-        <div className={'form-check'}>
+        <div className={'form-check d-flex align-items-center'}>
           <input
             type="checkbox"
-            className={'form-check-input'}
+            className={'check-input me-3'}
             id="CheckForPapers"
           />
           <label className={'form-check-label'} htmlFor="CheckForPapers">
@@ -232,10 +232,10 @@ export default function SignUpForm() {
           'container d-flex justify-content-center mt-3 mb-4 align-items-center'
         }
       >
-        <div className={'form-check'}>
+        <div className={'form-check d-flex align-items-center'}>
           <input
             type="checkbox"
-            className={'form-check-input'}
+            className={'check-input me-3'}
             id="exampleCheck2"
             onClick={() => {
               if (allowContract) {
@@ -254,16 +254,18 @@ export default function SignUpForm() {
           </label>
         </div>
       </div>
-      <div className={'container d-flex justify-content-center allow-btn'}>
-        {allowContract === true ? (
+      {allowContract === true ? (
+        <div className={'container d-flex justify-content-center'}>
           <div
             className={
-              'btn-login text-center d-flex justify-content-center flex-column mb-5 agree'
+              'btn-login allow-btn text-center d-flex justify-content-center flex-column mb-5'
             }
           >
-            <span>確認並送出</span>
+            <span className={'agree'}>確認並送出</span>
           </div>
-        ) : (
+        </div>
+      ) : (
+        <div className={'container d-flex justify-content-center'}>
           <div
             className={
               'text-center d-flex justify-content-center flex-column mb-5 disagree'
@@ -271,8 +273,8 @@ export default function SignUpForm() {
           >
             <span>請勾選同意會員隱私條款</span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   )
 }

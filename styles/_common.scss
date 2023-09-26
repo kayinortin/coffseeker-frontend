@@ -22,7 +22,6 @@
 .header {
   position: relative;
 }
-
 .ed-icon-padding {
   padding: 10px;
 }
@@ -228,7 +227,6 @@
   letter-spacing: 10px;
 }
 
-
 @mixin btn-color {
   color: black;
   border-radius: 10px;
@@ -299,7 +297,6 @@
     height: calc(100vh - 120px);
     overflow: hidden;
   }
-
   .slick-dots {
     right: 0px;
     bottom: 4%;
@@ -343,7 +340,6 @@
   #s6 {
     content: url('http://localhost:3000/index-image/s6-m.png');
   }
-
   .ed-position-absolute {
     width: 280px !important;
     height: auto;

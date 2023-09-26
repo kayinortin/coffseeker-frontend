@@ -14,6 +14,17 @@ export default function ButtonTest() {
             記住密碼
           </label>
         </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+          />
+          <label class="form-check-label" htmlFor="flexCheckDefault">
+            Default checkbox
+          </label>
+        </div>
       </div>
     </>
   )

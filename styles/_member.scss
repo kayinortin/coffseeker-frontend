@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-
 // $color--secondary: #FF9B1A;
 
 // header的會員按鈕
@@ -10,157 +7,169 @@
 
 // 大標籤樣式變更
 
+// checkBox自製樣式
+.check-input {
+  appearance: none;
+  width: 16px; 
+  height: 16px; 
+  border: 1px solid #000000; 
+  &:checked {
+    background: url('https://cdn-icons-png.flaticon.com/512/3388/3388530.png') no-repeat top left / cover;
 
-.background{
-    background: #F2F3EE;
+  }
 }
 
-.sidebar{
-    // width: 100%;
-    height: 100vh;
-    // background:pink
+.background {
+  background: #f2f3ee;
 }
 
-.content{
-    // height: 100vh;
-    width: 650px;
-    // background: cyan;
+.sidebar {
+  // width: 100%;
+  height: 100vh;
+  // background:pink
+}
+
+.content {
+  // height: 100vh;
+  width: 650px;
+  // background: cyan;
 }
 
 // 麵包屑 Start
-.nav-breadcrumb{
-    --bs-breadcrumb-divider: '>';
-    .link{
-        color: $color--primary;
-        text-decoration: none;
-        &:hover{
-            color: $color--secondary;
-        }
+.nav-breadcrumb {
+  --bs-breadcrumb-divider: '>';
+  .link {
+    color: $color--primary;
+    text-decoration: none;
+    &:hover {
+      color: $color--secondary;
     }
-    
+  }
 }
 
 // 麵包屑 End
 
 // sideBar Start
 
-.sidebar-title{
-    font-size: 16px;
-    font-weight: bold;
-    color: $color--primary;
-    font-family: 'Noto Sans TC', sans-serif;
-    text-decoration: none;
-        &:hover{
-            color: $color--secondary;
-        }
+.sidebar-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: $color--primary;
+  font-family: 'Noto Sans TC', sans-serif;
+  text-decoration: none;
+  &:hover {
+    color: $color--secondary;
+  }
 }
 // sideBar End
 
 // 表單 Start
 
-.form-title{
-    background: #e0e0e0;
-    font-weight: bold;
-    color: $color--primary;
-    font-family: 'Noto Sans TC', sans-serif;
+.form-title {
+  background: #e0e0e0;
+  font-weight: bold;
+  color: $color--primary;
+  font-family: 'Noto Sans TC', sans-serif;
 }
-
 
 // 表單input統規
-.form-box{
-    width: 650px;
-    input.form-control{
-        height: 60px;
-        border: black solid 1px;
-        background: none;
-    }
-    select.form-select{
-        height: 60px;
-        border: black solid 1px;
-        background-color:#ffffff00
-        // background: #F2F3EE;
-    }
+.form-box {
+  width: 650px;
+  input.form-control {
+    height: 60px;
+    border: black solid 1px;
+    background: none;
+  }
+  select.form-select {
+    height: 60px;
+    border: black solid 1px;
+    background-color: #ffffff00;
+    // background: #F2F3EE;
+  }
 }
+// cursor: pointer;
 
 // 按鈕統規
-.btn-login{
-    cursor: pointer;
-    color: #ffffff;
-    background:$color--secondary;
-    font-family: "Noto Sans TC";
-    font-size: 18px;
-    height: 48px;
-    width: 650px;
-    
+.btn-login {
+  color: #ffffff;
+  background: $color--secondary;
+  font-family: 'Noto Sans TC';
+  font-size: 18px;
+  height: 48px;
+  width: 650px;
 }
 
 // 登入頁面 詢問註冊
-.ask-for-register{
-    font-size: 20px;
-    font-family: "Noto Sans TC";
-    span{
-        color: #a7a7a7;
-    }
-    a{
-        color: $color--secondary;
-        text-decoration: none;
-    }
-}
-
-.forget-password{
-    font-size: 16px;
-    font-family: "Noto Sans TC";
+.ask-for-register {
+  font-size: 20px;
+  font-family: 'Noto Sans TC';
+  span {
     color: #a7a7a7;
-    text-decoration: none;
-    
-}
-
-.birthday-selector{
-    visibility: hidden;
-}
-
-.allow-btn{
-    .disagree{
-        cursor: pointer;
-        color: #ffffff;
-        font-family: "Noto Sans TC";
-        font-size: 18px;
-        height: 48px;
-        width: 650px;
-        background: #a7a7a7;
-    }
-}
-
-.orange-text{
+  }
+  a {
     color: $color--secondary;
+    text-decoration: none;
+  }
 }
 
-@media screen and (max-width: 768px) {
-    .ask-for-login{
-        display: flex;
-        flex-direction: column
-    }
+.forget-password {
+  font-size: 16px;
+  font-family: 'Noto Sans TC';
+  color: #a7a7a7;
+  text-decoration: none;
 }
 
-.membership-button{
-    svg{
+.birthday-selector {
+  visibility: hidden;
+}
+
+.allow-btn {
+    cursor: pointer;
+    .agree{
         cursor: pointer;
-        &:hover{
-         color: $color--secondary;   
-        }
-    }    
+    }
+}
+.disagree {
+  color: #ffffff;
+  font-family: 'Noto Sans TC';
+  font-size: 18px;
+  height: 48px;
+  width: 650px;
+  background: #a7a7a7;
 }
 
-.member-dropdown{
-    background: white;
-    left: -92px;
-    text-wrap: nowrap;
-    .dropdown-option{
-        a{
-            color:$color--primary;
-        }
-        &:hover{
-            background: $color--secondary;
-        }
+.orange-text {
+  color: $color--secondary;
+}
+
+.ask-for-login{
+    width: 650px;
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        max-width:fit-content ;
     }
+}
+
+.membership-button {
+  svg {
+    cursor: pointer;
+    &:hover {
+      color: $color--secondary;
+    }
+  }
+}
+
+.member-dropdown {
+  background: white;
+  left: -92px;
+  text-wrap: nowrap;
+  .dropdown-option {
+    a {
+      color: $color--primary;
+    }
+    &:hover {
+      background: $color--secondary;
+    }
+  }
 }

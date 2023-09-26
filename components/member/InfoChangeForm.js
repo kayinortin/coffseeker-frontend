@@ -23,7 +23,7 @@ export default function InfoChangeForm() {
 
   return (
     <>
-      <div className={'login border border-dark'}>
+      <div className={'form-box border border-dark'}>
         <div className={'form-title border-bottom border-dark p-3'}>
           會員資料檢視/修改
         </div>
