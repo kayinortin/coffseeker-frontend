@@ -7,7 +7,7 @@ export default function LoginForm() {
   return (
     <>
       <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'login border border-dark'}>
+        <div className={'form-box border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             會員登入
           </div>
