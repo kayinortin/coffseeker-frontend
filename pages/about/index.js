@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import style from '../../styles/_about.module.scss'
 import ContactUs from '@/components/about/send-message'
+import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 
 export default function About() {
   return (
@@ -111,6 +112,60 @@ export default function About() {
             </div>
           </div>
           <ContactUs />
+
+          <div className="container d-sm-none">
+            <div className="row mb-3">
+              <label htmlFor="message" className="col-sm-2 col-form-label">
+                訊息:
+              </label>
+              <div className="col-sm-10">
+                <textarea
+                  className="form-control"
+                  name="message"
+                  id="message"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="name" className="col-sm-2 col-form-label">
+                姓名:
+              </label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  id="name"
+                />
+              </div>
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="email" className="col-sm-2 col-form-label">
+                Email:
+              </label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  id="email"
+                />
+              </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col-sm-12 text-center">
+                <button
+                  type="submit"
+                  name="submit"
+                  value="NOW, I SEND THANKS!"
+                  className="btn btn-dark"
+                >
+                  送出
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>
