@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import MemSideBar from '@/components/member/SideBar'
 
 // 這頁面map後的資料並沒有以key值呈現，因為沒有id，所以會出現警告
 // 建議在map後的資料加上id，例如：
@@ -21,15 +22,6 @@ import Link from 'next/link'
 //         {list.title}...
 
 export default function User() {
-  const sidebar = [
-    '會員中心',
-    '會員資料查詢/修改',
-    '修改密碼',
-    '訂單管理',
-    '我的收藏',
-    '優惠券',
-    '登出',
-  ]
   return (
     <>
       <section className={'background'}>
@@ -51,39 +43,15 @@ export default function User() {
 
           <div className={'row'}>
             <div className={'col-3'}>
-              <div className={'sidebar d-flex flex-column'}>
-                {sidebar.map((list) => {
-                  return (
-                    <>
-                      <div className={'border-bottom p-2'}>
-                        {/* 未添加key值 */}
-                        <Link href="/" className={'sidebar-title'}>
-                          {list}
-                        </Link>
-                      </div>
-                    </>
-                  )
-                })}
-              </div>
+              <MemSideBar />
             </div>
             <div className={'col-9 mb-5'}>
               <div className={'content border border-dark'}>
                 <div className={'form-title border-bottom border-dark p-3'}>
                   會員中心
                 </div>
-                <div className={'d-flex flex-column px-5'}>
-                  {sidebar.map((list) => {
-                    return (
-                      <>
-                        <div className={'border-bottom p-2'}>
-                          {/* 未添加key值 */}
-                          <Link href="/" className={'sidebar-title'}>
-                            {list}
-                          </Link>
-                        </div>
-                      </>
-                    )
-                  })}
+                <div className={'px-5'}>
+                  <MemSideBar />
                 </div>
               </div>
             </div>

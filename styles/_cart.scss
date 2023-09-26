@@ -1,5 +1,4 @@
 //color
-$color-white: #fff;
 $color-black: #000;
 $color-gray: #808080;
 $color-lightgray: #E0E0E0;
@@ -21,7 +20,7 @@ $fw-bold:700;
 $fw-black:900;
 
 .background{
-    background-color: #69782e
+    // background-color: #69782e
 }
 
 .steps{
@@ -61,7 +60,7 @@ $fw-black:900;
                 text-align: center;
             }
             .setnumWhite{
-                color: $color-white;
+                color: $color--white;
             }
             .setnumGray{
                 color: $color-gray;
@@ -93,15 +92,16 @@ $fw-black:900;
 }
 
 
-.carts{
+table.carts{
     padding-block: 1rem;
+    width: 100%;
     
     thead.cartLabels{
         border: 1px solid $color--primary;
         background-color: $color-lightgray;
         font-size: $fs-sm;
         tr{
-        
+
             th{
                 padding-block: 1rem;
                 padding-inline: 0.5rem;
@@ -114,29 +114,47 @@ $fw-black:900;
     tbody.cartProducts{
         border: 1px solid $color--primary;
 
-        tr{
-           
-         
+        tr{   
+            // border: 3px solid red;
+            border-bottom: 1px solid $color--primary;
             td{
-                padding: .5rem;
+                padding: 1rem;
                 text-align: center;
-                .quantity{
-                    text-align: center;
-                }
-                button{
-                    width: 32px;
-                    height: 32px;
-                    color: $color-white;
-                    background-color:$color--secondary;
-                    :active{
-                        background-color: red;
+            }
+
+            td.quantity {
+                .btn-group{
+                    button {
+                        width: 40px;
+                        height: 40px;
+                        color: $color--primary;
+                        border: 1px solid $color--primary;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        transition: background-color 0.3s, color 0.3s;
+                        &:hover {
+                          background-color: $color--secondary;
+                          color: $color--white;
+                        }
+                    }
+                    input.forminput{
+                        width: 60px;
+                        height: 40px;
+                        border-block: 1px solid $color--primary;
+                        text-align: center;
+                        background-color: $color--background;
                     }
                 }
             }
-            
-        }
-        :hover{
-            background-color: $color--gray6;
+            td.cartdelete{
+                    width: 100%;
+                    height: 100%;
+                    border: 1px solid #FF9B1A;
+                .trash{
+                   
+                }
+            }
         }
         
     }
