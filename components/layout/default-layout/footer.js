@@ -3,19 +3,23 @@ import Image from 'next/image'
 import { GrFacebook, GrInstagram } from 'react-icons/gr'
 
 function scrollToTop() {
+  // TOP按鈕平滑效果
   window.scrollTo({
     top: 0,
-    behavior: 'smooth', // 使用平滑滚动
+    behavior: 'smooth',
   })
 }
 
 export default function Footer() {
   return (
+    // footer全版區塊
     <div className="bg-primary-color">
+      {/* footer內容書寫區 */}
       <div className="container pb-5 pt-5" style={{ maxWidth: '1600px' }}>
         <div className="row">
           <div className="col-lg-3 col-md-2 mb-4 mb-md-0 text-center">
             <div className="d-flex flex-column align-items-center">
+              {/* footer大圖 */}
               <a href="http://localhost:3000" className="d-block">
                 <Image
                   src="http://localhost:3000/coffseeker-logo-footer.png"
@@ -31,6 +35,7 @@ export default function Footer() {
                   height={42}
                 />
               </a>
+              {/* 三個外部連結 */}
               <div className="d-flex mt-3">
                 <a href="" className="mx-3">
                   <GrFacebook
@@ -53,6 +58,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
+          {/* 拉資料庫資訊後拆成component導入 */}
           <div className="col-lg-4 col-md-2 ms-md-5 ps-md-5 px-4 text-white mt-5">
             <h5 className="text-white">最新消息</h5>
             <hr />
@@ -81,6 +87,7 @@ export default function Footer() {
               <p className="footer-p-color">Jul 31, 2023</p>
             </div>
           </div>
+          {/* 拉資料庫資訊後拆成component導入 */}
           <div className="col-lg-4 col-md-2 ms-md-5 ps-md-5 px-4 text-white mt-5">
             <h5 className="text-white">咖啡資訊</h5>
             <hr />
@@ -120,7 +127,7 @@ export default function Footer() {
             <p className="my-3 fw-light">條款及細則</p>
           </div>
         </div>
-        <div className="d-flex justify-content-center align-items-center mt-4">
+        <div className="d-flex justify-content-center align-items-center mt-2">
           <button
             onClick={scrollToTop}
             className="btn btn-outline-light px-4 py-2"

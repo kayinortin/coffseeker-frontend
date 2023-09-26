@@ -1,20 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Hot from '../components/product/index'
-import Slider from 'react-slick'
+import Course from '../components/index/course'
+import Slider from '../components/index/slider'
+import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 // 手機版照片要置換成 390 * 724
 
 export default function Home() {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: false,
-  }
   return (
     <>
       {/* 本頁面不刻意用container包住，因為container會有padding，會影響到圖片的寬度 */}
@@ -25,52 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* 此處製作首頁幻燈片 */}
-      <div>
-        <Slider {...settings}>
-          <div>
-            <img
-              id="s1"
-              src="http://localhost:3000/index-image/s1.png"
-              alt="Slide 1"
-            />
-          </div>
-          <div>
-            <img
-              id="s2"
-              src="http://localhost:3000/index-image/s2.png"
-              alt="Slide 2"
-            />
-          </div>
-          <div>
-            <img
-              id="s3"
-              src="http://localhost:3000/index-image/s3.png"
-              alt="Slide 3"
-            />
-          </div>
-          <div>
-            <img
-              id="s4"
-              src="http://localhost:3000/index-image/s4.png"
-              alt="Slide 4"
-            />
-          </div>
-          <div>
-            <img
-              id="s5"
-              src="http://localhost:3000/index-image/s5.png"
-              alt="Slide 5"
-            />
-          </div>
-          <div>
-            <img
-              id="s6"
-              src="http://localhost:3000/index-image/s6.png"
-              alt="Slide 6"
-            />
-          </div>
-        </Slider>
-      </div>
+      <Slider />
       {/* 此處製作商城與課程的按鈕 */}
       <div className="d-md-flex d-flex-colum justify-content-center">
         <a href="http://localhost:3000/product">
@@ -93,6 +40,7 @@ export default function Home() {
         <Hot />
       </div>
       {/* 此處製作課程區 */}
+      <Course />
       {/* 此處製作團體購買的圖片 */}
       <div className="img-container">
         <img
@@ -103,43 +51,7 @@ export default function Home() {
         />
       </div>
       {/* 此處製作咖啡產地的介紹 */}
-      <div className="container ed-index-product">
-        <div className="hot-product-wrapper">
-          <div className="line"></div>
-          <div className="hot-product">咖啡與它們的產地</div>
-          <div className="line"></div>
-        </div>
-      </div>
-      <div className="d-flex flex-column flex-md-row my-md-5 my-3 justify-content-md-center">
-        <div className="d-flex flex-column col-md-4">
-          <div className="d-flex justify-content-center">
-            <Image
-              className="d-block ed-orgin-img"
-              src="http://localhost:3000/index-image/origin.png"
-              alt="COFFSEEKER"
-              width={400}
-              height={80}
-              lazy="true"
-            />
-          </div>
-          <h4 className="ed-orgin-text mt-md-5 mt-3">
-            哥倫比亞，這片位於南美洲的土地，是咖啡文化的重要發源地之一。它的高海拔山脈，孕育了無數優質的咖啡樹，帶給世界無盡的美味。
-            <br />
-            <br />
-            在哥倫比亞的咖啡產區，咖啡農們經歷著漫長而辛苦的日子，細心照料每一棵咖啡樹，等待著最佳的收成時機。他們的辛勞，正是一杯香醇咖啡背後的故事。
-          </h4>
-        </div>
-        <div className="">
-          <img
-            className="img-fluid d-block"
-            src="http://localhost:3000/index-image/world-map.svg"
-            alt="instagram"
-            id="instagram"
-            width={1200}
-            height={60}
-          />
-        </div>
-      </div>
+      <CoffeeMap />
     </>
   )
 }

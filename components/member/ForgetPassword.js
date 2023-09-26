@@ -66,9 +66,8 @@ export default function ForgetPassword() {
 
   return (
     <>
-      <div>本頁面已經串好OTP by Edison</div>
       <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'login border border-dark'}>
+        <div className={'form-box border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             忘記密碼
           </div>
@@ -91,52 +90,72 @@ export default function ForgetPassword() {
         </div>
       </div>
       <div className={'container d-flex justify-content-center'}>
-        <div
+        <button
           className={
-            'btn-login text-center d-flex justify-content-center flex-column'
+            'btn-login text-center allow-btn mb-3 border-0 text-center'
           }
+          onClick={getOtp}
         >
-          <button onClick={getOtp}>
-            {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
-          </button>
+          {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
+        </button>
+      </div>
+      <div className="container d-flex justify-content-center mb-3">
+        <div className={'form-box border border-dark'}>
+          <div className={'form-title border-bottom border-dark p-3'}>
+            重設密碼
+          </div>
+          <form className={'p-5'}>
+            <div className={'mb-3'}>
+              <label htmlFor="OTPcode" className={'form-label'}>
+                電子郵件驗證碼：
+              </label>
+              <input
+                type="text"
+                className={'form-control'}
+                value={token}
+                placeholder="請輸入您在信箱取得的驗證碼"
+                id="OTPcode"
+                onChange={(e) => setToken(e.target.value)}
+              />
+            </div>
+            <div className={'mb-3'}>
+              <label htmlFor="newPassword" className={'form-label'}>
+                新密碼：
+              </label>
+              <input
+                type="text"
+                className={'form-control'}
+                value={password}
+                placeholder="請輸入8~12位數,英數混和的密碼"
+                id="newPassword"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </form>
         </div>
       </div>
-      <div className="container">
-        <label>
-          電子郵件驗證碼：
-          <input
-            type="text"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          新密碼：
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button onClick={resetPassword}>重設密碼</button>
+      <div className={'container d-flex justify-content-center'}>
+        <button
+          className={'btn-login text-center allow-btn mb-3 border-0'}
+          onClick={resetPassword}
+        >
+          重設密碼
+        </button>
       </div>
       <div
         className={
-          'container d-flex justify-content-between content p-0 align-items-center ask-for-login'
+          'container d-flex justify-content-between p-0 align-items-center ask-for-login'
         }
       >
-        {/* <div className={'my-3'}></div> */}
         <div className={'ask-for-regester my-3'}>
           <span className="me-3">已經是會員了?</span>
-          <Link href="./register" className={'text-secondary ms-3'}>
+          <Link href="./login" className={'orange-text ms-3'}>
             會員登入
           </Link>
         </div>
         <div className={'ask-for-regester my-3'}>
           <span className="me-3">還不是會員嗎?</span>
-          <Link href="./register" className={'text-secondary ms-3'}>
+          <Link href="./register" className={'orange-text ms-3'}>
             加入會員
           </Link>
         </div>

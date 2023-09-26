@@ -1,47 +1,161 @@
+//color
+$color-black: #000;
+$color-gray: #808080;
+$color-lightgray: #E0E0E0;
+
 //圓角
-$border-radius: 100%;
-
+$border-circle: 100%;
 //寬度
-$width-small: 60px;
-$width-medium: 80px;
-$width-large: 100px;
-//文字大小
+$width-sm: 60px;
+$width-md: 80px;
+$width-lg: 100px;
+//文字
+$fs-sm: 1rem;
+$fs-md: 1.25rem;
+$fs-lg: 1.5rem;
+$fs-xl: 2rem;
 
+$fw-regular:400;
+$fw-bold:700;
+$fw-black:900;
 
-
-
-.step{
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+.background{
+    // background-color: #69782e
 }
 
-.stepTop{
+.steps{
     display: flex;
-    padding: 0px;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-}   
-.stepCircle{
-    width: $width-small;
-    height: $width-small;
-    background-color: $color--primary;
-    border-radius: $border-radius;
+    gap: 2rem;
+    padding-block: 1rem;
+  
+    .step{
+        padding: 1.5rem;
+
+        .stepTop{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 1rem;
+    
+            .stepCircle{
+                width: $width-sm;
+                height: $width-sm;
+                border-radius: $border-circle;
+            }
+            .circleBlue{
+                background-color: $color--primary;
+            }
+            .circleGray{
+                background-color: $color-lightgray;
+                border: 2px solid $color-gray;
+            }
+    
+            .setNum{
+                position: absolute;
+                font-size: $fs-xl;
+                font-weight: $fw-bold;
+                text-align: center;
+            }
+            .setnumWhite{
+                color: $color--white;
+            }
+            .setnumGray{
+                color: $color-gray;
+            }
+        }  
+    
+        .stepFont{
+            font-size: $fs-md;
+            font-weight: $fw-regular;
+        }
+        .stepfontBlue{
+            color: $color--primary;
+        }
+        .stepfontGray{
+            color: $color-gray;
+        }
+    }
+
+    .arrow{
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+    .arrowBlue{
+        color: $color--primary;
+    }
+    .arrowGray{
+        color: $color-lightgray;
+    }
 }
-.setNum{
-    position: absolute;
-    font-size: 2rem;
-    font-weight: 700;
-    color: $white;
-    text-align: center;
-}
-.stepFont{
-    color: $color--primary;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-.circle-gray{
-    background-color: $color--gray3;
+
+
+table.carts{
+    padding-block: 1rem;
+    width: 100%;
+    
+    thead.cartLabels{
+        border: 1px solid $color--primary;
+        background-color: $color-lightgray;
+        font-size: $fs-sm;
+        tr{
+
+            th{
+                padding-block: 1rem;
+                padding-inline: 0.5rem;
+                vertical-align: middle;
+                text-align: center;
+                min-width: 80px;
+            }
+        }
+    }
+    tbody.cartProducts{
+        border: 1px solid $color--primary;
+
+        tr{   
+            // border: 3px solid red;
+            border-bottom: 1px solid $color--primary;
+            td{
+                padding: 1rem;
+                text-align: center;
+            }
+
+            td.quantity {
+                .btn-group{
+                    button {
+                        width: 40px;
+                        height: 40px;
+                        color: $color--primary;
+                        border: 1px solid $color--primary;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        transition: background-color 0.3s, color 0.3s;
+                        &:hover {
+                          background-color: $color--secondary;
+                          color: $color--white;
+                        }
+                    }
+                    input.forminput{
+                        width: 60px;
+                        height: 40px;
+                        border-block: 1px solid $color--primary;
+                        text-align: center;
+                        background-color: $color--background;
+                    }
+                }
+            }
+            td.cartdelete{
+                    width: 100%;
+                    height: 100%;
+                    border: 1px solid #FF9B1A;
+                .trash{
+                   
+                }
+            }
+        }
+        
+    }
 }

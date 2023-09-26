@@ -9,7 +9,7 @@ export default function PopularProducts() {
   }
   return (
     <>
-      <div className="container ed-index-product">
+      <div className="container ed-index">
         <div className="hot-product-wrapper">
           <div className="line"></div>
           <div className="hot-product">熱銷商品</div>
