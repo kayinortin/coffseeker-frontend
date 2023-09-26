@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="ed-bg-setting fixed-top z-1031">
+      <header className="ed-bg-setting fixed-top">
         <div className="container">
           <div className="row">
             <div className="d-flex col-12 justify-content-md-between justify-content-end">

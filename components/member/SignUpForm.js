@@ -211,7 +211,7 @@ export default function SignUpForm() {
           />
           <label className={'form-check-label'} htmlFor="exampleCheck2">
             我已閱讀並同意
-            <Link href="" className={'text-secondary'}>
+            <Link href="" className={'orange-text'}>
               「會員隱私條款」
             </Link>
           </label>
