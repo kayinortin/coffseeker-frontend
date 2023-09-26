@@ -6,7 +6,7 @@ export default function MemSideBar() {
     {
       id: 1,
       option: '會員中心',
-      href: '/member/',
+      href: '/member',
     },
     {
       id: 2,
