@@ -9,9 +9,9 @@ export default function SendMessage() {
         <h3 className="text-center news-title mobile-contact-us">聯絡我們</h3>
         <div className="ei-line ms-3"></div>
       </div>
-      
+
       {/* 信封區 */}
-      <div id="ei-wrap" className="ei-about-container  d-none d-lg-block">
+      <div id="ei-wrap" className="ei-about-container d-none d-lg-block">
         <div id="ei-form-wrap" className={`ei-form}`}>
           <form className="ei-form ">
             <label htmlFor="email" className="mb-3">
