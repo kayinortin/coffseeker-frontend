@@ -1,6 +1,7 @@
 
 $color--secondary: #FF9B1A;
 $color--card-background:#CBB48B;
+$color--primary: #1c262c;
 
 
 
@@ -31,6 +32,10 @@ $color--card-background:#CBB48B;
   //-------------------btn
   .btn-add{
     background-color: $color--secondary;
+  }
+
+  .btn-check{
+    background-color: $color--primary;
   }
 
  
