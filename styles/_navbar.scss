@@ -172,23 +172,26 @@ ul.dropdown-menu {
 .ed-reset {
   position: fixed;
   z-index: 1040 !important;
-  width: 280px;
-  height: 400px;
+  width: 220px;
+  height: 360px;
   top: 70px !important;
-  right: 250px !important;
-  color: #1c262c;
-  background-color: #ffffff;
+  right: 275px !important;
+  color: $color--primary;
+  background-color: white;
   li {
     font-size: 18px;
     padding: 6px;
     margin-block: 6px;
-    border-bottom: 1px solid #1c262c;
+    border-bottom: 1px solid $color--primary;
+    &:nth-child(7){
+      border-bottom: none;
+    }
     .dropdown-item {
       color: gray;
-      font-size: 1em;
+      font-size: 16px;
       padding: 0.5em 1em;
       &:hover {
-        color: #ffffff;
+        color: white;
         background-color: $color--primary;
       }
     }

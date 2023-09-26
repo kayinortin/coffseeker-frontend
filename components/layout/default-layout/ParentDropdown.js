@@ -1,34 +1,29 @@
-import { useState } from 'react'
-import Dropdown from '../default-layout/dropdown'
-import DropdownUser from '../default-layout/dropdown-user'
-import Data from '@/data/dropdown/menuItems.json'
-import DataUser from '@/data/dropdown/admin.json'
+import React, { useState } from 'react'
+import Navbar from './navbar'
+import Header from './header'
 
 export default function ParentComponent() {
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [dropdownUserOpen, setDropdownUserOpen] = useState(false)
-
-  const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev)
-    setDropdownUserOpen(false)
-  }
+  const [activeDropdown, setActiveDropdown] = useState('none')
 
   const toggleDropdownUser = () => {
-    setDropdownUserOpen((prev) => !prev)
-    setDropdownOpen(false)
+    setActiveDropdown(activeDropdown === 'user' ? 'none' : 'user')
+  }
+
+  const toggleDropdown = () => {
+    setActiveDropdown(activeDropdown === 'navbar' ? 'none' : 'navbar')
   }
 
   return (
     <>
-      <Dropdown
-        items={Data}
-        isOpen={dropdownOpen}
-        toggleDropdown={toggleDropdown}
+      <Header
+        isOpen={activeDropdown === 'user'}
+        toggleDrop={toggleDropdownUser}
+        currentDropdown={activeDropdown}
       />
-      <DropdownUser
-        items={DataUser}
-        isOpen={dropdownUserOpen}
-        toggleDropdown={toggleDropdownUser}
+      <Navbar
+        isOpen={activeDropdown === 'navbar'}
+        toggleDrop={toggleDropdown}
+        currentDropdown={activeDropdown}
       />
     </>
   )
