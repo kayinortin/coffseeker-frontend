@@ -1,0 +1,47 @@
+[
+    {
+      "id": 1,
+      "label": "線上購物",
+      "children": [
+        { "id": 11, "label": "全站商品", "href": "/product" },
+        { "id": 12, "label": "咖啡球", "href": "/product/category/01" },
+        { "id": 13, "label": "濾掛包", "href": "/product/category/02" },
+        { "id": 14, "label": "咖啡豆", "href": "/product/category/03" },
+        { "id": 15, "label": "中淺焙 > 偏酸", "href": "/product/category/04" },
+        { "id": 16, "label": "中　焙 > 不酸不苦", "href": "/product/category/05" },
+        { "id": 17, "label": "中深焙 > 偏苦", "href": "/product/category/06" },
+        { "id": 18, "label": "企業團購", "href": "/product/category/07" },
+        { "id": 19, "label": "送禮推薦", "href": "/product/category/08" }
+      ]
+    },
+    {
+      "id": 2,
+      "label": "咖啡資訊",
+      "children": [
+        { "id": 21, "label": "咖啡占卜", "href": "/infomation/divination" },
+        { "id": 22, "label": "烘焙介紹", "href": "/infomation/baked" },
+        { "id": 23, "label": "手沖資訊", "href": "/infomation/handbrewed" }
+      ]
+    },
+    {
+      "id": 3,
+      "label": "咖啡地圖",
+      "href": "/map"
+    },
+    {
+      "id": 4,
+      "label": "課程預約",
+      "href": "/course"
+    },
+    {
+      "id": 5,
+      "label": "最新消息",
+      "href": "/news"
+    },
+    {
+      "id": 6,
+      "label": "關於我們",
+      "href": "/about"
+    }
+  ]
+  
