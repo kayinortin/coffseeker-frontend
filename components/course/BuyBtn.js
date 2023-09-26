@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '@/styles/_course.module.scss'
+import Link from 'next/link'
 
 function AddCartBtn() {
   return (
@@ -10,7 +11,13 @@ function AddCartBtn() {
 }
 
 function BuyBtn() {
-  return <button className="btn btn-secondary btn-check">立即結帳</button>
+  return (
+    <div className={`${styles['btn-check']} text-center px-2 py-1  `}>
+      <Link href="http://localhost:3000/cart" className="text-white">
+        立即結帳
+      </Link>
+    </div>
+  )
 }
 
 export { AddCartBtn, BuyBtn }
