@@ -4,42 +4,63 @@ import { FaFacebook, FaGoogle } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 
 export default function LoginForm() {
+  const inputs = [
+    {
+      id: 1,
+      htmlFor: 'InputEmail',
+      title: '會員信箱(登入帳號)',
+      placeholder: '請輸入信箱',
+      type: 'email',
+      htmlId: 'Inputmail',
+      aria: null,
+      maxlength: 50,
+    },
+    {
+      id: 2,
+      htmlFor: 'InputPassword',
+      title: '密碼',
+      placeholder: '請輸入密碼',
+      type: 'password',
+      htmlId: 'InputPassword',
+      aria: null,
+      maxlength: 10,
+    },
+  ]
   return (
     <>
       <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'login border border-dark'}>
+        <div className={'form-box border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             會員登入
           </div>
           <form className="p-5">
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                會員信箱(登入帳號)
-              </label>
-              <input
-                placeholder="請輸入信箱"
-                type="email"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              <div id="emailHelp" className="form-text"></div>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-                密碼
-              </label>
-              <input
-                placeholder="請輸入密碼"
-                type="password"
-                className="form-control"
-                id="exampleInputPassword1"
-              />
-            </div>
-            <div className={'mb-3 form-check'}>
+            {inputs.map((input) => {
+              return (
+                <>
+                  <div className="mb-3" key={input.id}>
+                    <label htmlFor={input.htmlFor} className={'form-label'}>
+                      {input.title}
+                    </label>
+                    <input
+                      placeholder={input.placeholder}
+                      type={input.tyoe}
+                      className={'form-control'}
+                      id={input.htmlId}
+                      aria-describedby={input.aria}
+                      maxLength={input.maxlength}
+                    />
+                    <div
+                      id={'error' + input.id}
+                      className={'form-text text-danger'}
+                    ></div>
+                  </div>
+                </>
+              )
+            })}
+            <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>
               <input
                 type="checkbox"
-                className={'form-check-input'}
+                className={'check-input me-3 rounded-0'}
                 id="exampleCheck1"
               />
               <label className={'form-check-label'} htmlFor="exampleCheck1">
@@ -67,8 +88,8 @@ export default function LoginForm() {
         <FaGoogle className={'h1'} />
         <FaXTwitter className={'h1 ms-5'} />
       </div>
-      <div className={'container d-flex justify-content-center'}>
-        <div className={'ask-for-register mb-2'}>
+      <div className={'container d-flex justify-content-center mb-3'}>
+        <div className={'ask-for-register'}>
           <span className="me-3">還不是會員嗎?</span>
           <Link href="./register" className={'ms-3'}>
             加入會員
@@ -80,7 +101,7 @@ export default function LoginForm() {
           <Link href="/" className={'forget-password'}>
             會員隱私條款
           </Link>
-          <Link href="/" className={'forget-password'}>
+          <Link href="/member/forget-password" className={'forget-password'}>
             忘記密碼
           </Link>
         </div>
