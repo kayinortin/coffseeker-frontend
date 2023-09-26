@@ -13,6 +13,7 @@ export default function CourseList() {
       <ul className=" row row-cols-sm-3 flex-wrap list-unstyled">
         {data.map((v, i) => {
           let {
+            id,
             name,
             price,
             start_date,
@@ -30,15 +31,15 @@ export default function CourseList() {
                 price={price}
                 start_date={start_date}
                 end_date={end_date}
-                capacity={capacity}
                 description={description}
                 image={image}
+                id={id}
               />
             </li>
           )
         })}
       </ul>
-      <Pagination />
+      {/* <Pagination /> */}
     </div>
   )
 }

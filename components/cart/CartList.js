@@ -1,5 +1,5 @@
 import React from 'react'
-import { RiDeleteBin6Line } from 'react-icons/Ri'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 
 function CartList() {
   return (
@@ -7,11 +7,7 @@ function CartList() {
       <table className={'carts'}>
         <thead className={'cartLabels'}>
           <tr>
-            <th
-              className={'align-middle p-6 text-start'}
-              colSpan="2"
-              scope="col"
-            >
+            <th className={'align-middle text-start'} colSpan="2" scope="col">
               項目
             </th>
             <th className={'align-middle'} scope="col">
@@ -32,7 +28,7 @@ function CartList() {
           </tr>
         </thead>
         <tbody className={'cartProducts'}>
-          <tr>
+          <tr className={''}>
             <td className={'align-middle'}>
               <img
                 className={'img-fluid'}
@@ -42,16 +38,42 @@ function CartList() {
             </td>
             <td className={'align-middle text-start'}>
               <div className={'fs-4 mb-2'}>商品名稱</div>
-              <div className={'fs-6'}>
+              <div className={'fs-6 '}>
                 商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情商品詳情
               </div>
             </td>
-            <td className={'align-middle'}>+1</td>
-            <td className={'align-middle'}>$999</td>
+            <td className={'align-middle  quantity'} role="gruup">
+              <div className={'btn-group'}>
+                <button
+                  type="button"
+                  value="+"
+                  className={'btn quantityMinus'}
+                  id={'quantityMinus'}
+                >
+                  -
+                </button>
+                <input
+                  className={'form-control'}
+                  type="text"
+                  name="qulity"
+                  min="0"
+                  value="0"
+                />
+                <button
+                  type="button"
+                  value="-"
+                  className={'btn quantityAdd'}
+                  id={'quantityAdd'}
+                >
+                  +
+                </button>
+              </div>
+            </td>
+            <td className={'align-middle '}>$999</td>
             <td className={'align-middle'}>$900</td>
             <td className={'align-middle'}>$900</td>
             <td className={'align-middle'}>
-              <RiDeleteBin6Line />
+              <RiDeleteBin6Line className={'trash'} />
             </td>
           </tr>
         </tbody>

@@ -20,11 +20,6 @@ $fw-regular:400;
 $fw-bold:700;
 $fw-black:900;
 
-
-*{
-    box-sizing: border-box;
-    position: relative;
-}
 .background{
     background-color: #69782e
 }
@@ -35,6 +30,7 @@ $fw-black:900;
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    padding-block: 1rem;
   
     .step{
         padding: 1.5rem;
@@ -96,103 +92,52 @@ $fw-black:900;
     }
 }
 
-// .carts{
+
+.carts{
+    padding-block: 1rem;
     
-//     .cartLabels{
-//         border: 1.5px solid $color-black;
-//         background-color: $color-lightgray;
-
-//         tr{
-//             color:$color-black;
-//             font-size: $fs-md;
-//             font-weight: $fw-bold;
-
-//             th{
-//                 padding: 1rem;
-//                 justify-content: center;
-//             }
-//         }
-       
-//     }
-
-//     .cartProduct{
-//         // display: flex;
-
-//         tr{
-//             border: 1px solid red;
-//             padding: 1rem;
-//             justify-content: center;
-
-//             td{
-//                 border: 1px solid green;
-//             }
-//         } 
-//         td.item{
-//             display: flex;
-//             align-items: center;
-            
-//             .productDetail{
-//                 padding: 1rem;
-                
-//                 .title{
-//                     font-size: $fs-lg;
-//                     font-weight: $fw-bold;
-//                     padding-bottom: 0.5rem;
-//                 }
-//                 .describe{
-//                     font-size: $fs-sm;
-//                     // font-weight: $fw-regular;
-//                     line-height: 1.5rem;
-//                 }
-//             }
-//         }
-//         td.OriginPrice{
-//             justify-content: center;
-
-//         }
-//         td.discountPrice{
-//             justify-content: center;
-//         }
-//         td.Subtotal{
-//             justify-content: center;
-//         }
-//         td.delete{
-//             justify-content: center;
-//         }
-        
-//     }
-    
-
-// }
-
-table.carts{
     thead.cartLabels{
-        border: 3px solid green;
+        border: 1px solid $color--primary;
         background-color: $color-lightgray;
-        font-size: $fs-md;
+        font-size: $fs-sm;
         tr{
         
             th{
-                border: 3px solid rgb(114, 82, 24);
-                min-width: 50px;
-                padding: 1rem;
+                padding-block: 1rem;
+                padding-inline: 0.5rem;
                 vertical-align: middle;
-                min-width: 20px;
                 text-align: center;
+                min-width: 80px;
             }
         }
     }
     tbody.cartProducts{
-        // border: 3px solid red;
+        border: 1px solid $color--primary;
 
         tr{
            
+         
             td{
-                border: 3px solid orange;
                 padding: .5rem;
                 text-align: center;
-                min-width: 20px;
+                .quantity{
+                    text-align: center;
+                }
+                button{
+                    width: 32px;
+                    height: 32px;
+                    color: $color-white;
+                    background-color:$color--secondary;
+                    :active{
+                        background-color: red;
+                    }
+                }
             }
+            
         }
+        :hover{
+            background-color: $color--gray6;
+        }
+        
     }
 }
