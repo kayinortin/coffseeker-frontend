@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function SendMessage() {
   // const [isPopupOpen, setPopupOpen] = useState(false)
+  const [text, setText] = useState('')
   return (
     <>
       <div className="d-flex justify-content-center align-items-center ei-contact-us">
@@ -21,21 +22,34 @@ export default function SendMessage() {
               className=""
               name="message"
               id="message"
-              defaultValue=""
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             ></textarea>
             <label htmlFor="name" className="mb-3">
               姓名:
             </label>
-            <input type="text" name="name" value="" id="name" />
+            <input
+              type="text"
+              name="name"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              id="name"
+            />
             <label htmlFor="email" className="mb-3">
               Email:
             </label>
-            <input type="text" name="email" value="" id="email" />
+            <input
+              type="text"
+              name="email"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              id="email"
+            />
             <div className="d-flex justify-content-center">
               <button
                 type="submit"
                 name="submit"
-                value="NOW, I SEND THANKS!"
+                // value="NOW, I SEND THANKS!"
                 className="text-center btn btn-dark mt-3"
               >
                 送出

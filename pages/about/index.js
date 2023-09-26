@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import style from '../../styles/_about.module.scss'
 import ContactUs from '@/components/about/send-message'
-import CoffeeMap from '@/components/index-coffee-map/coffee-map'
+// import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 
 export default function About() {
   return (
@@ -21,7 +21,7 @@ export default function About() {
                 </li>
                 <li className="breadcrumb-item list-inline-item">
                   <Link
-                    href="/about"
+                    href="./about"
                     className="breadcrumb-item text-decoration-none link ms-2"
                   >
                     關於我們
@@ -158,7 +158,7 @@ export default function About() {
                 <button
                   type="submit"
                   name="submit"
-                  value="NOW, I SEND THANKS!"
+                  // value="NOW, I SEND THANKS!"
                   className="btn btn-dark"
                 >
                   送出

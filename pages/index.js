@@ -4,6 +4,7 @@ import Hot from '../components/product/index'
 import Course from '../components/index/course'
 import Slider from '../components/index/slider'
 import CoffeeMap from '@/components/index-coffee-map/coffee-map'
+import Link from 'next/link'
 // 手機版照片要置換成 390 * 724
 
 export default function Home() {
@@ -16,31 +17,36 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       {/* 此處製作首頁幻燈片 */}
       <Slider />
+
       {/* 此處製作商城與課程的按鈕 */}
       <div className="d-md-flex d-flex-colum justify-content-center">
-        <a href="http://localhost:3000/product">
+        <Link href="http://localhost:3000/product">
           <img
             className="ed-img-size-1"
             src="http://localhost:3000/index-image/product.png"
             alt="go-to-product"
           />
-        </a>
-        <a href="http://localhost:3000/course">
+        </Link>
+        <Link href="http://localhost:3000/course">
           <img
             className="ed-img-size-2 d-none d-md-block"
             src="http://localhost:3000/index-image/course.png"
             alt="go-to-course"
           />
-        </a>
+        </Link>
       </div>
+
       {/* 此處製作後端抓取熱銷商品，並提供前八名的商品資訊 */}
       <div className="container">
         <Hot />
       </div>
+
       {/* 此處製作課程區 */}
       <Course />
+
       {/* 此處製作團體購買的圖片 */}
       <div className="img-container">
         <img
@@ -50,6 +56,7 @@ export default function Home() {
           id="company-buy"
         />
       </div>
+
       {/* 此處製作咖啡產地的介紹 */}
       <CoffeeMap />
     </>
