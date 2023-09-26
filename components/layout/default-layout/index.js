@@ -5,6 +5,7 @@ import Navbar from './navbar'
 import Footer from './footer'
 
 export default function DefaultLayout({ title = '', children }) {
+  // 使header與nav在滾動時增加淡出效果
   useEffect(() => {
     const handleScroll = () => {
       const scrollAmount = window.scrollY
@@ -35,7 +36,7 @@ export default function DefaultLayout({ title = '', children }) {
       </Head>
       <Header />
       <Navbar />
-      {children}
+      <div id="main-content">{children}</div>
       <Footer />
     </>
   )
