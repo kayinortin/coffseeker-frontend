@@ -6,235 +6,376 @@
   + * {
     margin-top: 134px;
   }
-} 
+}
 
- // header setting
-  .ed-bg-setting{
-    display:flex;
-    align-items: center;
-    background-color: #F2F3EE;
-    height: 70px;
-    transition: background-color 0.5s, opacity 0.5s;
-    &.transparent{
-      background-color: rgba(242, 243, 238, 0.8);
-    }
+// header setting
+.ed-bg-setting {
+  display: flex;
+  align-items: center;
+  background-color: #f2f3ee;
+  height: 70px;
+  transition: background-color 0.5s, opacity 0.5s;
+  &.transparent {
+    background-color: rgba(242, 243, 238, 0.8);
   }
-  .header{
-    position: relative;
-  }
+}
+.header {
+  position: relative;
+}
 
-  .ed-icon-padding{
-    padding:  10px;
-  }
-  .ed-icon-user{
-    font-size: 34px;
-    color: var(--bs-gray-700);
-    margin-inline: 10px;
-  }
-  .ed-icon-cart{
-    font-size: 30px;
-    color: var(--bs-gray-700);
-    margin-inline: 10px;
-  }
+.ed-icon-padding {
+  padding: 10px;
+}
+.ed-icon-user {
+  font-size: 34px;
+  color: var(--bs-gray-700);
+  margin-inline: 10px;
+}
+.ed-icon-cart {
+  font-size: 30px;
+  color: var(--bs-gray-700);
+  margin-inline: 10px;
+}
 
-  @media (max-width: 600px){
-    .fixed-top {
-      + * {
-        margin-top: 120px;
-      }
-    } 
-    .ed-bg-setting{
-      height: 120px;
-    }
-    .mobile-justify-content-center{
-      justify-content: center;
-    }
-    .smaller-Logo{
-      width: 200px;
-      height: auto;
-    }
-    .ed-icon-user{
-      font-size: 28px;
-      color: var(--bs-gray-700);
-      margin-inline: 6px;
-    }
-    .ed-icon-cart{
-      font-size: 28px;
-      color: var(--bs-gray-700);
-      margin-inline: 10px;
-    }
-  
-  }
-
-  // index setting
-  .slick-slider {
-    width: 100%;
-    height: calc(100vh - 134px);
-    overflow: hidden;
-  }
-  
-  .slick-dots {
-    right: -700px;
-    bottom: 4%; 
-    transform: translateY(50%);
-    flex-direction: column;
-    left: auto;
-  
-    & li {
-    margin-inline:10px;
-  
-    & button:before{
-      font-size: 20px; 
-    }
-    & button:hover:before{
-      color: #EEE5D0;
-    }
-  
-    &.slick-active{
-      & button:before{
-        color: #EEE5D0;
-      }
+@media (max-width: 600px) {
+  .fixed-top {
+    + * {
+      margin-top: 120px;
     }
   }
+  .ed-bg-setting {
+    height: 120px;
   }
-  .img-container {
-    position: relative;
-    width: 100%;
-    max-width: 1920px;
+  .mobile-justify-content-center {
+    justify-content: center;
   }
-  
-  .img-container img {
-    width: 100%;
+  .smaller-Logo {
+    width: 200px;
     height: auto;
   }
-
-  .ed-img-size-1{
-    display: block;
-    max-width: 100%;
+  .ed-icon-user {
+    font-size: 28px;
+    color: var(--bs-gray-700);
+    margin-inline: 6px;
   }
-  .ed-img-size-2{
-    display: block;
-    max-width: 100%;
+  .ed-icon-cart {
+    font-size: 28px;
+    color: var(--bs-gray-700);
+    margin-inline: 10px;
   }
+}
 
-  #company-buy{
-    width: 1940px;
+// index setting
+.slick-slider {
+  width: 100%;
+  height: calc(100vh - 134px);
+  overflow: hidden;
+}
+.slick-dots {
+  right: -700px;
+  bottom: 4%;
+  transform: translateY(50%);
+  flex-direction: column;
+  left: auto;
+
+  & li {
+    margin-inline: 10px;
+
+    & button:before {
+      font-size: 20px;
+    }
+    & button:hover:before {
+      color: #eee5d0;
+    }
+
+    &.slick-active {
+      & button:before {
+        color: #eee5d0;
+      }
+    }
   }
-
-.ed-index-product{
+}
+.img-container {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+}
+.img-container img {
+  width: 100%;
+  height: auto;
+}
+.ed-img-size-1 {
+  display: block;
+  max-width: 100%;
+}
+.ed-img-size-2 {
+  display: block;
+  max-width: 100%;
+}
+#company-buy {
+  width: 1940px;
+}
+.ed-index {
+  padding: 0;
+  margin-top: 60px;
+}
+.ed-index-origin {
+  margin-top: 60px;
+}
+.ed-index-course {
   margin-top: 60px;
 }
 .hot-product {
-    font-size: 24px;
-    text-align: center;
-    padding: 20px;
-    letter-spacing: 10px;
+  font-size: 24px;
+  text-align: center;
+  padding: 20px;
+  letter-spacing: 10px;
 }
-
 .hot-product-wrapper {
   display: flex;
   max-width: 800px;
   align-items: center;
   margin: auto;
 }
-
+.origin-wrapper {
+  display: flex;
+  max-width: 800px;
+  align-items: center;
+  margin: auto;
+}
 .line {
   flex-grow: 1;
   height: 1px;
   background-color: $color--gray3;
 }
-
-.ed-orgin-text{
+.line-white {
+  flex-grow: 1;
+  height: 1px;
+  background-color: $color--background;
+}
+.ed-orgin-text {
   font-size: 20px;
   line-height: 30px;
   letter-spacing: 2px;
   padding-inline: 80px;
 }
-
-  @media (max-width: 576px) {
-    .slick-slider {
-      width: 390px;
-      height: calc(100vh - 120px);
-      overflow: hidden;
+.ed-course-intro {
+  background-color: $color--background;
+}
+.ed-course-intro div {
+  float: left;
+}
+.ed-course-intro:after {
+  content: '';
+  clear: both;
+  display: table;
+}
+.ed-course-title {
+  width: 963px;
+  height: 806px;
+  background-color: #1c262c;
+}
+.gallery {
+  background-color: #dfd0af;
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(6, 150px);
+  grid-gap: 8px;
+  padding-block: 8px;
+  // padding: 8px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: 0.5s;
+    &:hover {
+      opacity: 1;
     }
+  }
+  &:hover {
+    img:not(:hover) {
+      opacity: 0.8;
+      filter: grayscale(1);
+    }
+  }
+}
+.gallery_img-1x1 {
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+  aspect-ratio: 1/1;
+}
+.gallery_img-2x1 {
+  grid-column-end: span 2;
+  grid-row-end: span 1;
+  aspect-ratio: 2/1;
+}
+.gallery_img-1x2 {
+  grid-column-end: span 1;
+  grid-row-end: span 2;
+  aspect-ratio: 1/2;
+}
+.gallery_img-2x2 {
+  grid-column-end: span 2;
+  grid-row-end: span 2;
+  aspect-ratio: 2/2;
+}
+.course-category {
+  color: $color--background;
+  font-size: 24px;
+  text-align: center;
+  padding: 20px;
+  letter-spacing: 10px;
+}
 
-    .slick-dots {
-      right: 0px;
-      bottom: 4%; 
-      transform: translateY(50%);
-      flex-direction: column;
-      left: auto;
-    
-      & li {
-      margin-inline:7px;
-    
-      & button:before{
-        font-size: 16px; 
+
+@mixin btn-color {
+  color: black;
+  border-radius: 10px;
+  width: 200px;
+  font-size: 20px;
+}
+.btn-color-1 {
+  @include btn-color;
+  background-color: #dfd0af !important;
+  &:hover {
+    color: #f2f3ee;
+  }
+}
+.btn-color-2 {
+  @include btn-color;
+  background-color: #b29e7a !important;
+  &:hover {
+    color: #f2f3ee;
+  }
+}
+.btn-color-3 {
+  @include btn-color;
+  background-color: #845635 !important;
+  &:hover {
+    color: #f2f3ee;
+  }
+}
+.slogan {
+  font-weight: normal;
+  font-size: 22px;
+  color: $color--background;
+}
+
+@media (max-width: 576px) {
+  .ed-course-intro {
+    display: flex;
+    flex-direction: column;
+  }
+  .ed-course-title {
+    max-width: 100%;
+    height: 790px;
+    background-color: $color--primary;
+  }
+  .ed-index-course {
+    margin-top: 30px;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(4, 1fr); /* 這會使每行有兩個項目 */
+    /* 如果你希望手機上每行只有一個項目，可以改為： */
+    // grid-template-columns: 1fr;
+  }
+  .slogan {
+    font-size: 16px;
+  }
+  .btn-color-1,
+  .btn-color-2,
+  .btn-color-3 {
+    border-radius: 10px;
+    width: 170px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .slick-slider {
+    width: 390px;
+    height: calc(100vh - 120px);
+    overflow: hidden;
+  }
+
+  .slick-dots {
+    right: 0px;
+    bottom: 4%;
+    transform: translateY(50%);
+    flex-direction: column;
+    left: auto;
+
+    & li {
+      margin-inline: 7px;
+
+      & button:before {
+        font-size: 16px;
       }
-      & button:hover:before{
-        color: #EEE5D0;
+      & button:hover:before {
+        color: #eee5d0;
       }
-    
-      &.slick-active{
-        & button:before{
-          color: #EEE5D0;
+
+      &.slick-active {
+        & button:before {
+          color: #eee5d0;
         }
       }
     }
-    }
-
-    #s1 {
-      content: url("http://localhost:3000/index-image/s1-m.png");
-    }
-    #s2 {
-      content: url("http://localhost:3000/index-image/s2-m.png");
-    }
-    #s3 {
-      content: url("http://localhost:3000/index-image/s3-m.png");
-    }
-    #s4 {
-      content: url("http://localhost:3000/index-image/s4-m.png");
-    }
-    #s5 {
-      content: url("http://localhost:3000/index-image/s5-m.png");
-    }
-    #s6 {
-      content: url("http://localhost:3000/index-image/s6-m.png");
-    }
-
-
-    .ed-position-absolute {
-      width: 280px !important;
-      height: auto;
-      top: calc(50% - 150px);
-      left: calc(50% - 140px);
-    }
-    #company-buy{
-      width: 390px;
-      content: url("http://localhost:3000/index-image/company-buy-mobile.png");
-    }
-    .ed-index-product{
-      margin-top: 30px;
-    }  
-    .hot-product {
-      font-size: 16px;
-      text-align: center;
-      padding: 20px;
-      letter-spacing: 10px;
   }
-  .ed-orgin-text{
+
+  #s1 {
+    content: url('http://localhost:3000/index-image/s1-m.png');
+  }
+  #s2 {
+    content: url('http://localhost:3000/index-image/s2-m.png');
+  }
+  #s3 {
+    content: url('http://localhost:3000/index-image/s3-m.png');
+  }
+  #s4 {
+    content: url('http://localhost:3000/index-image/s4-m.png');
+  }
+  #s5 {
+    content: url('http://localhost:3000/index-image/s5-m.png');
+  }
+  #s6 {
+    content: url('http://localhost:3000/index-image/s6-m.png');
+  }
+
+  .ed-position-absolute {
+    width: 280px !important;
+    height: auto;
+    top: calc(50% - 150px);
+    left: calc(50% - 140px);
+  }
+  #company-buy {
+    width: 390px;
+    content: url('http://localhost:3000/index-image/company-buy-mobile.png');
+  }
+  .ed-index {
+    margin-top: 30px;
+  }
+  .hot-product {
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+    letter-spacing: 10px;
+  }
+  .course-category {
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+    letter-spacing: 10px;
+  }
+  .ed-orgin-text {
     font-size: 18px;
     line-height: 30px;
     letter-spacing: 2px;
   }
-  .ed-orgin-img{
+  .ed-orgin-img {
     width: 70%;
     height: auto;
   }
-  }
-  
-  
-  
-  
-  
-  
+}
