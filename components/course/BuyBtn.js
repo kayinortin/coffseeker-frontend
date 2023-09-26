@@ -12,8 +12,11 @@ function AddCartBtn() {
 
 function BuyBtn() {
   return (
-    <div className={`${styles['btn-check']} text-center px-2 py-1  `}>
-      <Link href="http://localhost:3000/cart" className="text-white">
+    <div className={`${styles['btn-check']} text-center   `}>
+      <Link
+        href="http://localhost:3000/cart"
+        className="text-white d-block px-2 py-2"
+      >
         立即結帳
       </Link>
     </div>
