@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '@/styles/_course.module.scss'
 import Link from 'next/link'
+import { useSwiper } from 'swiper/react'
 
 function AddCartBtn() {
   return (
@@ -23,4 +24,22 @@ function BuyBtn() {
   )
 }
 
-export { AddCartBtn, BuyBtn }
+const SwiperNextBtn = ({ className, children }) => {
+  const swiper = useSwiper()
+  return (
+    <button className={className} onClick={() => swiper.slideNext()}>
+      {children}
+    </button>
+  )
+}
+
+const SwiperPrevBtn = ({ className, children }) => {
+  const swiper = useSwiper()
+  return (
+    <button className={className} onClick={() => swiper.slidePrev()}>
+      {children}
+    </button>
+  )
+}
+
+export { SwiperNextBtn, SwiperPrevBtn, AddCartBtn, BuyBtn }
