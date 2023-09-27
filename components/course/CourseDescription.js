@@ -9,8 +9,13 @@ export default function CourseDescription() {
   return (
     <>
       <section>
-        <CourseInfoBtn />
-        <div className="border border-3 col-2 text-center">課程介紹</div>
+        <div className="d-none d-sm-block">
+          <CourseInfoBtn />
+        </div>
+
+        <div className="border border-3 col-sm-2 col-4 mb-3 text-center">
+          課程介紹
+        </div>
         <h6>【課程大綱】</h6>
         <div className={style['course-intro']}>
           <ul>
@@ -34,24 +39,24 @@ export default function CourseDescription() {
           </ul>
         </div>
       </section>
-      <section>
+      <section className="col-10 mx-auto">
         <h6>【教師簡介】</h6>
         <Image
           alt="header"
           src="/course-image/selfie.png"
           width={50}
           height={50}
-          className="ms-4"
+          className="ms-4 rounded-circle"
         />
         <p className="fw-bold">教師姓名：XXX</p>
         <p className="fw-bold">教師資歷：XXXXXXXXXXXXXXXXX</p>
         <p className="fw-bold">教師自介：</p>
         <p>
           這裡有一位經驗豐富的咖啡教師，致力於教授咖啡的精髓。他/她擁有超過10年的咖啡行業經驗，包括在知名咖啡館工作以及參加國際咖啡大賽。他/她精通不同種類的咖啡豆，並擅長各種沖煮方法，從手沖、濾杯到意式咖啡機，無一不在行。
-          這位咖啡教師熱愛分享知識，他/她的教學風格深入淺出，讓學員們能夠輕鬆理解並掌握咖啡的精髓。他/她的課程涵蓋了咖啡的各個層面，從咖啡的起源、栽培、烘焙到最終的沖煮，學員們將從他/她的課程中受益匪淺。
+          這位咖啡教師熱愛分享知識，他/她的教學風格深入淺出，讓學員們能夠輕鬆理解並掌握咖啡的精髓。
         </p>
       </section>
-      <section className="course-sp">
+      <section className="course-sp col-10 mx-auto">
         <h6>【課程特色】</h6>
 
         <p>

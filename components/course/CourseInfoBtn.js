@@ -53,7 +53,7 @@ export default function CategoryBtn() {
               }`}
               onClick={() => setActiveButton('introduction')}
             >
-              全部消息
+              課程介紹
             </button>
             <button
               className={`btn rounded-0 ${
@@ -63,7 +63,7 @@ export default function CategoryBtn() {
               }`}
               onClick={() => setActiveButton('specialty')}
             >
-              活動消息
+              課程特色
             </button>
             <button
               className={`btn rounded-0 ${
@@ -73,7 +73,7 @@ export default function CategoryBtn() {
               }`}
               onClick={() => setActiveButton('review')}
             >
-              新品上架
+              課程評價
             </button>
           </div>
         </div>

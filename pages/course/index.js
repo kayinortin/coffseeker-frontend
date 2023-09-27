@@ -17,7 +17,7 @@ export default function Index() {
               {/* <BreadCrumbs className="ms-5" /> */}
               <div className="d-flex">
                 <SideBar className="" />
-                <CourseList className="d-flex mx-4" />
+                <CourseList />
               </div>
             </section>
           </div>
