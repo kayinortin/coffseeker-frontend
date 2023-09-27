@@ -128,6 +128,7 @@
       width: 27px;
       height: 27px;
       padding: 3px;
+      flex-shrink: 0;
     }
     h4 {
       padding-block: 10px;
@@ -162,7 +163,7 @@
         align-items: center;
       }
       h6 {
-        margin-left: 20px;
+        padding-left: 10px;
         word-wrap: break-word;
         word-break: break-all;
       }
