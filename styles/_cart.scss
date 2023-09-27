@@ -93,12 +93,12 @@ $fw-black:900;
 
 .cartlist{
     padding-block: 2rem;
-    table.carts{
+    table.products{
         padding-block: 1rem;
         width: 100%;
         color: $color--primary;
         
-        thead.cartLabels{
+        thead.productsLabels{
             border: 1px solid $color--primary;
             background-color: $color-lightgray;
             font-size: $fs-sm;
@@ -115,7 +115,7 @@ $fw-black:900;
             }
         }
 
-        tbody.cartProducts{
+        tbody.productsItem{
             border: 1px solid $color--primary;
             margin-block: 16px;
 
