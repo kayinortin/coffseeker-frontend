@@ -35,8 +35,6 @@ export default function DefaultLayout({ title = '', children }) {
         <title>{title}</title>
         <meta name="viewport" content="width=device-width" />
       </Head>
-      {/* <Header />
-      <Navbar /> */}
       <ParentComponent />
       <div id="main-content">{children}</div>
       <Footer />
