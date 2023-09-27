@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { IoLocation } from 'react-icons/io5'
+import styles from '../../styles/_about.module.scss'
 
 export default function CoffeeMap() {
   const [selectedData, setSelectedData] = useState(null)
@@ -92,7 +93,7 @@ export default function CoffeeMap() {
           <div className="line"></div>
         </div>
       </div>
-      <div className="d-flex flex-column flex-md-row my-md-5 my-3 justify-content-md-center">
+      <div className="d-flex flex-column flex-md-row my-md-5 my-3 justify-content-md-center ei-mobile-map">
         <div className="d-flex flex-column col-md-4">
           <div className="d-flex justify-content-center">
             <Image
@@ -130,8 +131,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '270px',
-                top: '290px',
+                left: '250px',
+                top: '260px',
               }}
               onClick={() => handleLocationClick(1)}
               stroke="green"
@@ -145,8 +146,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '215px',
-                top: '240px',
+                left: '195px',
+                top: '210px',
               }}
               onClick={() => handleLocationClick(2)}
               stroke="blue"
@@ -160,8 +161,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '145px',
-                top: '175px',
+                left: '130px',
+                top: '160px',
               }}
               onClick={() => handleLocationClick(3)}
               stroke="red"
@@ -175,8 +176,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '728px',
-                top: '250px',
+                left: '659px',
+                top: '223px',
               }}
               onClick={() => handleLocationClick(4)}
               stroke="red"
@@ -190,8 +191,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '525px',
-                top: '220px',
+                left: '475px',
+                top: '200px',
               }}
               onClick={() => handleLocationClick(5)}
               stroke="red"
@@ -205,8 +206,133 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '630px',
-                top: '180px',
+                left: '570px',
+                top: '160px',
+              }}
+              onClick={() => handleLocationClick(6)}
+              stroke="red"
+              strokeWidth={2}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 手機板產地圖 */}
+      <div className="d-flex flex-column flex-md-row my-md-5 my-3 justify-content-md-center d-lg-none">
+        <div className="d-flex flex-column col-md-4">
+          <div className="d-flex justify-content-center">
+            <Image
+              className="d-block ed-orgin-img"
+              src="/index-image/origin.png"
+              alt="COFFSEEKER"
+              width={400}
+              height={80}
+              lazy="true"
+            />
+          </div>
+          <h4
+            className="ed-orgin-text mt-md-5 mt-3"
+            dangerouslySetInnerHTML={{
+              __html:
+                selectedData && selectedData.content.replace(/\n/g, '<br />'),
+            }}
+          ></h4>
+        </div>
+        <div className="position-relative">
+          <Image
+            className="img-fluid d-block"
+            src="/index-image/world-map.svg"
+            alt="instagram"
+            id="instagram"
+            width={1200}
+            height={60}
+          />
+          <div className="">
+            {/* //巴西 */}
+            <IoLocation
+              size={35}
+              color={iconColor1}
+              className="custom-icon"
+              style={{
+                // marginRight: '0px',
+                position: 'absolute',
+                left: '115px',
+                top: '110px',
+              }}
+              onClick={() => handleLocationClick(1)}
+              stroke="green"
+              strokeWidth={2}
+            />
+            {/* //哥倫比亞 */}
+            <IoLocation
+              size={35}
+              color={iconColor2}
+              className="custom-icon"
+              style={{
+                // marginRight: '10px',
+                position: 'absolute',
+                left: '89px',
+                top: '92px',
+              }}
+              onClick={() => handleLocationClick(2)}
+              stroke="blue"
+              strokeWidth={2}
+            />
+            {/* //墨西哥 */}
+            <IoLocation
+              size={35}
+              color={iconColor3}
+              className="custom-icon"
+              style={{
+                // marginRight: '10px',
+                position: 'absolute',
+                left: '57px',
+                top: '70px',
+              }}
+              onClick={() => handleLocationClick(3)}
+              stroke="red"
+              strokeWidth={2}
+            />
+            {/* 印尼 */}
+            <IoLocation
+              size={35}
+              color={iconColor4}
+              className="custom-icon"
+              style={{
+                // marginRight: '10px',
+                position: 'absolute',
+                left: '317px',
+                top: '100px',
+              }}
+              onClick={() => handleLocationClick(4)}
+              stroke="red"
+              strokeWidth={2}
+            />
+            {/* 衣索比亞 */}
+            <IoLocation
+              size={35}
+              color={iconColor5}
+              className="custom-icon"
+              style={{
+                // marginRight: '10px',
+                position: 'absolute',
+                left: '228px',
+                top: '90px',
+              }}
+              onClick={() => handleLocationClick(5)}
+              stroke="red"
+              strokeWidth={2}
+            />
+            {/* 印度 */}
+            <IoLocation
+              size={35}
+              color={iconColor6}
+              className="custom-icon"
+              style={{
+                // marginRight: '10px',
+                position: 'absolute',
+                left: '273px',
+                top: '70px',
               }}
               onClick={() => handleLocationClick(6)}
               stroke="red"
