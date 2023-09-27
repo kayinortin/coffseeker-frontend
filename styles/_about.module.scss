@@ -181,3 +181,10 @@ $color--black: #000000;
   }
   
 }
+@media (max-width: 431px) {
+ 
+  .ei-mobile-map{
+    display: none !important;
+  }
+  
+}
