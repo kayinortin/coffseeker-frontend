@@ -6,7 +6,7 @@ import styles from '../../styles/_news.module.scss'
 
 export default function News() {
   return (
-    <div className="container">
+    <div className="ei-news-container">
       {/* 麵包屑 */}
       <div className="row ms-4 mt-1 mt-3">
         <nav className="nav-breadcrumb ms-3 d-none d-sm-block">
