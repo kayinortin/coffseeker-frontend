@@ -4,7 +4,7 @@ import style from '@/styles/_course.module.scss'
 export default function Pagination() {
   const pages = ['1', '2', '3', '4', '5']
   return (
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center col-sm-12 col-4">
       <nav aria-label="Page navigation example ">
         <ul className="pagination">
           <li className="page-item">

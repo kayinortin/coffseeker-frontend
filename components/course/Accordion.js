@@ -8,19 +8,19 @@ function Accordion({ title, content }) {
   const level = ['入門', '進階', '高階', '證照']
 
   return (
-    <div className="accordion" id="accordionExample">
+    <div className="accordion course-bg" id="accordionExample">
       {options.map((v, i) => {
         const targetId = `collapse${i}`
         return (
-          <div className="accordion-item" key={i}>
-            <h2 className="accordion-header">
+          <div className="accordion-item course-bg" key={i}>
+            <h2 className="accordion-header course-bg">
               <button
-                className="accordion-button"
+                className="accordion-button course-bg sidebar-title collapsed"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target={`#${targetId}`}
-                aria-expanded="false"
-                aria-controls={targetId}
+                // aria-expanded="false"
+                // aria-controls={targetId}
               >
                 {v}
               </button>
