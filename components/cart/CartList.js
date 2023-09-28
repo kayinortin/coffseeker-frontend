@@ -5,7 +5,7 @@ import { AiOutlineMinus } from 'react-icons/ai'
 import productsData from '@/data/cart/cart'
 import CourseData from '@/data/cart/course'
 
-// 小计函式
+// 小計函式
 function calculateTotal(cart) {
   const total = cart.reduce((accumulator, product) => {
     return accumulator + product.quantity * product.price
@@ -23,7 +23,6 @@ function applyDiscount(price, discountRate) {
   return Math.round(discountedPrice.toFixed(2))
 }
 
-// 全部購物車
 function CartList() {
   const [productCart, setProductCart] = useState([])
   const [courseCart, setCourseCart] = useState([])
@@ -37,7 +36,6 @@ function CartList() {
     }))
     setProductCart(cartWithDiscount)
   }
-
   // 初始化课程購物車
   const initCourseCart = () => {
     setCourseCart([...CourseData])
@@ -228,78 +226,82 @@ function CartList() {
         ) : (
           <>
             {/* 商品表格 */}
-            <table className={'products'}>
-              {/* 商品表格的表头 */}
-              <thead className={'productsLabels'}>
-                <tr>
-                  <th
-                    className={'align-middle text-start ps-4'}
-                    colSpan="2"
-                    scope="col"
-                  >
-                    商品項目 ({productItems.length})
-                  </th>
-                  <th className={'align-middle'} scope="col">
-                    數量
-                  </th>
-                  <th className={'align-middle'} scope="col">
-                    單價
-                  </th>
-                  <th className={'align-middle'} scope="col">
-                    小計
-                  </th>
-                  <th className={'align-middle'} scope="col">
-                    刪除
-                  </th>
-                </tr>
-              </thead>
-              <tbody className={'productsItem'}>{productItems}</tbody>
-              <tfoot>
-                <tr className="carttotal">
-                  <td colSpan="5" className="text-end total">
-                    商品小計：
-                  </td>
-                  <td className={'align-middle pe-2'}>
-                    NTD${Math.round(productTotal.toFixed())}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+            {productItems.length > 0 && (
+              <table className={'products'}>
+                {/* 商品表格的表头 */}
+                <thead className={'productsLabels'}>
+                  <tr>
+                    <th
+                      className={'align-middle text-start ps-4'}
+                      colSpan="2"
+                      scope="col"
+                    >
+                      商品項目 ({productItems.length})
+                    </th>
+                    <th className={'align-middle'} scope="col">
+                      數量
+                    </th>
+                    <th className={'align-middle'} scope="col">
+                      單價
+                    </th>
+                    <th className={'align-middle'} scope="col">
+                      小計
+                    </th>
+                    <th className={'align-middle'} scope="col">
+                      刪除
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className={'productsItem'}>{productItems}</tbody>
+                <tfoot>
+                  <tr className="carttotal">
+                    <td colSpan="5" className="text-end total">
+                      商品小計：
+                    </td>
+                    <td className={'align-middle pe-2'}>
+                      NTD${Math.round(productTotal.toFixed())}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            )}
             {/* 课程表格 */}
-            <table className={'courses'}>
-              {/* 课程表格的表头 */}
-              <thead className={'coursesLabels'}>
-                <tr>
-                  <th
-                    className={'align-middle text-start ps-4'}
-                    colSpan="2"
-                    scope="col"
-                  >
-                    課程項目 ({courseItems.length})
-                  </th>
-                  <th className={'align-middle'} scope="col">
-                    數量
-                  </th>
-                  <th className={'align-middle'} scope="col">
-                    單價
-                  </th>
-                  <th className={'align-middle'} scope="col">
-                    刪除
-                  </th>
-                </tr>
-              </thead>
-              <tbody className={'coursesItem'}>{courseItems}</tbody>
-              <tfoot>
-                <tr className="carttotal">
-                  <td colSpan="4" className="text-end total">
-                    課程小計：
-                  </td>
-                  <td className={'align-middle pe-2'}>
-                    NTD${Math.round(courseTotal.toFixed(2))}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+            {courseItems.length > 0 && (
+              <table className={'courses'}>
+                {/* 课程表格的表头 */}
+                <thead className={'coursesLabels'}>
+                  <tr>
+                    <th
+                      className={'align-middle text-start ps-4'}
+                      colSpan="2"
+                      scope="col"
+                    >
+                      課程項目 ({courseItems.length})
+                    </th>
+                    <th className={'align-middle'} scope="col">
+                      數量
+                    </th>
+                    <th className={'align-middle'} scope="col">
+                      單價
+                    </th>
+                    <th className={'align-middle'} scope="col">
+                      刪除
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className={'coursesItem'}>{courseItems}</tbody>
+                <tfoot>
+                  <tr className="carttotal">
+                    <td colSpan="4" className="text-end total">
+                      課程小計：
+                    </td>
+                    <td className={'align-middle pe-2'}>
+                      NTD${Math.round(courseTotal.toFixed(2))}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            )}
           </>
         )}
       </div>
