@@ -21,7 +21,7 @@ export default function MainContent() {
         <Review />
         <Review />
         <h3 className="text-center">熱門課程</h3>
-        {/* <TopHits /> */}
+        <TopHits />
       </div>
     </>
   )

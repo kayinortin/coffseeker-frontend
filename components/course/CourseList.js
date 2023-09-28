@@ -39,7 +39,7 @@ export default function CourseList({ className }) {
           )
         })}
       </ul>
-      {/* <Pagination /> */}
+      <Pagination />
     </div>
   )
 }

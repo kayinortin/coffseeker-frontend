@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import style from '@/styles/_course.module.scss'
 import Card from './Card'
+import data from '@/data/course/course[pid].json'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -24,12 +25,13 @@ const TopHits = ({ images = [], path = '' }) => {
 
   return (
     <div className={`${style['swiper-container']}`}>
-      {/* 上方大圖 */}
       <Swiper
-        style={{
-          '--swiper-navigation-color': '#fff',
-          '--swiper-pagination-color': '#fff',
-        }}
+        style={
+          {
+            // '--swiper-navigation-color': '#fff',
+            // '--swiper-pagination-color': '#fff',
+          }
+        }
         loop={true}
         spaceBetween={10}
         navigation={true}
@@ -45,7 +47,7 @@ const TopHits = ({ images = [], path = '' }) => {
           )
         })}
       </Swiper>
-      {/* 下方小圖 */}
+
       <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={30}
@@ -56,9 +58,19 @@ const TopHits = ({ images = [], path = '' }) => {
         loop={true}
         navigation={{ clickable: true }}
       >
-        <Card />
-        <Card />
-        <Card />
+        <SwiperSlide>
+          {data.course.map((v, i) => {
+            return (
+              <Card
+                key={i}
+                name={v.name}
+                id={v.id}
+                image={v.image}
+                price={v.price}
+              />
+            )
+          })}
+        </SwiperSlide>
         {/* {images.map((item, index) => {
           return (
             <SwiperSlide

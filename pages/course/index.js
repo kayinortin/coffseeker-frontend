@@ -19,6 +19,7 @@ export default function Index() {
                 <SideBar className="" />
                 <CourseList />
               </div>
+              {/* <Pagination /> */}
             </section>
           </div>
         </div>
