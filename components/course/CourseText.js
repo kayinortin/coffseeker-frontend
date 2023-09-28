@@ -1,9 +1,12 @@
 import React from 'react'
-import BreadCrumbs from './BreadCrumbs'
-import { BuyBtn } from './BuyBtn'
+import { BreadCrumbs, BreadCrumbsMobile } from './BreadCrumbs'
+import CourseInfoBtn from './CourseInfoBtn'
+import { AddCartBtn, BuyBtn } from './BuyBtn'
 import style from '@/styles/_course.module.scss'
 import data from '@/data/course/course[pid].json'
 import { useRouter } from 'next/router'
+import Rating from './Rating'
+// import
 
 export default function CourseText() {
   const router = useRouter()
@@ -16,11 +19,23 @@ export default function CourseText() {
   console.log(courseData)
   const { image, name, price } = courseData
   return (
-    <div className="m-2 ms-5">
-      <BreadCrumbs className="m-2" />
+    <div className="m-2 col-10 col-sm-6 mx-auto ms-sm-5">
+      <div className="d-none d-sm-block">
+        <BreadCrumbs />
+      </div>
+
       <h3>{name}</h3>
+      <Rating />
       <h5 className={style['price']}>NT${price}</h5>
-      <div className="mt-5 col-8 ">
+      <div className="d-flex justify-content-around d-sm-none">
+        <AddCartBtn />
+        <BuyBtn />
+      </div>
+      <div className="d-sm-none">
+        <CourseInfoBtn />
+      </div>
+
+      <div className="mt-5 col-10 ">
         <p>【教師姓名】：ＸＸＸ</p>
         <p>
           【課程介紹】：
@@ -28,7 +43,9 @@ export default function CourseText() {
         </p>
       </div>
       <div className="w-25 px-2 py-1 ms-auto">
-        <BuyBtn />
+        <div className="d-none d-sm-block">
+          <BuyBtn />
+        </div>
       </div>
     </div>
   )

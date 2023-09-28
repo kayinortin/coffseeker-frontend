@@ -8,8 +8,8 @@ import TopHits from './TopHits'
 export default function MainContent() {
   return (
     <>
-      <div className=" mt-5 ms-5">
-        <div className="d-flex">
+      <div className=" mt-5 ms-sm-5">
+        <div className="d-sm-flex">
           <CoursePic />
           <CourseText />
         </div>
@@ -20,8 +20,8 @@ export default function MainContent() {
         <Review />
         <Review />
         <Review />
-        <h3 className="text-center">熱門課程</h3>
-        <TopHits />
+        {/* <h3 className="text-center">熱門課程</h3> */}
+        <div className="w-100">{/* <TopHits /> */}</div>
       </div>
     </>
   )

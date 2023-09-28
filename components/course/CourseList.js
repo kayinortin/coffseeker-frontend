@@ -1,15 +1,15 @@
 import React from 'react'
 import data from '@/data/course/course.json'
 import Card from './Card'
-import Breadcrumb from './BreadCrumbs'
 import Pagination from './Pagination'
+import { BreadCrumbs } from './BreadCrumbs'
 
-export default function CourseList() {
+export default function CourseList({ className }) {
   // console.log(data)
   return (
-    <div className="">
+    <div className={className}>
       <h3 className="text-center mt-5">課程列表</h3>
-      <Breadcrumb className="" />
+      <BreadCrumbs />
       <ul className=" row row-cols-sm-3 flex-wrap list-unstyled">
         {data.map((v, i) => {
           let {
@@ -18,7 +18,7 @@ export default function CourseList() {
             price,
             start_date,
             end_date,
-            capacity,
+
             description,
             image,
           } = v
@@ -39,7 +39,7 @@ export default function CourseList() {
           )
         })}
       </ul>
-      {/* <Pagination /> */}
+      <Pagination />
     </div>
   )
 }
