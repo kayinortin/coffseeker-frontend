@@ -8,8 +8,7 @@ import Link from 'next/link'
 export default function Card({ name, image, price, id }) {
   return (
     <div
-      style={{ width: '288px' }}
-      className="d-flex py-3  flex-column align-items-center m-3"
+      className={`${style['card']} d-flex py-3 flex-column align-items-center m-3`}
     >
       <div className={` ${style['img-bg']}`}>
         <Link href={`http://localhost:3000/course/${id}`}>
