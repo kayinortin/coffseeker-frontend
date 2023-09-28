@@ -4,6 +4,7 @@ import { GrAdd } from 'react-icons/gr'
 import { AiOutlineMinus } from 'react-icons/ai'
 import productsData from '@/data/cart/cart'
 import CourseData from '@/data/course/course'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 
 function calculateTotal(cart) {
   const total = cart.reduce((accumulator, product) => {

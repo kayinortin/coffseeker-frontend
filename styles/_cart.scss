@@ -151,7 +151,7 @@ $fw-black:900;
                     }
                 }
 
-                td.cartdelete{
+                td.productdelete{
                     text-align: center;
                     vertical-align: middle;
                     button.deleteButton{
@@ -192,6 +192,27 @@ $fw-black:900;
                     
                 }
                 
+            }
+        }
+    }
+    div.emptyContainer{
+        margin-block: 2rem;
+        img{
+            width: 20vw;
+        }
+        div.emptyTitle{
+            padding-block: 1rem;
+            font-size: $fs-lg;
+            color: $color--primary;
+            font-weight: $fw-bold;
+        }
+        button.goshop{
+            background-color: $color--secondary;
+            color: $color--white;
+            width: 30vw;
+            height: 2.5rem;
+            &:hover{
+                background-color: $color--primary;
             }
         }
     }
