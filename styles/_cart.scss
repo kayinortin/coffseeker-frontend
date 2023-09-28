@@ -93,12 +93,12 @@ $fw-black:900;
 
 .cartlist{
     padding-block: 2rem;
-    table.carts{
+    table.products{
         padding-block: 1rem;
         width: 100%;
         color: $color--primary;
         
-        thead.cartLabels{
+        thead.productsLabels{
             border: 1px solid $color--primary;
             background-color: $color-lightgray;
             font-size: $fs-sm;
@@ -115,7 +115,7 @@ $fw-black:900;
             }
         }
 
-        tbody.cartProducts{
+        tbody.productsItem{
             border: 1px solid $color--primary;
             margin-block: 16px;
 
@@ -151,7 +151,7 @@ $fw-black:900;
                     }
                 }
 
-                td.cartdelete{
+                td.productdelete{
                     text-align: center;
                     vertical-align: middle;
                     button.deleteButton{
@@ -192,6 +192,27 @@ $fw-black:900;
                     
                 }
                 
+            }
+        }
+    }
+    div.emptyContainer{
+        margin-block: 2rem;
+        img{
+            width: 20vw;
+        }
+        div.emptyTitle{
+            padding-block: 1rem;
+            font-size: $fs-lg;
+            color: $color--primary;
+            font-weight: $fw-bold;
+        }
+        button.goshop{
+            background-color: $color--secondary;
+            color: $color--white;
+            width: 30vw;
+            height: 2.5rem;
+            &:hover{
+                background-color: $color--primary;
             }
         }
     }
