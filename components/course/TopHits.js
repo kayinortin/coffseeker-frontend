@@ -1,90 +1,62 @@
-import { useEffect, useState } from 'react'
-import style from '@/styles/_course.module.scss'
 import Card from './Card'
 import data from '@/data/course/course[pid].json'
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi'
 
-// Import Swiper React components
+import React, { useState } from 'react'
+import { Controller } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/scss'
+import 'swiper/scss/pagination'
+import 'swiper/scss/navigation'
+import style from '@/styles/_swiper.module.scss'
 
-// Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/free-mode'
-import 'swiper/css/navigation'
-import 'swiper/css/thumbs'
-// import style from 'components/thumbs/thumbs.scss'
-
-// import required modules
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
-
-// modules styles
-// import style from './_gallery_swiper.module.scss'
-
-const TopHits = ({ images = [], path = '' }) => {
-  // 左邊圖片 slider
-  const [thumbsSwiper, setThumbsSwiper] = useState(null)
+const TopHits = () => {
+  // store swiper instances
+  const [firstSwiper, setFirstSwiper] = useState(null)
+  const [secondSwiper, setSecondSwiper] = useState(null)
+  console.log(data)
+  const newData = data.course
+  console.log(newData)
 
   return (
-    <div className={`${style['swiper-container']}`}>
-      <Swiper
-        style={
-          {
-            // '--swiper-navigation-color': '#fff',
-            // '--swiper-pagination-color': '#fff',
-          }
-        }
-        loop={true}
-        spaceBetween={10}
-        navigation={true}
-        thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className={`${style['swiper-bg']}`}
-      >
-        {images.map((item, index) => {
-          return (
-            <SwiperSlide key={index} className={`${style['swiper-slide']}`}>
-              <img src={item} />
-            </SwiperSlide>
-          )
-        })}
-      </Swiper>
+    // <div className="w-100">
+    <Swiper spaceBetween={20} slidesPerView={3}>
+      {newData.map((v, i) => {
+        return (
+          <SwiperSlide key={i} className={`${style['swiper-slide']}`}>
+            <Card
+              name={v.name}
+              price={v.price}
+              start_date={v.start_date}
+              image={v.image}
+              id={v.id}
+            />
+          </SwiperSlide>
+        )
+      })}
+    </Swiper>
+    // </div>
 
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={30}
-        slidesPerView={5}
-        watchSlidesProgress={true}
-        modules={[Navigation, Thumbs]}
-        className={`${style['swiper-sm']} d-none d-sm-flex`}
-        loop={true}
-        navigation={{ clickable: true }}
-      >
-        <SwiperSlide>
-          {data.course.map((v, i) => {
-            return (
-              <Card
-                key={i}
-                name={v.name}
-                id={v.id}
-                image={v.image}
-                price={v.price}
-              />
-            )
-          })}
-        </SwiperSlide>
-        {/* {images.map((item, index) => {
-          return (
-            <SwiperSlide
-              key={index}
-              className={`${style['swiper-slide']} ${
-                thumbsSwiper ? style['active'] : ''
-              }`}
-            >
-              <img src={item} />
-            </SwiperSlide>
-          )
-        })} */}
-      </Swiper>
-    </div>
+    //------------------------------------------------------
+    // <div className="swiper">
+    //   {/* <!-- Additional required wrapper --> */}
+    //   <div className="swiper-wrapper">
+    //     {/* <!-- Slides --> */}
+    //     <div className="swiper-slide">Slide 1</div>
+    //     <div className="swiper-slide">Slide 2</div>
+    //     <div className="swiper-slide">Slide 3</div>
+    //     ...
+    //   </div>
+    //   {/* <!-- If we need pagination --> */}
+    //   <div className="swiper-pagination"></div>
+
+    //   {/* <!-- If we need navigation buttons --> */}
+    //   <div className="swiper-button-prev"></div>
+    //   <div className="swiper-button-next"></div>
+
+    //   {/* <!-- If we need scrollbar --> */}
+    //   <div className="swiper-scrollbar"></div>
+    // </div>
   )
 }
 

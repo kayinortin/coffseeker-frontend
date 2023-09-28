@@ -20,8 +20,8 @@ export default function MainContent() {
         <Review />
         <Review />
         <Review />
-        <h3 className="text-center">熱門課程</h3>
-        <TopHits />
+        {/* <h3 className="text-center">熱門課程</h3> */}
+        <div className="w-100">{/* <TopHits /> */}</div>
       </div>
     </>
   )
