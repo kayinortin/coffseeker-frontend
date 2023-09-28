@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/MemSideBar'
-import InfoChangeForm from '@/components/member/InfoChangeForm'
+import ChangePassword from '@/components/member/ChangePassword'
 export default function info() {
   return (
     <>
@@ -35,7 +35,7 @@ export default function info() {
             </div>
             <div className={'col-9 mb-5'}>
               <div className={'px-5'}>
-                <InfoChangeForm />
+                <ChangePassword />
               </div>
             </div>
           </div>
