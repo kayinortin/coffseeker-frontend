@@ -92,7 +92,34 @@ $fw-black:900;
 }
 
 .cartlist{
-    padding-block: 2rem;
+    padding-block: 1rem;
+
+    // 空購物車
+    div.emptyContainer{
+        margin-block: 2rem;
+        img{
+            width: 20vw;
+        }
+        div.emptyTitle{
+            padding-block: 1rem;
+            font-size: $fs-lg;
+            color: $color--primary;
+            font-weight: $fw-bold;
+        }
+        button.goshop{
+            background-color: $color--secondary;
+            color: $color--white;
+            width: 30vw;
+            height: 2.5rem;
+            &:hover{
+                background-color: $color--primary;
+            }
+        }
+    }
+    table{
+        margin-bottom: 2rem;
+    }
+    // 咖啡商品
     table.products{
         padding-block: 1rem;
         width: 100%;
@@ -121,13 +148,20 @@ $fw-black:900;
 
             tr{   
                 border-bottom: 1px solid $color--primary;
-
                 td{
-                    padding-block: 2rem;
+                    padding-block: .5rem;
                     padding-inline: .5rem;
                     text-align: center;
                 }
-    
+                td.imgContainer{
+                    width: 160px;
+                    height: 160px;
+                    img{
+                        box-sizing: border-box;
+                        background-color: $color--primary;
+                        border: .4rem solid #CBB48B;
+                    }
+                }
                 td.quantity {
                     div.btn-group{
                         button {
@@ -169,7 +203,6 @@ $fw-black:900;
                     }
 
                 }
-
                 &:hover{
                     background-color: $color--gray6;
                 }
@@ -184,10 +217,9 @@ $fw-black:900;
             font-size: $fs-md;
             font-weight: $fw-bold;
          
-            tr.carttotal{
-                // border: 1px solid red;
+            tr.carttotal{ 
                 td.total{
-                    // border: 1px solid blue;
+                   
                     vertical-align: middle;
                     
                 }
@@ -195,25 +227,88 @@ $fw-black:900;
             }
         }
     }
-    div.emptyContainer{
-        margin-block: 2rem;
-        img{
-            width: 20vw;
-        }
-        div.emptyTitle{
-            padding-block: 1rem;
-            font-size: $fs-lg;
-            color: $color--primary;
+
+    // 課程商品
+    table.courses{
+        padding-block: 1rem;
+        width: 100%;
+        color: $color--primary;
+
+        thead.coursesLabels{
+            border: 1px solid $color--primary;
+            background-color: $color-lightgray;
+            font-size: $fs-sm;
             font-weight: $fw-bold;
+            tr{
+                th{
+                    padding-block: 1rem;
+                    padding-inline: 0.5rem;
+                    vertical-align: middle;
+                    text-align: center;
+                    min-width: 80px;
+                }
+            }
         }
-        button.goshop{
-            background-color: $color--secondary;
-            color: $color--white;
-            width: 30vw;
-            height: 2.5rem;
-            &:hover{
-                background-color: $color--primary;
+        tbody.coursesItem{
+            border: 1px solid $color--primary;
+            margin-block: 16px;
+
+            tr{   
+                border-bottom: 1px solid $color--primary;
+                &:hover{
+                    background-color: $color--gray6;
+                }
+
+                td{
+                    padding-block: .5rem;
+                    padding-inline: .5rem;
+                    text-align: center;
+                }
+                td.imgContainer{
+                    width: 160px;
+                    height: 160px;
+                    img{
+                        box-sizing: border-box;
+                        background-color: $color--primary;
+                        border: .4rem solid #CBB48B;
+                    }
+                }
+                td.productdelete{
+                    text-align: center;
+                    vertical-align: middle;
+                    button.deleteButton{
+                        width: 40px;
+                        height: 40px;
+                        padding: 0;
+                        &:hover,&:active{
+                            border: 1px solid $color--primary;
+                            background-color: $color--secondary;
+                        }
+                        .trash{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                        }
+                    }
+
+                }
+            }
+            
+        }
+        tfoot{
+            border: 1px solid $color--primary;
+            height: 50px;
+            padding: 2rem;
+            font-size: $fs-md;
+            font-weight: $fw-bold;
+
+            tr.carttotal{
+                td.total{
+                    vertical-align: middle;
+                   
+                } 
             }
         }
     }
+
+   
 }

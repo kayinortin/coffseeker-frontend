@@ -1,14 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import MemSideBar from '@/components/member/SideBar'
+import MemSideBar from '@/components/member/MemSideBar'
 import InfoChangeForm from '@/components/member/InfoChangeForm'
 export default function info() {
   return (
     <>
-      {/* 麵包屑結束 */}
       <section className={'background'}>
         <div className={'container'}>
-          {/* 麵包屑 */}
           {/* 麵包屑 */}
           <div className={'row'}>
             <nav className={'nav-breadcrumb'}>

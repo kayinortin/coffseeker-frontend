@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import ForgetPassword from '@/components/member/ForgetPassword'
-import ChangeForgetPassword from '@/components/member/ChangeForgetPassword'
 export default function Forget() {
   return (
     <>
@@ -29,8 +28,6 @@ export default function Forget() {
         {/* 麵包屑結束 */}
 
         <ForgetPassword />
-
-        {/* <ChangeForgetPassword /> */}
       </div>
     </>
   )
