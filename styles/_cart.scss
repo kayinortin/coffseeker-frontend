@@ -91,71 +91,224 @@ $fw-black:900;
     }
 }
 
-
-table.carts{
+.cartlist{
     padding-block: 1rem;
-    width: 100%;
-    
-    thead.cartLabels{
-        border: 1px solid $color--primary;
-        background-color: $color-lightgray;
-        font-size: $fs-sm;
-        tr{
 
-            th{
-                padding-block: 1rem;
-                padding-inline: 0.5rem;
-                vertical-align: middle;
-                text-align: center;
-                min-width: 80px;
+    // 空購物車
+    div.emptyContainer{
+        margin-block: 2rem;
+        img{
+            width: 20vw;
+        }
+        div.emptyTitle{
+            padding-block: 1rem;
+            font-size: $fs-lg;
+            color: $color--primary;
+            font-weight: $fw-bold;
+        }
+        button.goshop{
+            background-color: $color--secondary;
+            color: $color--white;
+            width: 30vw;
+            height: 2.5rem;
+            &:hover{
+                background-color: $color--primary;
             }
         }
     }
-    tbody.cartProducts{
-        border: 1px solid $color--primary;
-
-        tr{   
-            // border: 3px solid red;
-            border-bottom: 1px solid $color--primary;
-            td{
-                padding: 1rem;
-                text-align: center;
+    table{
+        margin-bottom: 2rem;
+    }
+    // 咖啡商品
+    table.products{
+        padding-block: 1rem;
+        width: 100%;
+        color: $color--primary;
+        
+        thead.productsLabels{
+            border: 1px solid $color--primary;
+            background-color: $color-lightgray;
+            font-size: $fs-sm;
+            font-weight: $fw-bold;
+            tr{
+               
+                th{
+                    padding-block: 1rem;
+                    padding-inline: 0.5rem;
+                    vertical-align: middle;
+                    text-align: center;
+                    min-width: 80px;
+                }
             }
+        }
 
-            td.quantity {
-                .btn-group{
-                    button {
-                        width: 40px;
-                        height: 40px;
-                        color: $color--primary;
-                        border: 1px solid $color--primary;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        transition: background-color 0.3s, color 0.3s;
-                        &:hover {
-                          background-color: $color--secondary;
-                          color: $color--white;
+        tbody.productsItem{
+            border: 1px solid $color--primary;
+            margin-block: 16px;
+
+            tr{   
+                border-bottom: 1px solid $color--primary;
+                td{
+                    padding-block: .5rem;
+                    padding-inline: .5rem;
+                    text-align: center;
+                }
+                td.imgContainer{
+                    width: 160px;
+                    height: 160px;
+                    img{
+                        box-sizing: border-box;
+                        background-color: $color--primary;
+                        border: .4rem solid #CBB48B;
+                    }
+                }
+                td.quantity {
+                    div.btn-group{
+                        button {
+                            width: 40px;
+                            color: $color--primary;
+                            border: 1px solid $color--primary;
+                            background-color: $color--background;
+                        }
+                        button.quantityAdd,button.quantityMinus{
+                            &:hover {
+                                background-color: $color--secondary;
+                              }
+                        }
+                        input.forminput{
+                            width: 60px;
+                            height: 40px;
+                            border-block: 1px solid $color--primary;
+                            text-align: center;
+                            background-color: $color--background;
                         }
                     }
-                    input.forminput{
-                        width: 60px;
+                }
+
+                td.productdelete{
+                    text-align: center;
+                    vertical-align: middle;
+                    button.deleteButton{
+                        width: 40px;
                         height: 40px;
-                        border-block: 1px solid $color--primary;
-                        text-align: center;
-                        background-color: $color--background;
+                        padding: 0;
+                        &:hover,&:active{
+                            border: 1px solid $color--primary;
+                            background-color: $color--secondary;
+                        }
+                        .trash{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                        }
                     }
+
+                }
+                &:hover{
+                    background-color: $color--gray6;
                 }
             }
-            td.cartdelete{
-                    width: 100%;
-                    height: 100%;
-                    border: 1px solid #FF9B1A;
-                .trash{
+            
+        }
+
+        tfoot{
+            border: 1px solid $color--primary;
+            height: 50px;
+            padding: 2rem;
+            font-size: $fs-md;
+            font-weight: $fw-bold;
+         
+            tr.carttotal{ 
+                td.total{
                    
+                    vertical-align: middle;
+                    
+                }
+                
+            }
+        }
+    }
+
+    // 課程商品
+    table.courses{
+        padding-block: 1rem;
+        width: 100%;
+        color: $color--primary;
+
+        thead.coursesLabels{
+            border: 1px solid $color--primary;
+            background-color: $color-lightgray;
+            font-size: $fs-sm;
+            font-weight: $fw-bold;
+            tr{
+                th{
+                    padding-block: 1rem;
+                    padding-inline: 0.5rem;
+                    vertical-align: middle;
+                    text-align: center;
+                    min-width: 80px;
                 }
             }
         }
-        
+        tbody.coursesItem{
+            border: 1px solid $color--primary;
+            margin-block: 16px;
+
+            tr{   
+                border-bottom: 1px solid $color--primary;
+                &:hover{
+                    background-color: $color--gray6;
+                }
+
+                td{
+                    padding-block: .5rem;
+                    padding-inline: .5rem;
+                    text-align: center;
+                }
+                td.imgContainer{
+                    width: 160px;
+                    height: 160px;
+                    img{
+                        box-sizing: border-box;
+                        background-color: $color--primary;
+                        border: .4rem solid #CBB48B;
+                    }
+                }
+                td.productdelete{
+                    text-align: center;
+                    vertical-align: middle;
+                    button.deleteButton{
+                        width: 40px;
+                        height: 40px;
+                        padding: 0;
+                        &:hover,&:active{
+                            border: 1px solid $color--primary;
+                            background-color: $color--secondary;
+                        }
+                        .trash{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                        }
+                    }
+
+                }
+            }
+            
+        }
+        tfoot{
+            border: 1px solid $color--primary;
+            height: 50px;
+            padding: 2rem;
+            font-size: $fs-md;
+            font-weight: $fw-bold;
+
+            tr.carttotal{
+                td.total{
+                    vertical-align: middle;
+                   
+                } 
+            }
+        }
     }
+
+   
 }

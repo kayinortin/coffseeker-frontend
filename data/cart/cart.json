@@ -1,52 +1,29 @@
 [
     {
     "id": 1,
-    "image": "latte_1_1.jpg",
+    "image": "product_1.png",
     "name": "烘焙咖啡豆",
     "description": "新鮮烘焙的咖啡豆，給你最佳的咖啡體驗。",
     "quantity": 1,
     "price": 900,
-    "discountPrice": 810,
-    "subtitle": 900
+    "discountPrice":900
   },
   {
     "id": 2,
-    "image": "cappuccino_2_1.jpg",
+    "image": "product_2.png",
     "name": "卡布奇諾咖啡豆",
     "description": "濃郁的卡布奇諾風味，適合喜愛濃咖啡的你。",
     "quantity": 1,
     "price": 1200,
-    "discountPrice": 1080, 
-    "subtitle": 1100
+    "discountPrice":1200
   },
   {
     "id": 3,
-    "image": "espresso_3_1.jpg",
-    "name": "意式濃縮咖啡豆",
-    "description": "原汁原味的意式濃縮，帶來純粹的咖啡享受。",
+    "image": "product_3.png",
+    "name": "美式咖啡風味豆",
+    "description": "濃郁的卡布奇諾風味，適合喜愛濃咖啡的你。",
     "quantity": 1,
-    "price": 400,
-    "discountPrice": 360, 
-    "subtitle": 800
-  },
-  {
-    "id": 4,
-    "image": "mocha_4_1.jpg",
-    "name": "摩卡咖啡豆",
-    "description": "結合巧克力和咖啡的經典風味，讓你愛不釋手。",
-    "quantity": 1,
-    "price": 320,
-    "discountPrice": 288, 
-    "subtitle": 1000
-  },
-  {
-    "id": 5,
-    "image": "americano_5_1.jpg",
-    "name": "美式咖啡豆",
-    "description": "清新的美式風味，適合每天享用的咖啡。",
-    "quantity": 1,
-    "price": 800,
-    "discountPrice": 720, 
-    "subtitle": 750
+    "price": 1200,
+    "discountPrice":1200
   }
 ]

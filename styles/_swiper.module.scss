@@ -1,0 +1,14 @@
+// 修改 swiper 的 scss
+$color--primary: #1c262c;
+.gallery-swiper {
+  .swiper-sm {
+    .swiper-slide {
+      opacity: 0.5;
+      transition: all 0.1s ease;
+    }
+    .swiper-slide-thumb-active {
+      opacity: 1;
+      border: 3px solid $color--primary;
+    }
+  }
+}

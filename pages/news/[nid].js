@@ -47,7 +47,7 @@ export default function NewsDetail() {
             </ol>
           </nav>
         </div>
-        <div className="news-detail mt-3 mb-2">
+        <div className="news-detail mt-3 ">
           <h3 className="text-center mb-4 mobile-news-title lh-sm">
             {selectedNews.title}
           </h3>

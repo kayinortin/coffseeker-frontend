@@ -36,25 +36,23 @@ export default function LoginForm() {
           <form className="p-5">
             {inputs.map((input) => {
               return (
-                <>
-                  <div className="mb-3" key={input.id}>
-                    <label htmlFor={input.htmlFor} className={'form-label'}>
-                      {input.title}
-                    </label>
-                    <input
-                      placeholder={input.placeholder}
-                      type={input.tyoe}
-                      className={'form-control'}
-                      id={input.htmlId}
-                      aria-describedby={input.aria}
-                      maxLength={input.maxlength}
-                    />
-                    <div
-                      id={'error' + input.id}
-                      className={'form-text text-danger'}
-                    ></div>
-                  </div>
-                </>
+                <div className="mb-3" key={input.id}>
+                  <label htmlFor={input.htmlFor} className={'form-label'}>
+                    {input.title}
+                  </label>
+                  <input
+                    placeholder={input.placeholder}
+                    type={input.tyoe}
+                    className={'form-control'}
+                    id={input.htmlId}
+                    aria-describedby={input.aria}
+                    maxLength={input.maxlength}
+                  />
+                  <div
+                    id={'error' + input.id}
+                    className={'form-text text-danger'}
+                  ></div>
+                </div>
               )
             })}
             <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>

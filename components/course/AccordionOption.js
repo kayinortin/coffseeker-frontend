@@ -21,7 +21,7 @@ export function AccordionOption({ options, level }) {
     <>
       <div className={`accordion ${isOpen ? 'open' : ''}`}>
         <div
-          className="accordion-header"
+          className="accordion-header mx-auto"
           role="button"
           tabIndex={0}
           onKeyDown={toggleAccordion}
@@ -29,7 +29,9 @@ export function AccordionOption({ options, level }) {
         >
           <ul>
             {level.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li key={index} className="text-center">
+                {item}
+              </li>
             ))}
           </ul>
         </div>
