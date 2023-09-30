@@ -8,7 +8,6 @@ import Footer from './footer'
 
 import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
 import axios from 'axios'
-import { useLogin } from '@/context/LoginStatus'
 import Swal from 'sweetalert2'
 
 export default function DefaultLayout({ title = '', children }) {
@@ -144,7 +143,7 @@ export default function DefaultLayout({ title = '', children }) {
       id: 7,
       label: '註冊/登入',
       iconMobile: (
-        <i className="fas fa-user-circle ed-navbar__font led-navbar__icon ed-navbar__icon--inline"></i>
+        <i className="fas fa-user-circle ed-navbar__font ed-navbar__icon ed-navbar__icon--inline"></i>
       ),
       iconDesktop: <i className="fas user-circle ed-navbar__font"></i>,
       tagDesktop: ``,

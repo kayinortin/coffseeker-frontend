@@ -2,15 +2,13 @@
 @import "./styles/variables";
 @import "./styles/reset";
 @import "./styles/global";
+@import "./styles/common";
 
 // 首頁樣式
-@import "./styles/common";
 @import "./styles/sidemenu";
 @import 'slick-carousel/slick/slick.css';
 @import 'slick-carousel/slick/slick-theme.css';
 
-// 導覽列表
-@import './styles/navbar';
 
 // 購物車
 @import './styles/cart';

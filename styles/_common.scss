@@ -359,11 +359,11 @@
         margin-bottom: 12px;
       }
       & li a:hover{
-        color: $color--white;
+        color: $color--white !important;
         background-color: $color--primary;
       }
       & li a:active{
-        color: $color--white;
+        color: $color--white !important;
         background-color: $color--primary;
       }
     }
@@ -451,7 +451,7 @@
     opacity: 1;
     &--navbar {
       width: 10rem;
-      background: $color--secondary;
+      background: $color--gray4;
     }
     &--divider {
       width: 100%;
