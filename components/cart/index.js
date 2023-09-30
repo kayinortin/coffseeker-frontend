@@ -1,15 +1,16 @@
 import React from 'react'
-import Cartbtn from './CartBtn'
-import Cartlist from './CartList'
+import Step from '@/components/cart/step'
+import CartList from '@/components/cart/CartList'
 
 function Cart() {
   return (
     <>
-      <div>購物車範例</div>
-      <Cartlist />
-      <Cartlist />
-      <Cartlist />
-      <Cartbtn />
+      <div className={'background'}>
+        <div className={'container'}>
+          <Step />
+          <CartList />
+        </div>
+      </div>
     </>
   )
 }
