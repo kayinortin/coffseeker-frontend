@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import MemSideBar from '@/components/member/SideBar'
+import MemSideBar from '@/components/member/MemSideBar'
 
 // 這頁面map後的資料並沒有以key值呈現，因為沒有id，所以會出現警告
 // 建議在map後的資料加上id，例如：
@@ -46,12 +46,14 @@ export default function User() {
               <MemSideBar />
             </div>
             <div className={'col-9 mb-5'}>
-              <div className={'content border border-dark'}>
-                <div className={'form-title border-bottom border-dark p-3'}>
-                  會員中心
-                </div>
-                <div className={'px-5'}>
-                  <MemSideBar />
+              <div className={'px-5'}>
+                <div className={'form-box border border-dark'}>
+                  <div className={'form-title border-bottom border-dark p-3'}>
+                    會員中心
+                  </div>
+                  <div className={'p-5'}>
+                    <MemSideBar />
+                  </div>
                 </div>
               </div>
             </div>
