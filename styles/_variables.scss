@@ -1,10 +1,11 @@
 /* color */
 $color--primary: #1c262c;
 $color--secondary: #FF9B1A;
-$color--info: #4A4E5C;
+$color--info: #1C262C;
 $color--success: #FF9B1A;
-$color--warning: #fad08e;
-$color--light: #4A4E5C;
+$color--warning: #FF9B1A;
+$color--error: #ef8b90;
+$color--dark: #1C262C;
 $color--white: #ffffff;
 $color--black: #000000;
 $color--background: #f2f2f2;
@@ -17,8 +18,8 @@ $color--gray5: #e0e0e0;
 $color--gray6: #f2f2f2;
 $color--gray7: #fafafa;
 
-$color--analogous1: #74b08d;
-$color--analogous2: #95b06b;
+$color--analogous1: #165885;
+$color--analogous2: #1C262C;
 
 $color--hover: #364047;
 $color--active: #1c262c;
@@ -151,15 +152,13 @@ $xxl: 1399px;
 $accordion-button-focus-border-color: #fff;
 $accordion-button-focus-box-shadow: #fff;
 $accordion-button-active-bg: #fff;
+
 // 按鈕圓角邊 button radius
 $border-radius: 0em;
 $border-radius-sm: 0em;
 $border-radius-lg: 0em;
 $form-select-bg: #F2F3EE;
 
-// $accordion-button-focus-border-color: #fff;
-// $accordion-button-focus-box-shadow: #fff;
-// $accordion-button-active-bg: #fff;
 
 $primary: #fff;
 // :root {--bs-accordion-btn-focus-box-shadow :#00000000;}

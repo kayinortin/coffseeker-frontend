@@ -16,13 +16,15 @@ body {
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   letter-spacing: $letter-spacing;
   color: $color__font;
+  overflow-x: hidden;
 }
 // 讓footer保持在最底下
-#main-content {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+// #main-content {
+//   display: flex;
+//   flex-direction: column;
+//   min-height: 100vh;
+// }
+
 // 背景為深藍色
 .bg-primary-color {
   background-color: $color--primary;
@@ -31,6 +33,7 @@ body {
 .footer-p-color {
   color: $color--gray3;
 }
+
 // TOP按鈕外框
 .btn-outline-light {
   color: $color--gray3;
@@ -46,38 +49,13 @@ nav {
 .fade-out {
   opacity: 0.9;
 }
+
 // 會員按鈕邊界取消
 .ed-icon-user-button {
   background-color:$color--background;
   border: none;
 }
 // 物件權限設定
-.z-1060 {
-  z-index: 1060;
-}
-.overlay {
-  position: fixed;
-  top: 136px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色 */
-  z-index: 1020; /* 確保其在最上層 */
-}
-@media screen and (max-width: 576px) {
-  .overlay {
-    position: fixed;
-    top: 120px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色 */
-    z-index: 1020; /* 確保其在最上層 */
-  }
-  .z-1080 {
-    z-index: 1080;
-  }
-}
 
 // 強迫取消bootstrap的樣式
 a {
