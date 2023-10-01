@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import '../index.scss'
 import DefaultLayout from '@/components/layout/default-layout/index'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
