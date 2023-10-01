@@ -217,7 +217,9 @@ export default function Map() {
   function ActiveCafeMarker({ cafeData }) {
     const map = useMap()
     if (asideInfoIndex == 'cafe') {
-      map.panTo([cafeData.latitude, cafeData.longitude], 15)
+      setTimeout(() => {
+        map.flyTo([cafeData.latitude, cafeData.longitude], map.getZoom())
+      }, 400)
       return (
         <Marker
           key={cafeData.id}
@@ -475,6 +477,7 @@ export default function Map() {
   //啟動定位
   function LocateBtn() {
     setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
+    handleAsideInfo('all')
   }
   //整體return
   return (
