@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
-import useInterval from '@/hooks/use-interval'
+import useInterval from '@/hooks/useInterval'
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('')
