@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FaFacebook, FaGoogle } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 
 export default function LoginForm() {
+  // 定義表單的值
+  const [mail, setMail] = useState('')
+  const [password, setPassword] = useState('')
+
   const inputs = [
     {
       id: 1,
@@ -11,9 +18,10 @@ export default function LoginForm() {
       title: '會員信箱(登入帳號)',
       placeholder: '請輸入信箱',
       type: 'email',
-      htmlId: 'Inputmail',
+      htmlId: 'InputEmail',
       aria: null,
       maxlength: 50,
+      onChange: (e) => setMail(e.target.value),
     },
     {
       id: 2,
@@ -23,87 +31,118 @@ export default function LoginForm() {
       type: 'password',
       htmlId: 'InputPassword',
       aria: null,
-      maxlength: 10,
+      maxlength: 12,
+      onChange: (e) => setPassword(e.target.value),
     },
   ]
+  const router = useRouter()
+  // ============================
+  // 在 LoginForm 元件中添加這個函式
+  const handleLoginFormSubmit = async () => {
+    // 建立要發送的資料物件
+    const formData = {
+      email: mail,
+      password: password,
+    }
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3005/api/auth-jwt/login',
+        formData
+      )
+      console.log('伺服器回應:', response.data)
+      // router.push('/member')
+      // response.data.accessToken
+      Cookies.set('accessToken', response.data.accessToken)
+    } catch (error) {
+      console.error('錯誤:', error)
+    }
+  }
+  // ===================================
+
   return (
     <>
-      <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'form-box border border-dark'}>
-          <div className={'form-title border-bottom border-dark p-3'}>
-            會員登入
-          </div>
-          <form className="p-5">
-            {inputs.map((input) => {
-              return (
-                <div className="mb-3" key={input.id}>
-                  <label htmlFor={input.htmlFor} className={'form-label'}>
-                    {input.title}
-                  </label>
-                  <input
-                    placeholder={input.placeholder}
-                    type={input.tyoe}
-                    className={'form-control'}
-                    id={input.htmlId}
-                    aria-describedby={input.aria}
-                    maxLength={input.maxlength}
-                  />
-                  <div
-                    id={'error' + input.id}
-                    className={'form-text text-danger'}
-                  ></div>
-                </div>
-              )
-            })}
-            <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>
-              <input
-                type="checkbox"
-                className={'check-input me-3 rounded-0'}
-                id="exampleCheck1"
-              />
-              <label className={'form-check-label'} htmlFor="exampleCheck1">
-                記住密碼
-              </label>
+      <form id="loginForm">
+        <div className={'container d-flex justify-content-center pb-3'}>
+          <div className={'form-box border border-dark'}>
+            <div className={'form-title border-bottom border-dark p-3'}>
+              會員登入
             </div>
-          </form>
+            <div className="p-5">
+              {inputs.map((input) => {
+                return (
+                  <div className="mb-3" key={input.id}>
+                    <label htmlFor={input.htmlFor} className={'form-label'}>
+                      {input.title}
+                    </label>
+                    <input
+                      placeholder={input.placeholder}
+                      type={input.type}
+                      className={'form-control'}
+                      id={input.htmlId}
+                      aria-describedby={input.aria}
+                      maxLength={input.maxlength}
+                      onChange={(e) => {
+                        input.onChange(e)
+                      }}
+                    />
+                    <div
+                      id={'error' + input.id}
+                      className={'form-text text-danger'}
+                    ></div>
+                  </div>
+                )
+              })}
+              <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>
+                <input
+                  type="checkbox"
+                  className={'check-input me-3 rounded-0'}
+                  id="exampleCheck1"
+                />
+                <label className={'form-check-label'} htmlFor="exampleCheck1">
+                  記住密碼
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className={'container d-flex justify-content-center'}>
+        <div className={'container d-flex justify-content-center'}>
+          <button
+            className={'btn-login border-0 text-center'}
+            type="button"
+            onClick={handleLoginFormSubmit}
+          >
+            登入
+          </button>
+        </div>
         <div
           className={
-            'btn-login text-center d-flex justify-content-center flex-column'
+            'container d-flex justify-content-center mt-4 mb-3 align-items-center'
           }
         >
-          <span>登入</span>
+          <FaFacebook className={'h2 me-5'} />
+          <FaGoogle className={'h2'} />
+          <FaXTwitter className={'h2 ms-5'} />
         </div>
-      </div>
-      <div
-        className={
-          'container d-flex justify-content-center mt-4 mb-3 align-items-center'
-        }
-      >
-        <FaFacebook className={'h1 me-5'} />
-        <FaGoogle className={'h1'} />
-        <FaXTwitter className={'h1 ms-5'} />
-      </div>
-      <div className={'container d-flex justify-content-center mb-3'}>
-        <div className={'ask-for-register'}>
-          <span className="me-3">還不是會員嗎?</span>
-          <Link href="./register" className={'ms-3'}>
-            加入會員
-          </Link>
+        <div className={'container d-flex justify-content-center mb-3'}>
+          <div className={'ask-for-register'}>
+            <span className="me-3">還不是會員嗎?</span>
+            <Link href="./register" className={'ms-3'}>
+              加入會員
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className={'container d-flex justify-content-center  pb-5'}>
-        <div className={'content d-flex justify-content-between'}>
-          <Link href="/" className={'forget-password'}>
-            會員隱私條款
-          </Link>
-          <Link href="/member/forget-password" className={'forget-password'}>
-            忘記密碼
-          </Link>
+        <div className={'container d-flex justify-content-center  pb-5'}>
+          <div className={'content d-flex justify-content-between'}>
+            <Link href="/" className={'forget-password'}>
+              會員隱私條款
+            </Link>
+            <Link href="/member/forget-password" className={'forget-password'}>
+              忘記密碼
+            </Link>
+          </div>
         </div>
-      </div>
+      </form>
     </>
   )
 }

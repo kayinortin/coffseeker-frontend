@@ -1,16 +1,10 @@
 import React from 'react'
-import Step from '@/components/cart/step'
-import CartList from '@/components/cart/CartList'
+import CartIndex from '@/components/cart/index'
 
 export default function Cart() {
   return (
     <>
-      <div className={'background'}>
-        <div className={'container'}>
-          <Step />
-          <CartList />
-        </div>
-      </div>
+      <CartIndex />
     </>
   )
 }

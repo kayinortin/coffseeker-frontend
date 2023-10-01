@@ -23,16 +23,16 @@ const items = [
 export default function Header({ isOpen, toggleDrop, currentDropdown }) {
   const router = useRouter()
   const currentRoute = router.pathname
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  // useEffect(() => {
-  //   async function fetchLoginStatus() {
-  //     const loggedIn = await checkLoginStatus()
-  //     setIsLoggedIn(loggedIn)
-  //   }
+  useEffect(() => {
+    async function fetchLoginStatus() {
+      const loggedIn = await checkLoginStatus()
+      setIsLoggedIn(loggedIn)
+    }
 
-  //   fetchLoginStatus()
-  // }, [])
+    fetchLoginStatus()
+  }, [])
 
   const children = items[0].children
 

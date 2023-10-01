@@ -312,3 +312,17 @@ $fw-black:900;
 
    
 }
+.selectInfo{
+    border: 3px solid red;
+
+    .select{
+        border: 1px solid green;
+        table.selectDelivery{
+            border: 1px solid blue;
+        }
+        table.totalInfo{
+            border: 1px solid orange;
+        }
+
+    }
+}
