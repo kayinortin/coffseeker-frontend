@@ -119,6 +119,7 @@
   align-items: center;
   @media screen and (max-width: $lg) {
     bottom: -425px;
+    left: 10px;
     position: absolute;
   }
   & .dot {
@@ -147,6 +148,9 @@
 .line-container {
   position: relative;
   overflow: hidden;
+  @media screen and (max-width: $lg) {
+    overflow: visible;
+  }
   & .line {
     display: block;
     --tw-bg-opacity: 1;
@@ -214,6 +218,23 @@
   }
 }
 
+.ed-position {
+  position: absolute;
+  top: -40px;
+  left: -80px;
+  width: 110%;
+  height: 110%;
+  z-index: 5;
+  @media screen and (max-width: $lg) {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .season-frame {
   position: absolute;
   top: 7.5rem;
@@ -273,6 +294,11 @@
   position: absolute;
   left: calc(100% - 240px);
   opacity: 0.5 !important;
+  @media screen and (max-width: $lg) {
+    rotate: 120deg;
+    width: 300px;
+    bottom: 230px;
+  }
 }
 
 .timeline-fullscreen {
@@ -283,8 +309,8 @@
   height: calc(100% - 80px);
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 1000;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  // overflow-x: scroll;
+  // overflow-y: hidden;
   display: flex;
   &::-webkit-scrollbar {
     display: none;
@@ -302,6 +328,17 @@
   height: 104vh;
   writing-mode: vertical-lr !important;
   z-index: 5;
+  @media screen and (max-width: $lg) {
+    border: 1px solid $color--gray3;
+    border-radius: 100%;
+    background-color: $color--secondary;
+    color: white;
+    width: 8vh;
+    height: 8vh;
+    bottom: 100px;
+    left: 300px;
+    z-index: 1090;
+  }
 }
 
 .season-wrap {
@@ -320,8 +357,16 @@
   &.expanded {
     opacity: 1;
     width: 100%;
-    overflow-y: hidden;
+    overflow: hidden;
   }
+  @media screen and (max-width: $lg) {
+    left: 0;
+    position: absolute;
+    overflow: visible;
+    &.expanded {
+      overflow: visible;
+    }
+}
 }
 .overscroll {
   overscroll-behavior: none;
@@ -335,6 +380,12 @@
   flex-grow: 1;
   --tw-bg-opacity: 1;
   background-color: rgb(240 235 226 / var(--tw-bg-opacity));
+  @media screen and (max-width: $lg) {
+    width: 390px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 .h-full {
@@ -374,6 +425,11 @@
   width: max-content;
   height: 100%;
   display: flex;
+  @media screen and (max-width: $lg) {
+    width: 360px;
+    flex-direction: column;
+    
+  }
 }
 
 .season-item {
@@ -407,6 +463,26 @@
   }
 }
 
+.ed-season-btn {
+  font-size: 2.5rem;
+  line-height: 120%;
+  letter-spacing: 0.2em;
+  writing-mode: vertical-lr;
+  white-space: nowrap;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  @media screen and (max-width: $lg) {
+  margin-top: 20px;
+   margin-left: 10px;   
+  }
+  & p {
+    writing-mode: horizontal-tb;
+    font-size: 0.5rem;
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+}
+
 .divider-line {
   --tw-bg-opacity: 1;
   background-color: rgb(231 231 231 / var(--tw-bg-opacity));
@@ -427,11 +503,53 @@
   margin-top: 0.75rem;
 }
 
-.ed-icon{
+.ed-icon {
   font-size: 25px;
   position: fixed;
   color: $color--primary;
-  z-index: 1080;
+  z-index: 1090;
   top: 56%;
   left: 0.6%;
+}
+
+.ed-wrapper-content {
+  display: flex;
+  writing-mode: horizontal-tb;
+  font-size: 1rem;
+  word-break: normal;
+  word-wrap: break-word;
+  white-space: wrap;
+  width: 160px;
+  height: 300px;
+  line-height: 25px;
+  position: absolute;
+  top: 160px;
+  right: 60px;
+  font-weight: 300;
+  @media screen and (max-width: $lg) {
+    top: 60px;
+    right: 100px;
+    width: 150px;
+    height: 100%;
+    font-size: 1.1rem;
+    line-height: 200%;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+  }
+    
+  }
+
+.btn-image {
+  img {
+    position: relative;
+    top: 400px;
+    width: 200px;
+    height: auto;
+    opacity: 0.4;
+    @media screen and (max-width: $lg) {
+      top: 70px;
+      right: -90px;
+      opacity: 0.2;
+    }
+  }
 }

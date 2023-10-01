@@ -30,7 +30,7 @@ export default function PopularProducts() {
                   <div
                     className="card card-small"
                     data-aos="fade-right"
-                    data-aos-delay={product.product_id * 200}
+                    data-aos-delay={200}
                   >
                     <img
                       src={`http://localhost:3005/uploads/${product.product_image}`}

@@ -5,7 +5,7 @@ export default function useTextAnimation(ref, dependency, animationType) {
   useEffect(() => {
     if (ref.current) {
       const splitTextWithLineBreaks = (element) => {
-        const parts = element.innerHTML.split('<br>')
+        const parts = element.innerHTML.split('，')
         element.innerHTML = ''
 
         parts.forEach((part, index) => {
@@ -15,7 +15,7 @@ export default function useTextAnimation(ref, dependency, animationType) {
             .join('')
           element.innerHTML += chars
           if (index < parts.length - 1) {
-            element.innerHTML += '<br>'
+            element.innerHTML += '，<br>'
           }
         })
       }
