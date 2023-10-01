@@ -361,93 +361,115 @@ function CartList() {
                 </tfoot>
               </table>
             )}
-            <table className="selectContainer">
-              <thead className="Labels">
-                <tr>
-                  <th className="align-middle" scope="col">
-                    選擇送貨及付款方式
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="selectItem">
-                <tr>
-                  <td className="align-middle py-4 px-2" scope="col">
-                    <label for="deliveryLabel" className="deliveryLabel">
-                      選擇運送方式：
-                    </label>
-                    <select
-                      class="form-select"
-                      id="deliveryLabel"
-                      name="deliveryLabel"
-                      aria-label="選擇運送方式"
+            <div className="d-flex selectItems">
+              {/* 選擇送貨及付款方式 */}
+              <table className="selectContainer">
+                <thead className="Labels">
+                  <tr>
+                    <th className="align-middle" scope="col">
+                      選擇送貨及付款方式
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="selectItem">
+                  <tr>
+                    <td
+                      className="align-middle selectContainer w-100"
+                      scope="col"
                     >
-                      <option selected>請選擇</option>
-                      <option value="delivery">宅配</option>
-                      <option value="711Store">7-11便利商店</option>
-                      <option value="familyStore">全家便利商店</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td lassName="align-middle" scope="col">
-                    <label for="paymentLabel">選擇付款方式：</label>
-                    <select
-                      className="form-select"
-                      id="paymentLabel"
-                      name="paymentLabel"
-                      aria-label="選擇付款方式"
+                      <label for="deliveryLabel" className="selecTitle">
+                        選擇運送方式：
+                      </label>
+                      <select
+                        class="form-select"
+                        id="deliveryLabel"
+                        name="deliveryLabel"
+                        aria-label="選擇運送方式"
+                      >
+                        <option selected>請選擇</option>
+                        <option value="delivery">宅配</option>
+                        <option value="711Store">7-11便利商店</option>
+                        <option value="familyStore">全家便利商店</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className="align-middle selectContainer w-100"
+                      scope="col"
                     >
-                      <option selected>請選擇</option>
-                      <option value="creditCard">信用卡</option>
-                      <option value="ATM">ATM轉帳</option>
-                    </select>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="paymentContainer">
-              <thead className="Labels">
-                <tr>
-                  <th className="align-middle" scope="col">
-                    付款資訊
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div className="label-item">
-                      <label for="allProductsItems">商品</label>
-                      <div className="value" name="allProductsItems">
-                        5/項
+                      <label for="paymentLabel" className="selecTitle">
+                        選擇付款方式：
+                      </label>
+                      <select
+                        className="form-select"
+                        id="paymentLabel"
+                        name="paymentLabel"
+                        aria-label="選擇付款方式"
+                      >
+                        <option selected>請選擇</option>
+                        <option value="creditCard">信用卡</option>
+                        <option value="ATM">ATM轉帳</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* 付款資訊 */}
+              <table className="paymentContainer">
+                <thead className="Labels">
+                  <tr>
+                    <th className="align-middle" scope="col">
+                      付款資訊
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="paymentItem">
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
+                        <label for="allProductsItems" className="selecTitle">
+                          商品
+                        </label>
+                        <div className="" name="allProductsItems">
+                          5/項
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="label-item">
-                      <label for="allPrdouctPrice">金額</label>
-                      <div className="value" name="allPrdouctPrice">
-                        $9999
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
+                        <label for="allPrdouctPrice">金額</label>
+                        <div className="" name="allPrdouctPrice">
+                          $9999
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <div className="label-item">
-                    <label for="deliveryPrice">運費</label>
-                    <div className="value" name="deliveryPrice">
-                      $60
-                    </div>
-                  </div>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="label-item">
-                      <label for="couponDiscount">優惠卷折扣</label>
-                      <div className="value" name="couponDiscount">
-                        -$360
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
+                        <label for="deliveryPrice">運費</label>
+                        <div className="" name="deliveryPrice">
+                          $9999
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
+                        <label for="couponDiscount">優惠卷折扣</label>
+                        <div className="" name="couponDiscount">
+                          -$360
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
                         <select
                           className="form-select"
                           id="coupon"
@@ -460,24 +482,31 @@ function CartList() {
                           <option value="3">優惠卷3</option>
                         </select>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td>
-                    <hr />
-                    <div className="label-item">
-                      <label for="sumTotal">合計</label>
-                      <div className="value" name="sumTotal">
-                        $9999
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle p-2" scope="col">
+                      <hr />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
+                        <label for="sumTotal">合計</label>
+                        <div className="fs-3 fw-bold" name="sumTotal">
+                          $9999
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <button className="btn goCheckout">前往結賬</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </>
         )}
       </div>
