@@ -119,12 +119,11 @@ function useSeasonIcon(monthIndex) {
     },
   ]
   // 首先，我们检查月份索引的有效性
-  
+
   const [iconSrc, setIconSrc] = useState('http://localhost:3000/season/10.jpg')
 
   useEffect(() => {
     const mobileMatch = window.matchMedia('(max-width: 992px)')
-    console.log(window.matchMedia('(max-width: 992px)').matches)
 
     function handleDeviceChange(e) {
       if (e.matches) {
@@ -140,7 +139,7 @@ function useSeasonIcon(monthIndex) {
     return () => {
       mobileMatch.removeListener(handleDeviceChange)
     }
-  }, [monthIndex]) // 我们将monthIndex添加为依赖项，这样如果它改变，我们的effect会重新运行
+  }, [monthIndex])
 
   return iconSrc
 }

@@ -17,7 +17,11 @@ export default function PopularProducts() {
   return (
     <>
       <div className="container ed-index">
-        <div className="hot-product-wrapper">
+        <div
+          className="hot-product-wrapper"
+          data-aos="fade-down"
+          data-aos-delay="300"
+        >
           <div className="line"></div>
           <div className="hot-product">熱銷商品</div>
           <div className="line"></div>
