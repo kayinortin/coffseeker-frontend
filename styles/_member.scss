@@ -114,7 +114,15 @@ body{
     height: 48px;
     width: 650px;
 }
-
+// 忘記密碼取得驗證碼按鈕
+.btn-getOTP {
+    color: #ffffff;
+    background: $color--secondary;
+    font-family: 'Noto Sans TC';
+    font-size: 18px;
+    height: 48px;
+    // width: 650px;
+}
 // 登入頁面 詢問註冊
 .ask-for-register {
     font-size: 20px;
