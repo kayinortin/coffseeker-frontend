@@ -40,6 +40,12 @@ export default function HeaderMobile(props) {
         </Link>
         <div className={`ed-navbar__menu ${!isTop ? 'ed-navbar--scroll' : ''}`}>
           <ul className="ed-navbar__list">
+            <div className="ed-bg1">
+              <img src="http://localhost:3000/bg1.png" alt="menu-bg" />
+            </div>
+            <div className="ed-bg2">
+              <img src="http://localhost:3000/bg2.png" alt="menu-bg" width={300}/>
+            </div>
             {navItems.map((item) => {
               if (!item.children) {
                 return (

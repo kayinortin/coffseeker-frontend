@@ -1,9 +1,9 @@
 /* color */
 $color--primary: #1c262c;
-$color--secondary: #FF9B1A;
+$color--secondary: rgb(181 75 51);
 $color--info: #1C262C;
-$color--success: #FF9B1A;
-$color--warning: #FF9B1A;
+$color--success: rgb(181 75 51);
+$color--warning: rgb(181 75 51);
 $color--error: #ef8b90;
 $color--dark: #1C262C;
 $color--white: #ffffff;
@@ -32,7 +32,7 @@ $color__bg--analogous1: rgba(116, 176, 141, 0.3);
 $color__bg--analogous2: rgba(149, 176, 107, 0.3);
 $color__bg--hover: rgb(118, 184, 211, 0.3);
 $color__bg--light: rgba(255, 255, 255, 0.9);
-$color__deco: rgba(107, 156, 102, 0.2);
+$color__deco: rgba(107, 156, 102, 0.8);
 
 $color--gradient: linear-gradient(180.06deg, rgba(255, 255, 255, 0) 0.05%, #ffffff 68.32%);
 $color--loading: linear-gradient(
