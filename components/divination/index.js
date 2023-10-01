@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
-
+import { register } from 'swiper/element/bundle'
 import drinkCoffeeImg from '@/public/divination-image/Animation - 1695799375022.json'
 let cayPlay = false
-
+register()
 export default function Divination() {
   const [gameFinish, setGameFinish] = useState(false)
   const sections = [
@@ -226,7 +226,7 @@ export default function Divination() {
       await waittings(300)
       cardSelector.classList.add(`tarotCard${picks[i]}Active`)
     }
-    await waittings(500)
+    await waittings(1000)
     //動畫：卡片摺疊回去
     for (let i = 1; i <= 10; i++) {
       document
@@ -305,8 +305,7 @@ export default function Divination() {
   } else {
     return (
       <>
-        <div className="desk">
-          <div></div>
+        <div className="TarotResult">
           <sections className="result container">
             <div className="resultCard d-lg-flex">
               <Lottie
@@ -332,7 +331,40 @@ export default function Divination() {
               </div>
             </div>
           </sections>
-          <section>這裡是推薦商品跑馬燈</section>
+          <section>
+            <swiper-container
+              //左右控制
+              navigation="true"
+              //分頁點點
+              pagination="false"
+              //進度條
+              scrollbar="true"
+              //每頁幾張
+              slides-per-view="1"
+              speed="500"
+              loop="true"
+              css-mode="true"
+            >
+              <swiper-slide>
+                <div className="box">推薦商品1</div>
+              </swiper-slide>
+              <swiper-slide>
+                <div className="box">推薦商品2</div>
+              </swiper-slide>
+              <swiper-slide>
+                <div className="box">推薦商品3</div>
+              </swiper-slide>
+              <swiper-slide>
+                <div className="box">推薦商品4</div>
+              </swiper-slide>
+              <swiper-slide>
+                <div className="box">推薦商品5</div>
+              </swiper-slide>
+              <swiper-slide>
+                <div className="box">推薦商品6</div>
+              </swiper-slide>
+            </swiper-container>
+          </section>
         </div>
       </>
     )

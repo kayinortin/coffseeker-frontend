@@ -5,48 +5,47 @@ import { AiOutlineMinus } from 'react-icons/ai'
 import productsData from '@/data/cart/cart'
 import CourseData from '@/data/cart/course'
 
-// 小計函式
-function calculateTotal(cart) {
-  const total = cart.reduce((accumulator, product) => {
-    return accumulator + product.quantity * product.price
-  }, 0)
-  return Math.round(total.toFixed(2))
-}
-
-// 打折函式
-function applyDiscount(price, discountRate) {
-  const parsedPrice = parseFloat(price)
-  if (isNaN(parsedPrice)) {
-    return (0).toFixed(2)
-  }
-  const discountedPrice = parsedPrice * discountRate
-  return Math.round(discountedPrice.toFixed(2))
-}
-
 function CartList() {
   const [productCart, setProductCart] = useState([])
   const [courseCart, setCourseCart] = useState([])
-  const [discountRate, setDiscountRate] = useState(0.85)
+  const [selectAllProducts, setSelectAllProducts] = useState(false)
+  const [selectAllCourses, setSelectAllCourses] = useState(false)
 
   // 初始化商品購物車
   const initProductCart = () => {
-    const cartWithDiscount = productsData.map((product) => ({
-      ...product,
-      discountPrice: applyDiscount(product.price, discountRate),
-    }))
-    setProductCart(cartWithDiscount)
+    setProductCart([...productsData])
   }
+
   // 初始化课程購物車
   const initCourseCart = () => {
     setCourseCart([...CourseData])
   }
 
+  //初次進入購物車狀態
   useEffect(() => {
     initProductCart()
     initCourseCart()
+
+    // 預設已選擇所有商品
+    const updatedProductCart = productsData.map((product) => ({
+      ...product,
+      selected: true,
+    }))
+    setProductCart(updatedProductCart)
+
+    // 預設已選擇所有課程
+    const updatedCourseCart = CourseData.map((course) => ({
+      ...course,
+      selected: true,
+    }))
+    setCourseCart(updatedCourseCart)
+    //預設全選
+    setSelectAllProducts(true)
+    setSelectAllCourses(true)
   }, [])
 
-  const handleProductQuantityChange = (productId, changeAmount) => {
+  // 處理商品數量增減
+  const handleQuantityChange = (productId, changeAmount) => {
     if (changeAmount === 0) {
       const updatedCart = productCart.filter(
         (product) => product.id !== productId
@@ -56,11 +55,11 @@ function CartList() {
       const updatedCart = productCart.map((product) => {
         if (product.id === productId) {
           const newQuantity = Math.max(1, product.quantity + changeAmount)
-          const newDiscountPrice = applyDiscount(product.price, discountRate)
+          const newPrice = product.price * newQuantity
           return {
             ...product,
             quantity: newQuantity,
-            discountPrice: newDiscountPrice,
+            price: newPrice,
           }
         }
         return product
@@ -69,44 +68,80 @@ function CartList() {
     }
   }
 
-  //處理商品數量增減
-  const handleCourseQuantityChange = (courseId, changeAmount) => {
-    if (changeAmount === 0) {
-      const updatedCart = courseCart.filter((course) => course.id !== courseId)
-      setCourseCart(updatedCart)
-    } else {
-      const updatedCart = courseCart.map((course) => {
-        if (course.id === courseId) {
-          return {
-            ...course,
-            quantity: course.quantity + changeAmount,
-          }
-        }
-        return course
-      })
-      setCourseCart(updatedCart)
-    }
-  }
-
-  // 刪除一個商品
+  // 刪除一個商品/課程
   const handleRemoveProduct = (productId) => {
     const updatedCart = productCart.filter((item) => item.id !== productId)
     setProductCart(updatedCart)
   }
-  // 刪除一個課程
   const handleRemoveCourse = (courseId) => {
     const updatedCart = courseCart.filter((item) => item.id !== courseId)
     setCourseCart(updatedCart)
   }
 
-  // 判斷商品購物車是否有無商品
+  // 切換單個商品的選擇狀態
+  const handleToggleProductSelection = (productId) => {
+    const updatedCart = productCart.map((product) => {
+      if (product.id === productId) {
+        return {
+          ...product,
+          selected: !product.selected,
+        }
+      }
+      return product
+    })
+    setProductCart(updatedCart)
+
+    const allProductsSelected = updatedCart.every((product) => product.selected)
+    setSelectAllProducts(allProductsSelected)
+  }
+  const handleToggleCourseSelection = (courseId) => {
+    const updatedCart = courseCart.map((course) => {
+      if (course.id === courseId) {
+        return {
+          ...course,
+          selected: !course.selected,
+        }
+      }
+      return course
+    })
+    setCourseCart(updatedCart)
+
+    const allCoursesSelected = updatedCart.every((course) => course.selected)
+    setSelectAllCourses(allCoursesSelected)
+  }
+
+  // 切換所有選擇狀態
+  const handleToggleSelectAllProducts = () => {
+    const updatedProductCart = productCart.map((product) => ({
+      ...product,
+      selected: !selectAllProducts,
+    }))
+    setProductCart(updatedProductCart)
+    setSelectAllProducts(!selectAllProducts)
+  }
+  const handleToggleSelectAllCourses = () => {
+    const updatedCourseCart = courseCart.map((course) => ({
+      ...course,
+      selected: !selectAllCourses,
+    }))
+    setCourseCart(updatedCourseCart)
+    setSelectAllCourses(!selectAllCourses)
+  }
+
+  //判斷購物車是否為空
   const isProductCartEmpty = productCart.length === 0
-  // 判斷课程購物車是否有無课程
   const isCourseCartEmpty = courseCart.length === 0
 
   // 商品列表
   const productItems = productCart.map((product) => (
     <tr key={product.id}>
+      <td className={'align-middle'}>
+        <input
+          type="checkbox"
+          checked={product.selected}
+          onChange={() => handleToggleProductSelection(product.id)}
+        />
+      </td>
       <td className={'align-middle ps-3 imgContainer'}>
         <img
           className={'img-fluid'}
@@ -118,13 +153,14 @@ function CartList() {
         <div className={'fs-5 mb-2'}>{product.name}</div>
         <div className={'description'}>{product.description}</div>
       </td>
+      <td className={'align-middle'}>${product.price}</td>
       <td className={'align-middle quantity'} role="group">
         <div className={'btn-group'}>
           <button
             type="button"
             className={'quantityMinus'}
             onClick={() => {
-              handleProductQuantityChange(product.id, -1)
+              handleQuantityChange(product.id, -1)
             }}
           >
             <AiOutlineMinus />
@@ -141,17 +177,14 @@ function CartList() {
             type="button"
             className={'quantityAdd'}
             onClick={() => {
-              handleProductQuantityChange(product.id, 1)
+              handleQuantityChange(product.id, 1)
             }}
           >
             <GrAdd />
           </button>
         </div>
       </td>
-      <td className={'align-middle'}>${product.price.toFixed()}</td>
-      <td className={'align-middle'}>
-        ${Math.round((product.quantity * product.price).toFixed())}
-      </td>
+      <td className={'align-middle'}>${product.price * product.quantity}</td>
       <td className={'align-middle productdelete'}>
         <button
           className={'btn deleteButton'}
@@ -164,9 +197,17 @@ function CartList() {
       </td>
     </tr>
   ))
+
   // 課程列表
   const courseItems = courseCart.map((course) => (
     <tr key={course.id}>
+      <td className={'align-middle'}>
+        <input
+          type="checkbox"
+          checked={course.selected}
+          onChange={() => handleToggleCourseSelection(course.id)}
+        />
+      </td>
       <td className={'align-middle ps-3 imgContainer'}>
         <img
           className={'img-fluid'}
@@ -179,7 +220,7 @@ function CartList() {
         <div className={'description'}>{course.description}</div>
       </td>
       <td className={'align-middle'}>{course.quantity}</td>
-      <td className={'align-middle'}>${course.price.toFixed()}</td>
+      <td className={'align-middle'}>${course.price}</td>
       <td className={'align-middle productdelete'}>
         <button
           className={'btn deleteButton'}
@@ -194,16 +235,20 @@ function CartList() {
   ))
 
   // 商品小計金額
-  // const productTotal = calculateTotal(productCart)
-  const productTotal = productCart.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  )
+  const selectedProductTotal = productCart.reduce((total, product) => {
+    if (product.selected) {
+      return total + product.price * product.quantity
+    }
+    return total
+  }, 0)
+
   // 課程小計金額
-  const courseTotal = courseCart.reduce(
-    (total, course) => total + course.price * course.quantity,
-    0
-  )
+  const selectedCourseTotal = courseCart.reduce((total, course) => {
+    if (course.selected) {
+      return total + course.price * course.quantity
+    }
+    return total
+  }, 0)
 
   return (
     <>
@@ -228,9 +273,16 @@ function CartList() {
             {/* 商品表格 */}
             {productItems.length > 0 && (
               <table className={'products'}>
-                {/* 商品表格的表头 */}
+                {/* 商品表格的表頭 */}
                 <thead className={'productsLabels'}>
                   <tr>
+                    <th className={'align-middle'} scope="col">
+                      <input
+                        type="checkbox"
+                        checked={selectAllProducts}
+                        onChange={() => handleToggleSelectAllProducts()}
+                      />
+                    </th>
                     <th
                       className={'align-middle text-start ps-4'}
                       colSpan="2"
@@ -239,10 +291,10 @@ function CartList() {
                       商品項目 ({productItems.length})
                     </th>
                     <th className={'align-middle'} scope="col">
-                      數量
+                      單價
                     </th>
                     <th className={'align-middle'} scope="col">
-                      單價
+                      數量
                     </th>
                     <th className={'align-middle'} scope="col">
                       小計
@@ -253,24 +305,31 @@ function CartList() {
                   </tr>
                 </thead>
                 <tbody className={'productsItem'}>{productItems}</tbody>
-                <tfoot>
-                  <tr className="carttotal">
+                <tfoot className={'productFoot'}>
+                  <tr className="productTotal">
                     <td colSpan="5" className="text-end total">
                       商品小計：
                     </td>
                     <td className={'align-middle pe-2'}>
-                      NTD${Math.round(productTotal.toFixed())}
+                      NTD${selectedProductTotal}
                     </td>
                   </tr>
                 </tfoot>
               </table>
             )}
-            {/* 课程表格 */}
+            {/* 課程表格 */}
             {courseItems.length > 0 && (
               <table className={'courses'}>
-                {/* 课程表格的表头 */}
+                {/* 課程表格的表頭 */}
                 <thead className={'coursesLabels'}>
                   <tr>
+                    <th className={'align-middle'} scope="col">
+                      <input
+                        type="checkbox"
+                        checked={selectAllCourses}
+                        onChange={() => handleToggleSelectAllCourses()}
+                      />
+                    </th>
                     <th
                       className={'align-middle text-start ps-4'}
                       colSpan="2"
@@ -279,10 +338,10 @@ function CartList() {
                       課程項目 ({courseItems.length})
                     </th>
                     <th className={'align-middle'} scope="col">
-                      數量
+                      單價
                     </th>
                     <th className={'align-middle'} scope="col">
-                      單價
+                      數量
                     </th>
                     <th className={'align-middle'} scope="col">
                       刪除
@@ -291,17 +350,134 @@ function CartList() {
                 </thead>
                 <tbody className={'coursesItem'}>{courseItems}</tbody>
                 <tfoot>
-                  <tr className="carttotal">
+                  <tr className="courseTotal">
                     <td colSpan="4" className="text-end total">
                       課程小計：
                     </td>
                     <td className={'align-middle pe-2'}>
-                      NTD${Math.round(courseTotal.toFixed(2))}
+                      NTD${selectedCourseTotal}
                     </td>
                   </tr>
                 </tfoot>
               </table>
             )}
+            <table className="selectContainer">
+              <thead className="Labels">
+                <tr>
+                  <th className="align-middle" scope="col">
+                    選擇送貨及付款方式
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="selectItem">
+                <tr>
+                  <td className="align-middle py-4 px-2" scope="col">
+                    <label for="deliveryLabel" className="deliveryLabel">
+                      選擇運送方式：
+                    </label>
+                    <select
+                      class="form-select"
+                      id="deliveryLabel"
+                      name="deliveryLabel"
+                      aria-label="選擇運送方式"
+                    >
+                      <option selected>請選擇</option>
+                      <option value="delivery">宅配</option>
+                      <option value="711Store">7-11便利商店</option>
+                      <option value="familyStore">全家便利商店</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td lassName="align-middle" scope="col">
+                    <label for="paymentLabel">選擇付款方式：</label>
+                    <select
+                      className="form-select"
+                      id="paymentLabel"
+                      name="paymentLabel"
+                      aria-label="選擇付款方式"
+                    >
+                      <option selected>請選擇</option>
+                      <option value="creditCard">信用卡</option>
+                      <option value="ATM">ATM轉帳</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="paymentContainer">
+              <thead className="Labels">
+                <tr>
+                  <th className="align-middle" scope="col">
+                    付款資訊
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div className="label-item">
+                      <label for="allProductsItems">商品</label>
+                      <div className="value" name="allProductsItems">
+                        5/項
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="label-item">
+                      <label for="allPrdouctPrice">金額</label>
+                      <div className="value" name="allPrdouctPrice">
+                        $9999
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <div className="label-item">
+                    <label for="deliveryPrice">運費</label>
+                    <div className="value" name="deliveryPrice">
+                      $60
+                    </div>
+                  </div>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="label-item">
+                      <label for="couponDiscount">優惠卷折扣</label>
+                      <div className="value" name="couponDiscount">
+                        -$360
+                        <select
+                          className="form-select"
+                          id="coupon"
+                          name="coupon"
+                          aria-label="selectCoupon"
+                        >
+                          <option selected>請選擇</option>
+                          <option value="1">優惠卷1</option>
+                          <option value="2">優惠卷2</option>
+                          <option value="3">優惠卷3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>
+                    <hr />
+                    <div className="label-item">
+                      <label for="sumTotal">合計</label>
+                      <div className="value" name="sumTotal">
+                        $9999
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
           </>
         )}
       </div>

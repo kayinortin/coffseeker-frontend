@@ -130,7 +130,7 @@ export default function InfoChangeForm() {
                 </label>
                 <input
                   value={input.value}
-                  type={input.tyoe}
+                  type={input.type}
                   className={input.class}
                   id={input.htmlId}
                   aria-describedby={input.aria}
