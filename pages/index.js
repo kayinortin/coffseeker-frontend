@@ -7,6 +7,8 @@ import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 import Link from 'next/link'
 import AOS from 'aos'
 import useTextAnimation from '@/hooks/useTextAnimation'
+import { FaCircleRight } from 'react-icons/fa6'
+import { FaCircleLeft } from 'react-icons/fa6'
 
 export default function Home() {
   const monthlyData = [
@@ -113,24 +115,16 @@ export default function Home() {
     '尼加拉瓜的日照，猶如金色的秋葉，漫舞在十月的微風中，充滿詩意。'
   )
   const [currentImage, setCurrentImage] = useState(
-    'https://picsum.photos/1200/900'
+    'http://localhost:3000/index-image/s5.png'
   )
-  const [isFullscreen, setIsFullscreen] = useState(false)
+
   const handleMonthClick = (data) => {
     setCurrentCoverDescription(data.month)
     setCurrentCover(data.reveal)
     setCurrentContent(data.content)
     setCurrentImage(data.cover)
     setShowTimeline(false)
-  }
-
-  const handleFullscreenToggle = () => {
-    setIsFullscreen(!isFullscreen)
-  }
-
-  const handleClick = () => {
-    setShowTimeline(!showTimeline)
-    handleFullscreenToggle()
+    setShowSeasonWrap(false)
   }
 
   useEffect(() => {
@@ -147,82 +141,151 @@ export default function Home() {
   useTextAnimation(textRef1, currentCoverDescription, 'fadeInUp')
   useTextAnimation(textRef2, currentCover, 'fadeInUp')
   useTextAnimation(textRef3, currentContent, 'fadeInUp')
-  useTextAnimation(textRef4, currenttitleMonth, 'fadeInRight')
+  useTextAnimation(textRef4, '', 'fadeInRight')
 
+  const [showSeasonWrap, setShowSeasonWrap] = useState(false)
+
+  const handleClick = () => {
+    setShowSeasonWrap(!showSeasonWrap)
+    setShowTimeline(!showTimeline)
+  }
+
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+
+  const startDragging = (e) => {
+    setIsDragging(true)
+    setStartX(e.pageX - e.currentTarget.offsetLeft)
+    setScrollLeft(e.currentTarget.scrollLeft)
+  }
+
+  const stopDragging = () => {
+    setIsDragging(false)
+  }
+
+  // 使滾輪無法上下滾動
   useEffect(() => {
-    if (isFullscreen) {
-      document.body.style.overflowY = 'hidden'
-    } else {
-      document.body.style.overflowY = 'auto'
+    const handleWheelScroll = (e) => {
+      if (showSeasonWrap && e.deltaY !== 0) {
+        e.preventDefault()
+        const container = e.currentTarget
+        container.scrollLeft += e.deltaY
+      }
     }
-  }, [isFullscreen])
 
-  const handleWheelScroll = (e) => {
-    if (!e.nativeEvent) return
+    document.addEventListener('wheel', handleWheelScroll, { passive: false })
 
-    // e.preventDefault();
-    const container = e.currentTarget
-    container.scrollLeft += e.nativeEvent.deltaY
+    const scrollableContainer = document.querySelector('.season-wrap')
+
+    if (scrollableContainer) {
+      scrollableContainer.addEventListener('wheel', handleWheelScroll)
+    }
+
+    return () => {
+      document.removeEventListener('wheel', handleWheelScroll)
+      if (scrollableContainer) {
+        scrollableContainer.removeEventListener('wheel', handleWheelScroll)
+      }
+    }
+  }, [showSeasonWrap])
+
+  const [progress, setProgress] = useState(3)
+
+  const whileDragging = (e) => {
+    if (!isDragging) return
+    e.preventDefault()
+
+    const x = e.pageX - e.currentTarget.offsetLeft
+    const walk = x - startX
+    const newScrollLeft = scrollLeft - walk
+    e.currentTarget.scrollLeft = newScrollLeft
+
+    const totalWidth = e.currentTarget.scrollWidth - e.currentTarget.clientWidth
+    const currentProgress = (newScrollLeft / (totalWidth + 1000)) * 100
+
+    setProgress(currentProgress)
   }
 
   return (
     <>
-      {/* <button className="timeline-btn" onClick={handleClick}>
-        顯示
-      </button>
+      {/* 時令咖啡 */}
+      <div>
+        {showTimeline ? (
+          <FaCircleLeft className="ed-icon" />
+        ) : (
+          <FaCircleRight className="ed-icon" />
+        )}
+        <button className="timeline-btn" onClick={handleClick}>
+          {showTimeline ? '歸途' : '探索'}
+        </button>
+      </div>
 
-      {showTimeline && (
-        <div className="timeline-fullscreen" onWheel={handleWheelScroll}>
-          <button
-            className="timeline-btn"
-            onClick={() => setShowTimeline(false)}
-          >
-            關閉
-          </button>
-        </div>
-      )} */}
-      <div className="season-wrap">
-        <div className="overscroll">
-          <div className="h-full fixed d-flex">
-            <div className="d-flex h-full flex-col">
-              <div className="scroll-progress">
-                <div className="progress-bar">
-                  <div className="progress-index"></div>
+      <div
+        className={`season-wrap ${showSeasonWrap ? 'expanded' : ''}`}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            startDragging(e)
+          }
+        }}
+        onMouseDown={startDragging}
+        onMouseLeave={stopDragging}
+        onMouseUp={stopDragging}
+        onMouseMove={whileDragging}
+        onTouchStart={startDragging}
+        onTouchEnd={stopDragging}
+        onTouchMove={whileDragging}
+      >
+        {showSeasonWrap && (
+          <div className="overscroll">
+            <div className="h-full fixed d-flex">
+              <div className="d-flex h-full flex-col">
+                <div className="scroll-progress">
+                  <div className="progress-bar">
+                    <div
+                      className="progress-index"
+                      style={{ left: `${progress}%` }}
+                    ></div>
+                  </div>
                 </div>
-              </div>
-              <div className="season-content grow">
-                <div className="season-list d-flex">
-                  {monthlyData.map((data, index) => (
-                    <div className="season-list d-flex" key={index}>
-                      <div className="season-item">
-                        <div className="season-timeline">
-                          <span className="bar" ref={textRef4}></span>
-                          <h6 className="bar-month">
-                            <span>{data.titleMonth}</span>
-                          </h6>
-                          <span className="bar"></span>
+                <div className="season-content grow">
+                  <div className="season-list d-flex">
+                    {monthlyData.map((data, index) => (
+                      <div className="season-list d-flex" key={index}>
+                        <div className="season-item">
+                          <div className="season-timeline">
+                            <span className="bar" ref={textRef4}></span>
+                            <h6 className="bar-month">
+                              <span>{data.titleMonth}</span>
+                            </h6>
+                            <span className="bar"></span>
+                          </div>
+                          <div className="">
+                            <button
+                              className="btn"
+                              onClick={() => handleMonthClick(data)}
+                            >
+                              {data.reveal}
+                              <img src="http://localhost:3000/bg2.png" alt="" />
+                            </button>
+                          </div>
                         </div>
-                        <div className="">
-                          <button
-                            className="btn"
-                            onClick={() => handleMonthClick(data)}
-                          >
-                            {data.reveal}
-                            <img src="http://localhost:3000/bg2.png" alt="" />
-                          </button>
+                        <div className="divider d-flex flex-col">
+                          <div className="season-timeline d-flex">
+                            <div className="linebar"></div>
+                          </div>
+                          <div className="divider-line d-flex"></div>
                         </div>
                       </div>
-                      <div className="divider d-flex flex-col">
-                        <div className="season-timelie d-flex"></div>
-                        <div className="divider-line d-flex"></div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* 首頁 */}
