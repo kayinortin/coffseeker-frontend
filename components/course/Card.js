@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import data from '@/data/course/course.json'
 import style from '@/styles/_course.module.scss'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
 import Link from 'next/link'
@@ -13,7 +12,7 @@ export default function Card({ name, image, price, id }) {
       <div className={` ${style['img-bg']}`}>
         <Link href={`http://localhost:3000/course/${id}`}>
           <Image
-            src={`/course-image/${image}`}
+            src={`http://localhost:3000/course-image/${image}`}
             alt={name}
             width={250}
             height={250}
