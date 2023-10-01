@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductDataFetcher from '../../components/product/PopularProducts'
+import AOS from 'aos'
 
 export default function PopularProducts() {
   const [data, setData] = useState(null)
@@ -7,6 +8,12 @@ export default function PopularProducts() {
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
   }
+
+  useEffect(() => {
+    AOS.init({
+      duration: 2000, // 你可以根據需要調整動畫時間
+    })
+  }, [])
   return (
     <>
       <div className="container ed-index">
@@ -20,7 +27,11 @@ export default function PopularProducts() {
             <div className="row p-5">
               {data.products.map((product) => (
                 <div className="col-md-3 mb-4" key={product.product_id}>
-                  <div className="card card-small">
+                  <div
+                    className="card card-small"
+                    data-aos="fade-right"
+                    data-aos-delay={product.product_id * 200}
+                  >
                     <img
                       src={`http://localhost:3005/uploads/${product.product_image}`}
                       alt={product.product_name}
