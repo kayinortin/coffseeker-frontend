@@ -40,6 +40,16 @@ export default function CategoryBtn() {
             >
               新品上架
             </button>
+            <button
+              className={`btn rounded-0 ${
+                activeButton === 'coffeeKnowlege'
+                  ? 'btn-secondary active'
+                  : 'btn-outline-secondary'
+              }`}
+              onClick={() => setActiveButton('coffeeKnowlege')}
+            >
+              咖啡知識
+            </button>
           </div>
         </div>
         {/* 手機板 */}
@@ -74,6 +84,16 @@ export default function CategoryBtn() {
               onClick={() => setActiveButton('newProduct')}
             >
               新品上架
+            </button>
+            <button
+              className={`btn rounded-0 ${
+                activeButton === 'coffeeKnowlege'
+                  ? 'btn-secondary active'
+                  : 'btn-outline-secondary'
+              }`}
+              onClick={() => setActiveButton('coffeeKnowlege')}
+            >
+              咖啡知識
             </button>
           </div>
         </div>

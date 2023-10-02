@@ -213,8 +213,8 @@
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 20% 100%);
   overflow: hidden;
   @media screen and (max-width: $lg) {
-    height: 524px;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 40% 100%);
+    height: 424px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 30% 100%);
   }
 }
 
@@ -335,8 +335,8 @@
     color: white;
     width: 8vh;
     height: 8vh;
-    bottom: 100px;
-    left: 300px;
+    bottom: 80px;
+    left: 310px;
     z-index: 1090;
   }
 }
