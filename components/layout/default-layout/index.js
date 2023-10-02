@@ -147,7 +147,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas user-circle ed-navbar__font"></i>,
       tagDesktop: ``,
-      href: 'member/login',
+      href: '/member/login',
     },
     {
       id: 10,
