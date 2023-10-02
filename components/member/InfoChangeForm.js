@@ -3,6 +3,71 @@ import { FaAngleDown } from 'react-icons/fa6'
 import Link from 'next/link'
 
 export default function InfoChangeForm() {
+  const fakeUser = {
+    id: 1,
+    name: 'Jone Doe',
+    email: 'johndoe@example.com',
+    birthday: '1990-01-01',
+    gender: '男',
+    phone: '0909121343',
+  }
+
+  // input文字輸入框
+  const inputs = [
+    {
+      id: 1,
+      htmlFor: 'InputEmail',
+      class: 'form-control disable',
+      title: '會員信箱(登入帳號)',
+      value: fakeUser.email,
+      type: 'email',
+      htmlId: 'Inputmail',
+      aria: null,
+      maxlength: 50,
+      disabled: true,
+    },
+    {
+      id: 2,
+      htmlFor: 'InputName',
+      class: 'form-control',
+      title: '會員姓名',
+      value: fakeUser.name,
+      type: 'text',
+      htmlId: 'InputName',
+      aria: null,
+      maxlength: 10,
+      disabled: false,
+    },
+    {
+      id: 3,
+      htmlFor: 'InputPhone',
+      class: 'form-control',
+      title: '手機',
+      value: fakeUser.phone,
+      type: 'tel',
+      htmlId: 'InputPhone',
+      aria: null,
+      maxlength: 10,
+      disabled: false,
+    },
+  ]
+
+  // select選擇輸入框
+  // 性別
+  const selection = [
+    {
+      id: 7,
+      class: 'mb-3',
+      htmlFor: 'SelectGender',
+      title: '性別',
+      value: fakeUser.gender,
+      options: ['男', '女', '不便透漏'],
+      placeholder: '請選擇您的性別',
+      htmlId: 'SelectGender',
+    },
+  ]
+
+  // 生日
   const years = []
   let thisYears = new Date().getFullYear()
   let beginYears = thisYears - 100
@@ -21,6 +86,35 @@ export default function InfoChangeForm() {
     date.push(i)
   }
 
+  const birthday = [
+    {
+      id: 8,
+      class: 'col-4 mb-3',
+      htmlFor: 'SelectBirthdayYear',
+      title: '生日',
+      options: years,
+      placeholder: '年',
+      htmlId: 'SelectBirthdayYear',
+    },
+    {
+      id: 9,
+      class: 'col-4 mb-3',
+      htmlFor: 'SelectBirthdayMonth',
+      title: '',
+      options: month,
+      placeholder: '月',
+      htmlId: 'SelectBirthdayMonth',
+    },
+    {
+      id: 10,
+      class: 'col-4 mb-3',
+      htmlFor: 'SelectBirthdayDate',
+      title: '',
+      options: date,
+      placeholder: '日',
+      htmlId: 'SelectBirthdayDate',
+    },
+  ]
   return (
     <>
       <div className={'form-box border border-dark'}>
@@ -28,154 +122,84 @@ export default function InfoChangeForm() {
           會員資料檢視/修改
         </div>
         <form className="p-5">
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className={'form-label'}>
-              會員信箱(登入帳號)
-            </label>
-            <input
-              value="test@test.com"
-              type="text"
-              className={'form-control'}
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              readonly
-              disabled
-            />
-            <div id="emailHelp" className={'form-text'}></div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className={'form-label'}>
-              會員姓名
-            </label>
-            <input
-              type="text"
-              className={'form-control'}
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              readonly
-            />
-            <div id="emailHelp" className={'form-text'}></div>
-          </div>
-          <div className={'mb-3'}>
-            <label htmlFor="exampleInputEmail1" className={'form-label'}>
-              密碼
-            </label>
-            <input
-              placeholder="請輸入8~12位數,英數混和的密碼"
-              type="password"
-              className={'form-control'}
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" className={'form-text'}></div>
-          </div>
-          <div className={'mb-3'}>
-            <label htmlFor="exampleInputEmail1" className={'form-label'}>
-              確認密碼
-            </label>
-            <input
-              placeholder="請輸入相同的密碼"
-              type="password"
-              className={'form-control'}
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" className={'form-text'}></div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className={'form-label'}>
-              手機
-            </label>
-            <input
-              placeholder="請輸入手機號碼"
-              type="email"
-              className={'form-control'}
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" className={'form-text'}></div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className={'form-label'}>
-              性別
-            </label>
-            <select className={'form-select'}>
-              <option selected disabled>
-                請選擇性別
-              </option>
-              <option value="1">男</option>
-              <option value="2">女</option>
-              <option value="3">不便透漏</option>
-            </select>
-          </div>
-          <div className={'row'}>
-            <div className={'col-4 mb-3'}>
-              <label htmlFor="exampleInputPassword1" className={'form-label'}>
-                生日
-              </label>
-              <select className={'form-select'}>
-                <option selected disabled>
-                  年
-                </option>
-                {years.map((year, i) => {
-                  return (
-                    <option key={i} value={year}>
-                      {year}
+          {inputs.map((input) => {
+            return (
+              <div className="mb-3" key={input.id}>
+                <label htmlFor={input.htmlFor} className={'form-label'}>
+                  {input.title}
+                </label>
+                <input
+                  value={input.value}
+                  type={input.type}
+                  className={input.class}
+                  id={input.htmlId}
+                  aria-describedby={input.aria}
+                  maxLength={input.maxlength}
+                  {...(input.disabled
+                    ? { readOnly: true, disabled: true }
+                    : {})}
+                />
+                <div
+                  id={'error' + input.id}
+                  className={'form-text text-danger'}
+                ></div>
+              </div>
+            )
+          })}
+          {/* 性別 */}
+          {selection.map((select) => {
+            return (
+              <div className={select.class} key={select.id}>
+                <label htmlFor={select.htmlFor} className={'form-label'}>
+                  {select.title}
+                </label>
+                <select className={'form-select'}>
+                  <option selected disabled>
+                    {select.placeholder}
+                  </option>
+                  {select.options.map((ops, i) => {
+                    return (
+                      <option
+                        key={i}
+                        value={ops}
+                        {...(select.value === ops ? { selected: true } : {})}
+                      >
+                        {ops}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+            )
+          })}
+          {/* 生日 */}
+          <div className={'row align-items-end'}>
+            {birthday.map((select) => {
+              return (
+                <div className={select.class} key={select.id}>
+                  <label htmlFor={select.htmlFor} className={'form-label'}>
+                    {select.title}
+                  </label>
+                  <select className={'form-select'}>
+                    <option selected disabled>
+                      {select.placeholder}
                     </option>
-                  )
-                })}
-              </select>
-            </div>
-            <div className={'col-4 mb-3'}>
-              <label
-                htmlFor="exampleInputPassword1"
-                className={'form-label birthday-selector'}
-              >
-                生日
-              </label>
-              <select className={'form-select'}>
-                <option selected disabled>
-                  月
-                </option>
-                {month.map((month, i) => {
-                  return (
-                    <option key={i} value={month}>
-                      {month}
-                    </option>
-                  )
-                })}
-              </select>
-            </div>
-            <div className={'col-4 mb-3'}>
-              <label
-                htmlFor="exampleInputPassword1"
-                className={'form-label birthday-selector'}
-              >
-                生日
-              </label>
-              <select className={'form-select'}>
-                <option selected disabled>
-                  日
-                </option>
-                {date.map((date, i) => {
-                  return (
-                    <option key={i} value={date}>
-                      {date}
-                    </option>
-                  )
-                })}
-              </select>
-            </div>
+                    {select.options.map((ops) => {
+                      return (
+                        <option key={ops} value={ops}>
+                          {ops}
+                        </option>
+                      )
+                    })}
+                  </select>
+                </div>
+              )
+            })}
           </div>
         </form>
       </div>
 
-      <div
-        className={
-          'container d-flex justify-content-center mt-4 mb-3 align-items-center'
-        }
-      ></div>
-      <div className={'container allow-btn p-0'}>
+      <div className={'container allow-btn p-0 mt-4'}>
         <div
           className={
             'btn-login text-center d-flex justify-content-center flex-column mb-5 agree'

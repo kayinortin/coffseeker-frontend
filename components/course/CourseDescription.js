@@ -39,7 +39,7 @@ export default function CourseDescription() {
           </ul>
         </div>
       </section>
-      <section className="col-10 mx-auto">
+      <section className="col-10 col-sm-12 mx-auto">
         <h6>【教師簡介】</h6>
         <Image
           alt="header"
@@ -56,7 +56,7 @@ export default function CourseDescription() {
           這位咖啡教師熱愛分享知識，他/她的教學風格深入淺出，讓學員們能夠輕鬆理解並掌握咖啡的精髓。
         </p>
       </section>
-      <section className="course-sp col-10 mx-auto">
+      <section className="course-sp col-10 col-sm-12 mx-auto">
         <h6>【課程特色】</h6>
 
         <p>

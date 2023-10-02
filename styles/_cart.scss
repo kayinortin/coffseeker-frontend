@@ -93,6 +93,7 @@ $fw-black:900;
 
 .cartlist{
     padding-block: 1rem;
+    
 
     // 空購物車
     div.emptyContainer{
@@ -217,9 +218,8 @@ $fw-black:900;
             font-size: $fs-md;
             font-weight: $fw-bold;
          
-            tr.carttotal{ 
+            tr.productTotal{
                 td.total{
-                   
                     vertical-align: middle;
                     
                 }
@@ -246,6 +246,7 @@ $fw-black:900;
                     vertical-align: middle;
                     text-align: center;
                     min-width: 80px;
+                   
                 }
             }
         }
@@ -291,6 +292,9 @@ $fw-black:900;
                     }
 
                 }
+                &:hover{
+                    background-color: $color--gray6;
+                }
             }
             
         }
@@ -301,7 +305,7 @@ $fw-black:900;
             font-size: $fs-md;
             font-weight: $fw-bold;
 
-            tr.carttotal{
+            tr.courseTotal{
                 td.total{
                     vertical-align: middle;
                    
@@ -310,5 +314,124 @@ $fw-black:900;
         }
     }
 
+    div.selectItems{
+        gap: 2rem;
+
+        table.selectContainer{
+            width: 100%;
+            color: $color--primary;
+            
+    
+            thead.Labels{
+                border: 1px solid $color--primary;
+                background-color: $color-lightgray;
+                font-size: $fs-sm;
+                font-weight: $fw-bold;
+    
+                tr{
+    
+                    th{
+                        padding-block: 1rem;
+                        padding-inline: 0.5rem;
+                        vertical-align: middle;
+                        min-width: 80px;
+                       
+                    }
+                }
+            }
+    
+            tbody.selectItem{
+                border: 1px solid $color--primary;
+                
+    
+                tr{
+                    // border: 1px solid red;
+                    height: 100px;
+                    display: flex;
+                    align-items: center;
+                    
+                    td.selectContainer{
+                        padding: 1rem;
+                        
+                        label.selecTitle{
+                            // border: 1px solid blue;
+                            padding-bottom: .5rem;
+                            
+                            
+                        }
+                        select.form-select{
+                            border: 1px solid $color--primary;
+    
+                        }
+                        
+                    }
+                }
+               
+            }
+        }
+    
+        table.paymentContainer{
+            width: 100%;
+            color: $color--primary;
+            
+    
+            thead.Labels{
+                border: 1px solid $color--primary;
+                background-color: $color-lightgray;
+                font-size: $fs-sm;
+                font-weight: $fw-bold;
+    
+                tr{
+    
+                    th{
+                        padding-block: 1rem;
+                        padding-inline: 0.5rem;
+                        vertical-align: middle;
+                        min-width: 80px;
+                       
+                    }
+                }
+            }
+    
+            tbody.paymentItem{
+                border: 1px solid $color--primary;
+    
+                tr{
+                    td{
+    
+                        button.goCheckout{
+                            width: 100%;
+                            background-color: $color--secondary;
+                            color: $color--white;
+                            font-weight: $fw-black;
+                            font-size: $fs-md;
+                            &:hover{
+                                background-color: $color--primary 
+                            }
+                        }
+                    }
+                    
+                    td.selectContainer{
+                        padding: 1rem;
+                        
+                        div.label-item{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        
+                        }
+                    }
+                    
+                }
+            }
+            
+            
+        }
+    }
+
+   
+    
+
    
 }
+

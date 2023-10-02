@@ -6,6 +6,7 @@ import style from '@/styles/_course.module.scss'
 import data from '@/data/course/course[pid].json'
 import { useRouter } from 'next/router'
 import Rating from './Rating'
+import Score from './Score'
 // import
 
 export default function CourseText() {
@@ -25,7 +26,7 @@ export default function CourseText() {
       </div>
 
       <h3>{name}</h3>
-      <Rating />
+      <Score />
       <h5 className={style['price']}>NT${price}</h5>
       <div className="d-flex justify-content-around d-sm-none">
         <AddCartBtn />
@@ -35,7 +36,7 @@ export default function CourseText() {
         <CourseInfoBtn />
       </div>
 
-      <div className="mt-5 col-10 ">
+      <div className="  ">
         <p>【教師姓名】：ＸＸＸ</p>
         <p>
           【課程介紹】：
