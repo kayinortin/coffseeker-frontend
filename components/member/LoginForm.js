@@ -51,9 +51,9 @@ export default function LoginForm() {
         formData
       )
       console.log('伺服器回應:', response.data)
-      // router.push('/member')
       // response.data.accessToken
       Cookies.set('accessToken', response.data.accessToken)
+      router.push('/member')
     } catch (error) {
       console.error('錯誤:', error)
     }

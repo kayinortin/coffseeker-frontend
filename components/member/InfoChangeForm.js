@@ -8,9 +8,17 @@ export default function InfoChangeForm() {
     name: 'Jone Doe',
     email: 'johndoe@example.com',
     birthday: '1990-01-01',
-    gender: '男',
+    gender: '女',
     phone: '0909121343',
   }
+
+  const [userEmail, setMail] = useState('')
+  const [userName, setName] = useState('')
+  const [userPhone, setPhone] = useState('')
+  const [userGender, setGender] = useState('')
+  const [birthdayYear, setBirthdayYear] = useState('')
+  const [birthdayMonth, setBirthdayMonth] = useState('')
+  const [birthdayData, setBirthdayDate] = useState('')
 
   // input文字輸入框
   const inputs = [
@@ -25,6 +33,7 @@ export default function InfoChangeForm() {
       aria: null,
       maxlength: 50,
       disabled: true,
+      onChange: (e) => setMail(e.target.value),
     },
     {
       id: 2,
@@ -37,6 +46,7 @@ export default function InfoChangeForm() {
       aria: null,
       maxlength: 10,
       disabled: false,
+      onChange: (e) => setName(e.target.value),
     },
     {
       id: 3,
@@ -49,6 +59,7 @@ export default function InfoChangeForm() {
       aria: null,
       maxlength: 10,
       disabled: false,
+      onChange: (e) => setPhone(e.target.value),
     },
   ]
 
@@ -64,6 +75,7 @@ export default function InfoChangeForm() {
       options: ['男', '女', '不便透漏'],
       placeholder: '請選擇您的性別',
       htmlId: 'SelectGender',
+      onChange: (e) => setGender(e.target.value),
     },
   ]
 
@@ -95,6 +107,7 @@ export default function InfoChangeForm() {
       options: years,
       placeholder: '年',
       htmlId: 'SelectBirthdayYear',
+      onChange: (e) => setBirthdayYear(e.target.value),
     },
     {
       id: 9,
@@ -104,6 +117,7 @@ export default function InfoChangeForm() {
       options: month,
       placeholder: '月',
       htmlId: 'SelectBirthdayMonth',
+      onChange: (e) => setBirthdayMonth(e.target.value),
     },
     {
       id: 10,
@@ -113,8 +127,10 @@ export default function InfoChangeForm() {
       options: date,
       placeholder: '日',
       htmlId: 'SelectBirthdayDate',
+      onChange: (e) => setBirthdayDate(e.target.value),
     },
   ]
+
   return (
     <>
       <div className={'form-box border border-dark'}>
@@ -138,6 +154,9 @@ export default function InfoChangeForm() {
                   {...(input.disabled
                     ? { readOnly: true, disabled: true }
                     : {})}
+                  onChange={(e) => {
+                    input.onChange(e)
+                  }}
                 />
                 <div
                   id={'error' + input.id}
@@ -148,22 +167,25 @@ export default function InfoChangeForm() {
           })}
           {/* 性別 */}
           {selection.map((select) => {
+            const seGen = select.options.filter((v) => fakeUser.gender === v)
+            const openGen = { ...seGen }
+
             return (
               <div className={select.class} key={select.id}>
                 <label htmlFor={select.htmlFor} className={'form-label'}>
                   {select.title}
                 </label>
-                <select className={'form-select'}>
-                  <option selected disabled>
-                    {select.placeholder}
-                  </option>
+                <select
+                  className={'form-select'}
+                  defaultValue={openGen}
+                  onChange={(e) => {
+                    select.onChange(e)
+                  }}
+                >
+                  <option disabled>{select.placeholder}</option>
                   {select.options.map((ops, i) => {
                     return (
-                      <option
-                        key={i}
-                        value={ops}
-                        {...(select.value === ops ? { selected: true } : {})}
-                      >
+                      <option key={i} value={ops}>
                         {ops}
                       </option>
                     )
@@ -180,10 +202,17 @@ export default function InfoChangeForm() {
                   <label htmlFor={select.htmlFor} className={'form-label'}>
                     {select.title}
                   </label>
-                  <select className={'form-select'}>
-                    <option selected disabled>
-                      {select.placeholder}
-                    </option>
+                  <select
+                    className={'form-select'}
+                    value={select.placeholder}
+                    // defaultValue={
+
+                    // }
+                    onChange={(e) => {
+                      select.onChange(e)
+                    }}
+                  >
+                    <option disabled>{select.placeholder}</option>
                     {select.options.map((ops) => {
                       return (
                         <option key={ops} value={ops}>
