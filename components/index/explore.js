@@ -230,13 +230,16 @@ export default function Explore() {
   }, [showSeasonWrap])
 
   const whileDragging = (e) => {
+    if (!isDragging) return
+    e.preventDefault()
+
     const x = e.pageX - e.currentTarget.offsetLeft
     const walk = x - startX
     const newScrollLeft = scrollLeft - walk
     e.currentTarget.scrollLeft = newScrollLeft
 
     const totalWidth = e.currentTarget.scrollWidth - e.currentTarget.clientWidth
-    const currentProgress = (newScrollLeft / (totalWidth + 1000)) * 100
+    const currentProgress = (newScrollLeft / (totalWidth + 700)) * 100
 
     setProgress(currentProgress)
   }
@@ -246,7 +249,7 @@ export default function Explore() {
       container.scrollLeft += e.deltaY
 
       const totalWidth = container.scrollWidth - container.clientWidth
-      const currentProgress = (container.scrollLeft / (totalWidth + 1000)) * 100
+      const currentProgress = (container.scrollLeft / (totalWidth + 300)) * 100
 
       setProgress(currentProgress)
     }
@@ -290,7 +293,7 @@ export default function Explore() {
           <div className="overscroll">
             <div className="h-full fixed d-lg-flex d-block">
               <div className="d-flex h-full flex-col">
-                <div className="scroll-progress d-none">
+                <div className="scroll-progress d-none d-lg-block">
                   <div className="progress-bar">
                     <div
                       className="progress-index"
@@ -328,7 +331,7 @@ export default function Explore() {
                         </div>
                         <div className="divider d-flex flex-col">
                           <div className="season-timeline d-flex">
-                            <div className="linebar d-none"></div>
+                            <div className="linebar d-none d-lg-block"></div>
                           </div>
                           <div className="divider-line d-flex"></div>
                         </div>
