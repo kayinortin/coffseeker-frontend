@@ -11,10 +11,13 @@ export default function CourseList() {
 
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
-    // console.log(fetchedData)
   }
 
-  // console.log(data.courses)
+  //--------------------------------pagination
+  const itemsPerPage = 9
+  const totalItems = data.courses.length //----------------------------starts from here
+
+  console.log(totalItems)
   return (
     <>
       {data && data.courses && data.courses.length > 0 ? (
@@ -46,7 +49,7 @@ export default function CourseList() {
           <Pagination />
         </div>
       ) : (
-        <div>123</div>
+        <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
       )}
       {/*onDataFetched 為第12行定義的 這邊存入onCourseFetched並帶到子元件*/}
       <CourseFetcher onCourseFetched={onDataFetched} />
