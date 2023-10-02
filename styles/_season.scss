@@ -23,6 +23,10 @@
 .ed-left-content {
   width: 30%;
   position: relative;
+  @media screen and (max-width:1440px) {
+    padding-left: 10rem;
+    width: 40%;
+  }
   @media screen and (max-width: $lg) {
     width: 100%;
   }
@@ -30,6 +34,10 @@
 .ed-right-content {
   width: 70%;
   position: relative;
+  @media screen and (max-width:1440px){
+    margin-right: 8rem;
+    width: 50%;
+  }
   @media screen and (max-width: $lg) {
     width: 100%;
   }
@@ -199,6 +207,9 @@
   margin-top: 4rem;
   height: 900px;
   // width: 100%;
+  @media screen and (max-width:1440px) {
+    height: 700px;
+  }
   @media screen and (max-width: $lg) {
     margin-top: 2rem;
     padding-inline: 20px;
@@ -214,6 +225,9 @@
   background-position: center;
   clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 20% 100%);
   overflow: hidden;
+  @media screen and (max-width:1440px) {
+    height: 600px;
+  }
   @media screen and (max-width: $lg) {
     height: 440px;
     clip-path: polygon(0% 0%, 100% 0%, 100% 79%, 30% 90%);
@@ -296,6 +310,9 @@
   position: absolute;
   left: calc(100% - 240px);
   opacity: 0.5 !important;
+  @media screen and (max-width:1440px) {
+    width: 400px;
+  }
   @media screen and (max-width: $lg) {
     rotate: 120deg;
     width: 300px;
