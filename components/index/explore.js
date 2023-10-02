@@ -229,9 +229,17 @@ export default function Explore() {
     }
   }, [showSeasonWrap])
 
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  }
+
   const whileDragging = (e) => {
     if (!isDragging) return
-    e.preventDefault()
+    if (!isMobile()) {
+      e.preventDefault()
+    }
 
     const x = e.pageX - e.currentTarget.offsetLeft
     const walk = x - startX

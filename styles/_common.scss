@@ -11,6 +11,8 @@
   align-items: center;
 
   transition: $transition;
+  z-index: 1100 !important;
+
   &::after {
     content: '';
     width: 100%;
@@ -278,6 +280,7 @@
         & ~ #{$_}__menu #{$_}__list {
           opacity: 1;
           transform: translate3d(0, 0, 0);
+          
         }
         & ~ #{$_}--scroll {
           &::after {
@@ -339,6 +342,8 @@
     }
   }
 }
+
+
 
 .dropdown {
   padding-inline: 10px;
