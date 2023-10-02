@@ -1603,7 +1603,6 @@ div.my-4.d-md-flex a:hover {
 }
 
 .ed-bg1{
-  background-image: url('http://localhost:3000/index-image/bg1.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -1613,10 +1612,10 @@ div.my-4.d-md-flex a:hover {
   top: calc(100vh - 200px);
   left: calc(50% - 180px);
   z-index: 3;
+  opacity: 0.5;
 }
 
 .ed-bg2{
-  background-image: url('http://localhost:3000/index-image/bg2.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -1626,6 +1625,7 @@ div.my-4.d-md-flex a:hover {
   top: calc(100vh - 800px);
   left: calc(50% - 7px);
   z-index: 3;
+  opacity: 0.5;
 }
 
 .fullscreen-container {
