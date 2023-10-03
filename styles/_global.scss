@@ -17,7 +17,7 @@ body {
   letter-spacing: $letter-spacing;
   color: $color__font;
   --tw-bg-opacity: 1;
-    background-color: rgb(240 235 226/var(--tw-bg-opacity));
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity));
 }
 // 讓footer保持在最底下
 // #main-content {
@@ -33,6 +33,19 @@ body {
 // footer日期顏色
 .footer-p-color {
   color: $color--gray3;
+}
+
+// footer 尺寸
+.ed-resize {
+  max-width: 1600px;
+  @media screen and (max-width: 1440px) {
+    max-width: 1200px;
+    margin-left: 150px;
+  }
+  @media screen and (max-width: $lg) {
+    max-width: 390px;
+    margin-left: 0px;
+  }
 }
 
 // TOP按鈕外框
@@ -53,7 +66,7 @@ nav {
 
 // 會員按鈕邊界取消
 .ed-icon-user-button {
-  background-color:$color--background;
+  background-color: $color--background;
   border: none;
 }
 // 物件權限設定
@@ -129,7 +142,7 @@ h3 {
 
 h4 {
   @include heading;
-  font-weight: 500;
+  // font-weight: 500;
   font-size: 1.5rem;
 }
 

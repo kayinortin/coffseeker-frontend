@@ -28,6 +28,7 @@
     width: 40%;
   }
   @media screen and (max-width: $lg) {
+    padding-left: 0rem;
     width: 100%;
   }
 }
@@ -87,8 +88,7 @@
     font-size: 2.5rem;
     line-height: 120%;
     letter-spacing: 0.05em;
-    --tw-text-opacity: 1;
-    color: rgb(22 3 3 / var(--tw-text-opacity));
+    color: $color--primary;
     @media screen and (max-width: $lg) {
       font-size: 1.8rem;
     }
@@ -113,6 +113,7 @@
   line-height: 200%;
   letter-spacing: 0.05em;
   font-weight: 300;
+  color: $color--primary;
   @media screen and (max-width: $lg) {
     margin-top: 1.5rem;
     text-align: center;
@@ -138,6 +139,7 @@
     background-color: rgb(181 75 51 / var(--tw-bg-opacity));
   }
   & .text {
+    color: $color--primary;
     --tw-space-y-reverse: 0;
     margin-top: calc(0.5rem * (1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
@@ -203,6 +205,15 @@
   }
 }
 
+@keyframes rotate-infinity{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(5deg);
+  }
+}
+
 .ed-index-img {
   margin-top: 4rem;
   height: 900px;
@@ -241,6 +252,7 @@
   width: 110%;
   height: 110%;
   z-index: 5;
+  // animation: rotate-infinity 5s ease-in-out infinite  alternate;
   @media screen and (max-width: $lg) {
     position: absolute;
     z-index: 5;
