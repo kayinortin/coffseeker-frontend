@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
-import productsData from '@/data/cart/cart'
+import productsData from '@/data/cart/product'
 import courseData from '@/data/cart/course'
 import couponData from '@/data/cart/coupon'
 
-function CartList() {
+function CartList({ step, handleNextStep, setStep }) {
   const [productCart, setProductCart] = useState([]) //商品空購物車
   const [courseCart, setCourseCart] = useState([]) //課程空購物車
   const [selectAllProducts, setSelectAllProducts] = useState(false) //選擇所有商品
@@ -33,14 +33,14 @@ function CartList() {
     // 預設已選擇所有商品
     const updatedProductCart = productsData.map((product) => ({
       ...product,
-      selected: true,
+      product_selected: true,
     }))
     setProductCart(updatedProductCart)
 
     // 預設已選擇所有課程
     const updatedCourseCart = courseData.map((course) => ({
       ...course,
-      selected: true,
+      course_selected: true,
     }))
     setCourseCart(updatedCourseCart)
     //預設全選
@@ -52,17 +52,20 @@ function CartList() {
   const handleQuantityChange = (productId, changeAmount) => {
     if (changeAmount === 0) {
       const updatedCart = productCart.filter(
-        (product) => product.id !== productId
+        (product) => product.product_id !== productId
       )
       setProductCart(updatedCart)
     } else {
       const updatedCart = productCart.map((product) => {
-        if (product.id === productId) {
-          const newQuantity = Math.max(1, product.quantity + changeAmount)
-          const newPrice = product.price * newQuantity
+        if (product.product_id === productId) {
+          const newQuantity = Math.max(
+            1,
+            product.product_quantity + changeAmount
+          )
+          const newPrice = product.product_price * newQuantity
           return {
             ...product,
-            quantity: newQuantity,
+            product_quantity: newQuantity,
           }
         }
         return product
@@ -73,43 +76,49 @@ function CartList() {
 
   // 刪除一個商品/課程
   const handleRemoveProduct = (productId) => {
-    const updatedCart = productCart.filter((item) => item.id !== productId)
+    const updatedCart = productCart.filter(
+      (item) => item.product_id !== productId
+    )
     setProductCart(updatedCart)
   }
   const handleRemoveCourse = (courseId) => {
-    const updatedCart = courseCart.filter((item) => item.id !== courseId)
+    const updatedCart = courseCart.filter((item) => item.course_id !== courseId)
     setCourseCart(updatedCart)
   }
 
   // 切換單個商品的選擇狀態
   const handleToggleProductSelection = (productId) => {
     const updatedCart = productCart.map((product) => {
-      if (product.id === productId) {
+      if (product.product_id === productId) {
         return {
           ...product,
-          selected: !product.selected,
+          product_selected: !product.product_selected,
         }
       }
       return product
     })
     setProductCart(updatedCart)
 
-    const allProductsSelected = updatedCart.every((product) => product.selected)
+    const allProductsSelected = updatedCart.every(
+      (product) => product.product_selected
+    )
     setSelectAllProducts(allProductsSelected)
   }
   const handleToggleCourseSelection = (courseId) => {
     const updatedCart = courseCart.map((course) => {
-      if (course.id === courseId) {
+      if (course.course_id === courseId) {
         return {
           ...course,
-          selected: !course.selected,
+          course_selected: !course.course_selected,
         }
       }
       return course
     })
     setCourseCart(updatedCart)
 
-    const allCoursesSelected = updatedCart.every((course) => course.selected)
+    const allCoursesSelected = updatedCart.every(
+      (course) => course.course_selected
+    )
     setSelectAllCourses(allCoursesSelected)
   }
 
@@ -117,7 +126,7 @@ function CartList() {
   const handleToggleSelectAllProducts = () => {
     const updatedProductCart = productCart.map((product) => ({
       ...product,
-      selected: !selectAllProducts,
+      product_selected: !selectAllProducts,
     }))
     setProductCart(updatedProductCart)
     setSelectAllProducts(!selectAllProducts)
@@ -125,7 +134,7 @@ function CartList() {
   const handleToggleSelectAllCourses = () => {
     const updatedCourseCart = courseCart.map((course) => ({
       ...course,
-      selected: !selectAllCourses,
+      course_selected: !selectAllCourses,
     }))
     setCourseCart(updatedCourseCart)
     setSelectAllCourses(!selectAllCourses)
@@ -137,34 +146,34 @@ function CartList() {
 
   // 商品列表
   const productItems = productCart.map((product) => (
-    <tr key={product.id}>
+    <tr key={product.product_id}>
       <td className={'align-middle'}>
         <input
           className="checkbox"
           type="checkbox"
-          checked={product.selected}
-          onChange={() => handleToggleProductSelection(product.id)}
+          checked={product.product_selected}
+          onChange={() => handleToggleProductSelection(product.product_id)}
         />
       </td>
       <td className={'align-middle ps-3 imgContainer'}>
         <img
           className={'img-fluid'}
-          src={`/cart-image/${product.image}`}
-          alt={product.name}
+          src={`/cart-image/${product.product_image}`}
+          alt={product.product_name}
         />
       </td>
       <td className={'align-middle text-start'}>
-        <div className={'fs-5 mb-2'}>{product.name}</div>
-        <div className={'description'}>{product.description}</div>
+        <div className={'fs-5 mb-2'}>{product.product_name}</div>
+        <div className={'description'}>{product.product_description}</div>
       </td>
-      <td className={'align-middle'}>${product.price}</td>
+      <td className={'align-middle'}>${product.product_price}</td>
       <td className={'align-middle quantity'} role="group">
         <div className={'btn-group'}>
           <button
             type="button"
             className={'quantityMinus'}
             onClick={() => {
-              handleQuantityChange(product.id, -1)
+              handleQuantityChange(product.product_id, -1)
             }}
           >
             <AiOutlineMinus />
@@ -174,26 +183,28 @@ function CartList() {
             type="text"
             name="quantity"
             min="0"
-            value={product.quantity}
+            value={product.product_quantity}
             readOnly
           />
           <button
             type="button"
             className={'quantityAdd'}
             onClick={() => {
-              handleQuantityChange(product.id, 1)
+              handleQuantityChange(product.product_id, 1)
             }}
           >
             <AiOutlinePlus />
           </button>
         </div>
       </td>
-      <td className={'align-middle'}>${product.price * product.quantity}</td>
+      <td className={'align-middle'}>
+        ${product.product_price * product.product_quantity}
+      </td>
       <td className={'align-middle productdelete'}>
         <button
           className={'btn deleteButton'}
           onClick={() => {
-            handleRemoveProduct(product.id)
+            handleRemoveProduct(product.product_id)
           }}
         >
           <RiDeleteBin5Line className={'trash'} />
@@ -203,32 +214,32 @@ function CartList() {
   ))
   // 課程列表
   const courseItems = courseCart.map((course) => (
-    <tr key={course.id}>
+    <tr key={course.course_id}>
       <td className={'align-middle'}>
         <input
           type="checkbox"
-          checked={course.selected}
-          onChange={() => handleToggleCourseSelection(course.id)}
+          checked={course.course_selected}
+          onChange={() => handleToggleCourseSelection(course.course_id)}
         />
       </td>
       <td className={'align-middle ps-3 imgContainer'}>
         <img
           className={'img-fluid'}
-          src={`/cart-image/${course.image}`}
-          alt={course.name}
+          src={`/cart-image/${course.course_image}`}
+          alt={course.course_name}
         />
       </td>
       <td className={'align-middle text-start'}>
-        <div className={'fs-5 mb-2'}>{course.name}</div>
-        <div className={'description'}>{course.description}</div>
+        <div className={'fs-5 mb-2'}>{course.course_name}</div>
+        <div className={'description'}>{course.course_description}</div>
       </td>
-      <td className={'align-middle'}>{course.quantity}</td>
-      <td className={'align-middle'}>${course.price}</td>
+      <td className={'align-middle'}>{course.course_quantity}</td>
+      <td className={'align-middle'}>${course.course_price}</td>
       <td className={'align-middle productdelete'}>
         <button
           className={'btn deleteButton'}
           onClick={() => {
-            handleRemoveCourse(course.id)
+            handleRemoveCourse(course.course_id)
           }}
         >
           <RiDeleteBin5Line className={'trash'} />
@@ -239,15 +250,15 @@ function CartList() {
 
   // 商品小計金額
   const selectedProductTotal = productCart.reduce((total, product) => {
-    if (product.selected) {
-      return total + product.price * product.quantity
+    if (product.product_selected) {
+      return total + product.product_price * product.product_quantity
     }
     return total
   }, 0)
   // 課程小計金額
   const selectedCourseTotal = courseCart.reduce((total, course) => {
-    if (course.selected) {
-      return total + course.price * course.quantity
+    if (course.course_selected) {
+      return total + course.course_price * course.course_quantity
     }
     return total
   }, 0)
@@ -256,10 +267,10 @@ function CartList() {
 
   // 商品項目數量統計
   const selectedProductCart = productCart.filter(
-    (product) => product.selected
+    (product) => product.product_selected
   ).length
   const selectedCourseCart = courseCart.filter(
-    (course) => course.selected
+    (course) => course.course_selected
   ).length
   //總商品數量
   const totalSelectedItems = selectedProductCart + selectedCourseCart
@@ -291,6 +302,14 @@ function CartList() {
       // 如果沒有選擇優惠券或找不到優惠券，則重置折扣金額
       setDiscountAmount(0)
     }
+  }
+
+  //前往結帳
+  const handleCheckout = () => {
+    if (handleNextStep) {
+      handleNextStep() // 調用父組件的處理函數，切換到下一步
+    }
+    setStep(2) // 切換到第三步
   }
 
   return (
@@ -513,24 +532,6 @@ function CartList() {
                     <td className="align-middle selectContainer" scope="col">
                       <div className="label-item">
                         <label for="couponDiscount">優惠卷</label>
-                        {/* <select
-                          className="form-select"
-                          id="coupon"
-                          name="coupon"
-                          aria-label="selectCoupon"
-                          value={selectedCoupon}
-                          onChange={(e) => setSelectedCoupon(e.target.value)}
-                        >
-                          <option value="">請選擇</option>
-                          {couponData.map((coupon) => (
-                            <option
-                              key={coupon.couponid}
-                              value={coupon.coupon_code}
-                            >
-                              {coupon.coupon_name}
-                            </option>
-                          ))}
-                        </select> */}
                         <select
                           className="form-select"
                           id="coupon"
@@ -589,7 +590,12 @@ function CartList() {
                   </tr>
                   <tr>
                     <td className="align-middle selectContainer" scope="col">
-                      <button className="btn goCheckout">前往結賬</button>
+                      <button
+                        className="btn goCheckout"
+                        onClick={handleCheckout}
+                      >
+                        前往結賬
+                      </button>
                     </td>
                   </tr>
                 </tbody>
