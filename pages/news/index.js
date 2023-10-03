@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Card from '@/components/news/card'
 import CategoryBtn from '@/components/news/category-btn'
 import styles from '../../styles/_news.module.scss'
+import OrderBy from '@/components/news/order-by'
 
 export default function News() {
   return (
@@ -29,15 +30,18 @@ export default function News() {
       </div>
 
       {/* 標題區 */}
-      <div className="d-flex justify-content-center mb-2 align-items-center mobile-news-title">
+      <div className="d-flex justify-content-center mb-4 align-items-center mobile-news-title">
         <div className="ei-line me-3"></div>
         <h3 className="text-center news-title">最新消息</h3>
         <div className="ei-line ms-3"></div>
       </div>
 
-      <div className="">
+      {/* <div className="d-md-flex align-items-end justify-content-center mb-4">
         <CategoryBtn className="" />
-      </div>
+        <div className="mobile-orderby d-flex flex-column align-items-center mt-4">
+          <OrderBy className="" />
+        </div>
+      </div> */}
       <Card />
     </div>
   )
