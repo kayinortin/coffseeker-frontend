@@ -12,7 +12,7 @@ const NewsDetail = ({ news, error }) => {
   }
 
   return (
-    <div className="container ei-container-nid">
+    <div className="container ei-container-nid mb-3">
       {news ? (
         <>
           {/* 麵包屑 */}
@@ -33,12 +33,12 @@ const NewsDetail = ({ news, error }) => {
                   </Link>
                 </li>
                 <li className="breadcrumb-item list-inline-item">
-                  <Link
-                    href="/news"
+                  <a
+                    href={`/news/${router.query.nid}`} //點擊會停在同一頁
                     className="breadcrumb-item text-decoration-none link ms-2"
                   >
                     {news?.news_title}
-                  </Link>
+                  </a>
                 </li>
               </ol>
             </nav>
@@ -62,7 +62,7 @@ const NewsDetail = ({ news, error }) => {
           </div>
 
           <p
-            className="ei-letter-spacing lh-base  ms-2"
+            className="ei-letter-spacing lh-base ms-2"
             dangerouslySetInnerHTML={{ __html: contentWithLineBreaks }}
           ></p>
         </>
