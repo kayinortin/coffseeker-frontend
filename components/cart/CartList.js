@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { RiDeleteBin6Line } from 'react-icons/ri'
-import { GrAdd } from 'react-icons/gr'
-import { AiOutlineMinus } from 'react-icons/ai'
+import { RiDeleteBin5Line } from 'react-icons/ri'
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import productsData from '@/data/cart/cart'
-import CourseData from '@/data/cart/course'
+import courseData from '@/data/cart/course'
+import couponData from '@/data/cart/coupon'
 
 function CartList() {
-  const [productCart, setProductCart] = useState([])
-  const [courseCart, setCourseCart] = useState([])
-  const [selectAllProducts, setSelectAllProducts] = useState(false)
-  const [selectAllCourses, setSelectAllCourses] = useState(false)
+  const [productCart, setProductCart] = useState([]) //商品空購物車
+  const [courseCart, setCourseCart] = useState([]) //課程空購物車
+  const [selectAllProducts, setSelectAllProducts] = useState(false) //選擇所有商品
+  const [selectAllCourses, setSelectAllCourses] = useState(false) //選擇所有課程
+  const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('') // 運送方式
+  const [deliveryPrice, setDeliveryPrice] = useState(0) // 運費金額
+  const [selectedCoupon, setSelectedCoupon] = useState('') //選取優惠卷
+  const [discountAmount, setDiscountAmount] = useState(0) //優惠卷金額
 
   // 初始化商品購物車
   const initProductCart = () => {
@@ -18,7 +22,7 @@ function CartList() {
 
   // 初始化课程購物車
   const initCourseCart = () => {
-    setCourseCart([...CourseData])
+    setCourseCart([...courseData])
   }
 
   //初次進入購物車狀態
@@ -34,7 +38,7 @@ function CartList() {
     setProductCart(updatedProductCart)
 
     // 預設已選擇所有課程
-    const updatedCourseCart = CourseData.map((course) => ({
+    const updatedCourseCart = courseData.map((course) => ({
       ...course,
       selected: true,
     }))
@@ -59,7 +63,6 @@ function CartList() {
           return {
             ...product,
             quantity: newQuantity,
-            price: newPrice,
           }
         }
         return product
@@ -137,6 +140,7 @@ function CartList() {
     <tr key={product.id}>
       <td className={'align-middle'}>
         <input
+          className="checkbox"
           type="checkbox"
           checked={product.selected}
           onChange={() => handleToggleProductSelection(product.id)}
@@ -180,7 +184,7 @@ function CartList() {
               handleQuantityChange(product.id, 1)
             }}
           >
-            <GrAdd />
+            <AiOutlinePlus />
           </button>
         </div>
       </td>
@@ -192,12 +196,11 @@ function CartList() {
             handleRemoveProduct(product.id)
           }}
         >
-          <RiDeleteBin6Line className={'trash'} />
+          <RiDeleteBin5Line className={'trash'} />
         </button>
       </td>
     </tr>
   ))
-
   // 課程列表
   const courseItems = courseCart.map((course) => (
     <tr key={course.id}>
@@ -228,7 +231,7 @@ function CartList() {
             handleRemoveCourse(course.id)
           }}
         >
-          <RiDeleteBin6Line className={'trash'} />
+          <RiDeleteBin5Line className={'trash'} />
         </button>
       </td>
     </tr>
@@ -241,7 +244,6 @@ function CartList() {
     }
     return total
   }, 0)
-
   // 課程小計金額
   const selectedCourseTotal = courseCart.reduce((total, course) => {
     if (course.selected) {
@@ -249,6 +251,47 @@ function CartList() {
     }
     return total
   }, 0)
+  //商品與課程加總的小計金額
+  const totalSelectedTotal = selectedProductTotal + selectedCourseTotal
+
+  // 商品項目數量統計
+  const selectedProductCart = productCart.filter(
+    (product) => product.selected
+  ).length
+  const selectedCourseCart = courseCart.filter(
+    (course) => course.selected
+  ).length
+  //總商品數量
+  const totalSelectedItems = selectedProductCart + selectedCourseCart
+
+  //處理優惠卷折扣
+  const handleCouponChange = (couponCode) => {
+    //選取的優惠卷
+    setSelectedCoupon(couponCode)
+
+    // 查找所選優惠券數據
+    const selectedCouponData = couponData.find(
+      (coupon) => coupon.coupon_code === couponCode
+    )
+
+    if (selectedCouponData) {
+      if (selectedCouponData.coupon_type === 1) {
+        // 百分比折扣
+        const discountPercentage = selectedCouponData.discount_value / 100 //換算百分比
+        const discountPrice = Math.round(
+          totalSelectedTotal * discountPercentage
+        ) //總額小計＊百分比折扣
+        const discount = totalSelectedTotal - discountPrice //總額小計 - 總額折扣 ＝ 總折扣金額
+        setDiscountAmount(discount)
+      } else {
+        // 固定金額折扣
+        setDiscountAmount(selectedCouponData.discount_value)
+      }
+    } else {
+      // 如果沒有選擇優惠券或找不到優惠券，則重置折扣金額
+      setDiscountAmount(0)
+    }
+  }
 
   return (
     <>
@@ -381,15 +424,33 @@ function CartList() {
                         選擇運送方式：
                       </label>
                       <select
+                        required
                         class="form-select"
                         id="deliveryLabel"
                         name="deliveryLabel"
-                        aria-label="選擇運送方式"
+                        aria-label="select"
+                        value={selectedDeliveryOption}
+                        onChange={(e) => {
+                          const selectedOption = e.target.value
+                          setSelectedDeliveryOption(selectedOption)
+
+                          // 根據所選的運送方式更新運費
+                          let updatedDeliveryPrice = 0
+                          if (selectedOption === 'delivery') {
+                            updatedDeliveryPrice = 60 // 宅配運費為60元
+                          } else if (
+                            selectedOption === '711Store' ||
+                            selectedOption === 'familyStore'
+                          ) {
+                            updatedDeliveryPrice = 80 // 7-11或全家便利商店運費
+                          }
+                          setDeliveryPrice(updatedDeliveryPrice)
+                        }}
                       >
-                        <option selected>請選擇</option>
-                        <option value="delivery">宅配</option>
-                        <option value="711Store">7-11便利商店</option>
-                        <option value="familyStore">全家便利商店</option>
+                        <option value="">請選擇</option>
+                        <option value="delivery">宅配 NT$60</option>
+                        <option value="711Store">7-11取貨 NT$80</option>
+                        <option value="familyStore">全家取貨 NT$80</option>
                       </select>
                     </td>
                   </tr>
@@ -402,6 +463,7 @@ function CartList() {
                         選擇付款方式：
                       </label>
                       <select
+                        required
                         className="form-select"
                         id="paymentLabel"
                         name="paymentLabel"
@@ -429,10 +491,10 @@ function CartList() {
                     <td className="align-middle selectContainer" scope="col">
                       <div className="label-item">
                         <label for="allProductsItems" className="selecTitle">
-                          商品
+                          數量
                         </label>
                         <div className="" name="allProductsItems">
-                          5/項
+                          {totalSelectedItems}/項
                         </div>
                       </div>
                     </td>
@@ -440,9 +502,62 @@ function CartList() {
                   <tr>
                     <td className="align-middle selectContainer" scope="col">
                       <div className="label-item">
-                        <label for="allPrdouctPrice">金額</label>
+                        <label for="allPrdouctPrice">小計</label>
                         <div className="" name="allPrdouctPrice">
-                          $9999
+                          ${totalSelectedTotal}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
+                        <label for="couponDiscount">優惠卷</label>
+                        {/* <select
+                          className="form-select"
+                          id="coupon"
+                          name="coupon"
+                          aria-label="selectCoupon"
+                          value={selectedCoupon}
+                          onChange={(e) => setSelectedCoupon(e.target.value)}
+                        >
+                          <option value="">請選擇</option>
+                          {couponData.map((coupon) => (
+                            <option
+                              key={coupon.couponid}
+                              value={coupon.coupon_code}
+                            >
+                              {coupon.coupon_name}
+                            </option>
+                          ))}
+                        </select> */}
+                        <select
+                          className="form-select"
+                          id="coupon"
+                          name="coupon"
+                          aria-label="selectCoupon"
+                          value={selectedCoupon}
+                          onChange={(e) => handleCouponChange(e.target.value)}
+                        >
+                          <option value="">請選擇</option>
+                          {couponData.map((coupon) => (
+                            <option
+                              key={coupon.couponid}
+                              value={coupon.coupon_code}
+                            >
+                              {coupon.coupon_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="align-middle selectContainer" scope="col">
+                      <div className="label-item">
+                        <label for="couponDiscount">優惠卷折扣</label>
+                        <div className="" name="couponDiscount">
+                          -${discountAmount}
                         </div>
                       </div>
                     </td>
@@ -452,41 +567,14 @@ function CartList() {
                       <div className="label-item">
                         <label for="deliveryPrice">運費</label>
                         <div className="" name="deliveryPrice">
-                          $9999
+                          ${deliveryPrice}
                         </div>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td className="align-middle selectContainer" scope="col">
-                      <div className="label-item">
-                        <label for="couponDiscount">優惠卷折扣</label>
-                        <div className="" name="couponDiscount">
-                          -$360
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="align-middle selectContainer" scope="col">
-                      <div className="label-item">
-                        <select
-                          className="form-select"
-                          id="coupon"
-                          name="coupon"
-                          aria-label="selectCoupon"
-                        >
-                          <option selected>請選擇</option>
-                          <option value="1">優惠卷1</option>
-                          <option value="2">優惠卷2</option>
-                          <option value="3">優惠卷3</option>
-                        </select>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="align-middle p-2" scope="col">
-                      <hr />
+                    <td className="align-middle px-3 py-0" scope="col">
+                      <hr className="border-1 opacity-100" />
                     </td>
                   </tr>
                   <tr>
@@ -494,7 +582,7 @@ function CartList() {
                       <div className="label-item">
                         <label for="sumTotal">合計</label>
                         <div className="fs-3 fw-bold" name="sumTotal">
-                          $9999
+                          ${totalSelectedTotal - discountAmount + deliveryPrice}
                         </div>
                       </div>
                     </td>
