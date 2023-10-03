@@ -6,6 +6,8 @@ import HeaderDesktop from './Header-desktop'
 import HeaderMobile from './Header-mobile'
 import Footer from './footer'
 
+import productsData from '@/data/cart/product'
+
 import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
 
@@ -51,10 +53,10 @@ export default function DefaultLayout({ title = '', children }) {
   }, [scrollPosition])
 
   //   const { cartListData } = useCartList()
-  //   const [cartIconLength, setCartIconLength] = useState()
-  //   useEffect(() => {
-  //     setCartIconLength(cartListData.length)
-  //   }, [cartListData])
+  const [cartIconLength, setCartIconLength] = useState()
+  useEffect(() => {
+    setCartIconLength(productsData.length)
+  }, [productsData])
 
   // 未登入狀態
 
@@ -87,7 +89,7 @@ export default function DefaultLayout({ title = '', children }) {
         <i className="fas fa-shopping-cart ed-navbar__font ed-navbar__icon ed-navbar__icon--inline"></i>
       ),
       iconDesktop: <i className="fas fa-shopping-cart ed-navbar__font"></i>,
-      tagDesktop: <div className="ed-tag ed-tag--corner"></div>,
+      tagDesktop: <div className="ed-tag ed-tag--corner">{cartIconLength}</div>,
       href: '/cart',
     },
   ]
@@ -129,7 +131,7 @@ export default function DefaultLayout({ title = '', children }) {
         <i className="fas fa-shopping-cart ed-navbar__font ed-navbar__icon ed-navbar__icon--inline"></i>
       ),
       iconDesktop: <i className="fas fa-shopping-cart ed-navbar__font"></i>,
-      tagDesktop: <div className="ed-tag ed-tag--corner"></div>,
+      tagDesktop: <div className="ed-tag ed-tag--corner">{cartIconLength}</div>,
       href: '/cart',
     },
   ]
