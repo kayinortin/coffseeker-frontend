@@ -1632,11 +1632,9 @@ div.my-4.d-md-flex a:hover {
   filter: blur(10px);
   @media screen and (max-width: $lg) {
     width: 200px;
-  height: 200px;
+    height: 200px;
   }
-    
-  }
-
+}
 
 .ed-bg-circle03 {
   width: 400px;
@@ -1665,9 +1663,8 @@ div.my-4.d-md-flex a:hover {
   filter: blur(10px);
   @media screen and (max-width: $lg) {
     width: 300px;
-  height: 300px;
+    height: 300px;
     top: 5420px;
-    
   }
 }
 
@@ -1774,11 +1771,6 @@ div.my-4.d-md-flex a:hover {
 }
 
 .ed-bg1 {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  width: 90%;
-  height: 90%;
   position: absolute;
   top: calc(100vh - 200px);
   left: calc(50% - 180px);
@@ -1787,11 +1779,6 @@ div.my-4.d-md-flex a:hover {
 }
 
 .ed-bg2 {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: calc(100vh - 800px);
   left: 160px;
@@ -1802,16 +1789,16 @@ div.my-4.d-md-flex a:hover {
 .fullscreen-container {
   position: fixed;
   top: 0;
-  left: -100%; /* 開始時，將其放到畫面的左邊 */
+  left: -100%; 
   bottom: 0;
-  width: 100%; /* 或其他你想要的寬度 */
-  background-color: rgba(0, 0, 0, 0); /* 初始透明度為0 */
-  transition: left 0.5s, background-color 0.5s; /* 平滑地改變 left 屬性和背景色 */
+  width: 100%; 
+  background-color: rgba(0, 0, 0, 0); 
+  transition: left 0.5s, background-color 0.5s; 
   z-index: 1000;
 }
 
 .fullscreen-container.open {
-  left: 0; /* 當 .open 類被應用時，移動它回到視窗內 */
+  left: 0; 
   background-color: #f0ebe2;
 }
 
