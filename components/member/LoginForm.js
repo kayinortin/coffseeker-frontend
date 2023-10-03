@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FaFacebook, FaGoogle } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { useUser } from '@/context/UserInfo'
 
 export default function LoginForm() {
+  const { userData, setUserData } = useUser()
   // 定義表單的值
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
@@ -50,9 +52,23 @@ export default function LoginForm() {
         'http://localhost:3005/api/auth-jwt/login',
         formData
       )
-      console.log('伺服器回應:', response.data)
-      // response.data.accessToken
       Cookies.set('accessToken', response.data.accessToken)
+    } catch (error) {
+      console.error('錯誤:', error)
+    }
+
+    // 取得單一使用者資料
+    try {
+      const response = await axios.post(
+        'http://localhost:3005/api/auth/login',
+        formData
+      )
+      // console.log('伺服器回應:', response.data)
+      // setUserData(response.data.user)
+      Cookies.set('userInfo', JSON.stringify(response.data.user))
+      // const storedUserData = JSON.parse(Cookies.get('userInfo'))
+      // console.log('測試抓cookie資料', storedUserData)
+
       router.push('/member')
     } catch (error) {
       console.error('錯誤:', error)

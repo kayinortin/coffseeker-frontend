@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import _ from 'lodash'
 import {
   TileLayer,
@@ -35,7 +36,9 @@ import {
   BsClock,
 } from 'react-icons/bs'
 
-import testData from '@/data/map/taoyuanCafe.json'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+
 //所在地的mark樣式
 const locationMarker = new L.Icon({
   iconUrl:
@@ -81,7 +84,28 @@ export default function Map() {
   //定位啟動
   const [triggerLocate, setTriggerLocate] = useState(false)
   //咖啡廳清單資料
-  const [cafes, setCafes] = useState(testData)
+  const [cafes, setCafes] = useState([])
+  const [allCafeData, setAllCafeData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/fetchCafeData')
+        const data = response.data
+        setAllCafeData(data)
+        //預設顯示桃園咖啡
+        const defaultCafeData = _.filter(data, { city: 'taoyuan' })
+        setCafes(defaultCafeData)
+        setTimeout(() => {
+          setShowLoading(false)
+        }, 500)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchData()
+  }, [])
   //rating篩選後的咖啡廳清單資料
   const [cafesFiltered, setCafesFiltered] = useState([])
   //單間咖啡廳資料
@@ -105,8 +129,10 @@ export default function Map() {
     mrt: '',
     open_time: '主要是六日營業，其他以教學為主',
   })
-
+  //是否顯示咖啡廳資料視窗
   const [showCafeInfo, setShowCafeInfo] = useState(false)
+  //是否顯示Loading
+  const [showLoading, setShowLoading] = useState(true)
   //要生成Mark的資料預設
   const [markData, setMarkData] = useState(cafes)
   //咖啡rating篩選條件預設
@@ -298,7 +324,7 @@ export default function Map() {
             <h4 key={cafeData.id}>{cafeData.name}</h4>
             <button
               type="button"
-              class="btn-close"
+              className="btn-close"
               aria-label="Close"
               onClick={() => {
                 setShowCafeInfo(false)
@@ -463,6 +489,19 @@ export default function Map() {
   //整體return
   return (
     <>
+      <div
+        className={`mapArea justify-content-center align-items-center ${
+          showLoading ? '' : 'd-none'
+        }`}
+        id="loading"
+      >
+        <Lottie
+          play
+          loop
+          style={{ width: 600, height: 600 }}
+          animationData={lottieJson}
+        />
+      </div>
       <div className="mapArea">
         <div className="mapControl">
           <div className="rangeSelect me-3">

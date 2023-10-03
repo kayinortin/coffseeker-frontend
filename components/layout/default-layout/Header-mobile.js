@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
 
 export default function HeaderMobile(props) {
   const { navItems, currentRoute, navActions, isTop, isFullScreen } = props
@@ -12,6 +15,44 @@ export default function HeaderMobile(props) {
   useEffect(() => {
     setCheck(false)
   }, [pathname])
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  useEffect(() => {
+    async function fetchLoginStatus() {
+      const loggedIn = await checkLoginStatus()
+      setIsLoggedIn(loggedIn)
+    }
+
+    fetchLoginStatus()
+  }, [])
+
+  const handleLogout = () => {
+    axios
+      .post('http://localhost:3005/api/auth-jwt/logout')
+      .then((res) => {
+        if (res.data.success) {
+          Swal.fire({
+            title: '登出成功',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+          setTimeout(() => {
+            window.location.href = '/'
+          }, 1500)
+        } else {
+          Swal.fire({
+            title: '登出失敗',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <>
@@ -117,15 +158,22 @@ export default function HeaderMobile(props) {
                 </Link>
               </li>
             ))}
-            {/* {!isLogin ? null : (
-                    <li className="ed-navbar__item d-flex logout-icon">
-                      <i
-                        className="fas fa-sign-out-alt ed-navbar__font"
-                        onClick={handleLogout}
-                      ></i>
-                      <h4 className="ed-navbar__font">登出</h4>
-                    </li>
-                  )} */}
+            {!isLoggedIn ? null : (
+              <li className="ed-navbar__item d-flex logout-icon">
+                <button
+                  className="fas fa-sign-out-alt ed-navbar__font"
+                  onClick={handleLogout}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleLogout()
+                    }
+                  }}
+                  type="button"
+                >
+                  <h4 className="ed-navbar__font">登出</h4>
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
