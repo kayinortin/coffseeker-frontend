@@ -5,9 +5,12 @@ const UserInfo = createContext()
 
 export function UserProvider({ children }) {
   const [userData, setUserData] = useState(null) // 初始化用户数据为null
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   return (
-    <UserInfo.Provider value={{ userData, setUserData }}>
+    <UserInfo.Provider
+      value={{ userData, setUserData, isLoggedIn, setIsLoggedIn }}
+    >
       {children}
     </UserInfo.Provider>
   )

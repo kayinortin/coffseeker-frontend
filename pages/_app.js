@@ -10,14 +10,8 @@ export default function MyApp({ Component, pageProps }) {
     import('bootstrap/dist/js/bootstrap')
   }, [])
 
-  // 使用預設排版檔案 components/layout/default-layout/index.js`
   const getLayout =
     Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
-  return (
-    <UserProvider>
-      {''}
-      {getLayout(<Component {...pageProps} />)}
-    </UserProvider>
-  )
+  return <UserProvider>{getLayout(<Component {...pageProps} />)}</UserProvider>
 }

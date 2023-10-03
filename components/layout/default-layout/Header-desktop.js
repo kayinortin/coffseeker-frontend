@@ -3,11 +3,12 @@ import Link from 'next/link'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
+import { useUser } from '@/context/UserInfo'
 
 export default function HeaderDesktop(props) {
   const { navItems, currentRoute, navActions, isTop, isFullScreen } = props
+  const { isLoggedIn, setIsLoggedIn } = useUser()
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   useEffect(() => {
     async function fetchLoginStatus() {
       const loggedIn = await checkLoginStatus()
@@ -15,14 +16,18 @@ export default function HeaderDesktop(props) {
     }
 
     fetchLoginStatus()
-  }, [])
+  }, [isLoggedIn, setIsLoggedIn])
 
   const handleLogout = () => {
     axios
-      .post('http://localhost:3005/api/auth-jwt/logout')
+      .post(
+        'http://localhost:3005/api/auth-jwt/logout',
+        {},
+        { withCredentials: true }
+      )
       .then((res) => {
-        console.log(res)
-        if (res.data.success) {
+        console.log(res.data.message)
+        if (res.data.message === 'success') {
           Swal.fire({
             title: '登出成功',
             icon: 'success',

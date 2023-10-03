@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "label": "線上購物",
+    "href": "/product"
+  },
+  {
+    "id": 2,
+    "label": "咖啡資訊",
+    "children": [
+      { "id": 21, "label": "咖啡占卜", "href": "/infomation/divination" },
+      { "id": 22, "label": "烘焙介紹", "href": "/infomation/baked" },
+      { "id": 23, "label": "手沖資訊", "href": "/infomation/handbrewed" }
+    ]
+  },
+  {
+    "id": 3,
+    "label": "咖啡地圖",
+    "href": "/map"
+  },
+  {
+    "id": 4,
+    "label": "課程預約",
+    "href": "/course"
+  },
+  {
+    "id": 5,
+    "label": "最新消息",
+    "href": "/news"
+  },
+  {
+    "id": 6,
+    "label": "關於我們",
+    "href": "/about"
+  }
+]
