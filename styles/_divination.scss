@@ -1,0 +1,360 @@
+@use 'sass:math';
+.desk {
+  $range-base: 45deg;
+  $number-of-cards: 10;
+  $rotation-range: $range-base * 2;
+  $rotation-step: $rotation-range / ($number-of-cards - 1);
+  $translate-distance: -50px;
+  background-image: url(../public/divination-image/desk2.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .mask {
+    width: 100%;
+    height: 250px;
+    // background-color: #ffffff64;
+    position: absolute;
+    bottom: -10px;
+    z-index: 2;
+  }
+  .game {
+    position: relative;
+    //   outline: 1px solid red;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    //   padding-top: 500px;
+    .textArea {
+      text-align: center;
+      padding-block: 20px;
+      h2 {
+        color: $color--success;
+        margin-bottom: 20px;
+      }
+      h5 {
+        padding: 20px;
+        line-height: 200%;
+        color: $color--gray1;
+        background-color: #ffffff77;
+      }
+      button {
+        margin-top: 50px;
+        padding: 8px 50px;
+        background-color: $color--success;
+        border: none;
+      }
+    }
+    .post {
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      background-color: #d1d1d1;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .post1 {
+      margin-bottom: 450px;
+    }
+    .post2 {
+      margin-left: 450px;
+    }
+    .post3 {
+      margin-left: -450px;
+    }
+    .tarotCard {
+      background: transparent;
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: -100px;
+      transform-origin: center calc(100% + 100px);
+      perspective: 500px;
+      transition: 0.5s;
+
+      .content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        transition: transform 1s;
+        transform-style: preserve-3d;
+        border-radius: 16px;
+        .front {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          text-align: center;
+          border-radius: 5px;
+          backface-visibility: hidden;
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background-image: url(../public/divination-image/tarot_cardback.png);
+            background-position: center center;
+            background-size: cover;
+          }
+        }
+        .back {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          color: #333333;
+          background-color: #fff;
+          text-align: center;
+          font-size: 16px;
+          font-weight: 700;
+          border-radius: 15px;
+          backface-visibility: hidden;
+          transform: rotateY(180deg);
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .cardBackIndex {
+            width: 100%;
+            height: calc(100% - 20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .cardImage {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              img {
+                width: 50%;
+              }
+            }
+            .cardBackText {
+              display: block;
+              background-color: #dfd0af;
+              width: calc(100% - 20px);
+              padding-block: 10px;
+              border-radius: 0px 0px 10px 10px;
+            }
+          }
+          &::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            border: 3px solid #dfd0af;
+            border-radius: 10px;
+            background-color: transparent;
+          }
+        }
+      }
+
+      .active {
+        transform: rotateY(180deg);
+        transition: transform 0.5s;
+      }
+      .pickup {
+        margin-bottom: 100px;
+      }
+    }
+    .forward1 {
+      transition: all 0.5s;
+      bottom: 60px;
+    }
+    .forward12 {
+      bottom: 260px;
+      margin-left: -750px;
+    }
+    .forward2 {
+      transition: all 0.5s;
+      bottom: 60px;
+    }
+    .forward22 {
+      bottom: 260px;
+      margin-left: -250px;
+    }
+    .forward3 {
+      transition: all 0.5s;
+      bottom: 60px;
+    }
+    .forward32 {
+      bottom: 260px;
+      margin-left: 250px;
+    }
+    .forward4 {
+      transition: all 0.5s;
+      bottom: 60px;
+    }
+    .forward42 {
+      bottom: 260px;
+      margin-left: 750px;
+    }
+    @for $i from 1 through $number-of-cards {
+      $rotation-angle: $range-base * -1 + $rotation-step * ($i - 1);
+      .tarotCard#{$i}Active {
+        transition: transform 0.5s;
+        transform: rotate($rotation-angle);
+      }
+      .tarotCard#{$i}pickup {
+        $translate-x: $translate-distance * math.sin($rotation-angle);
+        $translate-y: $translate-distance * math.cos($rotation-angle);
+        transform: rotate($rotation-angle)
+          translateX(#{$translate-x})
+          translateY(#{$translate-y});
+      }
+    }
+    .canSelect {
+      .back {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  /* ----------------------------------------------
+ * Generated by Animista on 2023-9-26 14:36:24
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+  /**
+ * ----------------------------------------
+ * animation fade-in
+ * ----------------------------------------
+ */
+  .focus-in-contract {
+    -webkit-animation: focus-in-contract 0.7s
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: focus-in-contract 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  .blur-out-expand {
+    -webkit-animation: blur-out-expand 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      both;
+    animation: blur-out-expand 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  @-webkit-keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  /**
+ * ----------------------------------------
+ * animation focus-in-contract
+ * ----------------------------------------
+ */
+
+  @-webkit-keyframes focus-in-contract {
+    0% {
+      letter-spacing: 1em;
+      -webkit-filter: blur(12px);
+      filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-filter: blur(0px);
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  @keyframes focus-in-contract {
+    0% {
+      letter-spacing: 1em;
+      -webkit-filter: blur(12px);
+      filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-filter: blur(0px);
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  /**
+  * ----------------------------------------
+  * animation blur-out-expand
+  * ----------------------------------------
+  */
+  @-webkit-keyframes blur-out-expand {
+    0% {
+      -webkit-filter: blur(0.01);
+      filter: blur(0.01);
+    }
+    100% {
+      letter-spacing: 1em;
+      -webkit-filter: blur(12px) opacity(0%);
+      filter: blur(12px) opacity(0%);
+    }
+  }
+  @keyframes blur-out-expand {
+    0% {
+      -webkit-filter: blur(0.01);
+      filter: blur(0.01);
+    }
+    100% {
+      letter-spacing: 1em;
+      -webkit-filter: blur(12px) opacity(0%);
+      filter: blur(12px) opacity(0%);
+    }
+  }
+}
+.TarotResult {
+  background-image: url(../public/divination-image/desk2.png);
+  .result {
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .resultCard {
+      position: relative;
+      max-width: 600px;
+      background-color: #5b5b5b8f;
+      padding: 20px;
+      box-shadow: 10px 10px 42px 0 rgba(0, 0, 0, 0.75);
+    }
+    .title {
+      h2 {
+        text-align: center;
+        color: $color--success;
+        margin-bottom: 60px;
+      }
+      p {
+        max-width: 600px;
+        color: #ffffff;
+        line-height: 200%;
+      }
+    }
+  }
+  .box{
+    height: 600px;
+    background-color: #b2b2b287;
+  }
+  .swiper {
+    --swiper-theme-color: #909090;
+}
+}

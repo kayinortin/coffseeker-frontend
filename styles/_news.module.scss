@@ -1,8 +1,12 @@
 $color--primary: #1c262c;
-$color--background: #f2f2f2;
+$color--background: #F2F3EE;
 $color--black: #000000;
 
 //index.js區
+.ei-news-container{
+  background-color: $color--background;
+  // padding-inline: 50px;
+}
 //標題直線
 .ei-line {
   flex-grow: 0;
@@ -34,7 +38,7 @@ $color--black: #000000;
 
 .ei-card {
   // width: 94%;
-  max-width: 700;
+  max-width: 700px;
   height: 400px;
   margin-inline: 30px;
   margin-top: 30px;
@@ -92,9 +96,12 @@ $color--black: #000000;
     justify-content: center;
     text-align: right;
   }
+  .mobile-news-title{
+    margin-top: 2rem !important;
+  }
   .ei-card {
     max-width: 100%;
-    margin-bottom: 40px; // 添加这行样式
+    margin-bottom: 40px;
     &:hover {
       transform: none;
       box-shadow: none;
@@ -123,12 +130,12 @@ $color--black: #000000;
 
 // [nid].js頁面
 .ei-container-nid{
-  max-width: 90%;
+  max-width: 80%;
 }
 .news-detail {
   // width: 90%;
   margin: 0 auto;
-  padding-inline: 200px; /* 在大螢幕時設為 200 */
+  padding-inline: 200px; 
   img {
     width: 100%;
   }
@@ -144,10 +151,11 @@ $color--black: #000000;
 @media (max-width: 431px) {
   .ei-container-nid{
     padding: 0;
+    max-width: 90% !important;
     
   }
   .news-detail {
-    padding-inline: 10px; /* 在 430 像素以下時設為 0 */
+    padding-inline: 10px; 
   }
   .mobile-news-title{
     // text-align: left !important;

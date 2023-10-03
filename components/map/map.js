@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import _ from 'lodash'
 import {
   TileLayer,
@@ -35,7 +36,9 @@ import {
   BsClock,
 } from 'react-icons/bs'
 
-import testData from '@/data/map/taoyuanCafe.json'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+
 //所在地的mark樣式
 const locationMarker = new L.Icon({
   iconUrl:
@@ -81,7 +84,28 @@ export default function Map() {
   //定位啟動
   const [triggerLocate, setTriggerLocate] = useState(false)
   //咖啡廳清單資料
-  const [cafes, setCafes] = useState(testData)
+  const [cafes, setCafes] = useState([])
+  const [allCafeData, setAllCafeData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/fetchCafeData')
+        const data = response.data
+        setAllCafeData(data)
+        //預設顯示桃園咖啡
+        const defaultCafeData = _.filter(data, { city: 'taoyuan' })
+        setCafes(defaultCafeData)
+        setTimeout(() => {
+          setShowLoading(false)
+        }, 500)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchData()
+  }, [])
   //rating篩選後的咖啡廳清單資料
   const [cafesFiltered, setCafesFiltered] = useState([])
   //單間咖啡廳資料
@@ -105,8 +129,10 @@ export default function Map() {
     mrt: '',
     open_time: '主要是六日營業，其他以教學為主',
   })
-  //側面欄顯示(全部all/單間cafe/篩選filter)
-  const [asideInfoIndex, setAsideInfoIndex] = useState('all')
+  //是否顯示咖啡廳資料視窗
+  const [showCafeInfo, setShowCafeInfo] = useState(false)
+  //是否顯示Loading
+  const [showLoading, setShowLoading] = useState(true)
   //要生成Mark的資料預設
   const [markData, setMarkData] = useState(cafes)
   //咖啡rating篩選條件預設
@@ -149,10 +175,6 @@ export default function Map() {
     { icon: <PiCoffee />, label: '好喝', name: 'tasty' },
     { icon: <BsPlugin />, label: '插座', name: 'socket' },
   ]
-  //監聽aside切換顯示
-  useEffect(() => {
-    console.log(asideInfoIndex)
-  }, [asideInfoIndex])
 
   //生成系列，未來可拆component================
   //生成cafeMarks
@@ -216,8 +238,10 @@ export default function Map() {
   //生成active咖啡Mark
   function ActiveCafeMarker({ cafeData }) {
     const map = useMap()
-    if (asideInfoIndex == 'cafe') {
-      map.panTo([cafeData.latitude, cafeData.longitude], 15)
+    if (showCafeInfo) {
+      setTimeout(() => {
+        map.flyTo([cafeData.latitude, cafeData.longitude], map.getZoom())
+      }, 400)
       return (
         <Marker
           key={cafeData.id}
@@ -294,15 +318,19 @@ export default function Map() {
   function AsideInfo() {
     return (
       <>
-        {/* 全部LIST */}
-        <div className={`cafeList ${asideInfoIndex === 'all' ? 'active' : ''}`}>
-          <CafeList cafes={cafes} />
-        </div>
         {/* 單間咖啡廳 */}
-        <div
-          className={`cafeInfo ${asideInfoIndex === 'cafe' ? 'active' : ''}`}
-        >
-          <h4 key={cafeData.id}>{cafeData.name}</h4>
+        <div className={`cafeInfo ${showCafeInfo ? '' : 'd-none'}`}>
+          <div className="d-flex justify-content-between">
+            <h4 key={cafeData.id}>{cafeData.name}</h4>
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={() => {
+                setShowCafeInfo(false)
+              }}
+            ></button>
+          </div>
           <div className="cafeRating">
             <span>
               <div>
@@ -384,11 +412,7 @@ export default function Map() {
           <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
         </div>
         {/* 篩選 */}
-        <div
-          className={`cafeFilter  ${
-            asideInfoIndex === 'filter' ? 'active' : ''
-          }`}
-        >
+        <div className="cafeFilter">
           <h4>篩選條件</h4>
           <div className="cafeFilterForm py-3">
             {criteria.map((item) => (
@@ -405,7 +429,7 @@ export default function Map() {
                   <option defaultValue value="">
                     不限
                   </option>
-                  {item.name === 'socket' ? ( // 只为 'socket' 的Select渲染特定选项
+                  {item.name === 'socket' ? (
                     <>
                       <option value="yes">充足</option>
                       <option value="maybe">也許</option>
@@ -438,26 +462,11 @@ export default function Map() {
   }
   //切換單間咖啡廳資料
   function handelChangeCafe(cafe) {
-    handleAsideInfo('cafe')
+    setShowCafeInfo(true)
     setCafeData(cafe)
   }
   //切換Aside顯示事件
-  function handleAsideInfo(params) {
-    switch (params) {
-      case 'all':
-        setAsideInfoIndex('all')
-        setMarkData(cafes)
-        break
-      case 'filter':
-        setAsideInfoIndex('filter')
-        setMarkData(cafesFiltered)
-        break
-      case 'cafe':
-        setAsideInfoIndex('cafe')
-        break
-    }
-    console.log(asideInfoIndex)
-  }
+
   //輔助用函式(不生成物件)==================================
   //判斷打勾叉叉icon
   function checkValue(value) {
@@ -475,10 +484,24 @@ export default function Map() {
   //啟動定位
   function LocateBtn() {
     setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
+    setShowCafeInfo(false)
   }
   //整體return
   return (
     <>
+      <div
+        className={`mapArea justify-content-center align-items-center ${
+          showLoading ? '' : 'd-none'
+        }`}
+        id="loading"
+      >
+        <Lottie
+          play
+          loop
+          style={{ width: 600, height: 600 }}
+          animationData={lottieJson}
+        />
+      </div>
       <div className="mapArea">
         <div className="mapControl">
           <div className="rangeSelect me-3">
@@ -495,24 +518,9 @@ export default function Map() {
             <TbCurrentLocation />
           </button>
         </div>
-        <div className="mapAsideBar">
-          <button
-            className={`${asideInfoIndex === 'all' ? 'active' : ''}`}
-            onClick={() => {
-              handleAsideInfo('all')
-            }}
-          >
-            全部
-          </button>
-          <button
-            className={`${asideInfoIndex === 'filter' ? 'active' : ''}`}
-            onClick={() => {
-              handleAsideInfo('filter')
-            }}
-          >
-            篩選
-          </button>
-        </div>
+        {/* <div className="mapAsideBar">
+          <button>篩選</button>
+        </div> */}
         <aside className="mapAsideInfo">
           <AsideInfo />
         </aside>

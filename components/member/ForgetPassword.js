@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
-import useInterval from '@/hooks/use-interval'
+import useInterval from '@/hooks/useInterval'
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('')
@@ -10,6 +10,8 @@ export default function ForgetPassword() {
   const [message, setMessage] = useState('')
   const [count, setCount] = useState(10)
   const [delay, setDelay] = useState(null)
+  // 判斷使用者如果成功透過按鈕取得OTP切換顯示的表單
+  const [gotOTP, setGotOTP] = useState(false)
 
   useInterval(() => {
     setCount(count - 1)
@@ -24,6 +26,7 @@ export default function ForgetPassword() {
   const getOtp = async () => {
     if (delay !== null) {
       setMessage('60s　內無法重新獲得驗證碼')
+      setGotOTP(true)
       return
     }
 
@@ -64,11 +67,10 @@ export default function ForgetPassword() {
     console.log(res.data)
   }
 
-  return (
+  return gotOTP !== true ? (
     <>
-      <div>本頁面已經串好OTP by Edison</div>
       <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'login border border-dark'}>
+        <div className={'form-box border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             忘記密碼
           </div>
@@ -91,55 +93,71 @@ export default function ForgetPassword() {
         </div>
       </div>
       <div className={'container d-flex justify-content-center'}>
-        <div
+        <button
           className={
-            'btn-login text-center d-flex justify-content-center flex-column'
+            'btn-login text-center allow-btn mb-3 border-0 text-center'
           }
+          onClick={getOtp}
         >
-          <button onClick={getOtp}>
-            {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
-          </button>
+          {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
+        </button>
+      </div>
+    </>
+  ) : (
+    <>
+      <div className="container d-flex justify-content-center mb-3">
+        <div className={'form-box border border-dark'}>
+          <div className={'form-title border-bottom border-dark p-3'}>
+            重設密碼
+          </div>
+          <form className={'p-5'}>
+            <button
+              className={
+                'btn-getOTP text-center allow-btn mb-3 border-0 text-center px-3'
+              }
+              onClick={getOtp}
+            >
+              {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
+            </button>
+            <div className={'mb-3'}>
+              <label htmlFor="OTPcode" className={'form-label'}>
+                電子郵件驗證碼：
+              </label>
+              <input
+                type="text"
+                className={'form-control'}
+                value={token}
+                placeholder="請輸入您在信箱取得的驗證碼"
+                id="OTPcode"
+                onChange={(e) => setToken(e.target.value)}
+              />
+            </div>
+            <div className={'mb-3'}>
+              <label htmlFor="newPassword" className={'form-label'}>
+                新密碼：
+              </label>
+              <input
+                type="text"
+                className={'form-control'}
+                value={password}
+                placeholder="請輸入8~12位數,英數混和的密碼"
+                id="newPassword"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <div id="emailHelp" className="form-text">
+                <h5>{message}</h5>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-      <div className="container">
-        <label>
-          電子郵件驗證碼：
-          <input
-            type="text"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          新密碼：
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button onClick={resetPassword}>重設密碼</button>
-      </div>
-      <div
-        className={
-          'container d-flex justify-content-between content p-0 align-items-center ask-for-login'
-        }
-      >
-        {/* <div className={'my-3'}></div> */}
-        <div className={'ask-for-regester my-3'}>
-          <span className="me-3">已經是會員了?</span>
-          <Link href="./register" className={'text-secondary ms-3'}>
-            會員登入
-          </Link>
-        </div>
-        <div className={'ask-for-regester my-3'}>
-          <span className="me-3">還不是會員嗎?</span>
-          <Link href="./register" className={'text-secondary ms-3'}>
-            加入會員
-          </Link>
-        </div>
+      <div className={'container d-flex justify-content-center'}>
+        <button
+          className={'btn-login text-center allow-btn mb-3 border-0'}
+          onClick={resetPassword}
+        >
+          重設密碼
+        </button>
       </div>
     </>
   )

@@ -9,14 +9,13 @@ import Accordion from './Accordion'
 // 在父元件中，要把所有要傳遞的資料整理好，再傳遞給子元件
 
 export default function SideBar() {
-  const options = ['拉花課程', '手沖課程', '烘豆課程']
-
   return (
     <div className="col-sm-2 d-none d-sm-block text-center my-5 me-5">
       <h3>課程分類</h3>
-      {options.map((v, i) => {
+      {/* {options.map((v, i) => {
         return <Accordion title={v} key={i} />
-      })}
+      })} */}
+      <Accordion />
     </div>
   )
 }

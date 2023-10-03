@@ -1,31 +1,54 @@
 import React from 'react'
 import style from '@/styles/_course.module.scss'
 
-export default function Pagination() {
-  const pages = ['1', '2', '3', '4', '5']
+export default function Pagination({ totalPages, currentPage, onPageChange }) {
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  )
   return (
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center col-sm-12 col-4">
       <nav aria-label="Page navigation example ">
         <ul className="pagination">
-          <li className="page-item">
-            <a className="page-link" href="#" aria-label="Previous">
+          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+            <button
+              className="page-link"
+              href="#"
+              aria-label="Previous"
+              onClick={() => {
+                onPageChange(currentPage - 1)
+              }}
+            >
               <span aria-hidden="true">&laquo;</span>
-            </a>
+            </button>
           </li>
-          {pages.map((v, i) => {
+          {pageNumbers.map((v, i) => {
             return (
               <li className="page-item" key={i}>
-                <a className="page-link" href="#">
+                <button
+                  className={`page-link ${v === currentPage ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => {
+                    onPageChange(v)
+                  }}
+                >
                   {v}
-                </a>
+                </button>
               </li>
             )
           })}
 
           <li className="page-item">
-            <a className="page-link" href="#" aria-label="Next">
+            <button
+              className={`page-link ${
+                currentPage === totalPages ? 'disabled' : ''
+              }`}
+              href="#"
+              aria-label="Next"
+              onClick={() => onPageChange(currentPage + 1)}
+            >
               <span aria-hidden="true">&raquo;</span>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>

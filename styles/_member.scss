@@ -1,160 +1,232 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-
 // $color--secondary: #FF9B1A;
 
 // header的會員按鈕
-.z-1031{
-    z-index: 1031;
-}
+// .z-1031{
+//     z-index: 1031;
+// }
 
 // 大標籤樣式變更
 
 
-.background{
-    background: #F2F3EE;
+// checkBox自製樣式
+.check-input {
+  appearance: none;
+  width: 16px; 
+  height: 16px; 
+  border: 1px solid #000000; 
+  &:checked {
+    background: url('https://cdn-icons-png.flaticon.com/512/3388/3388530.png') no-repeat top left / cover;
+
+  }
 }
 
-.sidebar{
-    // width: 100%;
-    height: 100vh;
-    // background:pink
+.background {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity))
 }
 
-.content{
-    // height: 100vh;
-    width: 650px;
-    // background: cyan;
+.sidebar {
+  // width: 100%;
+  height: 100vh;
+  // background:pink
+}
+
+.content {
+  // height: 100vh;
+  width: 650px;
+  // background: cyan;
 }
 
 // 麵包屑 Start
-.nav-breadcrumb{
-    --bs-breadcrumb-divider: '>';
-    .link{
-        color: $color--primary;
-        text-decoration: none;
-        &:hover{
-            color: $color--secondary;
-        }
+.nav-breadcrumb {
+  --bs-breadcrumb-divider: '>';
+  .link {
+    color: $color--primary;
+    text-decoration: none;
+    &:hover {
+      color: $color--secondary;
     }
-    
+  }
 }
 
 // 麵包屑 End
 
 // sideBar Start
 
-.sidebar-title{
-    font-size: 16px;
-    font-weight: bold;
-    color: $color--primary;
-    font-family: 'Noto Sans TC', sans-serif;
-    text-decoration: none;
-        &:hover{
-            color: $color--secondary;
-        }
+.sidebar-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: $color--primary;
+  font-family: 'Noto Sans TC', sans-serif;
+  text-decoration: none;
+  &:hover {
+    color: $color--secondary;
+  }
 }
 // sideBar End
 
-// form Start
+// 表單 Start
 
-.form-title{
-    background: #e0e0e0;
-    font-weight: bold;
-    color: $color--primary;
+.form-title {
+  background: #e0e0e0;
+  font-weight: bold;
+  color: $color--primary;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+// 表單input統規
+.form-box {
+  width: 650px;
+  font-family: 'Noto Sans TC', sans-serif;
+  input.form-control {
+    height: 60px;
+    border: black solid 1px;
+    background: none;
+  }
+  select.form-select {
+    height: 60px;
+    border: black solid 1px;
+    background-color: #ffffff00;
+    // background: #F2F3EE;
+  }
+  .form-control.disable{
+    border: 0;
+  }
+  @media screen and (max-width: 768px) {
+    max-width: 650px;
+  }
+}
+// cursor: pointer;
+
+// 表格類的統規
+.table-box{
+    width: 878px;
     font-family: 'Noto Sans TC', sans-serif;
 }
 
 
-// 登入頁面
-.login{
-    width: 650px;
-    input.form-control{
-        height: 60px;
-        border: black solid 1px;
-        background: none;
-    }
-    select.form-select{
-        height: 60px;
-        border: black solid 1px;
-        background-color:#ffffff00
-        // background: #F2F3EE;
-    }
-}
 
-.btn-login{
-    cursor: pointer;
+
+// 按鈕統規
+.btn-login {
     color: #ffffff;
-    background:$color--secondary;
-    font-family: "Noto Sans TC";
+    background: $color--secondary;
+    font-family: 'Noto Sans TC';
     font-size: 18px;
     height: 48px;
     width: 650px;
-    
 }
-
-.ask-for-register{
+// 忘記密碼取得驗證碼按鈕
+.btn-getOTP {
+    color: #ffffff;
+    background: $color--secondary;
+    font-family: 'Noto Sans TC';
+    font-size: 18px;
+    height: 48px;
+    // width: 650px;
+}
+// 登入頁面 詢問註冊
+.ask-for-register {
     font-size: 20px;
-    font-family: "Noto Sans TC";
-    span{
+    font-family: 'Noto Sans TC';
+    span {
         color: #a7a7a7;
     }
-    a{
+    a {
         color: $color--secondary;
         text-decoration: none;
     }
 }
 
-.forget-password{
+.forget-password {
     font-size: 16px;
-    font-family: "Noto Sans TC";
+    font-family: 'Noto Sans TC';
     color: #a7a7a7;
     text-decoration: none;
-    
 }
 
-.birthday-selector{
+.birthday-selector {
     visibility: hidden;
 }
 
-.allow-btn{
-    .disagree{
+.allow-btn {
+    cursor: pointer;
+    .agree{
         cursor: pointer;
-        color: #ffffff;
-        font-family: "Noto Sans TC";
-        font-size: 18px;
-        height: 48px;
-        width: 650px;
-        background: #a7a7a7;
     }
 }
+.disagree {
+    color: #ffffff;
+    font-family: 'Noto Sans TC';
+    font-size: 18px;
+    height: 48px;
+    width: 650px;
+    background: #a7a7a7;
+}
 
-@media screen and (max-width: 768px) {
-    .ask-for-login{
+.orange-text {
+    color: $color--secondary;
+}
+
+.ask-for-login{
+    width: 650px;
+    @media screen and (max-width: 768px) {
         display: flex;
-        flex-direction: column
+        flex-direction: column;
+        max-width:fit-content ;
     }
 }
 
-.membership-button{
-    svg{
+.membership-button {
+    svg {
         cursor: pointer;
-        &:hover{
-         color: $color--secondary;   
+        &:hover {
+            color: $color--secondary;
         }
-    }    
+    }
 }
 
-.member-dropdown{
+.member-dropdown {
     background: white;
     left: -92px;
     text-wrap: nowrap;
-    .dropdown-option{
-        a{
-            color:$color--primary;
+    .dropdown-option {
+        a {
+            color: $color--primary;
         }
-        &:hover{
+        &:hover {
             background: $color--secondary;
         }
     }
 }
+
+.test-area{
+    background: pink;
+}
+
+
+// 訂單頁的表格
+
+.order-state{
+    font-size: 16px;
+    .data{
+        font-size: 12px;
+    }
+    .gray{
+        background: #a7a7a7;
+    }
+    .orange{
+        background: $color--secondary;
+    }
+}
+
+.order-nav{
+  div.text-center{
+    width: 103px;
+  }
+}
+
+// img{
+//     width: 100px;
+//     height: 100px;
+// }

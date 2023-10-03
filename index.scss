@@ -2,23 +2,22 @@
 @import "./styles/variables";
 @import "./styles/reset";
 @import "./styles/global";
+@import "./styles/common";
 
 // 首頁樣式
-@import "./styles/common";
-@import 'slick-carousel/slick/slick.css';
-@import 'slick-carousel/slick/slick-theme.css';
-
-// 導覽列表
-@import './styles/navbar';
+@import "./styles/sidemenu";
+@import "./styles/season";
 
 // 購物車
 @import './styles/cart';
+@import './styles/addCart.scss';
 
 // 會員頁面
 @import './styles/member';
 
 // 商品頁面
 @import './styles/product';
+@import './styles/productCard';
 
 //最新消息
 @import './styles/news.module';
@@ -27,14 +26,16 @@
 @import './styles/about.module';
 
 //課程相關
-
 @import './styles/course';
-@import './styles/about.module';
 
-
+//占卜
+@import './styles/divination';
 
 //地圖
 @import './styles/map';
+
+//烘焙介紹
+@import './styles/baked.module'
 
 
 

@@ -1,0 +1,39 @@
+[
+  {
+    "course_id": 1,
+    "course_name": "咖啡拉花入門班",
+    "course_price": 680,
+    "course_description":
+      "入門咖啡拉花班，開啟你的咖啡藝術之旅！渴望在咖啡的世界中展現獨特的風采嗎？想要掌握咖啡拉花的技巧...",
+    "course_start_date": "2023-07-01",
+    "course_end_date": "2023-07-16",
+    "course_capacity": 10,
+    "course_image": "course_1.png",
+    "course_quantity":1,
+    "course_valid":1
+  },{
+    "course_id": 2,
+    "course_name": "咖啡拉花入門班",
+    "course_description":
+      "入門咖啡拉花班，開啟你的咖啡藝術之旅！渴望在咖啡的世界中展現獨特的風采嗎？想要掌握咖啡拉花的技巧...",
+    "course_price": 980,
+    "course_start_date": "2023-07-01",
+    "course_end_date": "2023-07-16",
+    "course_capacity": 10,
+    "course_image": "course_2.png",
+    "course_quantity":1
+  },
+  {
+    "course_id": 3,
+    "course_name": "咖啡拉花入門班",
+    "course_description":
+    "入門咖啡拉花班，開啟你的咖啡藝術之旅！渴望在咖啡的世界中展現獨特的風采嗎？想要掌握咖啡拉花的技巧...",
+    "course_price": 1280,
+    "course_start_date": "2023-07-01",
+    "course_end_date": "2023-07-16",
+    "course_capacity": 10,
+    "course_image": "course_3.png",
+    "course_quantity":1
+  }
+]
+  

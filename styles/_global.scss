@@ -1,79 +1,89 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Style+Script&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
   box-sizing: border-box;
   // outline: 1px red solid;
-
-// 按鈕圓角邊 button radius
-// $border-radius: 0em;
-// $border-radius-sm: 0em;
-// $border-radius-lg: 0em;
-// $form-select-bg: #F2F3EE;
 }
 
-
+// 全域字形
 body {
-  font-family: 'Noto Sans','Noto Sans TC Regular', Helvetica, Arial, 'PingFang TC',
-    '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei', '微軟正黑體',
-    // Cross-platform generic font family (default user interface font)
-    system-ui,
-    // Safari for macOS and iOS (San Francisco)
-    -apple-system,
-    // Windows
-    'Segoe UI',
-    // Android
-    Roboto,
-    // Basic web fallback
-    'Helvetica Neue',
-    Arial,
-    // Linux
-    'Noto Sans',
-    'Liberation Sans',
-    // Sans serif fallback
-    sans-serif,
-    // Emoji fonts
-    'Apple Color Emoji',
+  font-family: 'Noto Sans', 'Noto Sans TC Regular', Helvetica, Arial,
+    'PingFang TC', '苹方-繁', 'Heiti TC', '黑體-繁', 'Microsoft JhengHei',
+    '微軟正黑體', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   letter-spacing: $letter-spacing;
   color: $color__font;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity));
 }
+// 讓footer保持在最底下
+// #main-content {
+//   display: flex;
+//   flex-direction: column;
+//   min-height: 100vh;
+// }
 
+// 背景為深藍色
 .bg-primary-color {
   background-color: $color--primary;
 }
+// footer日期顏色
 .footer-p-color {
   color: $color--gray3;
 }
-.btn-outline-light{
+
+// footer 尺寸
+.ed-resize {
+  max-width: 1600px;
+  @media screen and (max-width: 1440px) {
+    max-width: 1200px;
+    margin-left: 150px;
+  }
+  @media screen and (max-width: $lg) {
+    max-width: 390px;
+    margin-left: 0px;
+  }
+}
+
+// TOP按鈕外框
+.btn-outline-light {
   color: $color--gray3;
   border-color: $color--gray3;
   border-radius: 0;
 }
-
-header, nav {
+// 滾動漸變效果
+header,
+nav {
   transition: opacity 0.5s;
   opacity: 1;
 }
-
 .fade-out {
   opacity: 0.9;
 }
 
+// 會員按鈕邊界取消
+.ed-icon-user-button {
+  background-color: $color--background;
+  border: none;
+}
+// 物件權限設定
+
+// 強迫取消bootstrap的樣式
 a {
   text-decoration: none !important;
 }
-
-.breadcrumb{
-  a{
-    color: $color--gray4;
-  }
-}
-
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+.breadcrumb {
+  a {
+    color: $color--gray4;
+  }
 }
 
 h1,
@@ -96,10 +106,9 @@ button {
   display: none !important;
 }
 
-
 @mixin heading {
   font-style: normal;
-  font-family: "Inter", "Noto Sans TC", sans-serif;
+  font-family: 'Inter', 'Noto Sans TC', sans-serif;
   letter-spacing: $letter-spacing;
   // line-height: 2.5rem;
   color: $color__font;
@@ -107,7 +116,7 @@ button {
 
 @mixin text {
   font-style: normal;
-  font-family: "Inter", "Noto Sans TC", sans-serif;
+  font-family: 'Inter', 'Noto Sans TC', sans-serif;
   letter-spacing: $letter-spacing;
   line-height: 140%;
   color: $color__font;
@@ -133,7 +142,7 @@ h3 {
 
 h4 {
   @include heading;
-  font-weight: 500;
+  // font-weight: 500;
   font-size: 1.5rem;
 }
 
@@ -317,7 +326,7 @@ h6 {
   width: max-content;
   height: max-content;
 
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: 1.5rem;
 
@@ -397,7 +406,7 @@ h6 {
     margin: 0;
   }
 
-  &[type="number"] {
+  &[type='number'] {
     -moz-appearance: textfield;
   }
 }

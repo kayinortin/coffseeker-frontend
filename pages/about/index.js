@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import style from '../../styles/_about.module.scss'
+import ContactUs from '@/components/about/send-message'
+// import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 
 export default function About() {
   return (
@@ -19,7 +21,7 @@ export default function About() {
                 </li>
                 <li className="breadcrumb-item list-inline-item">
                   <Link
-                    href="/about"
+                    href="./about"
                     className="breadcrumb-item text-decoration-none link ms-2"
                   >
                     關於我們
@@ -107,6 +109,61 @@ export default function About() {
               <p className="lh-lg">
                 選擇合適的咖啡器具對於沖泡出美味的咖啡至關重要。我們提供各種專業的咖啡器具，從傳統的手沖壺到現代的咖啡機，每一款都是由咖啡愛好者所推薦。我們將為您介紹不同器具的特點和使用方法，讓您能夠輕鬆掌握沖泡的技巧。無論您是喜歡傳統方式還是追求便捷，我們都有合適您的選擇。
               </p>
+            </div>
+          </div>
+          <ContactUs />
+
+          <div className="container d-sm-none">
+            <div className="row mb-3">
+              <label htmlFor="message" className="col-sm-2 col-form-label">
+                訊息:
+              </label>
+              <div className="col-sm-10">
+                <textarea
+                  className="form-control"
+                  name="message"
+                  id="message"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="name" className="col-sm-2 col-form-label">
+                姓名:
+              </label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  id="name"
+                />
+              </div>
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="email" className="col-sm-2 col-form-label">
+                Email:
+              </label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  id="email"
+                />
+              </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col-sm-12 text-center">
+                <button
+                  type="submit"
+                  name="submit"
+                  // value="NOW, I SEND THANKS!"
+                  className="btn btn-dark"
+                >
+                  送出
+                </button>
+              </div>
             </div>
           </div>
         </div>

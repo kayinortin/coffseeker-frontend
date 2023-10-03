@@ -1,12 +1,15 @@
 
 $color--secondary: #FF9B1A;
 $color--card-background:#CBB48B;
+$color--primary: #1c262c;
+$color--background: #f2f2f2;
+$color--hover: #364047;
 
-
-
-.course-list{
-    // margin-top: ;
+.course-bg{
+  background-color: $color--background;
 }
+
+
 //---------------------Card
 .course-li {
     list-style: none; 
@@ -14,7 +17,7 @@ $color--card-background:#CBB48B;
     padding: 0;
   }
 
-  .img-bg{
+.img-bg{
     background-color: $color--card-background;
 }
 .price{
@@ -35,4 +38,24 @@ $color--card-background:#CBB48B;
     background-color: $color--secondary;
   }
 
- 
+  .btn-check{
+    background-color: $color--primary;
+  }
+
+  
+    .active{
+      outline: $color--hover;
+      background-color: $color--primary;
+      color:white;
+    }
+  
+
+ .course-intro{
+  li{
+    list-style-type: disc;
+ }
+}
+
+.card {
+  width: 288px;
+}

@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
+import MemSideBar from '@/components/member/MemSideBar'
 import InfoChangeForm from '@/components/member/InfoChangeForm'
 export default function info() {
   return (
     <>
-      <div className={'background'}>
+      <section className={'background'}>
         <div className={'container'}>
           {/* 麵包屑 */}
           <div className={'row'}>
@@ -15,15 +16,29 @@ export default function info() {
                     首頁
                   </Link>
                 </li>
-                <li className={'breadcrumb-item'}>會員註冊</li>
+                <li className={'breadcrumb-item'}>
+                  <Link href="/" className={'link'}>
+                    會員中心
+                  </Link>
+                </li>
+                <li className={'breadcrumb-item'}>會員資料檢視</li>
               </ol>
             </nav>
           </div>
-        </div>
-        {/* 麵包屑結束 */}
+          {/* 麵包屑結束 */}
 
-        <InfoChangeForm />
-      </div>
+          <div className={'row'}>
+            <div className={'col-3'}>
+              <MemSideBar />
+            </div>
+            <div className={'col-9 mb-5'}>
+              <div className={'px-5'}>
+                <InfoChangeForm />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
