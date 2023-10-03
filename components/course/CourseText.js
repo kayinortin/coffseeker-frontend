@@ -22,7 +22,7 @@ export default function CourseText() {
   return (
     <div className="m-2 col-10 col-sm-6 mx-auto ms-sm-5">
       <div className="d-none d-sm-block">
-        <BreadCrumbs />
+        <BreadCrumbs name={name} />
       </div>
 
       <h3>{name}</h3>
