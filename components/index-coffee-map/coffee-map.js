@@ -87,28 +87,38 @@ export default function CoffeeMap() {
 
   useEffect(() => {
     AOS.init({
-      duration: 3000, // 你可以根據需要調整動畫時間
+      duration: 1000,
     })
   }, [])
 
   return (
     <>
       <div className="container ed-index-origin">
-        <div className="origin-wrapper">
+        <div className="origin-wrapper d-block">
           <div className="line" data-aos="fade-down" data-aos-delay="200"></div>
-          <div className="hot-product" data-aos="fade-down" data-aos-delay="700">咖啡與它們的產地</div>
-          <div className="line" data-aos="fade-down" data-aos-delay="200"></div>
+          <div
+            className="hot-product"
+            data-aos="fade-down"
+            data-aos-delay="500"
+          >
+            咖啡與它們的產地
+          </div>
+          <div className="line" data-aos="fade-down" data-aos-delay="300"></div>
         </div>
       </div>
       <div className="d-flex flex-column flex-md-row my-md-5 my-3 justify-content-md-center ei-mobile-map">
-        <div className="d-flex flex-column col-md-4" data-aos="fade-down" data-aos-delay="1200">
+        <div
+          className="d-flex flex-column col-md-4"
+          data-aos="fade-down"
+          data-aos-delay="600"
+        >
           <div className="d-flex justify-content-center">
             <Image
               className="d-block ed-orgin-img"
               src="/index-image/origin.png"
               alt="COFFSEEKER"
-              width={400}
-              height={80}
+              width={300}
+              height={60}
               lazy="true"
             />
           </div>
@@ -120,7 +130,11 @@ export default function CoffeeMap() {
             }}
           ></h4>
         </div>
-        <div className="position-relative">
+        <div
+          className="position-relative"
+          data-aos="fade-down"
+          data-aos-delay="900"
+        >
           <Image
             className="img-fluid d-block"
             src="/index-image/world-map.svg"
@@ -227,7 +241,11 @@ export default function CoffeeMap() {
       {/* 手機板產地圖 */}
       <div className="d-flex flex-column flex-md-row my-md-5 my-3 justify-content-md-center d-lg-none">
         <div className="d-flex flex-column col-md-4">
-          <div className="d-flex justify-content-center" data-aos="fade-down" data-aos-delay="1200">
+          <div
+            className="d-flex justify-content-center"
+            data-aos="fade-down"
+            data-aos-delay="300"
+          >
             <Image
               className="d-block ed-orgin-img"
               src="/index-image/origin.png"
@@ -239,14 +257,19 @@ export default function CoffeeMap() {
           </div>
           <h4
             className="ed-orgin-text mt-md-5 mt-3"
-            data-aos="fade-down" data-aos-delay="1200"
+            data-aos="fade-down"
+            data-aos-delay="600"
             dangerouslySetInnerHTML={{
               __html:
                 selectedData && selectedData.content.replace(/\n/g, '<br />'),
             }}
           ></h4>
         </div>
-        <div className="position-relative" data-aos="fade-down" data-aos-delay="1400">
+        <div
+          className="position-relative"
+          data-aos="fade-down"
+          data-aos-delay="300"
+        >
           <Image
             className="img-fluid d-block"
             src="/index-image/world-map.svg"
