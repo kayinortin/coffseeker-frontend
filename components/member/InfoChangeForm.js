@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { FaAngleDown } from 'react-icons/fa6'
 import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default function InfoChangeForm() {
   const { userData, setUserData } = useUser()
@@ -10,6 +12,7 @@ export default function InfoChangeForm() {
 
   const storedUserData = Cookies.get('userInfo')
 
+  const [userId, setId] = useState('')
   const [userEmail, setMail] = useState('')
   const [userName, setName] = useState('')
   const [userPhone, setPhone] = useState('')
@@ -17,6 +20,7 @@ export default function InfoChangeForm() {
   const [birthdayYear, setBirthdayYear] = useState('')
   const [birthdayMonth, setBirthdayMonth] = useState('')
   const [birthdayData, setBirthdayDate] = useState('')
+  const [checkChange, setChange] = useState('')
 
   useEffect(() => {
     if (storedUserData) {
@@ -25,6 +29,7 @@ export default function InfoChangeForm() {
       const userData = JSON.parse(storedUserData)
       // console.log('測試抓cookie資料', userData)
       setUserData(userData)
+      setId(userData.id)
       setMail(userData.email)
       setName(userData.username)
       setPhone(userData.phone)
@@ -160,13 +165,31 @@ export default function InfoChangeForm() {
     },
   ]
 
-  const handleUserInfoChange = () => {
+  const handleUserInfoChange = async () => {
     const formData = {
+      id: userId,
       email: userEmail,
       username: userName,
       gender: userGender,
       phone: userPhone,
       birthday: birthdayYear + '-' + birthdayMonth + '-' + birthdayData,
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:3005/api/users/${userId}`,
+        formData
+      )
+      console.log(response)
+      Swal.fire({
+        title: '修改資料成功',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      Cookies.set('userInfo', JSON.stringify(formData))
+    } catch (error) {
+      console.error('錯誤:', error)
     }
   }
 
@@ -181,7 +204,7 @@ export default function InfoChangeForm() {
             {inputs.map((input) => {
               return (
                 <div className="mb-3" key={input.id}>
-                  <label htmlForId={input.htmlForId} className={'form-label'}>
+                  <label htmlFor={input.htmlForId} className={'form-label'}>
                     {input.title}
                   </label>
                   <input
@@ -209,7 +232,7 @@ export default function InfoChangeForm() {
             {selection.map((select) => {
               return (
                 <div className={select.class} key={select.id}>
-                  <label htmlForId={select.htmlForId} className={'form-label'}>
+                  <label htmlFor={select.htmlForId} className={'form-label'}>
                     {select.title}
                   </label>
                   <select
@@ -239,10 +262,7 @@ export default function InfoChangeForm() {
               {birthday.map((select) => {
                 return (
                   <div className={select.class} key={select.id}>
-                    <label
-                      htmlForId={select.htmlForId}
-                      className={'form-label'}
-                    >
+                    <label htmlFor={select.htmlForId} className={'form-label'}>
                       {select.title}
                     </label>
                     <select
@@ -268,11 +288,11 @@ export default function InfoChangeForm() {
             </div>
           </div>
         </div>
-
         <div className={'container allow-btn p-0 mt-4'}>
           <button
             type="button"
-            className={'btn-login text-center border-0 mb-5 agree'}
+            className={'btn-login text-center border-0 mb-3 agree'}
+            onClick={handleUserInfoChange}
           >
             <span>確認並送出</span>
           </button>
