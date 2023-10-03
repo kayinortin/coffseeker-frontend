@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Explore from '../components/index/explore'
 import Hot from '../components/product/index'

@@ -4,17 +4,11 @@ import AOS from 'aos'
 
 export default function Course() {
   // 檢查是否為手機介面
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 992)
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 992)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  }
 
   // 課程按鈕動畫
   useEffect(() => {
@@ -59,7 +53,7 @@ export default function Course() {
         <a className="ed-zindex" href="./course">
           <div
             className="gallery flex-column"
-            data-aos={isMobile ? 'fade-up' : 'fade-right'}
+            data-aos={isMobile() ? 'fade-up' : 'fade-right'}
             data-aos-delay={200}
           >
             <img
@@ -153,7 +147,7 @@ export default function Course() {
             <div className="container d-flex flex-column">
               <div
                 className="my-5 my-md-2 d-md-flex justify-content-center align-items-center"
-                data-aos={isMobile ? 'fade-up' : 'fade-left'}
+                data-aos={isMobile() ? 'fade-up' : 'fade-left'}
                 data-aos-delay={300}
               >
                 <Image
@@ -162,10 +156,10 @@ export default function Course() {
                   alt=""
                   width={150}
                   height={150}
-                  data-aos={isMobile ? 'fade-up' : 'fade-left'}
+                  data-aos={isMobile() ? 'fade-up' : 'fade-left'}
                   data-aos-delay={300}
                 />
-                <a href="/course/category/1">
+                <a href="./course/category/1">
                   <button id="btn1" className="btn my-2 btn-color-1 me-md-3">
                     拉花 <br /> 課程
                   </button>
@@ -180,7 +174,7 @@ export default function Course() {
               </div>
               <div
                 className="my-3 my-md-5 d-md-flex justify-content-center align-items-center"
-                data-aos={isMobile ? 'fade-up' : 'fade-left'}
+                data-aos={isMobile() ? 'fade-up' : 'fade-left'}
                 data-aos-delay={600}
               >
                 <Image
@@ -189,10 +183,10 @@ export default function Course() {
                   alt=""
                   width={150}
                   height={150}
-                  data-aos={isMobile ? 'fade-up' : 'fade-left'}
+                  data-aos={isMobile() ? 'fade-up' : 'fade-left'}
                   data-aos-delay={600}
                 />
-                <a href="/course/category/1">
+                <a href="./course/category/1">
                   <button id="btn2" className="btn my-2 btn-color-2 me-md-3">
                     烘豆 <br /> 課程
                   </button>
@@ -207,7 +201,7 @@ export default function Course() {
               </div>
               <div
                 className="my-5 my-md-3 d-md-flex justify-content-center align-items-center"
-                data-aos={isMobile ? 'fade-up' : 'fade-left'}
+                data-aos={isMobile() ? 'fade-up' : 'fade-left'}
                 data-aos-delay={900}
               >
                 <Image
@@ -216,10 +210,10 @@ export default function Course() {
                   alt=""
                   width={150}
                   height={150}
-                  data-aos={isMobile ? 'fade-up' : 'fade-left'}
+                  data-aos={isMobile() ? 'fade-up' : 'fade-left'}
                   data-aos-delay={900}
                 />
-                <a href="/course/category/1">
+                <a href="./course/category/1">
                   <button id="btn3" className="btn my-2 btn-color-3 me-md-3">
                     手沖 <br /> 課程
                   </button>

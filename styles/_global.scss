@@ -452,9 +452,28 @@ h6 {
       height: 50%;
     }
     @media screen and (max-width: $sm) {
-      width: 60%;
+      left: 230px;
+      width: 40%;
       height: 60%;
     }
+  }
+}
+
+.ed-icon-special {
+  fill: white;
+  width: 150%;
+  position: absolute;
+  left: 19%;
+  top: 53%;
+  @media screen and (max-width: 1440px) {
+    left: 18%;
+    top: 53%;
+    width: 150%;
+  }
+  @media screen and (max-width: $sm) {
+    left: 45px;
+    top: 480px;
+    width: 200%;
   }
 }
 
@@ -591,10 +610,12 @@ h6 {
 }
 
 @keyframes eypENqKG5ne2_c_o {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -604,10 +625,12 @@ h6 {
   animation-delay: 500ms;
 }
 @keyframes eypENqKG5ne3_c_o {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -617,10 +640,12 @@ h6 {
   animation-delay: 1000ms;
 }
 @keyframes eypENqKG5ne4_c_o {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -630,10 +655,12 @@ h6 {
   animation-delay: 1500ms;
 }
 @keyframes eypENqKG5ne5_c_o {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -643,10 +670,12 @@ h6 {
   animation-delay: 2000ms;
 }
 @keyframes eypENqKG5ne6_c_o {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -656,14 +685,15 @@ h6 {
   animation-delay: 2500ms;
 }
 @keyframes eypENqKG5ne7_c_o {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 1;
   }
 }
-
 
 #eypENqKG5ne1 {
   animation: eypENqKG5ne1_c_o 6000ms forwards;
@@ -740,4 +770,21 @@ h6 {
 
 .swal2-popup {
   border-radius: 0 !important;
+}
+
+#eypENqKG5ne8 {
+  opacity: 0;
+  animation: fadeOutFromLeftToRight 1.5s forwards;
+  animation-delay: 3000ms;
+}
+
+@keyframes fadeOutFromLeftToRight {
+  0% {
+    opacity: 0;
+    clip-path: polygon(0 0, 0% 0, 0% 100%, 0 100%);
+  }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
 }

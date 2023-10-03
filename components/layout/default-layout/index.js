@@ -7,8 +7,6 @@ import HeaderMobile from './Header-mobile'
 import Footer from './footer'
 
 import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
-import axios from 'axios'
-import Swal from 'sweetalert2'
 import { useUser } from '@/context/UserInfo'
 
 // Navbar 電腦版資料
