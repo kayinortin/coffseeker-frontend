@@ -130,7 +130,7 @@ $color--black: #000000;
 
 // [nid].js頁面
 .ei-container-nid{
-  max-width: 90%;
+  max-width: 80%;
 }
 .news-detail {
   // width: 90%;
@@ -151,6 +151,7 @@ $color--black: #000000;
 @media (max-width: 431px) {
   .ei-container-nid{
     padding: 0;
+    max-width: 90% !important;
     
   }
   .news-detail {

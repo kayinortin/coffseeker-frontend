@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import NewsDatabaseFetch from './news-database-fetch'
+import NewsDatabaseFetch from './NewstDataFetcher'
 import styles from '../../styles/_news.module.scss'
 import Pagination from '../news/pagination'
 
