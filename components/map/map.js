@@ -16,7 +16,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 //icon import
-import { FaMapMarkerAlt, FaGlobeAmericas } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaGlobeAmericas, FaCity } from 'react-icons/fa'
 import { IoIosWifi } from 'react-icons/io'
 import { LiaChairSolid } from 'react-icons/lia'
 import { IoEarOutline } from 'react-icons/io5'
@@ -72,19 +72,125 @@ const activeCafeMarker = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 })
-
 export default function Map() {
   //預設位置
   const defaultLocation = {
     latitude: 24.985415107645835,
     longitude: 121.22215559142012,
   }
+  //縣市經緯度
+  const cityData = [
+    {
+      title: '台北',
+      city: 'taipei',
+      latitude: '25.040184214933014',
+      longitude: '121.54353515714165',
+    },
+    {
+      title: '基隆',
+      city: 'keelung',
+      latitude: '25.130044772524375',
+      longitude: '121.74393340178702',
+    },
+    {
+      title: '桃園',
+      city: 'taoyuan',
+      latitude: '24.99262484939432',
+      longitude: '121.30151014814116',
+    },
+    {
+      title: '新竹',
+      city: 'hsinchu',
+      latitude: '24.80650828794589',
+      longitude: '120.96857900132484',
+    },
+    {
+      title: '苗栗',
+      city: 'miaoli',
+      latitude: '24.5643355614104',
+      longitude: '120.82065540475867',
+    },
+    {
+      title: '台中',
+      city: 'taichung',
+      latitude: '24.149408477164396',
+      longitude: '120.66474765872205',
+    },
+    {
+      title: '南投',
+      city: 'nantou',
+      latitude: '23.97798219670314',
+      longitude: '120.68411494973638',
+    },
+    {
+      title: '彰化',
+      city: 'changhua',
+      latitude: '24.07859709640672',
+      longitude: '120.54037652645667',
+    },
+    {
+      title: '雲林',
+      city: 'yunlin',
+      latitude: '23.710222543551886',
+      longitude: '120.54211815343298',
+    },
+    {
+      title: '嘉義',
+      city: 'chiayi',
+      latitude: '23.481614353403845',
+      longitude: '120.45405498545355',
+    },
+    {
+      title: '台南',
+      city: 'tainan',
+      latitude: '22.992593938243726',
+      longitude: '120.20499449471403',
+    },
+    {
+      title: '高雄',
+      city: 'kaohsiung',
+      latitude: '22.63155407266006',
+      longitude: '120.30191720502906',
+    },
+    {
+      title: '屏東',
+      city: 'pingtung',
+      latitude: '22.674766982472086',
+      longitude: '120.48971312136167',
+    },
+    {
+      title: '宜蘭',
+      city: 'yilan',
+      latitude: '24.75429428723912',
+      longitude: '121.7519009319021',
+    },
+    {
+      title: '花蓮',
+      city: 'hualien',
+      latitude: '23.978023503835665',
+      longitude: '121.60851562963362',
+    },
+    {
+      title: '台東',
+      city: 'taitung',
+      latitude: '22.761462552832683',
+      longitude: '121.14389869046911',
+    },
+    {
+      title: '澎湖',
+      city: 'penghu',
+      latitude: '23.566357398577793',
+      longitude: '119.56531305026361',
+    },
+  ]
+  const [selectedCity, setSelectedCity] = useState(null)
   //定位位置
   const [position, setPosition] = useState(null)
   //定位啟動
   const [triggerLocate, setTriggerLocate] = useState(false)
   //咖啡廳清單資料
   const [cafes, setCafes] = useState([])
+  //所有咖啡廳
   const [allCafeData, setAllCafeData] = useState([])
 
   useEffect(() => {
@@ -208,7 +314,7 @@ export default function Map() {
     const map = useMapEvents({
       locationfound(e) {
         setPosition(e.latlng)
-        // console.log(e)
+        setSelectedCity(null)
         map.flyTo(e.latlng, map.getZoom())
       },
     })
@@ -219,28 +325,43 @@ export default function Map() {
       }
     }, [triggerLocate])
 
-    return position === null ? (
-      <Marker
-        position={[defaultLocation.latitude, defaultLocation.longitude]}
-        icon={locationMarker}
-      >
-        <Popup>
-          預設地點 <br /> 桃園基督學院
-        </Popup>
-      </Marker>
-    ) : (
+    return position === null ? null : (
       <Marker position={position} icon={locationMarker}>
         <Popup>You are here</Popup>
       </Marker>
     )
   }
 
+  //生成城市Mark
+  function CityMarker() {
+    const map = useMap()
+    if (position === null && selectedCity !== null) {
+      setTimeout(() => {
+        map.flyTo(
+          [selectedCity.latitude, selectedCity.longitude],
+          map.getZoom()
+        )
+      }, 200)
+      return (
+        <Marker
+          key={'selectedCity'}
+          position={[selectedCity.latitude, selectedCity.longitude]}
+          icon={locationMarker}
+          zIndexOffset={2}
+        >
+          <Tooltip direction="top" offset={[0, -40]} opacity={1} permanent>
+            {selectedCity.title}
+          </Tooltip>
+        </Marker>
+      )
+    }
+  }
   //生成active咖啡Mark
   function ActiveCafeMarker({ cafeData }) {
     const map = useMap()
     if (showCafeInfo) {
       setTimeout(() => {
-        map.flyTo([cafeData.latitude, cafeData.longitude], map.getZoom())
+        map.flyTo([cafeData.latitude, cafeData.longitude])
       }, 400)
       return (
         <Marker
@@ -464,9 +585,18 @@ export default function Map() {
   function handelChangeCafe(cafe) {
     setShowCafeInfo(true)
     setCafeData(cafe)
+    setSelectedCity(null)
   }
-  //切換Aside顯示事件
 
+  //切換城市事件
+  function HandleChangeCity(e) {
+    setPosition(null)
+    setShowCafeInfo(false)
+    let newData = _.filter(allCafeData, { city: e.target.value })
+    setCafes(newData)
+    let targetCity = _.find(cityData, { city: e.target.value })
+    setSelectedCity(targetCity)
+  }
   //輔助用函式(不生成物件)==================================
   //判斷打勾叉叉icon
   function checkValue(value) {
@@ -485,6 +615,7 @@ export default function Map() {
   function LocateBtn() {
     setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
     setShowCafeInfo(false)
+    setSelectedCity(null)
   }
   //整體return
   return (
@@ -505,10 +636,23 @@ export default function Map() {
       <div className="mapArea">
         <div className="mapControl">
           <div className="rangeSelect me-3">
-            <select>
-              <option value="">顯示範圍</option>
-              <option value="">顯示城市</option>
+            <span>
+              <FaCity />
+            </span>
+            <select defaultValue={''} onChange={(e) => HandleChangeCity(e)}>
+              <option disabled value="">
+                選擇城市
+              </option>
+              {cityData.map((city, i) => (
+                <option key={i} value={city.city}>
+                  {city.title}
+                </option>
+              ))}
             </select>
+          </div>
+
+          <div className="rangeSelect me-3">
+            <span>顯示範圍</span>
             <select>
               <option value="">附近1000公尺</option>
               <option value="">附近500公尺</option>
@@ -540,6 +684,7 @@ export default function Map() {
           <CafesMarker cafes={markData} />
           <ActiveCafeMarker cafeData={cafeData} />
           <LocationMarker />
+          <CityMarker />
         </MapContainer>
       </div>
     </>

@@ -27,7 +27,10 @@
   .rangeSelect {
     border: 2px solid $color--primary;
     background-color: $color--primary;
-
+    span{
+      color: #ffffff;
+      padding-inline: 10px;
+    }
     select {
       padding-inline: 10px;
       height: 100%;
