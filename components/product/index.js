@@ -63,7 +63,7 @@ export default function PopularProducts() {
             {/* 區塊內容 */}
             <div className="container d-flex flex-column">
               <div
-                className="my-5 my-md-5 d-md-flex justify-content-center align-items-center"
+                className="mt-md-5 mb-md-0 my-5 d-md-flex justify-content-center align-items-center"
                 data-aos={isMobile ? 'fade-up' : 'fade-right'}
                 data-aos-delay={300}
               >
