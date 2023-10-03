@@ -1,0 +1,145 @@
+.ed-border-card01 {
+  border: 6px solid #dfd0af;
+}
+.ed-border-card02 {
+  border: 6px solid #dfd0af;
+}
+.ed-border-card03 {
+  border: 6px solid #dfd0af;
+}
+
+.ed-border-none {
+  border: none;
+}
+
+.card {
+  z-index: 10;
+}
+
+.ed-card-body-popular {
+  border: none;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity));
+}
+
+.ed-card-body {
+  border: none;
+  padding: 10px 0  0 0;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity));
+}
+
+.ed-card-title {
+  height: 70px;
+  font-size: 16px;
+  line-height: normal;
+  font-weight: bold;
+  color: $color--primary;
+  @media screen and (max-width: 1440px) {
+    line-height: 20px;
+  }
+  @media screen and (max-width: $lg) {
+  }
+}
+
+.ed-card-origin-price {
+  font-size: 12px;
+  color: $color--gray4;
+  text-decoration: line-through;
+}
+
+.ed-card-price {
+  font-weight: bold;
+  color: $color--secondary;
+}
+
+.ed-icon-size {
+  font-size: 20px;
+  &:hover {
+    color: $color--secondary;
+  }
+  &.true {
+    color: $color--secondary;
+  }
+}
+
+.popular-left {
+  width: 50%;
+  z-index: 5;
+  @media screen and (max-width: 1440px) {
+    width: 50%;
+  }
+  @media screen and (max-width: $lg) {
+    width: 100%;
+  }
+}
+.popular-right {
+  width: 50%;
+  z-index: 5;
+  @media screen and (max-width: 1440px) {
+    width: 45%;
+  }
+  @media screen and (max-width: $lg) {
+    width: 100%;
+  }
+    
+  }
+
+
+.ed-popular-marginTop {
+  margin-top: 30px;
+  @media screen and (max-width: 1440px) {
+    margin-top: 90px;
+  }
+  @media screen and (max-width: $lg) {
+    margin-top: 30px;
+  }
+}
+
+.ed-mt-1440{
+  @media screen and (max-width: 1440px) {
+    margin-top: 30px;
+  }
+  }
+
+.ed-popular-padding {
+  padding: 20px 45px 0 45px;
+  @media screen and (max-width: 1440px) {
+    padding: 60px 60px 0 60px;
+  }
+  @media screen and (max-width: $lg) {
+    margin-top: 80px;
+    padding: 0px;
+  }
+}
+
+.ed-index-left{
+    left:0px
+}
+
+.ed-no-product{
+    padding-top: 300px;
+}
+
+.ed-no-product-arrow{
+    position: relative;
+    top: 260px;
+    left:250px;
+    width: 100px;
+    rotate: 180deg;
+}
+
+.ed-h6-resize-margin{
+    margin-left: 15px;
+}
+
+.ed-addCart{
+   border: none;
+    width: 140px;
+    height: 30px;
+    color: white;
+    background-color: $color--secondary;
+    &:hover{
+        background-color: $color--primary;
+    }
+}

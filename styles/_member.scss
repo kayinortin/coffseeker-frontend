@@ -21,7 +21,8 @@
 }
 
 .background {
-  background: #f2f3ee;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity))
 }
 
 .sidebar {
@@ -90,6 +91,9 @@
   }
   .form-control.disable{
     border: 0;
+  }
+  @media screen and (max-width: 768px) {
+    max-width: 650px;
   }
 }
 // cursor: pointer;

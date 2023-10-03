@@ -117,9 +117,11 @@ $fw-black:900;
             }
         }
     }
+
     table{
         margin-bottom: 2rem;
     }
+
     // 咖啡商品
     table.products{
         padding-block: 1rem;
@@ -154,6 +156,7 @@ $fw-black:900;
                     padding-inline: .5rem;
                     text-align: center;
                 }
+                
                 td.imgContainer{
                     width: 160px;
                     height: 160px;
@@ -166,19 +169,24 @@ $fw-black:900;
                 td.quantity {
                     div.btn-group{
                         button {
-                            width: 40px;
+                            width: 2.5rem;
+                            height: 2.5rem;
                             color: $color--primary;
-                            border: 1px solid $color--primary;
                             background-color: $color--background;
+                            border: 1px solid $color--primary;
                         }
-                        button.quantityAdd,button.quantityMinus{
-                            &:hover {
+                        button.quantityMinus, button.quantityAdd{
+                            &:hover,&:active {
+                                color:$color--white;
                                 background-color: $color--secondary;
+                                border: px solid $color--primary;
+    
                               }
                         }
+                       
                         input.forminput{
-                            width: 60px;
-                            height: 40px;
+                            width: 3.5rem;
+                            height: 2.5rem;
                             border-block: 1px solid $color--primary;
                             text-align: center;
                             background-color: $color--background;
@@ -190,16 +198,20 @@ $fw-black:900;
                     text-align: center;
                     vertical-align: middle;
                     button.deleteButton{
-                        width: 40px;
-                        height: 40px;
+                        width: 2.5rem;
+                        height: 2.5rem;
                         padding: 0;
+
                         &:hover,&:active{
                             border: 1px solid $color--primary;
                             background-color: $color--secondary;
+                            color:$color--white;
                         }
+
                         .trash{
                             width: 1.5rem;
                             height: 1.5rem;
+                          
                         }
                     }
 
@@ -278,12 +290,14 @@ $fw-black:900;
                     text-align: center;
                     vertical-align: middle;
                     button.deleteButton{
-                        width: 40px;
-                        height: 40px;
+                        width: 2.5rem;
+                        height: 2.5rem;
                         padding: 0;
+                        
                         &:hover,&:active{
                             border: 1px solid $color--primary;
                             background-color: $color--secondary;
+                            color:$color--white;
                         }
                         .trash{
                             width: 1.5rem;
@@ -314,10 +328,13 @@ $fw-black:900;
         }
     }
 
+    //選擇與合計
     div.selectItems{
         gap: 2rem;
 
+        //選擇運送與付款方式
         table.selectContainer{
+            box-sizing: border-box;
             width: 100%;
             color: $color--primary;
             
@@ -343,25 +360,25 @@ $fw-black:900;
             tbody.selectItem{
                 border: 1px solid $color--primary;
                 
-    
                 tr{
-                    // border: 1px solid red;
-                    height: 100px;
                     display: flex;
                     align-items: center;
                     
                     td.selectContainer{
-                        padding: 1rem;
+                        padding-block: .8rem;
+                        padding-inline: 1rem;
                         
                         label.selecTitle{
-                            // border: 1px solid blue;
                             padding-bottom: .5rem;
-                            
-                            
                         }
+
                         select.form-select{
+                            
                             border: 1px solid $color--primary;
-    
+                            // &:hover{
+                            //     border: 1px solid $color--secondary;
+                            //     color: $color--secondary;
+                            // }
                         }
                         
                     }
@@ -369,7 +386,8 @@ $fw-black:900;
                
             }
         }
-    
+        
+        //付款資訊
         table.paymentContainer{
             width: 100%;
             color: $color--primary;
@@ -396,9 +414,12 @@ $fw-black:900;
             tbody.paymentItem{
                 border: 1px solid $color--primary;
     
-                tr{
-                    td{
+                tr{ 
     
+                    td{
+                        
+                        
+
                         button.goCheckout{
                             width: 100%;
                             background-color: $color--secondary;
@@ -409,10 +430,14 @@ $fw-black:900;
                                 background-color: $color--primary 
                             }
                         }
+
+                        
+                        
                     }
                     
                     td.selectContainer{
-                        padding: 1rem;
+                        padding-block: .8rem;
+                        padding-inline: 1rem;
                         
                         div.label-item{
                             display: flex;
@@ -420,7 +445,13 @@ $fw-black:900;
                             align-items: center;
                         
                         }
+                        select.form-select{
+                            width: 60%;
+                            border: 1px solid $color--primary;
+    
+                        }
                     }
+
                     
                 }
             }

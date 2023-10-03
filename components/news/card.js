@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import NewsDatabaseFetch from './news-database-fetch'
 import styles from '../../styles/_news.module.scss'
@@ -8,7 +7,6 @@ import Pagination from '../news/pagination'
 export default function Card() {
   const [data, setData] = useState(null)
 
-  // onDataFetched 函數用於將消息數據設置到 data 狀態中
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
   }

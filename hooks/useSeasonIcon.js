@@ -8,9 +8,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/1.png',
       wrapper: 'http://localhost:3000/season/wrap1.png',
       otherCover: 'http://localhost:3000/season/1-sm.png',
-      reveal: '東亞的神秘面紗',
+      reveal: '神秘面紗 ． 日曬',
       content:
-        '新年新起點，用東亞日曬的果香喚醒你的感官，揭開全新的一年的序幕。',
+        '新年新起點，用東亞日曬的果香，喚醒你的感官，揭開全新的一年的序幕。',
     },
     {
       titleMonth: 'February 二月',
@@ -18,8 +18,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/2.png',
       wrapper: 'http://localhost:3000/season/wrap2.png',
       otherCover: 'http://localhost:3000/season/2-sm.png',
-      reveal: '肯亞的一抹陽光',
-      content: '冬天裡的一抹陽光，肯亞水洗豆的酸甜平衡，為你送上溫暖的擁抱。',
+      reveal: '一抹陽光 ． 水洗',
+      content:
+        '冬日的霜冷和沉寂，在肯亞水洗豆的酸甜平衡中融化，陽光穿透雲層，為你送上溫暖的擁抱。',
     },
     {
       titleMonth: 'March 三月',
@@ -27,8 +28,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/3.png',
       wrapper: 'http://localhost:3000/season/wrap3.png',
       otherCover: 'http://localhost:3000/season/3-sm.png',
-      reveal: '會談蘇門答臘',
-      content: '春風中帶著遠方的神秘，蘇門答臘的濕剝香氣，宛如森林中的探險。',
+      reveal: '會談雨林 ． 濕剝',
+      content:
+        '春風中帶著東方的神秘，蘇門答臘的濕剝香氣，深入翠綠的熱帶雨林，探索大自然的奧秘。',
     },
     {
       titleMonth: 'April 四月',
@@ -36,9 +38,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/4.png',
       wrapper: 'http://localhost:3000/season/wrap4.png',
       otherCover: 'http://localhost:3000/season/4-sm.png',
-      reveal: '盧安達的春光故事',
+      reveal: '春光故事 ． 日曬',
       content:
-        '感受盧安達日曬的深沉與複雜，像春天的故事，層次豐富，待你慢慢品味。',
+        '感受盧安達日曬的深邃香味，如同春天的故事，層次豐富，引導你慢慢沉浸品味。',
     },
     {
       titleMonth: 'May 五月',
@@ -46,7 +48,7 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/5.png',
       wrapper: 'http://localhost:3000/season/wrap5.png',
       otherCover: 'http://localhost:3000/season/5-sm.png',
-      reveal: '哥倫比亞春末迎夏',
+      reveal: '春末細雨 ． 水洗',
       content:
         '哥倫比亞的山谷、雨季和陽光，化作每粒水洗豆的醇香，伴你走過春末。',
     },
@@ -56,8 +58,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/6.png',
       wrapper: 'http://localhost:3000/season/wrap6.png',
       otherCover: 'http://localhost:3000/season/6-sm.png',
-      reveal: '巴西夏日的午後狂歡',
-      content: '攜巴西的濕剝風情，舞動夏日的狂歡，讓靈魂乘載南美的熱情活力。',
+      reveal: '激情南美 ． 濕剝',
+      content:
+        '舞動夏日的狂歡，隨著巴西的濕剝咖啡而起，激情四溢的南美，讓靈魂乘載異國的熱情活力。',
     },
     {
       titleMonth: 'July 七月',
@@ -65,9 +68,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/7.png',
       wrapper: 'http://localhost:3000/season/wrap7.png',
       otherCover: 'http://localhost:3000/season/7-sm.png',
-      reveal: '坦尚尼亞日曬豆',
+      reveal: '坦尚尼亞 ． 日曬',
       content:
-        '從乞力馬扎羅的山坡到你的杯中，坦尚尼亞日曬豆，細說著非洲的夏日傳說。',
+        '從乞力馬扎羅的山坡，匯聚非洲的陽光與風情，流入你的杯中，坦尚尼亞日曬豆。',
     },
     {
       titleMonth: 'August 八月',
@@ -75,9 +78,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/8.png',
       wrapper: 'http://localhost:3000/season/wrap8.png',
       otherCover: 'http://localhost:3000/season/8-sm.png',
-      reveal: '暢遊非洲的味蕾之旅',
+      reveal: '非洲心臟 ． 水洗',
       content:
-        '品味布隆迪，就像一次水洗後的清晨沉思，寧靜、純淨，帶著自然的和諧。',
+        '品味布隆迪，就像一次水洗後的清晨沉思，寧靜、純淨，非洲心臟的祕密花園，帶著自然的和諧。',
     },
     {
       titleMonth: 'September 九月',
@@ -85,8 +88,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/9.png',
       wrapper: 'http://localhost:3000/season/wrap9.png',
       otherCover: 'http://localhost:3000/season/9-sm.png',
-      reveal: '秋風伴遊越南濕剝豆',
-      content: '秋天的第一杯，越南濕剝豆帶著珍貴的回憶，溫暖你的每一個清晨。',
+      reveal: '秋意飄揚 ． 濕剝',
+      content:
+        '秋意初露，越南濕剝豆重溫每個美好時刻，甜美的香氣，溫暖你每一個清晨。',
     },
     {
       titleMonth: 'October 十月',
@@ -94,7 +98,7 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/10.jpg',
       wrapper: 'http://localhost:3000/season/wrap10.png',
       otherCover: 'http://localhost:3000/season/10-sm.png',
-      reveal: '金色秋葉尼加拉瓜',
+      reveal: '金色秋葉 ． 日照',
       content: '尼加拉瓜的日照，猶如金色的秋葉，漫舞在十月的微風中，充滿詩意。',
     },
     {
@@ -103,9 +107,9 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/11.png',
       otherCover: 'http://localhost:3000/season/11-sm.png',
       wrapper: 'http://localhost:3000/season/wrap11.png',
-      reveal: '寶石水洗火山贈饋',
+      reveal: '火山贈饋 ． 水洗',
       content:
-        '每顆寶石瓜地馬拉水洗豆，都是火山土壤深處的饋贈，濃烈與細緻組成的冬日暖意。',
+        '每顆寶石瓜地馬拉水洗豆，都是火山土壤深處的饋贈，濃烈與細緻組成的冬日暖意，注入熾熱的暖意。',
     },
     {
       titleMonth: 'December 十二月',
@@ -113,12 +117,11 @@ function useSeasonIcon(monthIndex) {
       cover: 'http://localhost:3000/season/12.png',
       otherCover: 'http://localhost:3000/season/12-sm.png',
       wrapper: 'http://localhost:3000/season/wrap12.png',
-      reveal: '亙古的傳說告別歲末',
+      reveal: '印度亙古 ． 歲末',
       content:
-        '告別的十二月，以印度濕剝咖啡的特色和風味，為今年畫上完美的句號。',
+        '年末的寂靜，印度濕剝譜出悠揚樂曲，回響在心中，為歲末帶來完美與期盼。',
     },
   ]
-  // 首先，我们检查月份索引的有效性
 
   const [iconSrc, setIconSrc] = useState('http://localhost:3000/season/10.jpg')
 
