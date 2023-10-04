@@ -7,7 +7,7 @@ import CourseFetcher from './course-fetch'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-export default function CourseList() {
+export default function CourseList({ pid }) {
   const [data, setData] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const router = useRouter()
@@ -52,7 +52,7 @@ export default function CourseList() {
                       end_date={v.course_end_date}
                       description={v.course_description}
                       image={v.course_image}
-                      id={v.course_id}
+                      id={v.id}
                     />
                   </li>
                 )
@@ -68,7 +68,7 @@ export default function CourseList() {
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
       )}
-      {/*onDataFetched 為第12行定義的 這邊存入onCourseFetched並帶到子元件*/}
+      {/*onDataFetched 為第15行定義的 這邊存入onCourseFetched並帶到子元件*/}
       <CourseFetcher onCourseFetched={onDataFetched} />
     </>
   )
