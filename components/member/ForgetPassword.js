@@ -29,7 +29,6 @@ export default function ForgetPassword() {
   const getOtp = async () => {
     if (delay !== null) {
       setMessage('60s　內無法重新獲得驗證碼')
-      setGotOTP(true)
       return
     }
 
@@ -49,6 +48,7 @@ export default function ForgetPassword() {
       setMessage('驗證碼已寄送到你填寫的Email信箱中')
       setCount(60)
       setDelay(1000)
+      setGotOTP(true)
       // 應該也要設定在這 setGotOTP(true)
     }
   }
@@ -73,8 +73,8 @@ export default function ForgetPassword() {
 
   return gotOTP !== true ? (
     <>
-      <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'form-box border border-dark'}>
+      <div className={'form-box'}>
+        <div className={'border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             忘記密碼
           </div>
@@ -95,22 +95,17 @@ export default function ForgetPassword() {
             <h5>{message}</h5>
           </form>
         </div>
-      </div>
-      <div className={'container d-flex justify-content-center'}>
-        <button
-          className={
-            'btn-login text-center allow-btn mb-3 border-0 text-center'
-          }
-          onClick={getOtp}
-        >
-          {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
-        </button>
+        <div className={'mt-4'}>
+          <button className={'btn-login text-center border-0'} onClick={getOtp}>
+            {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
+          </button>
+        </div>
       </div>
     </>
   ) : (
     <>
-      <div className="container d-flex justify-content-center mb-3">
-        <div className={'form-box border border-dark'}>
+      <div className={'form-box'}>
+        <div className={'border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             重設密碼
           </div>
@@ -119,6 +114,7 @@ export default function ForgetPassword() {
               className={
                 'btn-getOTP text-center allow-btn mb-3 border-0 text-center px-3'
               }
+              type="button"
               onClick={getOtp}
             >
               {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
@@ -154,14 +150,14 @@ export default function ForgetPassword() {
             </div>
           </form>
         </div>
-      </div>
-      <div className={'container d-flex justify-content-center'}>
-        <button
-          className={'btn-login text-center allow-btn mb-3 border-0'}
-          onClick={resetPassword}
-        >
-          重設密碼
-        </button>
+        <div className={'mt-4'}>
+          <button
+            className={'btn-login text-center border-0'}
+            onClick={resetPassword}
+          >
+            重設密碼
+          </button>
+        </div>
       </div>
     </>
   )
