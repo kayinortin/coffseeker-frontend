@@ -1,3 +1,4 @@
+
 .mapArea {
   height: calc(100vh - 80px);
   background-color: $color--background;
@@ -6,6 +7,11 @@
   overflow: hidden;
 }
 
+#loading{
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+}
 .map {
   width: 100%;
   height: 100%;
@@ -21,7 +27,10 @@
   .rangeSelect {
     border: 2px solid $color--primary;
     background-color: $color--primary;
-
+    span{
+      color: #ffffff;
+      padding-inline: 10px;
+    }
     select {
       padding-inline: 10px;
       height: 100%;

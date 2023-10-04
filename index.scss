@@ -1,8 +1,10 @@
 // 全域樣式
 @import "./styles/variables";
 @import "./styles/reset";
+@import 'sweetalert2/dist/sweetalert2.min.css';
 @import "./styles/global";
 @import "./styles/common";
+
 
 // 首頁樣式
 @import "./styles/sidemenu";
@@ -10,6 +12,7 @@
 
 // 購物車
 @import './styles/cart';
+@import './styles/addCart.scss';
 
 // 會員頁面
 @import './styles/member';

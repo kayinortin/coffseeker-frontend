@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-export default function NewsDatabaseFetch({ onDataFetched }) {
+export default function NewstDataFetcher({ onDataFetched }) {
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -247,10 +247,22 @@
       z-index: 2;
     }
     #{$_}__item {
-      padding: 0.625rem;
-      margin-block: 0.4rem;
+      padding: 0rem;
+      margin-bottom: 1rem;
       position: relative;
       z-index: 10;
+      &:nth-child(3) {
+        margin-top: 12px;
+      }
+      &:nth-child(4) {
+        margin-top: 12px;
+      }
+      &:nth-child(5) {
+        margin-top: 12px;
+      }
+      &:nth-child(6) {
+        margin-top: 12px;
+      }
       &:last-of-type {
         margin-bottom: 0;
       }
@@ -348,10 +360,10 @@
 
 .dropdown {
   padding-inline: 10px;
-  margin-inline: 6px;
+  margin-inline: 0px;
   @media screen and (max-width: $lg) {
     padding: 10px;
-    margin-block: 10px;
+    margin-block: 0.2rem;
   }
 
   &:hover {
@@ -361,8 +373,14 @@
   ul {
     inset: 10px auto auto 10px !important;
     transform: translate3d(0px, 18px, 0px) !important;
+    @media screen and (max-width: $lg) {
+      inset: auto !important;
+    }
     & li {
       margin-block: 5px;
+      @media screen and (max-width: $lg) {
+        margin-block: 0;
+      }
     }
     & li a:hover {
       color: $color--white !important;
@@ -383,8 +401,8 @@
   @media screen and (max-width: $lg) {
     text-align: center;
     font-size: 18px;
-    padding: 0.5rem;
-    margin-block: 0.4rem;
+    padding: 0rem;
+    margin-bottom: 1rem;
     color: $color--primary !important;
   }
 }
@@ -1789,16 +1807,16 @@ div.my-4.d-md-flex a:hover {
 .fullscreen-container {
   position: fixed;
   top: 0;
-  left: -100%; 
+  left: -100%;
   bottom: 0;
-  width: 100%; 
-  background-color: rgba(0, 0, 0, 0); 
-  transition: left 0.5s, background-color 0.5s; 
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  transition: left 0.5s, background-color 0.5s;
   z-index: 1000;
 }
 
 .fullscreen-container.open {
-  left: 0; 
+  left: 0;
   background-color: #f0ebe2;
 }
 

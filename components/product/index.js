@@ -14,18 +14,6 @@ export default function PopularProducts() {
     setData(fetchedData)
   }
 
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 992)
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 992)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
   const [isFavorited, setFavorited] = useState(false)
   const [isCarted, setCarted] = useState(false)
 
@@ -34,6 +22,12 @@ export default function PopularProducts() {
       duration: 1000,
     })
   }, [])
+
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  }
   return (
     <>
       <div className="container ed-index">
@@ -64,7 +58,7 @@ export default function PopularProducts() {
             <div className="container d-flex flex-column">
               <div
                 className="mt-md-5 mb-md-0 my-5 d-md-flex justify-content-center align-items-center"
-                data-aos={isMobile ? 'fade-up' : 'fade-right'}
+                data-aos={isMobile() ? 'fade-up' : 'fade-right'}
                 data-aos-delay={300}
               >
                 <Image
@@ -73,7 +67,7 @@ export default function PopularProducts() {
                   alt=""
                   width={150}
                   height={150}
-                  data-aos={isMobile ? 'fade-up' : 'fade-right'}
+                  data-aos={isMobile() ? 'fade-up' : 'fade-right'}
                   data-aos-delay={300}
                 />
                 <a href="./product/category/04">
@@ -91,7 +85,7 @@ export default function PopularProducts() {
               </div>
               <div
                 className="my-3 my-md-5 d-md-flex justify-content-center align-items-center"
-                data-aos={isMobile ? 'fade-up' : 'fade-right'}
+                data-aos={isMobile() ? 'fade-up' : 'fade-right'}
                 data-aos-delay={600}
               >
                 <Image
@@ -100,7 +94,7 @@ export default function PopularProducts() {
                   alt=""
                   width={150}
                   height={150}
-                  data-aos={isMobile ? 'fade-up' : 'fade-right'}
+                  data-aos={isMobile() ? 'fade-up' : 'fade-right'}
                   data-aos-delay={600}
                 />
                 <a href="./product/category/05">
@@ -118,7 +112,7 @@ export default function PopularProducts() {
               </div>
               <div
                 className="my-5 my-md-3 d-md-flex justify-content-center align-items-center"
-                data-aos={isMobile ? 'fade-up' : 'fade-right'}
+                data-aos={isMobile() ? 'fade-up' : 'fade-right'}
                 data-aos-delay={900}
               >
                 <Image
@@ -127,7 +121,7 @@ export default function PopularProducts() {
                   alt=""
                   width={150}
                   height={150}
-                  data-aos={isMobile ? 'fade-up' : 'fade-right'}
+                  data-aos={isMobile() ? 'fade-up' : 'fade-right'}
                   data-aos-delay={900}
                 />
                 <a href="./product/category/06">
@@ -180,7 +174,7 @@ export default function PopularProducts() {
                     <div className="col-md-6" key={product.product_id}>
                       <div
                         className="card ed-border-none"
-                        data-aos={isMobile ? 'fade-up' : 'fade-left'}
+                        data-aos={isMobile() ? 'fade-up' : 'fade-left'}
                         data-aos-delay={200}
                       >
                         <img
