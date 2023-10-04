@@ -79,14 +79,14 @@ $fw-black:900;
         }
     }
 
-    .arrow{
+    .stepArrow{
         width: 1.25rem;
         height: 1.25rem;
     }
     .arrowBlue{
         color: $color--primary;
     }
-    
+
     .arrowGray{
         color: $color-lightgray;
     }
@@ -95,7 +95,6 @@ $fw-black:900;
 .cartlist{
     padding-block: 1rem;
     
-
     // 空購物車
     div.emptyContainer{
         margin-block: 2rem;
@@ -461,9 +460,86 @@ $fw-black:900;
         }
     }
 
-   
-    
-
-   
 }
+
+
+div.memberItems{
+    // border: 1px solid red;
+    gap: 2rem;
+
+    table.memberContainer{
+        box-sizing: border-box;
+        width: 100%;
+        color: $color--primary;
+
+
+        thead.Labels{
+            border: 1px solid $color--primary;
+            background-color: $color-lightgray;
+            font-size: $fs-sm;
+            font-weight: $fw-bold;
+            tr{
+    
+                th{
+                    padding-block: 1rem;
+                    padding-inline: 0.5rem;
+                    vertical-align: middle;
+                    min-width: 80px;
+                   
+                }
+            }
+        }
+        
+        tbody.memberbody{
+            border: 1px solid $color--primary;
+            margin-block: .5rem;
+            
+            tr{
+                display: flex;
+                align-items: center;
+                
+                td.memberContainer{
+                    padding-block: .5rem;
+                    padding-inline: 1rem;
+                    
+                    label.inputTitle{
+                        // border: 1px solid green;
+                        padding-bottom: .5rem;
+                        
+                    }
+                    
+                    input.form-control{
+                        box-sizing: border-box;
+                        border: 1px solid $color--primary;
+                        
+                        &:active,&:hover{
+                            border: 1px solid $color--secondary;
+                            color: $color--secondary;
+                        }
+                    }
+                    
+                }
+            }
+           
+        }
+    }
+
+    
+}
+
+div.btngroup{
+    gap: 2rem;
+    button.backStep{
+        background-color: $color--gray4;
+        color: $color--white;
+
+    }
+    button.sendOrder{
+        background-color: $color--secondary;
+        color: $color--white;
+    }
+
+}
+
+
 

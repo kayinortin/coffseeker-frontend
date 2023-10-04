@@ -337,7 +337,7 @@ function CartList({ step, handleNextStep, setStep }) {
               <table className={'products'}>
                 {/* 商品表格的表頭 */}
                 <thead className={'productsLabels'}>
-                  <tr>
+                  <tr className="selectTr">
                     <th className={'align-middle'} scope="col">
                       <input
                         type="checkbox"
@@ -543,7 +543,7 @@ function CartList({ step, handleNextStep, setStep }) {
                           <option value="">請選擇</option>
                           {couponData.map((coupon) => (
                             <option
-                              key={coupon.couponid}
+                              key={coupon.coupon_id}
                               value={coupon.coupon_code}
                             >
                               {coupon.coupon_name}
