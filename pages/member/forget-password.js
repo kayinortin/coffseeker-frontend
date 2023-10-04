@@ -26,8 +26,9 @@ export default function Forget() {
           </div>
         </div>
         {/* 麵包屑結束 */}
-
-        <ForgetPassword />
+        <div className={'container d-flex justify-content-center mb-5'}>
+          <ForgetPassword />
+        </div>
       </div>
     </>
   )
