@@ -4,13 +4,16 @@ import CartList from '@/components/cart/CartList'
 import Checkout from '@/components/cart/Checkout'
 import Complete from '@/components/cart/Complete'
 
+import productsData from '@/data/cart/product'
+import courseData from '@/data/cart/course'
+
 export default function Cart() {
   const [step, setStep] = useState(1)
 
   // 處理下一步點擊事件
   const handleNextStep = () => {
     if (step === 1) {
-      setStep(2) // 只有在第一步时才能前往第二步
+      setStep(2)
     }
   }
 
@@ -26,9 +29,7 @@ export default function Cart() {
               setStep={setStep}
             />
           )}
-          {step === 2 && (
-            <Checkout step={step} setStep={setStep} /> // 傳遞 setStep 給 Checkout 組件
-          )}
+          {step === 2 && <Checkout step={step} setStep={setStep} />}
           {step === 3 && <Complete step={step} setStep={setStep} />}
         </div>
       </div>
