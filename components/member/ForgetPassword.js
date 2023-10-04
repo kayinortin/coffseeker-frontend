@@ -10,6 +10,8 @@ export default function ForgetPassword() {
   const [message, setMessage] = useState('')
   const [count, setCount] = useState(10)
   const [delay, setDelay] = useState(null)
+  // 判斷使用者如果成功透過按鈕取得OTP切換顯示的表單
+  const [gotOTP, setGotOTP] = useState(false)
 
   useInterval(() => {
     setCount(count - 1)
@@ -21,9 +23,13 @@ export default function ForgetPassword() {
     }
   }, [count])
 
+  // Edison // 1004 代碼檢查
+  // Edison // 這邊寄送驗證碼之後不會跳出修改密碼的區塊
+
   const getOtp = async () => {
     if (delay !== null) {
       setMessage('60s　內無法重新獲得驗證碼')
+      setGotOTP(true)
       return
     }
 
@@ -43,6 +49,7 @@ export default function ForgetPassword() {
       setMessage('驗證碼已寄送到你填寫的Email信箱中')
       setCount(60)
       setDelay(1000)
+      // 應該也要設定在這 setGotOTP(true)
     }
   }
 
@@ -64,7 +71,7 @@ export default function ForgetPassword() {
     console.log(res.data)
   }
 
-  return (
+  return gotOTP !== true ? (
     <>
       <div className={'container d-flex justify-content-center pb-3'}>
         <div className={'form-box border border-dark'}>
@@ -99,12 +106,23 @@ export default function ForgetPassword() {
           {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
         </button>
       </div>
+    </>
+  ) : (
+    <>
       <div className="container d-flex justify-content-center mb-3">
         <div className={'form-box border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             重設密碼
           </div>
           <form className={'p-5'}>
+            <button
+              className={
+                'btn-getOTP text-center allow-btn mb-3 border-0 text-center px-3'
+              }
+              onClick={getOtp}
+            >
+              {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
+            </button>
             <div className={'mb-3'}>
               <label htmlFor="OTPcode" className={'form-label'}>
                 電子郵件驗證碼：
@@ -130,6 +148,9 @@ export default function ForgetPassword() {
                 id="newPassword"
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <div id="emailHelp" className="form-text">
+                <h5>{message}</h5>
+              </div>
             </div>
           </form>
         </div>
@@ -141,24 +162,6 @@ export default function ForgetPassword() {
         >
           重設密碼
         </button>
-      </div>
-      <div
-        className={
-          'container d-flex justify-content-between p-0 align-items-center ask-for-login'
-        }
-      >
-        <div className={'ask-for-regester my-3'}>
-          <span className="me-3">已經是會員了?</span>
-          <Link href="./login" className={'orange-text ms-3'}>
-            會員登入
-          </Link>
-        </div>
-        <div className={'ask-for-regester my-3'}>
-          <span className="me-3">還不是會員嗎?</span>
-          <Link href="./register" className={'orange-text ms-3'}>
-            加入會員
-          </Link>
-        </div>
       </div>
     </>
   )

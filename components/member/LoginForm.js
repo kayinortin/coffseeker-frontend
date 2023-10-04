@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FaFacebook, FaGoogle } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { useUser } from '@/context/UserInfo'
+import Swal from 'sweetalert2'
 
 export default function LoginForm() {
+  const { userData, setUserData, isLoggedIn, setIsLoggedIn } = useUser()
   // 定義表單的值
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
@@ -45,17 +48,72 @@ export default function LoginForm() {
       password: password,
     }
 
+    // Edison // 10/04 檢查代碼
+    // Edison // 在這邊登入會員成功後，應該要讓isLoggedIn狀態改變
+    // Edison // 這樣才能讓我的Navbar重新渲染
+
+    // Edison // 這邊如果帳號密碼有輸入錯誤時
+    // Edison // Cookies.set('userInfo', JSON.stringify(response.data.user)) 會出錯
+    // Edison // 而且這樣會形成錯誤的cookie 反而會無法使用登出功能
+
     try {
       const response = await axios.post(
         'http://localhost:3005/api/auth-jwt/login',
         formData
       )
       console.log('伺服器回應:', response.data)
-      // router.push('/member')
-      // response.data.accessToken
-      Cookies.set('accessToken', response.data.accessToken)
+
+      if (response.data.code === '200' && response.data.accessToken) {
+        Cookies.set('accessToken', response.data.accessToken)
+        setIsLoggedIn(true)
+        Swal.fire({
+          title: '登入成功，即將跳轉至會員中心',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      } else {
+        Swal.fire({
+          title: '登入失敗，請確認帳號密碼是否正確',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      }
     } catch (error) {
-      console.error('錯誤:', error)
+      console.error('錯誤：請確認後台API功能', error)
+      setIsLoggedIn(false)
+    }
+
+    // Edison // 10/04 檢查代碼
+    // Edison // 這邊如果帳號密碼有輸入錯誤時
+    // Edison // Cookies.set('userInfo', JSON.stringify(response.data.user)) 會出錯
+    // Edison // 用if else判斷是否登入狀態
+
+    // 取得單一使用者資料
+    try {
+      const response = await axios.post(
+        'http://localhost:3005/api/auth/login',
+        formData
+      )
+      console.log('伺服器回應:', response.data)
+      // setUserData(response.data.user)
+      if (response.data.code === '200' && response.data.user) {
+        Cookies.set('userInfo', JSON.stringify(response.data.user))
+        router.push('/member')
+      } else {
+        Swal.fire({
+          title: '登入失敗，請確認帳號密碼是否正確',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      }
+
+      // const storedUserData = JSON.parse(Cookies.get('userInfo'))
+      // console.log('測試抓cookie資料', storedUserData)
+    } catch (error) {
+      console.error('錯誤：請確認後台API功能', error)
     }
   }
   // ===================================

@@ -1,54 +1,86 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaAngleDown } from 'react-icons/fa6'
-import Link from 'next/link'
+import Cookies from 'js-cookie'
+import { useUser } from '@/context/UserInfo'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default function InfoChangeForm() {
-  const fakeUser = {
-    id: 1,
-    name: 'Jone Doe',
-    email: 'johndoe@example.com',
-    birthday: '1990-01-01',
-    gender: '男',
-    phone: '0909121343',
-  }
+  const { userData, setUserData } = useUser()
+
+  // console.log('userData抽取成功', userData)
+
+  const storedUserData = Cookies.get('userInfo')
+
+  const [userId, setId] = useState('')
+  const [userEmail, setMail] = useState('')
+  const [userName, setName] = useState('')
+  const [userPhone, setPhone] = useState('')
+  const [userGender, setGender] = useState('')
+  const [birthdayYear, setBirthdayYear] = useState('')
+  const [birthdayMonth, setBirthdayMonth] = useState('')
+  const [birthdayData, setBirthdayDate] = useState('')
+  const [checkChange, setChange] = useState('')
+
+  useEffect(() => {
+    if (storedUserData) {
+      // Cookie存在，解析数据
+      // setUserData(JSON.parse(storedUserData))
+      const userData = JSON.parse(storedUserData)
+      // console.log('測試抓cookie資料', userData)
+      setUserData(userData)
+      setId(userData.id)
+      setMail(userData.email)
+      setName(userData.username)
+      setPhone(userData.phone)
+      setGender(userData.gender)
+      const UserBirthday = userData.birthday.split('-')
+      setBirthdayYear(UserBirthday[0])
+      setBirthdayMonth(UserBirthday[1])
+      setBirthdayDate(UserBirthday[2])
+    } else {
+      // Cookie不存在，采取相应的处理方式
+      console.log('Cookie不存在')
+    }
+  }, [])
 
   // input文字輸入框
   const inputs = [
     {
       id: 1,
-      htmlFor: 'InputEmail',
+      htmlForId: 'InputEmail',
       class: 'form-control disable',
       title: '會員信箱(登入帳號)',
-      value: fakeUser.email,
+      value: userEmail,
       type: 'email',
-      htmlId: 'Inputmail',
       aria: null,
       maxlength: 50,
       disabled: true,
+      onChange: (e) => setMail(e.target.value),
     },
     {
       id: 2,
-      htmlFor: 'InputName',
+      htmlForId: 'InputName',
       class: 'form-control',
       title: '會員姓名',
-      value: fakeUser.name,
+      value: userName,
       type: 'text',
-      htmlId: 'InputName',
       aria: null,
       maxlength: 10,
       disabled: false,
+      onChange: (e) => setName(e.target.value),
     },
     {
       id: 3,
-      htmlFor: 'InputPhone',
+      htmlForId: 'InputPhone',
       class: 'form-control',
       title: '手機',
-      value: fakeUser.phone,
+      value: userPhone,
       type: 'tel',
-      htmlId: 'InputPhone',
       aria: null,
       maxlength: 10,
       disabled: false,
+      onChange: (e) => setPhone(e.target.value),
     },
   ]
 
@@ -58,12 +90,16 @@ export default function InfoChangeForm() {
     {
       id: 7,
       class: 'mb-3',
-      htmlFor: 'SelectGender',
+      htmlForId: 'SelectGender',
       title: '性別',
-      value: fakeUser.gender,
-      options: ['男', '女', '不便透漏'],
+      value: userGender,
+      options: [
+        { value: 'Male', opt: '男' },
+        { value: 'Female', opt: '女' },
+        { value: 'CantDisclose', opt: '不便透漏' },
+      ],
       placeholder: '請選擇您的性別',
-      htmlId: 'SelectGender',
+      onChange: (e) => setGender(e.target.value),
     },
   ]
 
@@ -78,116 +114,142 @@ export default function InfoChangeForm() {
 
   const month = []
   for (let i = 1; i <= 12; i++) {
-    month.push(i)
+    if (i < 10) {
+      month.push('0' + i)
+    } else {
+      month.push(i)
+    }
   }
 
   const date = []
   for (let i = 1; i <= 31; i++) {
-    date.push(i)
+    if (i < 10) {
+      date.push('0' + i)
+    } else {
+      date.push(i)
+    }
   }
 
   const birthday = [
     {
       id: 8,
       class: 'col-4 mb-3',
-      htmlFor: 'SelectBirthdayYear',
+      htmlForId: 'SelectBirthdayYear',
       title: '生日',
       options: years,
+      userBirth: birthdayYear,
       placeholder: '年',
-      htmlId: 'SelectBirthdayYear',
+      onChange: (e) => setBirthdayYear(e.target.value),
     },
     {
       id: 9,
       class: 'col-4 mb-3',
-      htmlFor: 'SelectBirthdayMonth',
+      htmlForId: 'SelectBirthdayMonth',
       title: '',
       options: month,
+      userBirth: birthdayMonth,
       placeholder: '月',
-      htmlId: 'SelectBirthdayMonth',
+
+      onChange: (e) => setBirthdayMonth(e.target.value),
     },
     {
       id: 10,
       class: 'col-4 mb-3',
-      htmlFor: 'SelectBirthdayDate',
+      htmlForIdId: 'SelectBirthdayDate',
       title: '',
       options: date,
+      userBirth: birthdayData,
       placeholder: '日',
-      htmlId: 'SelectBirthdayDate',
+
+      onChange: (e) => setBirthdayDate(e.target.value),
     },
   ]
+
+  const handleUserInfoChange = async () => {
+    const formData = {
+      id: userId,
+      email: userEmail,
+      username: userName,
+      gender: userGender,
+      phone: userPhone,
+      birthday: birthdayYear + '-' + birthdayMonth + '-' + birthdayData,
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:3005/api/users/${userId}`,
+        formData
+      )
+      console.log(response)
+      Swal.fire({
+        title: '修改資料成功',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      Cookies.set('userInfo', JSON.stringify(formData))
+    } catch (error) {
+      console.error('錯誤:', error)
+    }
+  }
+
   return (
     <>
-      <div className={'form-box border border-dark'}>
-        <div className={'form-title border-bottom border-dark p-3'}>
-          會員資料檢視/修改
-        </div>
-        <form className="p-5">
-          {inputs.map((input) => {
-            return (
-              <div className="mb-3" key={input.id}>
-                <label htmlFor={input.htmlFor} className={'form-label'}>
-                  {input.title}
-                </label>
-                <input
-                  value={input.value}
-                  type={input.type}
-                  className={input.class}
-                  id={input.htmlId}
-                  aria-describedby={input.aria}
-                  maxLength={input.maxlength}
-                  {...(input.disabled
-                    ? { readOnly: true, disabled: true }
-                    : {})}
-                />
-                <div
-                  id={'error' + input.id}
-                  className={'form-text text-danger'}
-                ></div>
-              </div>
-            )
-          })}
-          {/* 性別 */}
-          {selection.map((select) => {
-            return (
-              <div className={select.class} key={select.id}>
-                <label htmlFor={select.htmlFor} className={'form-label'}>
-                  {select.title}
-                </label>
-                <select className={'form-select'}>
-                  <option selected disabled>
-                    {select.placeholder}
-                  </option>
-                  {select.options.map((ops, i) => {
-                    return (
-                      <option
-                        key={i}
-                        value={ops}
-                        {...(select.value === ops ? { selected: true } : {})}
-                      >
-                        {ops}
-                      </option>
-                    )
-                  })}
-                </select>
-              </div>
-            )
-          })}
-          {/* 生日 */}
-          <div className={'row align-items-end'}>
-            {birthday.map((select) => {
+      <form>
+        <div className={'form-box border border-dark'}>
+          <div className={'form-title border-bottom border-dark p-3'}>
+            會員資料檢視/修改
+          </div>
+          <div className="p-5">
+            {inputs.map((input) => {
+              return (
+                <div className="mb-3" key={input.id}>
+                  <label htmlFor={input.htmlForId} className={'form-label'}>
+                    {input.title}
+                  </label>
+                  <input
+                    id={input.htmlForId}
+                    value={input.value}
+                    type={input.type}
+                    className={input.class}
+                    aria-describedby={input.aria}
+                    maxLength={input.maxlength}
+                    {...(input.disabled
+                      ? { readOnly: true, disabled: true }
+                      : {})}
+                    onChange={(e) => {
+                      input.onChange(e)
+                    }}
+                  />
+                  <div
+                    id={'error' + input.id}
+                    className={'form-text text-danger'}
+                  ></div>
+                </div>
+              )
+            })}
+            {/* 性別 */}
+            {selection.map((select) => {
               return (
                 <div className={select.class} key={select.id}>
-                  <label htmlFor={select.htmlFor} className={'form-label'}>
+                  <label htmlFor={select.htmlForId} className={'form-label'}>
                     {select.title}
                   </label>
-                  <select className={'form-select'}>
-                    <option selected disabled>
+                  <select
+                    id={select.htmlForId}
+                    className={'form-select'}
+                    value={userGender}
+                    onChange={(e) => {
+                      select.onChange(e)
+                    }}
+                  >
+                    <option value={''} disabled>
                       {select.placeholder}
                     </option>
-                    {select.options.map((ops) => {
+                    {select.options.map((opts, i) => {
                       return (
-                        <option key={ops} value={ops}>
-                          {ops}
+                        <option key={i} value={opts.value}>
+                          {opts.opt}
                         </option>
                       )
                     })}
@@ -195,19 +257,47 @@ export default function InfoChangeForm() {
                 </div>
               )
             })}
+            {/* 生日 */}
+            <div className={'row align-items-end'}>
+              {birthday.map((select) => {
+                return (
+                  <div className={select.class} key={select.id}>
+                    <label htmlFor={select.htmlForId} className={'form-label'}>
+                      {select.title}
+                    </label>
+                    <select
+                      id={select.htmlForId}
+                      className={'form-select'}
+                      value={select.userBirth}
+                      onChange={(e) => {
+                        select.onChange(e)
+                      }}
+                    >
+                      <option disabled>{select.placeholder}</option>
+                      {select.options.map((ops) => {
+                        return (
+                          <option key={ops} value={ops}>
+                            {ops}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        </form>
-      </div>
-
-      <div className={'container allow-btn p-0 mt-4'}>
-        <div
-          className={
-            'btn-login text-center d-flex justify-content-center flex-column mb-5 agree'
-          }
-        >
-          <span>確認並送出</span>
         </div>
-      </div>
+        <div className={'container allow-btn p-0 mt-4'}>
+          <button
+            type="button"
+            className={'btn-login text-center border-0 mb-3 agree'}
+            onClick={handleUserInfoChange}
+          >
+            <span>確認並送出</span>
+          </button>
+        </div>
+      </form>
     </>
   )
 }

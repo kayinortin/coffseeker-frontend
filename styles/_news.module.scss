@@ -1,11 +1,12 @@
 $color--primary: #1c262c;
-$color--background: #F2F3EE;
+$color--background: #f2f2f2;
 $color--black: #000000;
 
 //index.js區
 .ei-news-container{
-  background-color: $color--background;
+  // background-color: $color--background;
   // padding-inline: 50px;
+  // max-width: 1400px;
 }
 //標題直線
 .ei-line {
@@ -14,6 +15,12 @@ $color--black: #000000;
   height: 1px;
   background-color: $color--primary;
 }
+
+@media (max-width: 430px) {
+  .mobile-orderby {
+   margin-top: 20px;
+  }}
+
 
 // 卡片區
 .news-link {
@@ -130,7 +137,7 @@ $color--black: #000000;
 
 // [nid].js頁面
 .ei-container-nid{
-  max-width: 90%;
+  max-width: 80%;
 }
 .news-detail {
   // width: 90%;
@@ -151,6 +158,7 @@ $color--black: #000000;
 @media (max-width: 431px) {
   .ei-container-nid{
     padding: 0;
+    max-width: 90% !important;
     
   }
   .news-detail {

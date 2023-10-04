@@ -1,377 +1,175 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { API_URL } from '../../utils/config'
-import { useCartList } from '../../context/cart'
-import Swal from 'sweetalert2'
-import $ from 'jquery'
-import { useNavigate } from 'react-router-dom'
-import {
-  PaymentElement,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js'
+import React from 'react'
 
-function Checkout(props) {
-  const history = useNavigate()
-  const { activeStep, setActiveStep } = props
-  const { orderTotal, setOrderTotal } = props
-  const { member, setMember } = props
-  const { couponId, setCouponId } = props
-  const { shippingData, setShippingData } = props
-  // const [creditcard, setCreditcard] = useState({
-  //   cvc: '',
-  //   expiry: '',
-  //   focus: '',
-  //   name: '',
-  //   cardNumber: '',
-  // });
-  const { cartListData, setCartListData } = useCartList()
-
-  const stripe = useStripe()
-  const elements = useElements()
-
-  // const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
-  const handleChange = (e) => {
-    if (!e.complete) {
-      $('.pay-btn').attr('disabled', 'disabled')
+function Checkout({ step, handleNextStep, setStep, productCart, courseCart }) {
+  //按鈕上一步 //按鈕送出訂單
+  const handleCheckout = () => {
+    if (step === 2) {
+      setStep(1)
     } else {
-      $('.pay-btn').removeAttr('disabled', 'disabled')
+      if (handleNextStep) {
+        handleNextStep() // 否则执行下一步操作
+      }
     }
-  }
-
-  useEffect(() => {
-    if (!stripe) {
-      return
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret'
-    )
-
-    if (!clientSecret) {
-      return
-    }
-  }, [stripe])
-
-  //coupon_receive
-  const usedCouponData = {
-    member_id: member.id,
-    coupon_id: couponId,
-  }
-
-  //order_items
-  // ->準備好要傳回資料庫的product_id, amount
-  const cartItems = { ...cartListData }
-
-  //order_details
-  // ->準備好要傳回資料庫的應付金額
-  const cartDetails = {
-    ...shippingData,
-    total: Number(orderTotal),
-    member_id: member.id,
-  }
-
-  // const handleInputFocus = (e) => {
-  //   setCreditcard({ ...creditcard, focus: e.target.name });
-  // };
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-
-  //   setCreditcard({ ...creditcard, [name]: value });
-  // };
-
-  //返回運輸資訊modal
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
-
-  //送出訂單 ->傳回資料庫
-  async function handleSubmit(e) {
-    e.preventDefault()
-    if (!stripe || !elements) {
-      return
-    }
-
-    setIsLoading(true)
-
-    let orderDetailsResponse = await axios.post(
-      `${API_URL}/cart/orderDetails`,
-      cartDetails,
-      usedCouponData
-    )
-
-    // order_items
-    let orderItemsResponse = await axios.post(
-      `${API_URL}/cart/orderItems`,
-      cartItems
-    )
-
-    //coupon_receive
-    let couponReceiveResponse = await axios.post(
-      `${API_URL}/cart/orderItemsCoupon`,
-      usedCouponData
-    )
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // 付款成功會回到此頁面，並顯示payment_intent 跟 payment_intent_client_secret 以及 redirect_status
-        return_url: 'http://localhost:3000/member/cart',
-      },
-    })
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      Swal.fire({
-        icon: 'error',
-        text: error.message,
-      })
-    } else {
-      Swal.fire({
-        icon: 'error',
-        text: 'An unexpected error occured.',
-      })
-    }
-
-    setIsLoading(false)
-
-    // // orderDetails
-    // let orderDetailsResponse = await axios.post(
-    //   `${API_URL}/cart/orderDetails`,
-    //   cartDetails,
-    //   usedCouponData
-    // );
-
-    // // order_items
-    // let orderItemsResponse = await axios.post(
-    //   `${API_URL}/cart/orderItems`,
-    //   cartItems
-    // );
-
-    // //coupon_receive
-    // let couponReceiveResponse = await axios.post(
-    //   `${API_URL}/cart/orderItemsCoupon`,
-    //   usedCouponData
-    // );
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
   return (
     <>
-      <div className="container checkoutBox">
-        <form id="payment-form" onSubmit={handleSubmit} className="row">
-          <div className="col-12 g-3">
-            <h5>付款資訊</h5>
-          </div>
-          {/* <div className="col-12 g-3">
-            <Cards
-              cvc={creditcard.cvc}
-              expiry={creditcard.expiry}
-              focused={creditcard.focus}
-              name={creditcard.name}
-              number={creditcard.cardNumber}
-            />
-          </div>
-          <div className="col-12 g-3">
-            <label htmlFor="firstName" className="form-label c-form__label">
-              持卡人
-            </label>
-            <input
-              type="text"
-              className="form-control c-form__input"
-              name="name"
-              placeholder="請輸入持卡人姓名"
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-            />
-          </div>
-          <div className="form-group col-12 g-3">
-            <label
-              htmlFor="card_num_field"
-              className="form-label c-form__label"
-            >
-              卡號
-            </label>
-            <CardNumberElement
-              type="text"
-              id="card_num_field"
-              className="form-control c-form__input"
-              name="cardNumber"
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="card_exp_field">Card Expiry</label>
-            <CardExpiryElement
-              type="text"
-              id="card_exp_field"
-              className="form-control"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="card_cvc_field">Card CVC</label>
-            <CardCvcElement
-              type="text"
-              id="card_cvc_field"
-              className="form-control"
-            />
-          </div> */}
-          <PaymentElement
-            id="payment-element"
-            onChange={handleChange}
-            className="col-12 g-3"
-          />
-          <hr className="mt-4" />
-          <div className="col-6 g-3">
-            <div className="d-grid">
-              <button
-                className="e-btn e-btn--plain e-btn--secondary e-btn--w100 e-btn--medium"
-                onClick={handleBack}
-              >
-                上一步
-              </button>
-            </div>
-          </div>
-          <div className="col-6 g-3">
-            <div className="d-grid">
-              <button
-                className="e-btn e-btn--primary e-btn--w100 e-btn--medium pay-btn"
-                disabled={isLoading || !stripe || !elements}
-                id="submit"
-                onClick={() => {
-                  handleSubmit()
-                }}
-                form="payment-form"
-              >
-                <span id="button-text">
-                  {/* {isLoading ? (
-              <div className="spinner" id="spinner"></div>
-            ) : ( */}
-                  確認付款
-                  {/* )} */}
-                </span>
-              </button>
-            </div>
-          </div>
-
-          {/* {message && <div id="payment-message">{message}</div>} */}
-        </form>
+      <hr />
+      <div className="checkout text-center">
+        <div className="Expandproduct my-4">
+          <h3>合計: NTD$9999 </h3>
+          <button className="btn btn-info mt-3">查看商品</button>
+        </div>
       </div>
-
-      {/* <div className="container checkoutBox">
-        <form className="row" onSubmit={handleSubmit} id="checkoutForm">
-          <div className="col-12 g-3">
-            <h5>付款資訊</h5>
-          </div>
-          <div className="col-12 g-3">
-            <Cards
-              cvc={creditcard.cvc}
-              expiry={creditcard.expiry}
-              focused={creditcard.focus}
-              name={creditcard.name}
-              number={creditcard.number}
-            />
-          </div>
-          <div className="col-12 g-3">
-            <label htmlFor="firstName" className="form-label c-form__label">
-              持卡人
-            </label>
-            <input
-              type="text"
-              className="form-control c-form__input"
-              id="firstName"
-              name="name"
-              value={creditcard.name}
-              placeholder="請輸入持卡人姓名"
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              required
-            />
-          </div>
-
-          <div className="col-12 g-3 card-number-group">
-            <label htmlFor="card-number" className="form-label c-form__label">
-              卡號
-            </label>
-            <input
-              type=""
-              className="form-control card-number c-form__input"
-              id="adddress"
-              name="number"
-              value={creditcard.number}
-              placeholder="**** **** **** ****"
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              required
-            />
-          </div>
-          <div className="col-6 g-3 expiration-date-group">
-            <label
-              htmlFor="expiration-date"
-              className="form-label c-form__label"
-            >
-              有效日期
-            </label>
-            <input
-              type=""
-              className="form-control expiration-date c-form__input"
-              id=""
-              name="expiry"
-              value={creditcard.expiry}
-              placeholder="MM / YY"
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              required
-            />
-          </div>
-
-          <div className="col-6 g-3 cvc-group">
-            <label htmlFor="cvc" className="form-label c-form__label">
-              CVC
-            </label>
-            <input
-              type=""
-              className="form-control cvc c-form__input"
-              id="cvc"
-              name="cvc"
-              value={creditcard.cvc}
-              placeholder="安全碼"
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              required
-            />
-          </div>
-          <hr className="mt-4" />
-          <div className="col-6 g-3">
-            <div className="d-grid">
-              <button
-                className="e-btn e-btn--plain e-btn--secondary e-btn--w100 e-btn--medium"
-                onClick={handleBack}
+      <hr />
+      <div className="d-flex memberItems mt-5">
+        {/* 收件人資料 */}
+        <table className="memberContainer">
+          <thead className="Labels">
+            <tr>
+              <th className="align-middle" scope="col">
+                收件人資料
+              </th>
+            </tr>
+          </thead>
+          <tbody className="memberbody">
+            <tr>
+              <td
+                className="align-middle memberContainer w-100 mt-3"
+                scope="col"
               >
-                上一步
-              </button>
-            </div>
-          </div>
-          <div className="col-6 g-3">
-            <div className="d-grid">
-              <button
-                type="submit"
-                className="btn_outline btn_grn p-2"
-                disabled={isLoading || !stripe || !elements}
-                form="checkoutForm"
+                <label className="inputTitle fs-5 fw-bolder">
+                  送貨方式：<span>宅配</span>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td className="align-middle memberContainer w-100 " scope="col">
+                <input type="checkbox" className="tick me-2" />
+                <label className="inputTitle">收件人姓名與會員資料相符</label>
+              </td>
+            </tr>
+            <tr>
+              <td className="align-middle memberContainer w-100" scope="col">
+                <label className="inputTitle">收件人名稱</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="輸入名稱"
+                  aria-label="Username"
+                  aria-describedby="addon-wrapping"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="align-middle memberContainer w-100" scope="col">
+                <label className="inputTitle">收件人電話號碼</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="輸入電話號碼"
+                  aria-label="Username"
+                  aria-describedby="addon-wrapping"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td
+                className="align-middle memberContainer w-100 mb-3"
+                scope="col"
               >
-                確認付款
-              </button>
-            </div>
-          </div>
-        </form>
-      </div> */}
+                <label className="inputTitle">配送地址</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="輸入地址"
+                  aria-label="Username"
+                  aria-describedby="addon-wrapping"
+                />
+              </td>
+            </tr>
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+        {/* 付款資料 */}
+        <table className="memberContainer">
+          <thead className="Labels">
+            <tr>
+              <th className="align-middle" scope="col">
+                付款資料
+              </th>
+            </tr>
+          </thead>
+          <tbody className="memberbody">
+            <tr>
+              <td
+                className="align-middle memberContainer w-100 mt-3"
+                scope="col"
+              >
+                <label className="inputTitle fs-5 fw-bolder">
+                  付款方式：<span>信用卡</span>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td className="align-middle memberContainer w-100" scope="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="卡號"
+                  aria-label="CardNumber"
+                  aria-describedby="addon-wrapping"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="align-middle memberContainer w-100" scope="col">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="持卡人姓名"
+                  aria-label="Cardname"
+                  aria-describedby="addon-wrapping"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="align-middle memberContainer w-100" scope="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="有效期限（ＭＭ/YY）"
+                  aria-label="CardDate"
+                  aria-describedby="addon-wrapping"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="align-middle memberContainer w-100" scope="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="安全碼"
+                  aria-label="securityCode"
+                  aria-describedby="addon-wrapping"
+                />
+              </td>
+            </tr>
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+      <div className="d-flex btngroup my-5">
+        <button className="btn backStep w-100 fw-bold" onClick={handleCheckout}>
+          取消
+        </button>
+        <button
+          className="btn sendOrder w-100 fw-bold"
+          onClick={() => setStep(3)}
+        >
+          送出訂單
+        </button>
+      </div>
     </>
   )
 }

@@ -1,0 +1,53 @@
+[
+    {
+      "coupon_id": 1,
+      "coupon_name": "全品項9折",
+      "coupon_code": "UnNqaTu1oX",
+      "coupon_valid": 1,
+      "coupon_type":1,
+      "discount_value": 90,
+      "create_at": "2023-10-01",
+      "expires_at": "2023-12-30"
+    },
+    {
+      "coupon_id": 2,
+      "coupon_name": "新用戶專屬85折優惠",
+      "coupon_code": "NeWuSeR123",
+      "coupon_valid": 1,
+      "coupon_type":1,
+      "discount_value": 85,
+      "create_at": "2023-09-15",
+      "expires_at": "2023-11-30"
+    },
+    {
+      "coupon_id": 3,
+      "coupon_name": "特别活動7折",
+      "coupon_code": "SpEcIaL567",
+      "coupon_valid": 1,
+      "coupon_type":1,
+      "discount_value": 70,
+      "create_at": "2023-11-05",
+      "expires_at": "2024-01-31"
+    },
+    {
+      "coupon_id": 4,
+      "coupon_name": "折扣200元",
+      "coupon_code": "DiScOuNt200",
+      "coupon_valid": 1,
+      "coupon_type":2,
+      "discount_value": 200,
+      "create_at": "2023-09-20",
+      "expires_at": "2023-12-15"
+    },
+    {
+      "coupon_id": 5,
+      "coupon_name": "折扣100元",
+      "coupon_code": "DiScOuNt100",
+      "coupon_valid": 1,
+      "coupon_type":2,
+      "discount_value": 100,
+      "create_at": "2023-11-10",
+      "expires_at": "2024-02-28"
+    }
+  ]
+  

@@ -11,6 +11,8 @@
   align-items: center;
 
   transition: $transition;
+  z-index: 1100 !important;
+
   &::after {
     content: '';
     width: 100%;
@@ -245,8 +247,22 @@
       z-index: 2;
     }
     #{$_}__item {
-      padding: 0.625rem;
-      margin-block: 0.4rem;
+      padding: 0rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 10;
+      &:nth-child(3) {
+        margin-top: 12px;
+      }
+      &:nth-child(4) {
+        margin-top: 12px;
+      }
+      &:nth-child(5) {
+        margin-top: 12px;
+      }
+      &:nth-child(6) {
+        margin-top: 12px;
+      }
       &:last-of-type {
         margin-bottom: 0;
       }
@@ -278,6 +294,8 @@
         & ~ #{$_}__menu #{$_}__list {
           opacity: 1;
           transform: translate3d(0, 0, 0);
+          position: absolute;
+          z-index: 10;
         }
         & ~ #{$_}--scroll {
           &::after {
@@ -342,10 +360,10 @@
 
 .dropdown {
   padding-inline: 10px;
-  margin-inline: 6px;
+  margin-inline: 0px;
   @media screen and (max-width: $lg) {
     padding: 10px;
-    margin-block: 10px;
+    margin-block: 0.2rem;
   }
 
   &:hover {
@@ -353,8 +371,16 @@
   }
 
   ul {
+    inset: 10px auto auto 10px !important;
+    transform: translate3d(0px, 18px, 0px) !important;
+    @media screen and (max-width: $lg) {
+      inset: auto !important;
+    }
     & li {
-      margin-bottom: 12px;
+      margin-block: 5px;
+      @media screen and (max-width: $lg) {
+        margin-block: 0;
+      }
     }
     & li a:hover {
       color: $color--white !important;
@@ -371,11 +397,12 @@
   background-color: $color--primary !important;
 }
 .dropdown-item {
+  padding-block: 10px;
   @media screen and (max-width: $lg) {
     text-align: center;
     font-size: 18px;
-    padding: 0.5rem;
-    margin-block: 0.4rem;
+    padding: 0rem;
+    margin-bottom: 1rem;
     color: $color--primary !important;
   }
 }
@@ -389,7 +416,7 @@ input:checked + label + .expandable-menu {
 }
 
 .ed-tag {
-  background:#b29e7a;
+  background: #b29e7a;
 
   @include text--extra-small;
   color: $color--background;
@@ -1300,14 +1327,14 @@ input:checked + label + .expandable-menu {
   width: 1940px;
 }
 .ed-index {
-  padding: 0;
+  padding-inline: 24px;
   margin-top: 60px;
 }
 .ed-index-origin {
   margin-top: 60px;
 }
 .ed-index-course {
-  margin-top: 60px;
+  margin-top: 40px;
 }
 .hot-product {
   font-size: 24px;
@@ -1335,30 +1362,45 @@ input:checked + label + .expandable-menu {
 .line-white {
   flex-grow: 1;
   height: 1px;
-  background-color: $color--background;
+  background-color: $color--primary;
 }
 .ed-orgin-text {
   font-size: 20px;
-  line-height: 30px;
+  line-height: 40px;
   letter-spacing: 2px;
-  padding-inline: 80px;
+  padding-inline: 130px;
+  @media screen and (max-width: 1440px) {
+    line-height: 30px;
+    padding-inline: 60px;
+    margin-left: 30px;
+  }
 }
+
 .ed-course-intro {
-  // background-color: $color--background;
+  // height: 1800px;
 }
-.ed-course-intro div {
-  float: left;
-}
-.ed-course-intro:after {
-  content: '';
-  clear: both;
-  display: table;
-}
+// .ed-course-intro div {
+// }
+// .ed-course-intro:after {
+//   content: '';
+//   clear: both;
+//   display: table;
+// }
 .ed-course-title {
-  // width: 963px;
-  height: 806px;
-  background-color: #1c262c;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 6rem;
+  @media screen and (max-width: 1440px) {
+    width: 40%;
+  }
+  @media screen and (max-width: $lg) {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 7rem;
+  }
 }
+
 .gallery {
   background-color: #dfd0af;
   display: grid;
@@ -1366,7 +1408,15 @@ input:checked + label + .expandable-menu {
   grid-template-columns: repeat(6, 120px);
   grid-gap: 8px;
   padding: 8px;
+  width: 100%;
+  height: 790px;
+  margin-top: 40px;
   // padding: 8px;
+  @media screen and (max-width: 1440px) {
+    margin-top: 20px;
+    grid-template-columns: repeat(6, 100px);
+    height: 700px;
+  }
   img {
     width: 100%;
     height: 100%;
@@ -1444,7 +1494,7 @@ input:checked + label + .expandable-menu {
   aspect-ratio: 2/2;
 }
 .course-category {
-  color: $color--background;
+  color: $color--primary;
   font-size: 24px;
   text-align: center;
   padding: 20px;
@@ -1452,39 +1502,188 @@ input:checked + label + .expandable-menu {
 }
 
 @mixin btn-color {
-  color: black;
-  border-radius: 10px;
-  width: 180px;
+  color: $color--primary;
+  border-radius: 0px;
+  width: 70px;
   font-size: 20px;
+  z-index: 5;
+  @media screen and (max-width: $lg) {
+    width: 90px;
+  }
+  &:hover {
+    color: white;
+  }
 }
 .btn-color-1 {
   @include btn-color;
-  background-color: #dfd0af !important;
-  &:hover {
-    color: #f2f3ee;
-  }
+  border-color: #dfd0af !important;
 }
 .btn-color-2 {
   @include btn-color;
-  background-color: #b29e7a !important;
-  &:hover {
-    color: #f2f3ee;
-  }
+  border-color: #cbb48b !important;
 }
 .btn-color-3 {
   @include btn-color;
-  background-color: #845635 !important;
-  &:hover {
-    color: #f2f3ee;
+  border-color: #845635 !important;
+}
+.btn-color-4 {
+  @include btn-color;
+  width: 120px;
+  margin-left: 10px;
+  color: #fff;
+  border: 1px solid #808080;
+  background-color: $color--secondary !important;
+}
+.ed-my-md-5 {
+  margin-top: 70px;
+  @media screen and (max-width: 1440px) {
+    margin-top: 10px;
+  }
+  @media screen and (max-width: $lg) {
+    margin-top: 0px;
+  }
+}
+.ed-course-enter {
+  position: relative;
+  left: -65px;
+  @media screen and (max-width: 1440px) {
+    left: -100px;
+  }
+  @media screen and (max-width: $lg) {
+    left: 0px;
+  }
+}
+.ed-h6-resize {
+  width: 300px;
+}
+.arrow {
+  rotate: 90deg;
+  width: 30%;
+  position: relative;
+  left: 40px;
+  @media screen and (max-width: 1440px) {
+    position: relative;
+    left: 30px;
+    width: 25%;
+  }
+  @media screen and (max-width: $lg) {
+    position: relative;
+    left: 30px;
+    rotate: 180deg;
+    width: 25%;
   }
 }
 .slogan {
+  text-align: start;
   font-weight: normal;
   font-size: 18px;
-  color: $color--background;
+  color: $color--primary;
+  @media screen and (max-width: $lg) {
+    font-size: 16px;
+    text-align: center;
+  }
 }
+
 div.my-4.d-md-flex a:hover {
   color: white;
+}
+.ed-course-index {
+  position: absolute;
+  top: -35px;
+  left: -90px;
+  @media screen and (max-width: $lg) {
+    top: -60px;
+    left: -20px;
+  }
+}
+
+.ed-bg-circle {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: calc(100vh - 200px);
+  right: 0px;
+  z-index: 3;
+  opacity: 0.5;
+  background: radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.5) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.3) 40%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.1) 70%,
+      transparent 100%
+    );
+  border-radius: 50%;
+  filter: blur(10px);
+}
+.ed-bg-circle02 {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 1530px;
+  left: 0px;
+  z-index: 3;
+  opacity: 0.5;
+  background: radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.5) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.3) 40%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.1) 70%,
+      transparent 100%
+    );
+  border-radius: 50%;
+  filter: blur(10px);
+  @media screen and (max-width: $lg) {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.ed-bg-circle03 {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: 2000px;
+  right: 0px;
+  z-index: 3;
+  opacity: 0.5;
+  background: radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.5) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.3) 40%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(181, 75, 51, 0.1) 70%,
+      transparent 100%
+    );
+  border-radius: 50%;
+  filter: blur(10px);
+  @media screen and (max-width: $lg) {
+    width: 300px;
+    height: 300px;
+    top: 5420px;
+  }
 }
 
 @media (max-width: $lg) {
@@ -1492,28 +1691,15 @@ div.my-4.d-md-flex a:hover {
     display: flex;
     flex-direction: column;
   }
-  .ed-course-title {
-    max-width: 100%;
-    height: 790px;
-    background-color: $color--primary;
-  }
   .ed-index-course {
     margin-top: 30px;
   }
   .gallery {
+    width: 100%;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 6px;
     padding: 6px;
-  }
-  .slogan {
-    font-size: 16px;
-  }
-  .btn-color-1,
-  .btn-color-2,
-  .btn-color-3 {
-    border-radius: 10px;
-    width: 170px;
-    font-size: 18px;
+    z-index: 4;
   }
 }
 
@@ -1580,13 +1766,13 @@ div.my-4.d-md-flex a:hover {
     margin-top: 30px;
   }
   .hot-product {
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
     padding: 20px;
     letter-spacing: 10px;
   }
   .course-category {
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
     padding: 20px;
     letter-spacing: 10px;
@@ -1602,44 +1788,38 @@ div.my-4.d-md-flex a:hover {
   }
 }
 
-.ed-bg1{
-  background-image: url('http://localhost:3000/index-image/bg1.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  width: 90%;
-  height: 90%;
+.ed-bg1 {
   position: absolute;
   top: calc(100vh - 200px);
   left: calc(50% - 180px);
   z-index: 3;
+  opacity: 0.5;
 }
 
-.ed-bg2{
-  background-image: url('http://localhost:3000/index-image/bg2.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  width: 100%;
-  height: 100%;
+.ed-bg2 {
   position: absolute;
   top: calc(100vh - 800px);
-  left: calc(50% - 7px);
+  left: 160px;
   z-index: 3;
+  opacity: 0.5;
 }
 
 .fullscreen-container {
   position: fixed;
   top: 0;
-  left: -100%;  /* 開始時，將其放到畫面的左邊 */
+  left: -100%;
   bottom: 0;
-  width: 100%;   /* 或其他你想要的寬度 */
-  background-color: rgba(0, 0, 0, 0); /* 初始透明度為0 */
-  transition: left 0.5s, background-color 0.5s; /* 平滑地改變 left 屬性和背景色 */
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  transition: left 0.5s, background-color 0.5s;
   z-index: 1000;
 }
 
 .fullscreen-container.open {
-  left: 0;  /* 當 .open 類被應用時，移動它回到視窗內 */
-  background-color: #F0EBE2
+  left: 0;
+  background-color: #f0ebe2;
+}
+
+.ed-zindex {
+  z-index: 6;
 }

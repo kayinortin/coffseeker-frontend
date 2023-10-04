@@ -1,24 +1,25 @@
 // 全域樣式
 @import "./styles/variables";
 @import "./styles/reset";
+@import 'sweetalert2/dist/sweetalert2.min.css';
 @import "./styles/global";
 @import "./styles/common";
+
 
 // 首頁樣式
 @import "./styles/sidemenu";
 @import "./styles/season";
-@import 'slick-carousel/slick/slick.css';
-@import 'slick-carousel/slick/slick-theme.css';
-
 
 // 購物車
 @import './styles/cart';
+@import './styles/addCart.scss';
 
 // 會員頁面
 @import './styles/member';
 
 // 商品頁面
 @import './styles/product';
+@import './styles/productCard';
 
 //最新消息
 @import './styles/news.module';

@@ -21,7 +21,8 @@
 }
 
 .background {
-  background: #f2f3ee;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity))
 }
 
 .sidebar {
@@ -91,6 +92,9 @@
   .form-control.disable{
     border: 0;
   }
+  @media screen and (max-width: 768px) {
+    max-width: 650px;
+  }
 }
 // cursor: pointer;
 
@@ -112,7 +116,15 @@
     height: 48px;
     width: 650px;
 }
-
+// 忘記密碼取得驗證碼按鈕
+.btn-getOTP {
+    color: #ffffff;
+    background: $color--secondary;
+    font-family: 'Noto Sans TC';
+    font-size: 18px;
+    height: 48px;
+    // width: 650px;
+}
 // 登入頁面 詢問註冊
 .ask-for-register {
     font-size: 20px;
@@ -218,3 +230,7 @@
 //     width: 100px;
 //     height: 100px;
 // }
+
+.check-change{
+    top: -200px;
+}
