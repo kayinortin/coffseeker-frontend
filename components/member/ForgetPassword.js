@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import useInterval from '@/hooks/useInterval'
+import Swal from 'sweetalert2'
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('')
@@ -29,6 +30,12 @@ export default function ForgetPassword() {
   const getOtp = async () => {
     if (delay !== null) {
       setMessage('60s　內無法重新獲得驗證碼')
+      Swal.fire({
+        title: '60s　內無法重新獲得驗證碼',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500,
+      })
       return
     }
 
@@ -42,10 +49,22 @@ export default function ForgetPassword() {
     console.log(res.data)
     if (res.data.message === 'fail') {
       setMessage('驗證碼取得失敗，請確認Email是否已經註冊')
+      Swal.fire({
+        title: '驗證碼取得失敗，請確認Email是否已經註冊',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
 
     if (res.data.message === 'email sent') {
       setMessage('驗證碼已寄送到你填寫的Email信箱中')
+      Swal.fire({
+        title: '驗證碼已寄送到你填寫的Email信箱中',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
       setCount(60)
       setDelay(1000)
       setGotOTP(true)
