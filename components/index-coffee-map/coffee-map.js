@@ -6,12 +6,12 @@ import AOS from 'aos'
 
 export default function CoffeeMap() {
   const [selectedData, setSelectedData] = useState(null)
-  const [iconColor1, setIconColor1] = useState('red')
-  const [iconColor2, setIconColor2] = useState('#fd7e14')
-  const [iconColor3, setIconColor3] = useState('#fd7e14')
-  const [iconColor4, setIconColor4] = useState('#fd7e14')
-  const [iconColor5, setIconColor5] = useState('#fd7e14')
-  const [iconColor6, setIconColor6] = useState('#fd7e14')
+  const [iconColor1, setIconColor1] = useState('#ef8b90')
+  const [iconColor2, setIconColor2] = useState('#ef8b90')
+  const [iconColor3, setIconColor3] = useState('#ef8b90')
+  const [iconColor4, setIconColor4] = useState('#ef8b90')
+  const [iconColor5, setIconColor5] = useState('#ef8b90')
+  const [iconColor6, setIconColor6] = useState('#ef8b90')
 
   const jsonData = [
     {
@@ -61,12 +61,12 @@ export default function CoffeeMap() {
     if (selectedArea) {
       setSelectedData(selectedArea)
       // 重置所有圖標的顏色
-      setIconColor1('#fd7e14')
-      setIconColor2('#fd7e14')
-      setIconColor3('#fd7e14')
-      setIconColor4('#fd7e14')
-      setIconColor5('#fd7e14')
-      setIconColor6('#fd7e14')
+      setIconColor1('#ef8b90')
+      setIconColor2('#ef8b90')
+      setIconColor3('#ef8b90')
+      setIconColor4('#ef8b90')
+      setIconColor5('#ef8b90')
+      setIconColor6('#ef8b90')
 
       // 根據選定的圖標設置顏色
       if (id === 1) {
@@ -152,11 +152,11 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '270px',
-                top: '280px',
+                left: '310px',
+                top: '340px',
               }}
               onClick={() => handleLocationClick(1)}
-              stroke="green"
+              stroke=""
               strokeWidth={2}
             />
             {/* //哥倫比亞 */}
@@ -167,8 +167,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '215px',
-                top: '240px',
+                left: '240px',
+                top: '270px',
               }}
               onClick={() => handleLocationClick(2)}
               stroke="blue"
@@ -182,8 +182,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '145px',
-                top: '180px',
+                left: '160px',
+                top: '200px',
               }}
               onClick={() => handleLocationClick(3)}
               stroke="red"
@@ -197,8 +197,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '725px',
-                top: '250px',
+                left: '810px',
+                top: '280px',
               }}
               onClick={() => handleLocationClick(4)}
               stroke="red"
@@ -212,8 +212,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '525px',
-                top: '225px',
+                left: '590px',
+                top: '254px',
               }}
               onClick={() => handleLocationClick(5)}
               stroke="red"
@@ -227,8 +227,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '630px',
-                top: '190px',
+                left: '700px',
+                top: '215px',
               }}
               onClick={() => handleLocationClick(6)}
               stroke="red"
@@ -287,8 +287,8 @@ export default function CoffeeMap() {
               style={{
                 // marginRight: '0px',
                 position: 'absolute',
-                left: '115px',
-                top: '110px',
+                left: '109px',
+                top: '105px',
               }}
               onClick={() => handleLocationClick(1)}
               stroke="green"
@@ -302,8 +302,8 @@ export default function CoffeeMap() {
               style={{
                 // marginRight: '10px',
                 position: 'absolute',
-                left: '89px',
-                top: '92px',
+                left: '80px',
+                top: '83px',
               }}
               onClick={() => handleLocationClick(2)}
               stroke="blue"
@@ -317,8 +317,8 @@ export default function CoffeeMap() {
               style={{
                 // marginRight: '10px',
                 position: 'absolute',
-                left: '57px',
-                top: '70px',
+                left: '50px',
+                top: '55px',
               }}
               onClick={() => handleLocationClick(3)}
               stroke="red"
@@ -332,8 +332,8 @@ export default function CoffeeMap() {
               style={{
                 // marginRight: '10px',
                 position: 'absolute',
-                left: '317px',
-                top: '100px',
+                left: '287px',
+                top: '84px',
               }}
               onClick={() => handleLocationClick(4)}
               stroke="red"
@@ -347,8 +347,8 @@ export default function CoffeeMap() {
               style={{
                 // marginRight: '10px',
                 position: 'absolute',
-                left: '228px',
-                top: '90px',
+                left: '205px',
+                top: '75px',
               }}
               onClick={() => handleLocationClick(5)}
               stroke="red"
@@ -362,8 +362,8 @@ export default function CoffeeMap() {
               style={{
                 // marginRight: '10px',
                 position: 'absolute',
-                left: '273px',
-                top: '70px',
+                left: '247px',
+                top: '58px',
               }}
               onClick={() => handleLocationClick(6)}
               stroke="red"

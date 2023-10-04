@@ -120,51 +120,49 @@ export default function LoginForm() {
 
   return (
     <>
-      <form id="loginForm">
-        <div className={'container d-flex justify-content-center pb-3'}>
-          <div className={'form-box border border-dark'}>
-            <div className={'form-title border-bottom border-dark p-3'}>
-              會員登入
-            </div>
-            <div className="p-5">
-              {inputs.map((input) => {
-                return (
-                  <div className="mb-3" key={input.id}>
-                    <label htmlFor={input.htmlFor} className={'form-label'}>
-                      {input.title}
-                    </label>
-                    <input
-                      placeholder={input.placeholder}
-                      type={input.type}
-                      className={'form-control'}
-                      id={input.htmlId}
-                      aria-describedby={input.aria}
-                      maxLength={input.maxlength}
-                      onChange={(e) => {
-                        input.onChange(e)
-                      }}
-                    />
-                    <div
-                      id={'error' + input.id}
-                      className={'form-text text-danger'}
-                    ></div>
-                  </div>
-                )
-              })}
-              <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>
-                <input
-                  type="checkbox"
-                  className={'check-input me-3 rounded-0'}
-                  id="exampleCheck1"
-                />
-                <label className={'form-check-label'} htmlFor="exampleCheck1">
-                  記住密碼
-                </label>
-              </div>
+      <form id="loginForm" className={'form-box'}>
+        <div className={'border border-dark'}>
+          <div className={'form-title border-bottom border-dark p-3'}>
+            會員登入
+          </div>
+          <div className="p-5">
+            {inputs.map((input) => {
+              return (
+                <div className="mb-3" key={input.id}>
+                  <label htmlFor={input.htmlFor} className={'form-label'}>
+                    {input.title}
+                  </label>
+                  <input
+                    placeholder={input.placeholder}
+                    type={input.type}
+                    className={'form-control'}
+                    id={input.htmlId}
+                    aria-describedby={input.aria}
+                    maxLength={input.maxlength}
+                    onChange={(e) => {
+                      input.onChange(e)
+                    }}
+                  />
+                  <div
+                    id={'error' + input.id}
+                    className={'form-text text-danger'}
+                  ></div>
+                </div>
+              )
+            })}
+            <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>
+              <input
+                type="checkbox"
+                className={'check-input me-3 rounded-0'}
+                id="exampleCheck1"
+              />
+              <label className={'form-check-label'} htmlFor="exampleCheck1">
+                記住密碼
+              </label>
             </div>
           </div>
         </div>
-        <div className={'container d-flex justify-content-center'}>
+        <div className={'d-flex justify-content-center mt-4'}>
           <button
             className={'btn-login border-0 text-center'}
             type="button"
