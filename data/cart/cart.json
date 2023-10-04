@@ -1,0 +1,29 @@
+[
+    {
+    "cart_id": 1,
+    "cart__name": "烘焙咖啡豆",
+    "cart__description": "新鮮烘焙的咖啡豆，給你最佳的咖啡體驗。",
+    "cart__price": 900,
+    "cart__image": "product_1.png",
+    "cart__quantity": 1,
+    "cart__valid":1
+  },
+  {
+    "cart_id": 2,
+    "cart__name": "卡布奇諾咖啡豆",
+    "cart__description": "濃郁的卡布奇諾風味，適合喜愛濃咖啡的你。",
+    "cart__price": 1200,
+    "cart__image": "product_2.png",
+    "cart__quantity": 1,
+    "cart__valid":1
+  },
+  {
+    "cart_id": 3,
+    "cart__name": "咖啡拉花入門班",
+    "cart__description": "入門咖啡拉花班，開啟你的咖啡藝術之旅！渴望在咖啡的世界中展現獨特的風采嗎？想要掌握咖啡拉花的技巧",
+    "cart__price": "product_3.png",
+    "cart__image": 680,
+    "cart__quantity": 1,
+    "cart__valid":1
+  }
+]
