@@ -5,16 +5,17 @@
   $rotation-range: $range-base * 2;
   $rotation-step: $rotation-range / ($number-of-cards - 1);
   $translate-distance: -50px;
-  background-image: url(../public/divination-image/desk2.png);
+  background-image: url(../public/divination-image/desk4.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
   .mask {
     width: 100%;
     height: 250px;
     // background-color: #ffffff64;
     position: absolute;
-    bottom: -10px;
+    bottom: 0px;
     z-index: 2;
   }
   .game {
