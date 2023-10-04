@@ -3,7 +3,7 @@ $color--background: #f0ebe2;
 $color--black: #000000;
 
 .about-div-width {
-  padding-inline: 125px;
+  padding-inline: 50px;
 }
 .brand-story {
   margin-top: 50px;
@@ -21,7 +21,7 @@ $color--black: #000000;
   color: #ff9b1a;
 }
 
-@media (max-width: 431px) {
+@media (max-width: 391px) {
   .about-div-width {
     padding-inline: 50px !important;
   }
@@ -31,7 +31,7 @@ $color--black: #000000;
   }
   .mobile-about-image {
     margin-right: 0 !important;
-    margin-left: 20px;
+    margin-left: 0px;
     margin-bottom: 30px;
     text-align: center;
   }
@@ -170,7 +170,7 @@ $color--black: #000000;
 }
 
 //聯絡我們RWD
-@media (max-width: 431px) {
+@media (max-width: 391px) {
   #ei-wrap {
    
     // display: none;
