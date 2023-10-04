@@ -93,7 +93,7 @@ export default function HeaderMobile(props) {
                   <li className="ed-navbar__item" key={item.id}>
                     <a
                       className={`ed-navbar__font ${
-                        navItems.find((here) => here.href === currentRoute)
+                        navItems.find((item) => item.href === currentRoute)
                           ? 'active'
                           : ''
                       }`}

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import ProductDataFetcher from '../../components/product/PopularProducts'
+import PopularDataFetcher from './PopularProducts'
 import AOS from 'aos'
 import Image from 'next/image'
 import { BsCart, BsFillCartCheckFill } from 'react-icons/bs'
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
+import ProductItem from './productItem'
+import { useProducts } from '@/context/product'
 
 // 02 跟 03 的圓圈放在這裡
 
-export default function PopularProducts() {
-  const [data, setData] = useState(null)
-
-  const onDataFetched = (fetchedData) => {
-    setData(fetchedData)
-  }
+export default function PopularProducts(props) {
+  const { setShow } = props
+  const { productsData, setProductsData } = useProducts()
+  const isFetchingProducts = productsData.length === 0
 
   const [isFavorited, setFavorited] = useState(false)
   const [isCarted, setCarted] = useState(false)
@@ -30,6 +30,7 @@ export default function PopularProducts() {
   }
   return (
     <>
+      <PopularDataFetcher />
       <div className="container ed-index">
         {/* 區塊名稱 */}
         <div
@@ -165,53 +166,21 @@ export default function PopularProducts() {
               </div>
             </div>
           </div>
+
           {/* 右側放商品 */}
           <div className="popular-right ed-mt-1440">
-            {data && data.products && data.products.length > 0 ? (
+            {productsData && productsData.length > 0 ? (
               <div>
                 <div className="row ed-popular-padding">
-                  {data.products.map((product) => (
-                    <div className="col-md-6" key={product.product_id}>
-                      <div
-                        className="card ed-border-none"
-                        data-aos={isMobile() ? 'fade-up' : 'fade-left'}
-                        data-aos-delay={200}
-                      >
-                        <img
-                          src={`http://localhost:3005/uploads/${product.product_image}`}
-                          alt={product.product_name}
-                          className="card-img-top ed-border-card01"
-                        />
-                        <div className="card-body ed-card-body-popular">
-                          <p className="card-title ed-card-title">
-                            {product.product_name}
-                          </p>
-                          <p className="ed-card-origin-price">NT$1,200</p>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h6 className="ed-card-price">
-                              NT${product.product_price}
-                            </h6>
-                            <div className="d-flex justify-content-between align-items-center">
-                              <div className="mx-2">
-                                {isFavorited ? (
-                                  <MdFavorite className="ed-icon-size true" />
-                                ) : (
-                                  <MdFavoriteBorder className="ed-icon-size" />
-                                )}
-                              </div>
-                              <div>
-                                {isCarted ? (
-                                  <BsFillCartCheckFill className="ed-icon-size true" />
-                                ) : (
-                                  <BsCart className="ed-icon-size" />
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                  {productsData.map((product, i) => {
+                    return (
+                      <ProductItem
+                        key={product.id}
+                        setShow={setShow}
+                        product={product}
+                      />
+                    )
+                  })}
                 </div>
               </div>
             ) : (
@@ -231,8 +200,6 @@ export default function PopularProducts() {
         <div className="ed-bg-circle02"></div>
         <div className="ed-bg-circle03"></div>
       </div>
-
-      <ProductDataFetcher onDataFetched={onDataFetched} />
     </>
   )
 }

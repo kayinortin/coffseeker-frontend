@@ -76,7 +76,7 @@ export default function HeaderDesktop(props) {
                   <li className="ed-navbar__item ed-navbar__link" key={item.id}>
                     <a
                       className={`ed-navbar__font ${
-                        navItems.find((here) => here.href === currentRoute)
+                        navItems.find((item) => item.href === currentRoute)
                           ? 'active'
                           : ''
                       }`}

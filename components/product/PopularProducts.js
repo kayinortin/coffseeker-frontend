@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
+import { useProducts } from '@/context/product'
 
-export default function PopularProducts({ onDataFetched }) {
+export default function PopularDataFetcher() {
+  const { setProductsData } = useProducts()
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const productResponse = await axios.get(
           'http://localhost:3005/api/popular-products'
         )
-        onDataFetched(response.data)
+        const products = productResponse.data.products
+        setProductsData(products)
       } catch (error) {
         console.error('資料獲取失敗:', error)
       }
     }
     fetchData()
   }, [])
+
+  return null
 }

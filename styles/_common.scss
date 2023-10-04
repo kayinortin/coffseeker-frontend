@@ -996,8 +996,7 @@ input:checked + label + .expandable-menu {
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
-
-    border-radius: 0 0.625rem 0 1.875rem;
+  
     #{$_}__icon {
       font-size: 1.5rem;
     }

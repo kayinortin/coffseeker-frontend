@@ -7,7 +7,8 @@ import { UserProvider } from '@/context/UserInfo'
 import { ProductsProvider } from '@/context/product'
 import { CategoryProvider } from '@/context/category'
 import { CartListProvider } from '@/context/cart'
-import { FavProvider } from '@/context/favorite'
+import { FavProvider } from '@/context/fav'
+import { DetailProvider } from '@/context/showProductDetail'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -23,7 +24,9 @@ export default function MyApp({ Component, pageProps }) {
         <CartListProvider>
           <FavProvider>
             <CategoryProvider>
-              {getLayout(<Component {...pageProps} />)}
+              <DetailProvider>
+                {getLayout(<Component {...pageProps} />)}
+              </DetailProvider>
             </CategoryProvider>
           </FavProvider>
         </CartListProvider>

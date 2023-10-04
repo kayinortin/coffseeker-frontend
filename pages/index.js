@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Explore from '../components/index/explore'
-import Hot from '../components/product/index'
+import Hot from '../components/product/hot'
 import Course from '../components/index/course'
 import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 import AOS from 'aos'

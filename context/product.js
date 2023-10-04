@@ -4,9 +4,12 @@ const ProductsContext = createContext()
 
 export function ProductsProvider({ children }) {
   const [productsData, setProductsData] = useState([])
+  const [sortBy, setSortBy] = useState('default')
 
   return (
-    <ProductsContext.Provider value={{ productsData, setProductsData }}>
+    <ProductsContext.Provider
+      value={{ productsData, setProductsData, sortBy, setSortBy }}
+    >
       {children}
     </ProductsContext.Provider>
   )
