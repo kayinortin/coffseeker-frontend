@@ -13,7 +13,6 @@ const BreadCrumbs = ({
   const router = useRouter()
   const { isReady, asPath } = router
   const { pid } = router.query
-  console.log(pid)
 
   const [showChild, setShowChild] = useState(false)
   const [pathSegments, setPathSegments] = useState([])
@@ -24,7 +23,6 @@ const BreadCrumbs = ({
     // 解析 URL 的路徑段落
     if (isReady) {
       const segments = asPath.split('/').filter((segment) => !!segment)
-      console.log(segments)
       setPathSegments(segments)
     }
   }, [isReady, asPath])
