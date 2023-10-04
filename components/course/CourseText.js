@@ -17,7 +17,7 @@ export default function CourseText() {
     name: 'Default Course Name',
   }
 
-  console.log(courseData)
+  // console.log(courseData)
   const { image, name, price } = courseData
   return (
     <div className="m-2 col-10 col-sm-6 mx-auto ms-sm-5">

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import NewsDatabaseFetch from './news-database-fetch'
+import NewsDatabaseFetch from './NewstDataFetcher'
 import styles from '../../styles/_news.module.scss'
 import Pagination from '../news/pagination'
+import CategoryBtn from './category-btn'
+import OrderBy from './order-by'
 
 export default function Card() {
   const [data, setData] = useState(null)
@@ -13,7 +15,16 @@ export default function Card() {
 
   return (
     <>
-      <div className="ei-card-container row row-cols-1 row-cols-md-2">
+      <div className="d-md-flex justify-content-center align-items-center mb-4">
+        <div className="d-flex flex-column align-items-center">
+          <CategoryBtn />
+        </div>
+        <div className="mt-4 d-flex justify-content-center">
+          <OrderBy />
+        </div>
+      </div>
+
+      <div className="ei-card-container row row-cols-1 row-cols-md-2 background ">
         {data && data.news && data.news.length > 0 ? (
           data.news.map((news, index) => (
             <div key={news.id} className={`col  ei-mobile-card-margin`}>
@@ -22,7 +33,7 @@ export default function Card() {
                 passHref={true}
                 className="text-dark"
               >
-                <div className={`${styles['ei-card']}`}>
+                <div key={news.news_id} className={`${styles['ei-card']}`}>
                   <img
                     src={`http://localhost:3005/uploads/${news.news_image}`}
                     className={`card-img-top img-fluid ${styles['custom-image']}`}

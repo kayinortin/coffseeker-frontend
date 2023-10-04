@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 export async function checkLoginStatus() {
   const token = Cookies.get('accessToken')
-  console.log('accessToken:', token)
+  // console.log('accessToken:', token)
 
   if (!token) {
     return false

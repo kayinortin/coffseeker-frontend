@@ -23,6 +23,9 @@ export default function ForgetPassword() {
     }
   }, [count])
 
+  // Edison // 1004 代碼檢查
+  // Edison // 這邊寄送驗證碼之後不會跳出修改密碼的區塊
+
   const getOtp = async () => {
     if (delay !== null) {
       setMessage('60s　內無法重新獲得驗證碼')
@@ -46,6 +49,7 @@ export default function ForgetPassword() {
       setMessage('驗證碼已寄送到你填寫的Email信箱中')
       setCount(60)
       setDelay(1000)
+      // 應該也要設定在這 setGotOTP(true)
     }
   }
 

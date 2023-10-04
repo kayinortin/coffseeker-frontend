@@ -3,6 +3,7 @@ import axios from 'axios'
 import ProductDataFetcher from '../../components/product/ProductDataFetcher'
 import { BsCart, BsFillCartCheckFill } from 'react-icons/bs'
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
+import Swal from 'sweetalert2'
 
 export default function ProductsList() {
   const [data, setData] = useState(null)
@@ -13,6 +14,75 @@ export default function ProductsList() {
 
   const [isFavorited, setFavorited] = useState(false)
   const [isCarted, setCarted] = useState(false)
+
+  // 加入購物車的按鈕，需要使用useContext 處理
+  // const { cartListData, setCartListData } = useCartList()
+  // const [number, setNumber] = useState(1)
+  // const [detailData, setDetailData] = useState([])  // 需再定義商品細節欄位
+  // const [cartListData, setCartListData] = useState([]) // 存放進useContext
+  // const [cartIconLength, setCartIconLength] = useState() // 購物車icon數字
+
+  // const addCart = () => {
+  //   const Toast = Swal.mixin({
+  //     toast: true,
+  //     position: 'top-end',
+  //     showConfirmButton: false,
+  //     timer: 2000,
+  //     timerProgressBar: false,
+  //     didOpen: (toast) => {
+  //       toast.addEventListener('mouseenter', Swal.stopTimer)
+  //       toast.addEventListener('mouseleave', Swal.resumeTimer)
+  //     },
+  //   })
+
+  //   Toast.fire({
+  //     icon: 'success',
+  //     title: '商品已加入購物車',
+  //     customClass: {
+  //       popup: 'c-alert__toast',
+  //       title: 'c-alert__subtitle',
+  //     },
+  //   })
+
+  //   const newItem = {
+  //     id: detailData.id,
+  //     name: detailData.name,
+  //     image: detailData.image,
+  //     price: detailData.price,
+  //     discountPrice: detailData.discountPrice,
+  //     amount: number,
+  //   }
+
+  //   const newItemData = [...cartListData, newItem]
+
+  //   for (let i = 0; i < cartListData.length; i++) {
+  //     if (cartListData[i].id === newItem.id) {
+  //       const newAmountItem = {
+  //         id: cartListData[i].id,
+  //         name: cartListData[i].name,
+  //         image: cartListData[i].image,
+  //         price: cartListData[i].price,
+  //         discountPrice: cartListData[i].discountPrice,
+  //         amount: cartListData[i].amount + newItem.amount,
+  //       }
+  //       const oldCartListData = cartListData.filter(
+  //         (item, i) => item.id !== newItem.id
+  //       )
+  //       const newCartListData = [...oldCartListData, newAmountItem]
+
+  //       setCartListData(newCartListData)
+  //       return localStorage.setItem('cartList', JSON.stringify(newCartListData))
+  //     }
+  //   }
+
+  //   if (cartListData.length !== 0) {
+  //     setCartListData(newItemData)
+  //     localStorage.setItem('cartList', JSON.stringify(newItemData))
+  //   } else {
+  //     setCartListData([newItem])
+  //     localStorage.setItem('cartList', JSON.stringify([newItem]))
+  //   }
+  // }
 
   return (
     <>
@@ -39,6 +109,7 @@ export default function ProductsList() {
                           NT${product.product_price}
                         </h6>
                         <div className="d-flex justify-content-between align-items-center">
+                          {/* <button className="ed-addCart" onClick={addCart}>加入購物車</button> */}
                           <button className="ed-addCart">加入購物車</button>
                         </div>
                       </div>
