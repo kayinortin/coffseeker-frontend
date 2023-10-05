@@ -6,8 +6,6 @@ import HeaderDesktop from './Header-desktop'
 import HeaderMobile from './Header-mobile'
 import Footer from './footer'
 
-import productsData from '@/data/cart/product'
-
 import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
 import { useCartList } from '@/context/cart'
