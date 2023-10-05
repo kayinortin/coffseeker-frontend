@@ -107,26 +107,29 @@ export default function SignUpForm() {
   const birthday = [
     {
       id: 8,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayYear',
       title: '生日',
       options: years,
+      placeholder: '年',
       onChange: (e) => setBirthdayYear(e.target.value),
     },
     {
       id: 9,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayMonth',
       title: '',
       options: month,
+      placeholder: '月',
       onChange: (e) => setBirthdayMonth(e.target.value),
     },
     {
       id: 10,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayDate',
       title: '',
       options: date,
+      placeholder: '日',
       onChange: (e) => setBirthdayDate(e.target.value),
     },
   ]
@@ -206,11 +209,12 @@ export default function SignUpForm() {
                     </label>
                     <select
                       className={'form-select'}
+                      value={select.placeholder}
                       onChange={(e) => {
                         select.onChange(e)
                       }}
                     >
-                      <option selected disabled>
+                      <option value={select.placeholder} disabled>
                         {select.placeholder}
                       </option>
                       {select.options.map((ops) => {
@@ -271,16 +275,19 @@ export default function SignUpForm() {
             </label>
           </div>
         </div>
-        {allowContract === true ? (
+        {allowContract ? (
           <div className={'d-flex justify-content-center'}>
             <button type="button" className={'btn-login border-0 text-center'}>
-              <span className={'agree'}>確認並送出</span>
+              確認並送出
             </button>
           </div>
         ) : (
-          <div className={'d-flex justify-content-center'}>
-            <button type="button" className={'btn-login border-0 text-center'}>
-              <span>請勾選同意會員隱私條款</span>
+          <div className={'d-flex'}>
+            <button
+              className={'btn-login border-0 text-center disagree py-auto'}
+              type="button"
+            >
+              請勾選同意會員隱私條款
             </button>
           </div>
         )}

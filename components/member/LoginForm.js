@@ -180,7 +180,7 @@ export default function LoginForm() {
           <FaGoogle className={'h2'} />
           <FaXTwitter className={'h2 ms-5'} />
         </div>
-        <div className={'container d-flex justify-content-center mb-3'}>
+        <div className={'d-flex justify-content-center mb-3'}>
           <div className={'ask-for-register'}>
             <span className="me-3">還不是會員嗎?</span>
             <Link href="./register" className={'ms-3'}>
@@ -188,15 +188,14 @@ export default function LoginForm() {
             </Link>
           </div>
         </div>
-        <div className={'container d-flex justify-content-center  pb-5'}>
-          <div className={'content d-flex justify-content-between'}>
-            <Link href="/" className={'forget-password'}>
-              會員隱私條款
-            </Link>
-            <Link href="/member/forget-password" className={'forget-password'}>
-              忘記密碼
-            </Link>
-          </div>
+
+        <div className={'d-flex justify-content-between'}>
+          <Link href="/" className={'forget-password'}>
+            會員隱私條款
+          </Link>
+          <Link href="/member/forget-password" className={'forget-password'}>
+            忘記密碼
+          </Link>
         </div>
       </form>
     </>
