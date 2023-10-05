@@ -27,7 +27,6 @@ export default function Home() {
 
   return (
     <>
-      {/* 頁面名稱 */}
       <div>
         <Head>
           <title>探索咖啡COFFSEEKER｜網羅世界各地極品咖啡</title>

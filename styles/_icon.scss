@@ -1,80 +1,84 @@
 .ed-fav-btn {
-    $_: &;
-    background: #d6d5d5;
-    border: none;
-  
-    position: absolute;
-    top: 0px;
-    right: 0;
-    border-radius: 0 0 0 10rem;
-  
+  $_: &;
+  background: #dfd0af;
+  border: none;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  clip-path: polygon(100% 100%, 0% 0%, 100% 0%);
+
+  cursor: pointer;
+
+  transition: $transition;
+  &__icon {
+    position: relative;
+    top: 6px;
+    color: white;
     cursor: pointer;
-  
-    transition: $transition;
-    &__icon {
-      color: white;
-      cursor: pointer;
-    }
-    &__text {
-      margin-left: 0.25rem;
-      @include text--small;
-      @include cursor(pointer);
-    }
-    &--medium {
-      width: 2.75rem;
-      height: 2.75rem;
-  
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
+  }
+  &__text {
+    margin-left: 0.25rem;
+    @include text--small;
+    @include cursor(pointer);
+  }
+  &--medium {
+    width: 4rem;
+    height: 4rem;
 
-      #{$_}__icon {
-        font-size: 1.5rem;
-      }
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    #{$_}__icon {
+      font-size: 1.5rem;
     }
-    &--large {
-      width: 3.75rem;
-      height: 3.75rem;
-      background: transparent;
-  
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
-  
-      #{$_}__icon {
-        font-size: 2rem;
-      }
+  }
+  &--large {
+    width: 4rem;
+    height: 4rem;
+    // background: transparent;
+    top: 10px;
+    right: 50px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    #{$_}__icon {
+      top: 0px;
+      right:-6px;
+      font-size: 2rem;
     }
+  }
+  @media screen and (max-width: $md) {
+    width: 3rem;
+    height: 3rem;
+
+    align-items: center;
+    #{$_}__icon {
+      font-size: 1.25rem;
+    }
+  }
+  &--icon-text {
+    width: max-content;
+
+    display: flex;
+    align-items: center;
+
+    right: 0.75rem;
     @media screen and (max-width: $md) {
-      width: 3rem;
-      height: 3rem;
-
-  
-      align-items: center;
-      #{$_}__icon {
-        font-size: 1.25rem;
-      }
-    }
-    &--icon-text {
       width: max-content;
-  
-      display: flex;
-      align-items: center;
-  
-      right: 0.75rem;
-      @media screen and (max-width: $md) {
-        width: max-content;
-        top: 0.5rem;
-        right: 0;
-      }
+      top: 0.5rem;
+      right: 0;
     }
-    &.active {
-      #{$_}__icon {
-        color: $color--error;
-        box-shadow: none;
-        &::before {
-          
-        }
+  }
+  &.active {
+    #{$_}__icon {
+      color: $color--error;
+      box-shadow: none;
+      &::before {
       }
     }
   }
+}

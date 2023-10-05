@@ -14,7 +14,7 @@ export default function ProductItem(props) {
   const { product } = props
   const {
     id,
-    image,
+    image_main,
     name,
     brand,
     amount,
@@ -117,7 +117,7 @@ export default function ProductItem(props) {
             onClick={handleShow}
           >
             <img
-              src={`http://localhost:3005/uploads/${image}`}
+              src={`http://localhost:3005/uploads/${image_main}`}
               alt={name}
               className="card-img-top"
             />

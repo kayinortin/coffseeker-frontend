@@ -1051,21 +1051,23 @@ input:checked + label + .expandable-menu {
 
 .ed-counter {
   $_: &;
-  width: 100%;
+  width: 156px;
+  height: 30px;
   height: $height__input;
 
   background: $color--gray6;
-  border-radius: $border-radius__input;
+  border: #1c262c 1px solid;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   &__btn {
-    padding: 0 0.625rem;
-    background: transparent;
+    // padding: 0 0.625rem;
+    height: 44px;
+    background: $color--secondary;
     border: none;
     #{$_}__icon {
-      color: $color--primary;
+      color: white;
       font-size: 1.25rem;
     }
   }
