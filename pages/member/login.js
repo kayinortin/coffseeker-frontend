@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginForm from '@/components/member/LoginForm'
+import LoginForm from '@/components/member/LoginForm/Index'
 import Link from 'next/link'
 
 export default function Login() {

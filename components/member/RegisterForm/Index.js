@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+import Validation from './Validation'
+import FormItems from './FormItems'
 
-export default function SignUpForm() {
-  const [userId, setId] = useState('')
+export default function RegisterForm() {
+  const router = useRouter()
+
+  const [errorMessage, setErrorMessage] = useState('')
   const [userEmail, setMail] = useState('')
   const [userName, setName] = useState('')
   const [userPassword, setPassword] = useState('')
@@ -75,6 +82,7 @@ export default function SignUpForm() {
       class: 'mb-3',
       htmlFor: 'SelectGender',
       title: '性別',
+      value: userGender,
       options: [
         { value: 'Male', opt: '男' },
         { value: 'Female', opt: '女' },
@@ -110,6 +118,7 @@ export default function SignUpForm() {
       class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayYear',
       title: '生日',
+      value: birthdayYear,
       options: years,
       placeholder: '年',
       onChange: (e) => setBirthdayYear(e.target.value),
@@ -119,6 +128,7 @@ export default function SignUpForm() {
       class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayMonth',
       title: '',
+      value: birthdayMonth,
       options: month,
       placeholder: '月',
       onChange: (e) => setBirthdayMonth(e.target.value),
@@ -128,6 +138,7 @@ export default function SignUpForm() {
       class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayDate',
       title: '',
+      value: birthdayData,
       options: date,
       placeholder: '日',
       onChange: (e) => setBirthdayDate(e.target.value),
@@ -137,6 +148,48 @@ export default function SignUpForm() {
   // 會員條款按鈕判斷
   const [allowContract, setAllowContract] = useState(false)
 
+  // 送出表單
+  const handleFormSubmit = async () => {
+    // 進行表單驗證
+    const isValied = Validation(
+      userEmail,
+      userPassword,
+      rePassword,
+      userGender,
+      userPhone,
+      birthdayYear,
+      birthdayMonth,
+      birthdayData
+    )
+
+    if (isValied) {
+      const formData = {
+        username: userName,
+        password: userPassword,
+        email: userEmail,
+        gender: userGender,
+        phone: userPhone,
+        birthday: birthdayYear + '-' + birthdayMonth + '-' + birthdayData,
+      }
+      try {
+        const response = await axios.post(
+          `http://localhost:3005/api/users/`,
+          formData
+        )
+        console.log(response)
+        Swal.fire({
+          title: '註冊成功',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        router.push('/member/login')
+      } catch (error) {
+        console.error('錯誤:', error)
+      }
+    }
+  }
+
   return (
     <>
       <form id="loginForm" className={'form-box'}>
@@ -144,92 +197,26 @@ export default function SignUpForm() {
           <div className={'form-title border-bottom border-dark p-3'}>
             會員註冊
           </div>
-          <div className="p-5">
-            {inputs.map((input) => {
-              return (
-                <div className="mb-3" key={input.id}>
-                  <label htmlFor={input.htmlFor} className={'form-label'}>
-                    {input.title}
-                  </label>
-                  <input
-                    placeholder={input.placeholder}
-                    type={input.tyoe}
-                    className={'form-control'}
-                    id={input.htmlFor}
-                    aria-describedby={input.aria}
-                    maxLength={input.maxlength}
-                    onChange={(e) => {
-                      input.onChange(e)
-                    }}
-                  />
-                  <div
-                    id={'error' + input.id}
-                    className={'form-text text-danger'}
-                  ></div>
-                </div>
-              )
-            })}
-            {/* 性別 */}
-            {selection.map((select) => {
-              return (
-                <div className={select.class} key={select.id}>
-                  <label htmlFor={select.htmlFor} className={'form-label'}>
-                    {select.title}
-                  </label>
-                  <select
-                    className={'form-select'}
-                    value={'default'}
-                    onChange={(e) => {
-                      select.onChange(e)
-                    }}
-                  >
-                    <option value={'default'} disabled>
-                      {select.placeholder}
-                    </option>
-                    {select.options.map((opts, i) => {
-                      return (
-                        <>
-                          <option key={i} value={opts.value}>
-                            {opts.opt}
-                          </option>
-                        </>
-                      )
-                    })}
-                  </select>
-                </div>
-              )
-            })}
-            {/* 生日 */}
-            <div className={'row align-items-end'}>
-              {birthday.map((select) => {
-                return (
-                  <div className={select.class} key={select.id}>
-                    <label htmlFor={select.htmlFor} className={'form-label'}>
-                      {select.title}
-                    </label>
-                    <select
-                      className={'form-select'}
-                      value={select.placeholder}
-                      onChange={(e) => {
-                        select.onChange(e)
-                      }}
-                    >
-                      <option value={select.placeholder} disabled>
-                        {select.placeholder}
-                      </option>
-                      {select.options.map((ops) => {
-                        return (
-                          <option key={ops} value={ops}>
-                            {ops}
-                          </option>
-                        )
-                      })}
-                    </select>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          <FormItems
+            userEmail={userEmail}
+            userName={userName}
+            userPassword={userPassword}
+            rePassword={rePassword}
+            userPhone={userPhone}
+            userGender={userGender}
+            birthdayYear={birthdayYear}
+            birthdayMonth={birthdayMonth}
+            birthdayData={birthdayData}
+            setMail={setMail}
+            setName={setName}
+            setPassword={setPassword}
+            setRePassword={setRePassword}
+            setPhone={setPhone}
+            setGender={setGender}
+            setBirthdayYear={setBirthdayYear}
+            setBirthdayMonth={setBirthdayMonth}
+            setBirthdayDate={setBirthdayDate}
+          />
         </div>
 
         <div
@@ -264,7 +251,6 @@ export default function SignUpForm() {
                 } else {
                   setAllowContract(true)
                 }
-                console.log(allowContract)
               }}
             />
             <label className={'form-check-label'} htmlFor="exampleCheck2">
@@ -277,7 +263,11 @@ export default function SignUpForm() {
         </div>
         {allowContract ? (
           <div className={'d-flex justify-content-center'}>
-            <button type="button" className={'btn-login border-0 text-center'}>
+            <button
+              type="button"
+              className={'btn-login border-0 text-center'}
+              onClick={handleFormSubmit}
+            >
               確認並送出
             </button>
           </div>
