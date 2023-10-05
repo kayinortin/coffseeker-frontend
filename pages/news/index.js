@@ -5,8 +5,17 @@ import CategoryBtn from '@/components/news/category-btn'
 import styles from '../../styles/_news.module.scss'
 import OrderBy from '@/components/news/order-by'
 import Pagination from '@/components/news/pagination'
+import { useState } from 'react'
 
 export default function News() {
+  const [currentSort, setCurrentSort] = useState('popular') // 假設初始排序方式是 'popular'
+
+  // 定義處理排序方式變化的函數
+  const handleSortChange = (newSort) => {
+    setCurrentSort(newSort) // 更新 currentSort 狀態
+    // 在這裡你可以執行其他處理排序方式變化的邏輯
+  }
+
   return (
     <>
       <div className="">
@@ -38,15 +47,21 @@ export default function News() {
             <h3 className="text-center news-title fs-2">最新消息</h3>
             <div className="ei-line ms-3"></div>
           </div>
+          <div className="d-md-flex align-items-end justify-content-center mb-4">
+            <div>
+              <CategoryBtn className="" />
+            </div>
 
-          {/* <div className="d-md-flex align-items-end justify-content-center mb-4">
-        <CategoryBtn className="" />
-        <div className="mobile-orderby d-flex flex-column align-items-center mt-4">
-          <OrderBy className="" />
-        </div>
-      </div> */}
-          <Card />
-          {/* <Pagination /> */}
+            <div className="mobile-orderby d-flex flex-column align-items-center mt-4">
+              <OrderBy onChange={handleSortChange} />
+            </div>
+          </div>
+
+          {/* 渲染新聞列表 */}
+          <Card currentSort={currentSort} />
+
+          {/* 添加分頁 */}
+          <Pagination />
         </div>
       </div>
     </>

@@ -152,8 +152,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '310px',
-                top: '340px',
+                left: '29%',
+                top: '56%',
               }}
               onClick={() => handleLocationClick(1)}
               stroke=""
@@ -167,8 +167,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '240px',
-                top: '270px',
+                left: '23%',
+                top: '46%',
               }}
               onClick={() => handleLocationClick(2)}
               stroke="blue"
@@ -182,8 +182,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '160px',
-                top: '200px',
+                left: '15.5%',
+                top: '35%',
               }}
               onClick={() => handleLocationClick(3)}
               stroke="red"
@@ -197,8 +197,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '810px',
-                top: '280px',
+                left: '76%',
+                top: '48%',
               }}
               onClick={() => handleLocationClick(4)}
               stroke="red"
@@ -212,8 +212,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '590px',
-                top: '254px',
+                left: '55%',
+                top: '43%',
               }}
               onClick={() => handleLocationClick(5)}
               stroke="red"
@@ -227,8 +227,8 @@ export default function CoffeeMap() {
               style={{
                 marginRight: '10px',
                 position: 'absolute',
-                left: '700px',
-                top: '215px',
+                left: '65.5%',
+                top: '36.5%',
               }}
               onClick={() => handleLocationClick(6)}
               stroke="red"

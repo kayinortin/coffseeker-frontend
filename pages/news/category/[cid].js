@@ -13,8 +13,8 @@ import Pagination from '@/components/news/pagination'
 const CategoryNews = () => {
   const router = useRouter()
   const { cid } = router.query
+  const [currentSort, setCurrentSort] = useState('default')
   const [categoryNews, setCategoryNews] = useState([])
-  const [activeButton, setActiveButton] = useState('allnews')
 
   useEffect(() => {
     // 在此處使用 cid 發送 API 請求以獲取分類新聞
@@ -30,23 +30,40 @@ const CategoryNews = () => {
     }
   }, [cid])
 
+  // 處理排序方式變更，並更新排序方式
+  const handleSortChange = (newSort) => {
+    setCurrentSort(newSort)
+  }
+
+  // 應用排序方式到消息列表
+  const sortedCategoryNews = categoryNews.sort((a, b) => {
+    if (currentSort === 'popular') {
+      return b.views - a.views // 按最多人瀏覽排序
+    } else if (currentSort === 'oldest') {
+      return new Date(a.created_at) - new Date(b.created_at) // 舊到新
+    } else if (currentSort === 'default') {
+      return new Date(b.created_at) - new Date(a.created_at) // 預設新到舊
+    }
+    return 0
+  })
+
   return (
     <>
       <div className="container">
         <NewsLayout />
-        <div className="d-md-flex justify-content-center align-items-center mb-4 ms-4">
+        <div className="d-md-flex justify-content-center align-items-center mb-4">
           <div className="d-flex flex-column align-items-center">
             <CategoryBtn />
           </div>
           <div className="mt-4 d-flex justify-content-center">
-            <OrderBy />
+            <OrderBy onChange={handleSortChange} />
           </div>
         </div>
 
         <div className=" row row-cols-1 row-cols-md-2 background">
-          {categoryNews && categoryNews.length > 0 ? (
-            categoryNews.map((news, index) => (
-              <div key={news.news_id} className={`col  ei-mobile-card-margin`}>
+          {sortedCategoryNews && sortedCategoryNews.length > 0 ? (
+            sortedCategoryNews.map((news, index) => (
+              <div key={news.id} className={`col  ei-mobile-card-margin`}>
                 <Link
                   href={`/news/${news.news_id}`}
                   passHref={true}
