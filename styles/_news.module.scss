@@ -1,11 +1,12 @@
 $color--primary: #1c262c;
-$color--background: #F2F3EE;
+$color--background: #f2f2f2;
 $color--black: #000000;
 
 //index.js區
 .ei-news-container{
-  background-color: $color--background;
+  // background-color: $color--background;
   // padding-inline: 50px;
+  // max-width: 1400px;
 }
 //標題直線
 .ei-line {
@@ -14,6 +15,12 @@ $color--black: #000000;
   height: 1px;
   background-color: $color--primary;
 }
+
+@media (max-width: 391px) {
+  .mobile-orderby {
+   margin-top: 20px;
+  }}
+
 
 // 卡片區
 .news-link {
@@ -37,9 +44,9 @@ $color--black: #000000;
 }
 
 .ei-card {
-  // width: 94%;
-  max-width: 700px;
-  height: 400px;
+  // width: 80%;
+  // max-width: 700px;
+  height: 380px;
   margin-inline: 30px;
   margin-top: 30px;
   margin-bottom: 20px;
@@ -52,14 +59,14 @@ $color--black: #000000;
 
   // 卡片圖片高度
   .custom-image {
-    height: 328px;
+    height: 308px;
   }
 }
 
 // 卡片日期設定
 .ei-create-at {
-  font-size: 12px;
-  font-weight: 100;
+  font-size: 14px;
+  font-weight: 300;
   color: $color--black;
 }
 
@@ -84,7 +91,7 @@ $color--black: #000000;
 }
 
 // 卡片RWD區
-@media (max-width: 430px) {
+@media (max-width: 391px) {
   .ei-mobile-container {
     width: 100%;
   }
@@ -93,15 +100,14 @@ $color--black: #000000;
   }
   .ei-mobile-category-btn {
     width: 100%;
-    justify-content: center;
-    text-align: right;
   }
   .mobile-news-title{
     margin-top: 2rem !important;
   }
   .ei-card {
     max-width: 100%;
-    margin-bottom: 40px;
+    height: 320px !important;
+    margin-bottom: 0px !important;
     &:hover {
       transform: none;
       box-shadow: none;
@@ -114,10 +120,17 @@ $color--black: #000000;
     width: 100%;
   }
   .ei-mobile-card-margin {
-    margin-bottom: 15px !important;
+    margin-bottom: 0px !important;
+    padding-right: 0 !important;
+    padding-left:  0 !important;
+    // height: 400px !important;
+  }
+  // 卡片圖片高度
+  .custom-image {
+    height: 238px !important;
   }
 }
-@media (min-width: 430px) {
+@media (min-width: 391px) {
   .ei-btn-container {
     text-align: left;
   }
@@ -130,7 +143,7 @@ $color--black: #000000;
 
 // [nid].js頁面
 .ei-container-nid{
-  max-width: 90%;
+  max-width: 80%;
 }
 .news-detail {
   // width: 90%;
@@ -148,9 +161,10 @@ $color--black: #000000;
 }
 
 // [nid].js  RWD區
-@media (max-width: 431px) {
+@media (max-width: 391px) {
   .ei-container-nid{
     padding: 0;
+    max-width: 90% !important;
     
   }
   .news-detail {
@@ -198,4 +212,9 @@ $color--black: #000000;
   &:hover {
     background-color: #f0f0f0;
   }
+}
+
+.ei-bold-text{
+  font-weight: bold;
+  color: $color--primary;
 }

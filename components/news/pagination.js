@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../styles/_news.module.scss' 
+import '../../styles/_news.module.scss'
 
 function Pagination() {
   return (

@@ -34,7 +34,7 @@ export default function About() {
           {/* 標題區 */}
           <div className="d-flex justify-content-center align-items-center mb-4">
             <div className="ei-line me-3"></div>
-            <h3 className="text-center news-title">關於我們</h3>
+            <h3 className="text-center news-title fs-2">關於我們</h3>
             <div className="ei-line ms-3"></div>
           </div>
 
@@ -51,6 +51,7 @@ export default function About() {
               <h4 className="mb-3 brand-title">品牌故事</h4>
               <p className="lh-lg">
                 CoffSeeker，我們的品牌故事源於一群程式初學者對於咖啡的熱愛和探索。當初，我們在程式的世界中摸索著，就像學習一門新的語言一樣，充滿了好奇和挑戰。然而，我們發現在這個瞬息萬變的數位時代，人們常常需要片刻的寧靜和慢下來的機會。
+                <br />
                 這種想法啟發了我們成立 CoffSeeker
                 的念頭。我們想要為忙碌的人們，尋找一個回歸自我、享受細緻生活的方式。就像我們在程式碼中尋求邏輯和創意一樣，我們將這份尋求融入到咖啡的世界裡。咖啡，不僅是一種飲品，更是一種品味，一種尋找美好的旅程。
               </p>
@@ -71,6 +72,8 @@ export default function About() {
               <p className="mb-3 fs-5">◆ 生豆品質</p>
               <p className="lh-lg mb-4">
                 CoffSeeker，我們的品牌故事源於一群程式初學者對於咖啡的熱愛和探索。當初，我們在程式的世界中摸索著，就像學習一門新的語言一樣，充滿了好奇和挑戰。然而，我們發現在這個瞬息萬變的數位時代，人們常常需要片刻的寧靜和慢下來的機會。
+              </p>{' '}
+              <p className="lh-lg mb-4">
                 這種想法啟發了我們成立 CoffSeeker
                 的念頭。我們想要為忙碌的人們，尋找一個回歸自我、享受細緻生活的方式。就像我們在程式碼中尋求邏輯和創意一樣，我們將這份尋求融入到咖啡的世界裡。咖啡，不僅是一種飲品，更是一種品味，一種尋找美好的旅程。
               </p>

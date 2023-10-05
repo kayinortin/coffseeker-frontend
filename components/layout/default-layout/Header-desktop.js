@@ -1,8 +1,58 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
+import { useUser } from '@/context/UserInfo'
 
 export default function HeaderDesktop(props) {
   const { navItems, currentRoute, navActions, isTop, isFullScreen } = props
+  const { isLoggedIn, setIsLoggedIn } = useUser()
+
+  useEffect(() => {
+    async function fetchLoginStatus() {
+      const loggedIn = await checkLoginStatus()
+      setIsLoggedIn(loggedIn)
+    }
+
+    fetchLoginStatus()
+  }, [isLoggedIn, setIsLoggedIn])
+
+  const handleLogout = () => {
+    axios
+      .post(
+        'http://localhost:3005/api/auth-jwt/logout',
+        {},
+        { withCredentials: true }
+      )
+      .then((res) => {
+        // console.log(res.data.message)
+        if (res.data.message === 'success') {
+          localStorage.removeItem('hasVisitedBefore')
+          localStorage.removeItem('userInfo')
+          Swal.fire({
+            title: '登出成功',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+          setTimeout(() => {
+            window.location.href = 'http://localhost:3000/'
+          }, 1500)
+        } else {
+          Swal.fire({
+            title: '登出失敗',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return (
     <>
       <div className="ed-navbar--desktop d-none d-lg-flex">
@@ -19,21 +69,7 @@ export default function HeaderDesktop(props) {
               )}
             </Link>
           </li>
-          {/* <button
-                  className="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span className="navbar-toggler-icon"></span>
-                </button>
-                <div
-                  className="collapse navbar-collapse"
-                  id="navbarSupportedContent"
-                > */}
+
           <ul className="ed-navbar__items">
             {navItems.map((item) => {
               if (!item.children) {
@@ -42,7 +78,7 @@ export default function HeaderDesktop(props) {
                   <li className="ed-navbar__item ed-navbar__link" key={item.id}>
                     <a
                       className={`ed-navbar__font ${
-                        navItems.find((here) => here.href === currentRoute)
+                        navItems.find((item) => item.href === currentRoute)
                           ? 'active'
                           : ''
                       }`}
@@ -99,14 +135,22 @@ export default function HeaderDesktop(props) {
               </Link>
             </li>
           ))}
-          {/* {!isLogin ? null : (
-                    <li className="ed-navbar__icon logout-icon">
-                      <i
-                        className="fas fa-sign-out-alt ed-navbar__font"
-                        onClick={handleLogout}
-                      ></i>
-                    </li>
-                  )} */}
+          {!isLoggedIn ? null : (
+            <li className="ed-navbar__icon d-flex logout-icon">
+              <div
+                className="fas fa-sign-out-alt ed-navbar__font"
+                onClick={handleLogout}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleLogout()
+                  }
+                }}
+                type="button"
+                role="button"
+                tabIndex={0}
+              ></div>
+            </li>
+          )}
         </ul>
       </div>
     </>
