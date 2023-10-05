@@ -26,6 +26,7 @@ export default function ProductsList() {
       product_price,
       product_description,
       product_image,
+      product_quantity,
     } = product
 
     addToCart({
@@ -34,6 +35,7 @@ export default function ProductsList() {
       price: product_price,
       description: product_description,
       image: product_image,
+      quantity: product_quantity,
     })
 
     // 在這裡將商品資料存儲在本地存儲
@@ -43,6 +45,7 @@ export default function ProductsList() {
       price: product_price,
       description: product_description,
       image: product_image,
+      quantity: product_quantity,
     }
 
     // 檢查本地存儲中是否已經有購物車資料
