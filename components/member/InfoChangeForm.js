@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { FaAngleDown } from 'react-icons/fa6'
 import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
 export default function InfoChangeForm() {
-  const { userData, setUserData } = useUser()
+  const { setUserData } = useUser()
 
   // console.log('userData抽取成功', userData)
 
@@ -20,7 +19,6 @@ export default function InfoChangeForm() {
   const [birthdayYear, setBirthdayYear] = useState('')
   const [birthdayMonth, setBirthdayMonth] = useState('')
   const [birthdayData, setBirthdayDate] = useState('')
-  const [checkChange, setChange] = useState('')
 
   useEffect(() => {
     if (storedUserData) {
@@ -133,7 +131,7 @@ export default function InfoChangeForm() {
   const birthday = [
     {
       id: 8,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlForId: 'SelectBirthdayYear',
       title: '生日',
       options: years,
@@ -143,7 +141,7 @@ export default function InfoChangeForm() {
     },
     {
       id: 9,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlForId: 'SelectBirthdayMonth',
       title: '',
       options: month,
@@ -154,7 +152,7 @@ export default function InfoChangeForm() {
     },
     {
       id: 10,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlForIdId: 'SelectBirthdayDate',
       title: '',
       options: date,
@@ -195,12 +193,12 @@ export default function InfoChangeForm() {
 
   return (
     <>
-      <form>
-        <div className={'form-box border border-dark'}>
+      <form className={'form-box'}>
+        <div className={'border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             會員資料檢視/修改
           </div>
-          <div className="p-5">
+          <div className="p-4 p-md-5">
             {inputs.map((input) => {
               return (
                 <div className="mb-3" key={input.id}>
@@ -288,10 +286,10 @@ export default function InfoChangeForm() {
             </div>
           </div>
         </div>
-        <div className={'container allow-btn p-0 mt-4'}>
+        <div className={'mt-4'}>
           <button
+            className={'btn-login text-center border-0'}
             type="button"
-            className={'btn-login text-center border-0 mb-3 agree'}
             onClick={handleUserInfoChange}
           >
             <span>確認並送出</span>

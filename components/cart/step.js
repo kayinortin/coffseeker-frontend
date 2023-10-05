@@ -30,7 +30,9 @@ export default function Step({ currentStep }) {
           </div>
         </div>
         <BiSolidRightArrow
-          className={`arrow ${currentStep === 1 ? 'arrowBlue' : 'arrowGray'}`}
+          className={`stepArrow ${
+            currentStep === 1 ? 'arrowBlue' : 'arrowGray'
+          }`}
         />
         {/* 第二步 */}
         <div className={`step ${currentStep === 2 ? 'active' : ''}`}>
@@ -57,7 +59,9 @@ export default function Step({ currentStep }) {
           </div>
         </div>
         <BiSolidRightArrow
-          className={`arrow ${currentStep === 2 ? 'arrowBlue' : 'arrowGray'}`}
+          className={`stepArrow ${
+            currentStep === 2 ? 'arrowBlue' : 'arrowGray'
+          }`}
         />
         {/* 第三步 */}
         <div className={`step ${currentStep === 3 ? 'active' : ''}`}>

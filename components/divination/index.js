@@ -238,7 +238,6 @@ export default function Divination() {
     if (nowSection < 6) {
       nowSection += 1
       picks = []
-      canSelect = true
       cayPlay = false
       start(sections[nowSection])
       await waittings(500)

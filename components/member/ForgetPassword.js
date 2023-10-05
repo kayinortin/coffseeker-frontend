@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import useInterval from '@/hooks/useInterval'
+import Swal from 'sweetalert2'
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('')
@@ -29,7 +30,12 @@ export default function ForgetPassword() {
   const getOtp = async () => {
     if (delay !== null) {
       setMessage('60s　內無法重新獲得驗證碼')
-      setGotOTP(true)
+      Swal.fire({
+        title: '60s　內無法重新獲得驗證碼',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500,
+      })
       return
     }
 
@@ -43,12 +49,25 @@ export default function ForgetPassword() {
     console.log(res.data)
     if (res.data.message === 'fail') {
       setMessage('驗證碼取得失敗，請確認Email是否已經註冊')
+      Swal.fire({
+        title: '驗證碼取得失敗，請確認Email是否已經註冊',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
 
     if (res.data.message === 'email sent') {
       setMessage('驗證碼已寄送到你填寫的Email信箱中')
+      Swal.fire({
+        title: '驗證碼已寄送到你填寫的Email信箱中',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
       setCount(60)
       setDelay(1000)
+      setGotOTP(true)
       // 應該也要設定在這 setGotOTP(true)
     }
   }
@@ -73,8 +92,8 @@ export default function ForgetPassword() {
 
   return gotOTP !== true ? (
     <>
-      <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'form-box border border-dark'}>
+      <div className={'form-box'}>
+        <div className={'border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             忘記密碼
           </div>
@@ -95,22 +114,17 @@ export default function ForgetPassword() {
             <h5>{message}</h5>
           </form>
         </div>
-      </div>
-      <div className={'container d-flex justify-content-center'}>
-        <button
-          className={
-            'btn-login text-center allow-btn mb-3 border-0 text-center'
-          }
-          onClick={getOtp}
-        >
-          {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
-        </button>
+        <div className={'mt-4'}>
+          <button className={'btn-login text-center border-0'} onClick={getOtp}>
+            {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
+          </button>
+        </div>
       </div>
     </>
   ) : (
     <>
-      <div className="container d-flex justify-content-center mb-3">
-        <div className={'form-box border border-dark'}>
+      <div className={'form-box'}>
+        <div className={'border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             重設密碼
           </div>
@@ -119,6 +133,7 @@ export default function ForgetPassword() {
               className={
                 'btn-getOTP text-center allow-btn mb-3 border-0 text-center px-3'
               }
+              type="button"
               onClick={getOtp}
             >
               {delay ? count + '秒後可以再次取得驗證碼' : '取得驗證碼'}
@@ -154,14 +169,14 @@ export default function ForgetPassword() {
             </div>
           </form>
         </div>
-      </div>
-      <div className={'container d-flex justify-content-center'}>
-        <button
-          className={'btn-login text-center allow-btn mb-3 border-0'}
-          onClick={resetPassword}
-        >
-          重設密碼
-        </button>
+        <div className={'mt-4'}>
+          <button
+            className={'btn-login text-center border-0'}
+            onClick={resetPassword}
+          >
+            重設密碼
+          </button>
+        </div>
       </div>
     </>
   )

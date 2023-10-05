@@ -1,52 +1,105 @@
-import React, { useState } from 'react'
-import styles from '../../styles/_news.module.scss'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export default function CategoryBtn() {
+  const router = useRouter()
   const [activeButton, setActiveButton] = useState('allnews')
 
+  // 在組件初始化時檢查路由，並根據路由的 cid 參數來設置初始的 activeButton 狀態
+  useEffect(() => {
+    const { cid } = router.query
+    if (cid) {
+      switch (cid) {
+        case '1':
+          setActiveButton('activity')
+          break
+        case '2':
+          setActiveButton('newProduct')
+          break
+        case '3':
+          setActiveButton('coffeeKnowlege')
+          break
+        default:
+          setActiveButton('allnews')
+      }
+    } else {
+      setActiveButton('allnews')
+    }
+  }, [router.query])
+
+  const handleButtonClick = (categoryId) => {
+    setActiveButton(categoryId)
+
+    // 根據不同按鈕選擇設置不同的 cid
+    let cid
+    switch (categoryId) {
+      case 'allnews':
+        // 不需要特別設定 cid
+        break
+      case 'activity':
+        cid = 1 // category_id = 1
+        break
+      case 'newProduct':
+        cid = 2 // category_id = 2
+        break
+      case 'coffeeKnowlege':
+        cid = 3 // category_id = 3
+        break
+      default:
+        break
+    }
+
+    // 使用路由導向到不同的 URL
+    if (cid) {
+      router.push(`/news/category/${cid}`)
+    } else {
+      router.push('/news') // 如果不需要特別的 cid，導向到所有消息
+    }
+  }
+
   return (
-    <div className="ei-btn-container">
-      <div className="row">
+    <div className="container ">
+      <div className="row me-4">
         {/* 網頁版（非手機板）*/}
-        <div className="col-sm-12 text-start d-none d-sm-block">
+        <div className="col-sm-12 text-start d-none d-sm-block ">
           <div className="btn-group mt-3">
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'allnews'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('allnews')}
+              onClick={() => handleButtonClick('allnews')}
             >
               全部消息
             </button>
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'activity'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('activity')}
+              onClick={() => handleButtonClick('activity')}
             >
               活動消息
             </button>
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'newProduct'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('newProduct')}
+              onClick={() => handleButtonClick('newProduct')}
             >
               新品上架
             </button>
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'coffeeKnowlege'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('coffeeKnowlege')}
+              onClick={() => handleButtonClick('coffeeKnowlege')}
             >
               咖啡知識
             </button>
@@ -54,44 +107,44 @@ export default function CategoryBtn() {
         </div>
         {/* 手機板 */}
         <div className="col-sm-12 text-end ei-mobile-category-btn d-lg-none">
-          <div className="btn-group mt-3">
+          <div className="btn-group mt-3 ">
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'allnews'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('allnews')}
+              onClick={() => handleButtonClick('allnews')}
             >
               全部消息
             </button>
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'activity'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('activity')}
+              onClick={() => handleButtonClick('activity')}
             >
               活動消息
             </button>
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'newProduct'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('newProduct')}
+              onClick={() => handleButtonClick('newProduct')}
             >
               新品上架
             </button>
             <button
-              className={`btn rounded-0 ${
+              className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'coffeeKnowlege'
                   ? 'btn-secondary active'
                   : 'btn-outline-secondary'
               }`}
-              onClick={() => setActiveButton('coffeeKnowlege')}
+              onClick={() => handleButtonClick('coffeeKnowlege')}
             >
               咖啡知識
             </button>

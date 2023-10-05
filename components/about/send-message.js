@@ -7,7 +7,7 @@ export default function SendMessage() {
     <>
       <div className="d-flex justify-content-center align-items-center ei-contact-us">
         <div className="ei-line me-3"></div>
-        <h3 className="text-center news-title mobile-contact-us">聯絡我們</h3>
+        <h3 className="text-center news-title mobile-contact-us fs-2">聯絡我們</h3>
         <div className="ei-line ms-3"></div>
       </div>
 

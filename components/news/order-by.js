@@ -1,3 +1,5 @@
+// components/news/order-by.js
+
 import React, { useState } from 'react'
 
 export default function OrderBy({ onChange }) {
