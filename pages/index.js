@@ -7,18 +7,28 @@ import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 import AOS from 'aos'
 import Loading from '@/components/loading'
 
+const FIRST_VISIT_KEY = 'hasVisitedBefore';
+
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-    })
+    // 初始載入時檢查localStorage
+    const hasVisitedBefore = localStorage.getItem(FIRST_VISIT_KEY)
 
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 4000)
+    // 如果用戶沒有訪問過
+    if (!hasVisitedBefore) {
+      AOS.init({ duration: 1000 })
 
-    return () => clearTimeout(timer)
+      setIsLoading(true)
+
+      const timer = setTimeout(() => {
+        setIsLoading(false)
+        localStorage.setItem(FIRST_VISIT_KEY, 'true')
+      }, 4000)
+
+      return () => clearTimeout(timer)
+    }
   }, [])
 
   if (isLoading) {

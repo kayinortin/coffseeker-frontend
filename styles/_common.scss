@@ -1053,16 +1053,14 @@ input:checked + label + .expandable-menu {
   $_: &;
   width: 156px;
   height: 30px;
+  font-size: 20px;
+  font-weight: 500;
   height: $height__input;
-
   background: $color--gray6;
-  border: #1c262c 1px solid;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   &__btn {
-    // padding: 0 0.625rem;
     height: 44px;
     background: $color--secondary;
     border: none;

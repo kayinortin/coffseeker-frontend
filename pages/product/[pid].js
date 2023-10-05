@@ -254,7 +254,12 @@ export default function ProductDetail(props) {
                     <div className="position-relative">
                       <h5 className="my-2 ed-detail-title">{name}</h5>
                       <h6 className="ed-detail-brand">精選品牌 {brand}</h6>
-                      <span className="ed-detail-price">NT{discountPrice}</span>
+                      <div className="my-2">
+                        <span className="ed-detail-price">
+                          NT{discountPrice}
+                        </span>
+                      </div>
+
                       <div className="d-flex mt-4">
                         <ul className="ed-detail__list">
                           <li className="ed-detail__item">【國家】：</li>

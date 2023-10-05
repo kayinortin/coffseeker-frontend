@@ -26,8 +26,10 @@ export default function HeaderDesktop(props) {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data.message)
+        // console.log(res.data.message)
         if (res.data.message === 'success') {
+          localStorage.removeItem('hasVisitedBefore')
+          localStorage.removeItem('userInfo')
           Swal.fire({
             title: '登出成功',
             icon: 'success',
