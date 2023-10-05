@@ -1,5 +1,3 @@
-// pages/news/category/[cid].js
-
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -13,8 +11,8 @@ import Pagination from '@/components/news/pagination'
 const CategoryNews = () => {
   const router = useRouter()
   const { cid } = router.query
+  const [currentSort, setCurrentSort] = useState('default')
   const [categoryNews, setCategoryNews] = useState([])
-  const [activeButton, setActiveButton] = useState('allnews')
 
   useEffect(() => {
     // 在此處使用 cid 發送 API 請求以獲取分類新聞
@@ -30,23 +28,51 @@ const CategoryNews = () => {
     }
   }, [cid])
 
+  // 處理排序方式變更，並更新排序方式
+  const handleSortChange = (newSort) => {
+    setCurrentSort(newSort)
+  }
+
+  // 應用排序方式到消息列表
+  const sortedCategoryNews = categoryNews.sort((a, b) => {
+    if (currentSort === 'popular') {
+      return b.views - a.views // 按最多人瀏覽排序
+    } else if (currentSort === 'oldest') {
+      return new Date(a.created_at) - new Date(b.created_at) // 舊到新
+    } else return new Date(b.created_at) - new Date(a.created_at) // 預設新到舊
+  })
+  function myOwnSort(sortBy, items) {
+    if (sortBy === 'popular') {
+      // 根據最多人瀏覽排序
+      return items.sort((a, b) => b.views - a.views)
+    } else if (sortBy === 'oldest') {
+      // 根據日期排序
+      return items.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      )
+    } else {
+      // 預設排序方式
+      return items
+    }
+  }
+
   return (
     <>
       <div className="container">
         <NewsLayout />
-        <div className="d-md-flex justify-content-center align-items-center mb-4 ms-4">
-          <div className="d-flex flex-column align-items-center">
+        <div className="d-md-flex justify-content-center align-items-end mb-lg-4">
+          <div className="d-flex flex-column align-items-center me-lg-4">
             <CategoryBtn />
           </div>
-          <div className="mt-4 d-flex justify-content-center">
-            <OrderBy />
+          <div className="mt-4 d-flex justify-content-center ms-lg-4">
+            <OrderBy onChange={handleSortChange} onSort={myOwnSort} />
           </div>
         </div>
 
         <div className=" row row-cols-1 row-cols-md-2 background">
-          {categoryNews && categoryNews.length > 0 ? (
-            categoryNews.map((news, index) => (
-              <div key={news.news_id} className={`col  ei-mobile-card-margin`}>
+          {sortedCategoryNews && sortedCategoryNews.length > 0 ? (
+            sortedCategoryNews.map((news, index) => (
+              <div key={news.id} className={`col  ei-mobile-card-margin`}>
                 <Link
                   href={`/news/${news.news_id}`}
                   passHref={true}
@@ -71,7 +97,7 @@ const CategoryNews = () => {
               </div>
             ))
           ) : (
-            <div>暫無最新消息可顯示</div>
+            <div></div>
           )}
         </div>
       </div>
