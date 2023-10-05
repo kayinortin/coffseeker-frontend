@@ -4,9 +4,6 @@ import CartList from '@/components/cart/CartList'
 import Checkout from '@/components/cart/Checkout'
 import Complete from '@/components/cart/Complete'
 
-import productsData from '@/data/cart/product'
-import courseData from '@/data/cart/course'
-
 export default function Cart() {
   const [step, setStep] = useState(1)
 
