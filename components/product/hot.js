@@ -4,7 +4,7 @@ import AOS from 'aos'
 import Image from 'next/image'
 import { BsCart, BsFillCartCheckFill } from 'react-icons/bs'
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
-import ProductItem from './productItem'
+import ProductItem from './ProductItem'
 import { useProducts } from '@/context/product'
 
 // 02 跟 03 的圓圈放在這裡

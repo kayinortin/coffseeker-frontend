@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import Skeleton from '@mui/material/Skeleton'
-import ProductItem from './productItem'
-import ProductDataFetcher from '../../components/product/ProductDataFetcher'
+import ProductItem from './ProductItem'
+import ProductDataFetcher from './ProductDataFetcher'
 import Sort from './Sort'
 
 import { useProducts } from '@/context/product'
@@ -41,12 +41,16 @@ export default function ProductList(props) {
     <>
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
-        <div className="d-none d-md-block ed-left-filter container mt-5">123</div>
+        <div className="d-none d-md-block ed-left-filter container mt-5">
+          123
+        </div>
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">
             <h5>精品咖啡豆 單品 | 行家 | 經典 系列咖啡豆</h5>
             <div className="d-flex justify-content-between align-items-center">
-              <div className="mt-2 d-none d-md-block">共有 {productsData.length} 筆商品</div>
+              <div className="mt-2 d-none d-md-block">
+                共有 {productsData.length} 筆商品
+              </div>
               <Sort />
             </div>
 
