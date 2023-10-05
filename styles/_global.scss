@@ -240,7 +240,7 @@ h6 {
 @mixin text--small-bold {
   @include text;
   font-weight: 500;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 }
 
 @mixin text--extra-small {

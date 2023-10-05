@@ -70,6 +70,7 @@ export default function ProductItem(props) {
       id: product.id,
       name: product.name,
       image: product.image,
+      image_main: product.image_main,
       price: product.price,
       discountPrice: product.discountPrice,
       amount: number,

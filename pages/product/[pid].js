@@ -291,9 +291,11 @@ export default function ProductDetail(props) {
                             加入購物車
                             <i className="fas fa-shopping-cart"></i>
                           </button>
-                          <button className="ms-4 ed-addCart__check">
-                            立即結帳
-                          </button>
+                          <a href="http://localhost:3000/cart">
+                            <button className="ms-4 ed-addCart__check">
+                              立即結帳
+                            </button>
+                          </a>
                         </div>
 
                         <div></div>
