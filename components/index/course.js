@@ -5,9 +5,12 @@ import AOS from 'aos'
 export default function Course() {
   // 檢查是否為手機介面
   const isMobile = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    )
+    if (typeof window !== 'undefined' && window.navigator) {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        window.navigator.userAgent
+      )
+    }
+    return false
   }
 
   // 課程按鈕動畫
