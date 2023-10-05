@@ -16,6 +16,8 @@ export default function CourseList({ pid }) {
     setData(fetchedData)
   }
 
+  console.log(data)
+
   //--------------------------------pagination
   const itemsPerPage = 9
   const totalItems = data ? data.courses : []
