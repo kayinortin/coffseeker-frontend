@@ -9,10 +9,11 @@ import OrderBy from './order-by'
 export default function Card({ currentSort, newsData }) {
   // 解構 currentSort
   const [data, setData] = useState(null)
+  // const [currentSort, setCurrentSort] = useState('default')
 
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
-    onDataFetched(fetchedData)
+    // onDataFetched(fetchedData)
   }
 
   // 過濾和排序新聞列表
@@ -21,7 +22,9 @@ export default function Card({ currentSort, newsData }) {
         if (currentSort === 'popular') {
           return b.views - a.views // 按最多人瀏覽排序
         } else if (currentSort === 'oldest') {
-          return new Date(a.created_at) - new Date(b.created_at) // 按日期排序
+          return new Date(a.created_at) - new Date(b.created_at) // 按日期  舊到新
+        } else if (currentSort === 'default') {
+          return new Date(b.created_at) - new Date(a.created_at) //預設按日期 新到舊
         }
         return 0
       })
@@ -33,7 +36,7 @@ export default function Card({ currentSort, newsData }) {
         <div className=" row row-cols-1 row-cols-md-2 background ">
           {sortedNews && sortedNews.length > 0 ? (
             sortedNews.map((news) => (
-              <div key={news.id} className={`col  ei-mobile-card-margin`}>
+              <div key={news.news_id} className={`col  ei-mobile-card-margin`}>
                 <Link
                   href={`/news/${news.news_id}`}
                   passHref={true}
@@ -58,12 +61,12 @@ export default function Card({ currentSort, newsData }) {
               </div>
             ))
           ) : (
-            <div>暫無最新消息可顯示</div>
+            <div></div>
           )}
         </div>
       </div>
       <NewsDatabaseFetch onDataFetched={onDataFetched} />
-      <Pagination />
+      {/* <Pagination /> */}
     </>
   )
 }

@@ -1,5 +1,3 @@
-// pages/news/category/[cid].js
-
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -41,22 +39,33 @@ const CategoryNews = () => {
       return b.views - a.views // 按最多人瀏覽排序
     } else if (currentSort === 'oldest') {
       return new Date(a.created_at) - new Date(b.created_at) // 舊到新
-    } else if (currentSort === 'default') {
-      return new Date(b.created_at) - new Date(a.created_at) // 預設新到舊
-    }
-    return 0
+    } else return new Date(b.created_at) - new Date(a.created_at) // 預設新到舊
   })
+  function myOwnSort(sortBy, items) {
+    if (sortBy === 'popular') {
+      // 根據最多人瀏覽排序
+      return items.sort((a, b) => b.views - a.views)
+    } else if (sortBy === 'oldest') {
+      // 根據日期排序
+      return items.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      )
+    } else {
+      // 預設排序方式
+      return items
+    }
+  }
 
   return (
     <>
       <div className="container">
         <NewsLayout />
-        <div className="d-md-flex justify-content-center align-items-center mb-4">
-          <div className="d-flex flex-column align-items-center">
+        <div className="d-md-flex justify-content-center align-items-end mb-lg-4">
+          <div className="d-flex flex-column align-items-center me-lg-4">
             <CategoryBtn />
           </div>
-          <div className="mt-4 d-flex justify-content-center">
-            <OrderBy onChange={handleSortChange} />
+          <div className="mt-4 d-flex justify-content-center ms-lg-4">
+            <OrderBy onChange={handleSortChange} onSort={myOwnSort} />
           </div>
         </div>
 
@@ -88,7 +97,7 @@ const CategoryNews = () => {
               </div>
             ))
           ) : (
-            <div>暫無最新消息可顯示</div>
+            <div></div>
           )}
         </div>
       </div>

@@ -5,7 +5,7 @@ export default function CategoryBtn() {
   const router = useRouter()
   const [activeButton, setActiveButton] = useState('allnews')
 
-  // 在組件初始化時檢查路由，並根據路由的 cid 參數來設置初始的 activeButton 狀態
+  // 在元件初始化時檢查路由，並根據路由的 cid 參數來設置初始的 activeButton 狀態
   useEffect(() => {
     const { cid } = router.query
     if (cid) {
@@ -59,7 +59,7 @@ export default function CategoryBtn() {
 
   return (
     <div className="container ">
-      <div className="row me-4">
+      <div className="row ">
         {/* 網頁版（非手機板）*/}
         <div className="col-sm-12 text-start d-none d-sm-block ">
           <div className="btn-group mt-3">
@@ -106,8 +106,8 @@ export default function CategoryBtn() {
           </div>
         </div>
         {/* 手機板 */}
-        <div className="col-sm-12 text-end ei-mobile-category-btn d-lg-none">
-          <div className="btn-group mt-3 ">
+        <div className="container ei-mobile-category-btn d-lg-none">
+          <div className="btn-group col-11 ms-3">
             <button
               className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'allnews'

@@ -46,7 +46,7 @@ $color--black: #000000;
 .ei-card {
   // width: 80%;
   // max-width: 700px;
-  height: 400px;
+  height: 380px;
   margin-inline: 30px;
   margin-top: 30px;
   margin-bottom: 20px;
@@ -59,7 +59,7 @@ $color--black: #000000;
 
   // 卡片圖片高度
   .custom-image {
-    height: 328px;
+    height: 308px;
   }
 }
 
@@ -100,15 +100,14 @@ $color--black: #000000;
   }
   .ei-mobile-category-btn {
     width: 100%;
-    justify-content: center;
-    text-align: right;
   }
   .mobile-news-title{
     margin-top: 2rem !important;
   }
   .ei-card {
     max-width: 100%;
-    margin-bottom: 40px;
+    height: 320px !important;
+    margin-bottom: 0px !important;
     &:hover {
       transform: none;
       box-shadow: none;
@@ -122,6 +121,13 @@ $color--black: #000000;
   }
   .ei-mobile-card-margin {
     margin-bottom: 0px !important;
+    padding-right: 0 !important;
+    padding-left:  0 !important;
+    // height: 400px !important;
+  }
+  // 卡片圖片高度
+  .custom-image {
+    height: 238px !important;
   }
 }
 @media (min-width: 391px) {
