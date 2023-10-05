@@ -29,115 +29,57 @@ export default function ProductsList() {
       product_quantity,
     } = product
 
-    addToCart({
-      id: product_id,
-      name: product_name,
-      price: product_price,
-      description: product_description,
-      image: product_image,
-      quantity: product_quantity,
-    })
-
-    // 在這裡將商品資料存儲在本地存儲
-    const newItem = {
-      id: product_id,
-      name: product_name,
-      price: product_price,
-      description: product_description,
-      image: product_image,
-      quantity: product_quantity,
-    }
-
-    // 檢查本地存儲中是否已經有購物車資料
     const existingCart = localStorage.getItem('cartList')
       ? JSON.parse(localStorage.getItem('cartList'))
       : []
+    const isProductInCart = existingCart.some((item) => item.id === product_id)
 
-    // 添加新商品到購物車
-    const updatedCart = [...existingCart, newItem]
+    if (isProductInCart) {
+      // 商品已经在购物车中，显示失败提示
+      Swal.fire({
+        icon: 'error',
+        title: '商品已加入過購物車',
+        customClass: {
+          popup: 'c-alert__toast',
+          title: 'c-alert__subtitle',
+        },
+      })
+    } else {
+      addToCart({
+        id: product_id,
+        name: product_name,
+        price: product_price,
+        description: product_description,
+        image: product_image,
+        quantity: product_quantity,
+      })
 
-    // 將購物車資料保存到本地存儲
-    localStorage.setItem('cartList', JSON.stringify(updatedCart))
+      // 添加新商品到购物车
+      const newItem = {
+        id: product_id,
+        name: product_name,
+        price: product_price,
+        description: product_description,
+        image: product_image,
+        quantity: product_quantity,
+      }
 
-    // 提示成功加入購物車
-    Swal.fire({
-      icon: 'success',
-      title: '商品已加入購物車',
-      customClass: {
-        popup: 'c-alert__toast',
-        title: 'c-alert__subtitle',
-      },
-    })
+      const updatedCart = [...existingCart, newItem]
+
+      // 将购物车数据保存到本地存储
+      localStorage.setItem('cartList', JSON.stringify(updatedCart))
+
+      // 提示成功加入购物车
+      Swal.fire({
+        icon: 'success',
+        title: '商品已加入購物車',
+        customClass: {
+          popup: 'c-alert__toast',
+          title: 'c-alert__subtitle',
+        },
+      })
+    }
   }
-
-  // 加入購物車的按鈕，需要使用useContext 處理
-  // const { cartListData, setCartListData } = useCartList()
-  // const [number, setNumber] = useState(1)
-  // const [detailData, setDetailData] = useState([])  // 需再定義商品細節欄位
-  // const [cartListData, setCartListData] = useState([]) // 存放進useContext
-  // const [cartIconLength, setCartIconLength] = useState() // 購物車icon數字
-
-  // const addCart = () => {
-  //   const Toast = Swal.mixin({
-  //     toast: true,
-  //     position: 'top-end',
-  //     showConfirmButton: false,
-  //     timer: 2000,
-  //     timerProgressBar: false,
-  //     didOpen: (toast) => {
-  //       toast.addEventListener('mouseenter', Swal.stopTimer)
-  //       toast.addEventListener('mouseleave', Swal.resumeTimer)
-  //     },
-  //   })
-
-  //   Toast.fire({
-  //     icon: 'success',
-  //     title: '商品已加入購物車',
-  //     customClass: {
-  //       popup: 'c-alert__toast',
-  //       title: 'c-alert__subtitle',
-  //     },
-  //   })
-
-  //   const newItem = {
-  //     id: detailData.id,
-  //     name: detailData.name,
-  //     image: detailData.image,
-  //     price: detailData.price,
-  //     discountPrice: detailData.discountPrice,
-  //     amount: number,
-  //   }
-
-  //   const newItemData = [...cartListData, newItem]
-
-  //   for (let i = 0; i < cartListData.length; i++) {
-  //     if (cartListData[i].id === newItem.id) {
-  //       const newAmountItem = {
-  //         id: cartListData[i].id,
-  //         name: cartListData[i].name,
-  //         image: cartListData[i].image,
-  //         price: cartListData[i].price,
-  //         discountPrice: cartListData[i].discountPrice,
-  //         amount: cartListData[i].amount + newItem.amount,
-  //       }
-  //       const oldCartListData = cartListData.filter(
-  //         (item, i) => item.id !== newItem.id
-  //       )
-  //       const newCartListData = [...oldCartListData, newAmountItem]
-
-  //       setCartListData(newCartListData)
-  //       return localStorage.setItem('cartList', JSON.stringify(newCartListData))
-  //     }
-  //   }
-
-  //   if (cartListData.length !== 0) {
-  //     setCartListData(newItemData)
-  //     localStorage.setItem('cartList', JSON.stringify(newItemData))
-  //   } else {
-  //     setCartListData([newItem])
-  //     localStorage.setItem('cartList', JSON.stringify([newItem]))
-  //   }
-  // }
 
   return (
     <>

@@ -6,13 +6,13 @@ import { ProductList } from '@/pages/cart/copy-product-list'
 
 function CartListCopy({ step, handleNextStep, setStep }) {
   const { cart } = useContext(CartContext)
-  const [productData, setProductData] = useState([])
+  const [producCart, setProducCart] = useState([])
 
   //進入購物車狀態，渲染localStorage裡的商品
   useEffect(() => {
     const storedProductData = JSON.parse(localStorage.getItem('cartList'))
     if (storedProductData) {
-      setProductData(storedProductData)
+      setProducCart(storedProductData)
     }
     console.log(storedProductData)
     console.log('成功獲取資料')
@@ -20,7 +20,7 @@ function CartListCopy({ step, handleNextStep, setStep }) {
 
   // 處理商品數量增減
   const handleQuantityChange = (productId, changeAmount) => {
-    const updatedProductData = productData.map((product) => {
+    const updatedProductData = producCart.map((product) => {
       if (product.id === productId) {
         const newQuantity = Math.max(1, product.quantity + changeAmount)
         return {
@@ -30,23 +30,38 @@ function CartListCopy({ step, handleNextStep, setStep }) {
       }
       return product
     })
-    setProductData(updatedProductData)
+    setProducCart(updatedProductData)
   }
-
   //單一商品小計＝價格＊數量
   const productSubtotal = (product) => {
     return product.price * product.quantity
   }
+
+  // 刪除一個商品
+  const handleRemoveProduct = (productId) => {
+    // localStorage 獲取目前的商品
+    const storedProductData = JSON.parse(localStorage.getItem('cartList'))
+
+    // 過濾出不包含要删除的商品
+    const updatedCart = storedProductData.filter(
+      (item) => item.id !== productId
+    )
+    // 更新購物車狀態
+    setProducCart(updatedCart)
+    // 更新localStorage數據
+    localStorage.setItem('cartList', JSON.stringify(updatedCart))
+  }
+
   //商品小計
   const productTotal = () => {
-    return productData.reduce(
+    return producCart.reduce(
       (total, product) => total + productSubtotal(product),
       0
     )
   }
 
   // 商品列表
-  const productItems = productData.map((product) => (
+  const productItems = producCart.map((product) => (
     <tr key={product.id}>
       <td className="align-middle ps-3 imgContainer">
         <img
@@ -92,8 +107,13 @@ function CartListCopy({ step, handleNextStep, setStep }) {
       </td>
       <td className="align-middle">{productSubtotal(product)}</td>
       <td className="align-middle productdelete">
-        <button className={'btn deleteButton'}>
-          <RiDeleteBin5Line className={'trash'} />
+        <button
+          className="btn deleteButton"
+          onClick={() => {
+            handleRemoveProduct(product.id)
+          }}
+        >
+          <RiDeleteBin5Line className="trash" />
         </button>
       </td>
     </tr>
