@@ -31,12 +31,6 @@
   // background:pink
 }
 
-.content {
-  // height: 100vh;
-  width: 650px;
-  // background: cyan;
-}
-
 // 麵包屑 Start
 .nav-breadcrumb {
   --bs-breadcrumb-divider: '>';
@@ -87,14 +81,13 @@
     height: 60px;
     border: black solid 1px;
     background-color: #ffffff00;
-    // background: #F2F3EE;
   }
   .form-control.disable{
     border: 0;
   }
-  @media screen and (max-width: 768px) {
-    max-width: 650px;
-  }
+  // @media screen and (max-width: 768px) {
+  //   max-width: 650px;;
+  // }
 }
 // cursor: pointer;
 
@@ -114,7 +107,8 @@
     font-family: 'Noto Sans TC';
     font-size: 18px;
     height: 48px;
-    width: 650px;
+    width:100% ;
+    
 }
 // 忘記密碼取得驗證碼按鈕
 .btn-getOTP {
@@ -150,18 +144,12 @@
 }
 
 .allow-btn {
-    cursor: pointer;
-    .agree{
-        cursor: pointer;
-    }
+  width: max-content;
 }
 .disagree {
-    color: #ffffff;
-    font-family: 'Noto Sans TC';
-    font-size: 18px;
-    height: 48px;
-    width: 650px;
+    cursor:not-allowed;
     background: #a7a7a7;
+
 }
 
 .orange-text {

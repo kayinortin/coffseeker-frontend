@@ -2,6 +2,17 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 
 export default function SignUpForm() {
+  const [userId, setId] = useState('')
+  const [userEmail, setMail] = useState('')
+  const [userName, setName] = useState('')
+  const [userPassword, setPassword] = useState('')
+  const [rePassword, setRePassword] = useState('')
+  const [userPhone, setPhone] = useState('')
+  const [userGender, setGender] = useState('')
+  const [birthdayYear, setBirthdayYear] = useState('')
+  const [birthdayMonth, setBirthdayMonth] = useState('')
+  const [birthdayData, setBirthdayDate] = useState('')
+
   // input文字輸入框
   const inputs = [
     {
@@ -10,9 +21,9 @@ export default function SignUpForm() {
       title: '會員信箱(登入帳號)',
       placeholder: '請輸入信箱',
       type: 'email',
-      htmlId: 'Inputmail',
       aria: null,
       maxlength: 50,
+      onChange: (e) => setMail(e.target.value),
     },
     {
       id: 2,
@@ -20,9 +31,9 @@ export default function SignUpForm() {
       title: '會員姓名',
       placeholder: '請輸入您的姓名',
       type: 'text',
-      htmlId: 'InputName',
       aria: null,
       maxlength: 10,
+      onChange: (e) => setName(e.target.value),
     },
     {
       id: 3,
@@ -30,9 +41,9 @@ export default function SignUpForm() {
       title: '密碼',
       placeholder: '請輸入8~12位數,英數混和的密碼',
       type: 'password',
-      htmlId: 'InputPassword',
       aria: null,
       maxlength: 10,
+      onChange: (e) => setPassword(e.target.value),
     },
     {
       id: 4,
@@ -40,9 +51,9 @@ export default function SignUpForm() {
       title: '確認密碼',
       placeholder: '請輸入相同的密碼',
       type: 'password',
-      htmlId: 'ReInputPassword',
       aria: null,
       maxlength: 12,
+      onChange: (e) => setRePassword(e.target.value),
     },
     {
       id: 6,
@@ -50,9 +61,9 @@ export default function SignUpForm() {
       title: '手機',
       placeholder: '09XX-XXX-XXX',
       type: 'tel',
-      htmlId: 'InputPhone',
       aria: null,
       maxlength: 10,
+      onChange: (e) => setPhone(e.target.value),
     },
   ]
 
@@ -64,9 +75,13 @@ export default function SignUpForm() {
       class: 'mb-3',
       htmlFor: 'SelectGender',
       title: '性別',
-      options: ['男', '女', '不便透漏'],
+      options: [
+        { value: 'Male', opt: '男' },
+        { value: 'Female', opt: '女' },
+        { value: 'CantDisclose', opt: '不便透漏' },
+      ],
       placeholder: '請選擇您的性別',
-      htmlId: 'SelectGender',
+      onChange: (e) => setGender(e.target.value),
     },
   ]
 
@@ -92,30 +107,30 @@ export default function SignUpForm() {
   const birthday = [
     {
       id: 8,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayYear',
       title: '生日',
       options: years,
       placeholder: '年',
-      htmlId: 'SelectBirthdayYear',
+      onChange: (e) => setBirthdayYear(e.target.value),
     },
     {
       id: 9,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayMonth',
       title: '',
       options: month,
       placeholder: '月',
-      htmlId: 'SelectBirthdayMonth',
+      onChange: (e) => setBirthdayMonth(e.target.value),
     },
     {
       id: 10,
-      class: 'col-4 mb-3',
+      class: 'col-12 mb-3 col-md-4',
       htmlFor: 'SelectBirthdayDate',
       title: '',
       options: date,
       placeholder: '日',
-      htmlId: 'SelectBirthdayDate',
+      onChange: (e) => setBirthdayDate(e.target.value),
     },
   ]
 
@@ -124,12 +139,12 @@ export default function SignUpForm() {
 
   return (
     <>
-      <div className={'container d-flex justify-content-center pb-3'}>
-        <div className={'form-box border border-dark'}>
+      <form id="loginForm" className={'form-box'}>
+        <div className={'border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3'}>
             會員註冊
           </div>
-          <form className="p-5">
+          <div className="p-5">
             {inputs.map((input) => {
               return (
                 <div className="mb-3" key={input.id}>
@@ -140,9 +155,12 @@ export default function SignUpForm() {
                     placeholder={input.placeholder}
                     type={input.tyoe}
                     className={'form-control'}
-                    id={input.htmlId}
+                    id={input.htmlFor}
                     aria-describedby={input.aria}
                     maxLength={input.maxlength}
+                    onChange={(e) => {
+                      input.onChange(e)
+                    }}
                   />
                   <div
                     id={'error' + input.id}
@@ -158,15 +176,21 @@ export default function SignUpForm() {
                   <label htmlFor={select.htmlFor} className={'form-label'}>
                     {select.title}
                   </label>
-                  <select className={'form-select'}>
-                    <option selected disabled>
+                  <select
+                    className={'form-select'}
+                    value={'default'}
+                    onChange={(e) => {
+                      select.onChange(e)
+                    }}
+                  >
+                    <option value={'default'} disabled>
                       {select.placeholder}
                     </option>
-                    {select.options.map((ops, i) => {
+                    {select.options.map((opts, i) => {
                       return (
                         <>
-                          <option key={i} value={ops}>
-                            {ops}
+                          <option key={i} value={opts.value}>
+                            {opts.opt}
                           </option>
                         </>
                       )
@@ -183,8 +207,14 @@ export default function SignUpForm() {
                     <label htmlFor={select.htmlFor} className={'form-label'}>
                       {select.title}
                     </label>
-                    <select className={'form-select'}>
-                      <option selected disabled>
+                    <select
+                      className={'form-select'}
+                      value={select.placeholder}
+                      onChange={(e) => {
+                        select.onChange(e)
+                      }}
+                    >
+                      <option value={select.placeholder} disabled>
                         {select.placeholder}
                       </option>
                       {select.options.map((ops) => {
@@ -199,74 +229,69 @@ export default function SignUpForm() {
                 )
               })}
             </div>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <div
-        className={
-          'container d-flex justify-content-center mt-4 mb-3 align-items-center'
-        }
-      >
-        <div className={'form-check d-flex align-items-center'}>
-          <input
-            type="checkbox"
-            className={'check-input me-3'}
-            id="CheckForPapers"
-          />
-          <label className={'form-check-label'} htmlFor="CheckForPapers">
-            訂閱電子報
-          </label>
-        </div>
-      </div>
-      <div
-        className={
-          'container d-flex justify-content-center mt-3 mb-4 align-items-center'
-        }
-      >
-        <div className={'form-check d-flex align-items-center'}>
-          <input
-            type="checkbox"
-            className={'check-input me-3'}
-            id="exampleCheck2"
-            onClick={() => {
-              if (allowContract) {
-                setAllowContract(false)
-              } else {
-                setAllowContract(true)
-              }
-              console.log(allowContract)
-            }}
-          />
-          <label className={'form-check-label'} htmlFor="exampleCheck2">
-            我已閱讀並同意
-            <Link href="" className={'orange-text'}>
-              「會員隱私條款」
-            </Link>
-          </label>
-        </div>
-      </div>
-      {allowContract === true ? (
-        <div className={'container d-flex justify-content-center'}>
-          <div
-            className={
-              'btn-login allow-btn text-center d-flex justify-content-center flex-column mb-5'
-            }
-          >
-            <span className={'agree'}>確認並送出</span>
+        <div
+          className={
+            'container d-flex justify-content-center mt-4 mb-3 align-items-center'
+          }
+        >
+          <div className={'form-check d-flex align-items-center'}>
+            <input
+              type="checkbox"
+              className={'check-input me-3'}
+              id="CheckForPapers"
+            />
+            <label className={'form-check-label'} htmlFor="CheckForPapers">
+              訂閱電子報
+            </label>
           </div>
         </div>
-      ) : (
-        <div className={'container d-flex justify-content-center'}>
-          <div
-            className={
-              'text-center d-flex justify-content-center flex-column mb-5 disagree'
-            }
-          >
-            <span>請勾選同意會員隱私條款</span>
+        <div
+          className={
+            'container d-flex justify-content-center mt-3 mb-4 align-items-center'
+          }
+        >
+          <div className={'form-check d-flex align-items-center'}>
+            <input
+              type="checkbox"
+              className={'check-input me-3'}
+              id="exampleCheck2"
+              onClick={() => {
+                if (allowContract) {
+                  setAllowContract(false)
+                } else {
+                  setAllowContract(true)
+                }
+                console.log(allowContract)
+              }}
+            />
+            <label className={'form-check-label'} htmlFor="exampleCheck2">
+              我已閱讀並同意
+              <Link href="" className={'orange-text'}>
+                「會員隱私條款」
+              </Link>
+            </label>
           </div>
         </div>
-      )}
+        {allowContract ? (
+          <div className={'d-flex justify-content-center'}>
+            <button type="button" className={'btn-login border-0 text-center'}>
+              確認並送出
+            </button>
+          </div>
+        ) : (
+          <div className={'d-flex'}>
+            <button
+              className={'btn-login border-0 text-center disagree py-auto'}
+              type="button"
+            >
+              請勾選同意會員隱私條款
+            </button>
+          </div>
+        )}
+      </form>
     </>
   )
 }

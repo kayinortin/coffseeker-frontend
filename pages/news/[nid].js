@@ -5,7 +5,8 @@ import style from '../../styles/_news.module.scss'
 
 const NewsDetail = ({ news, error }) => {
   const router = useRouter()
-  const contentWithLineBreaks = news.news_content.replace(/\n/g, '<br>')
+  const contentWithLineBreaks =
+    news && news.news_content ? news.news_content.replace(/\n/g, '<br>') : ''
 
   if (error) {
     return <div>{error}</div>

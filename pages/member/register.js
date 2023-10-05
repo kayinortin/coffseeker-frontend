@@ -21,8 +21,9 @@ export default function SignUp() {
           </div>
         </div>
         {/* 麵包屑結束 */}
-
-        <SignUpForm />
+        <div className={'container d-flex justify-content-center mb-5'}>
+          <SignUpForm />
+        </div>
       </div>
     </>
   )

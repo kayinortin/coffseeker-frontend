@@ -22,8 +22,9 @@ export default function Login() {
           </div>
         </div>
         {/* 麵包屑結束 */}
-
-        <LoginForm />
+        <div className={'container d-flex justify-content-center mb-5'}>
+          <LoginForm />
+        </div>
       </div>
     </>
   )
