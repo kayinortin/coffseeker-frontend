@@ -1,13 +1,19 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 
-export const ProductsContext = createContext()
+const ProductsContext = createContext()
 
+export function ProductsProvider({ children }) {
+  const [productsData, setProductsData] = useState([])
+  const [sortBy, setSortBy] = useState('default')
+
+  return (
+    <ProductsContext.Provider
+      value={{ productsData, setProductsData, sortBy, setSortBy }}
+    >
+      {children}
+    </ProductsContext.Provider>
+  )
+}
 export function useProducts() {
   return useContext(ProductsContext)
-}
-
-export const CategoryContext = createContext()
-
-export function useCategory() {
-  return useContext(CategoryContext)
 }

@@ -1,17 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
+import { useProducts } from '@/context/product'
 
-export default function ProductDataFetcher({ onDataFetched }) {
+export default function ProductDataFetcher() {
+  const { setProductsData } = useProducts() // 從上下文取得 setProductsData 函數
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3005/api/products')
-        // console.log(response.data)
-        onDataFetched(response.data)
+        const productResponse = await axios.get(
+          'http://localhost:3005/api/products'
+        )
+        const products = productResponse.data.products
+        setProductsData(products)
       } catch (error) {
         console.error('資料獲取失敗:', error)
       }
     }
     fetchData()
   }, [])
+
+  return null
 }
