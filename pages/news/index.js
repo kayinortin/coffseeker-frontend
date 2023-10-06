@@ -91,7 +91,7 @@ export default function News() {
             <div className="ei-line ms-3"></div>
           </div>
           {/* 篩選&排序區 */}
-          <div className="d-md-flex align-items-end justify-content-center ">
+          <div className="d-md-flex align-items-end justify-content-center mb-lg-4">
             <div className="me-lg-4">
               <CategoryBtn onSelectCategory={handleCategoryChange} />
             </div>
