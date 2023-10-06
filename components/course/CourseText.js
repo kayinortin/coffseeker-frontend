@@ -18,6 +18,13 @@ export default function CourseText() {
     setData(fetchedData)
   }
 
+  const [activeContent, setActiveContent] = useState('introduction')
+
+  //-------------------------設定按鈕狀態後改變下文
+  const handleButtonClick = (contentName) => {
+    setActiveContent(contentName)
+  }
+
   // console.log(courseData)
 
   return (
@@ -25,23 +32,20 @@ export default function CourseText() {
       {data && data.course_image.length > 0 ? (
         <div className="m-2 col-10 col-sm-6 mx-auto ms-sm-5">
           <div className="d-none d-sm-block">
-            <BreadCrumbs name={name} />
+            <BreadCrumbs />
           </div>
 
-          <h3>{data.course_name}</h3>
+          <h5>{data.course_name}</h5>
           <Score />
-          <h5 className={style['price']}>NT${data.course_price}</h5>
-          <div className="d-flex justify-content-around d-sm-none">
+          <h5 className={`mb-4 ${style['price']}`}>NT${data.course_price}</h5>
+          <div className="d-flex  justify-content-around d-sm-none">
             <AddCartBtn />
             <BuyBtn />
           </div>
-          <div className="d-sm-none">
-            <CourseInfoBtn />
-          </div>
 
           <div className="  ">
-            <p>【教師姓名】：{data.teacher_name}</p>
-            <p>
+            <p className="my-4">【教師姓名】：{data.teacher_name}</p>
+            <p className="lh-base">
               【課程介紹】：
               {data.course_description}
             </p>
@@ -55,7 +59,6 @@ export default function CourseText() {
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
       )}
-
       <CoursePerFetcher pid={pid} onCoursePerFetched={onDataFetched} />
     </>
   )

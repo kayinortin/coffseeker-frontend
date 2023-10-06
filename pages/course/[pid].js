@@ -1,4 +1,3 @@
-import SideBar from '@/components/course/SideBar'
 import { React, useState } from 'react'
 import data from '@/data/course/course[pid].json'
 import { useRouter } from 'next/router'
@@ -8,6 +7,7 @@ import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 import style from '@/styles/_course.module.scss'
 import MainContent from '@/components/course/MainContent'
 import CoursePerFetcher from '@/components/course/[pid]'
+import NewSideBar from '@/components/course/NewSideBar'
 
 export default function CourseDetails() {
   const router = useRouter()
@@ -26,7 +26,7 @@ export default function CourseDetails() {
       <main className={`${style['course-bg']}`}>
         <div className={`container-lg }`}>
           <div className="d-flex">
-            <SideBar />
+            <NewSideBar />
             <MainContent pid={pid} />
           </div>
         </div>
