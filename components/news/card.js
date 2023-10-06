@@ -1,41 +1,15 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import NewsDatabaseFetch from './NewstDataFetcher'
 import styles from '../../styles/_news.module.scss'
 
-export default function Card({ currentSort, newsData, selectedCategory }) {
-  const [data, setData] = useState({ news: [] })
-
-  const onDataFetched = (fetchedData) => {
-    setData(fetchedData)
-  }
-
-  // 過濾和排序新聞列表
-  const filteredNews = newsData.filter((news) => {
-    if (selectedCategory === 'allnews') {
-      return true // 不進行篩選，顯示所有新聞
-    } else {
-      return news.category === selectedCategory //
-    }
-  })
-
-  const sortedNews = filteredNews.slice().sort((a, b) => {
-    if (currentSort === 'popular') {
-      return b.views - a.views
-    } else if (currentSort === 'oldest') {
-      return new Date(a.created_at) - new Date(b.created_at)
-    } else {
-      return new Date(b.created_at) - new Date(a.created_at)
-    }
-  })
-
+export default function Card({ newsData }) {
+  // console.log(newsData);
   return (
     <>
-      <NewsDatabaseFetch onDataFetched={onDataFetched} />
       <div className="">
         <div className=" row row-cols-1 row-cols-md-2 background ">
-          {sortedNews && sortedNews.length > 0 ? (
-            sortedNews.map((news) => (
+          {newsData && newsData.length > 0 ? (
+            newsData.map((news) => (
               <div key={news.news_id} className={`col  ei-mobile-card-margin`}>
                 <Link
                   href={`/news/${news.news_id}`}
