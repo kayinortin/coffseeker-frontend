@@ -40,6 +40,8 @@ import {
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
 
+import CafeFilter from './cafeFilter'
+
 //所在地的mark樣式
 const locationMarker = new L.Icon({
   iconUrl:
@@ -303,14 +305,6 @@ export default function Map() {
       setCafes(sortedCafes)
     }
   }, [position, distanceRangeKm, allCafeData])
-  //篩選條件預設
-  const criteria = [
-    { icon: <IoIosWifi />, label: '網路', name: 'wifi' },
-    { icon: <LiaChairSolid />, label: '座位', name: 'seat' },
-    { icon: <IoEarOutline />, label: '安靜', name: 'quiet' },
-    { icon: <PiCoffee />, label: '好喝', name: 'tasty' },
-    { icon: <BsPlugin />, label: '插座', name: 'socket' },
-  ]
 
   //=====================生成系列，未來可拆component================
   //生成cafeMarks
@@ -406,72 +400,6 @@ export default function Map() {
         </Marker>
       )
     }
-  }
-
-  //生成咖啡店LIST
-  function CafeList({ cafes }) {
-    return (
-      <>
-        {cafes.length == 0 ? (
-          <p className="text-center">查無資料，請重設篩選條件</p>
-        ) : (
-          <p className="text-end">共{cafes.length}家</p>
-        )}
-
-        {cafes.map((cafe) => {
-          if (parseFloat(cafe.latitude) === 0) {
-            return null // 如果cafe.latitude等於0，則不渲染按鈕
-          }
-
-          return (
-            <button
-              key={cafe.id}
-              className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
-              onClick={() => {
-                handelChangeCafe(cafe)
-              }}
-            >
-              <h4>{cafe.name}</h4>
-
-              <h6>
-                <FaMapMarkerAlt />
-                {cafe.address}
-                {cafe.distanceInKm != null && (
-                  <>
-                    <br />
-                    <span className="distanceText">
-                      {cafe.distanceInKm.toFixed(3)}公里
-                    </span>
-                  </>
-                )}
-              </h6>
-              <p>
-                <span>
-                  <IoIosWifi />
-                  {cafe.wifi}★
-                </span>
-                <span>
-                  <LiaChairSolid />
-                  {cafe.seat}★
-                </span>
-                <span>
-                  <IoEarOutline />
-                  {cafe.quiet}★
-                </span>
-                <span>
-                  <PiCoffee />
-                  {cafe.tasty}★
-                </span>
-                <span>
-                  <BsPlugin />
-                  {checkValue(cafe.socket)}
-                </span>
-              </p>
-            </button>
-          )
-        })}
-      </>
-    )
   }
 
   //生成測欄資訊
@@ -583,46 +511,6 @@ export default function Map() {
             <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
           </a>
         </div>
-        {/* 篩選 */}
-        <div className="cafeFilter">
-          <h4>篩選條件</h4>
-          <div className="cafeFilterForm py-3">
-            {criteria.map((item) => (
-              <div key={item.name}>
-                <div className="d-flex align-items-center">
-                  {item.icon}
-                  <p className="">{item.label}</p>
-                </div>
-                <select
-                  name={item.name}
-                  onChange={handleCriteriaChange}
-                  value={filterValues[item.name]}
-                >
-                  <option defaultValue value="">
-                    不限
-                  </option>
-                  {item.name === 'socket' ? (
-                    <>
-                      <option value="yes">充足</option>
-                      <option value="maybe">也許</option>
-                      <option value="no">很少</option>
-                    </>
-                  ) : (
-                    [5, 4, 3, 2, 1].map((value) => (
-                      <option key={value} value={value}>
-                        {value}★
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
-            ))}
-          </div>
-          <h4 className="my-3">篩選結果</h4>
-          <div className="">
-            <CafeList cafes={cafesFiltered} />
-          </div>
-        </div>
       </>
     )
   }
@@ -692,7 +580,13 @@ export default function Map() {
     }
   }
 
-  //判斷打勾叉叉icon
+  //點擊定位按鈕
+  function LocateBtn() {
+    setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
+    setShowCafeInfo(false)
+    setSelectedCity(null)
+  }
+
   function checkValue(value) {
     switch (value) {
       case 'yes':
@@ -704,12 +598,6 @@ export default function Map() {
       default:
         return <BsDashLg />
     }
-  }
-  //點擊定位按鈕
-  function LocateBtn() {
-    setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
-    setShowCafeInfo(false)
-    setSelectedCity(null)
   }
   //========ref宣告區===========
   const selectCityRef = useRef(null)
@@ -773,6 +661,12 @@ export default function Map() {
         </div> */}
         <aside className="mapAsideInfo">
           <AsideInfo />
+          <CafeFilter
+            filterValues={filterValues}
+            handleCriteriaChange={handleCriteriaChange}
+            cafesFiltered={cafesFiltered}
+            handleCafeClick={handelChangeCafe}
+          />
         </aside>
 
         <MapContainer
