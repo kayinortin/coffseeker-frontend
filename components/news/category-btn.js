@@ -107,7 +107,7 @@ export default function CategoryBtn() {
         </div>
         {/* 手機板 */}
         <div className="container ei-mobile-category-btn d-lg-none">
-          <div className="btn-group col-11 ms-3">
+          <div className="btn-group col-11 ms-3 p-1">
             <button
               className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'allnews'

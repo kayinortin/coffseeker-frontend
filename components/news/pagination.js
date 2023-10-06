@@ -1,37 +1,65 @@
 import React from 'react'
-import '../../styles/_news.module.scss'
 
-function Pagination() {
+function Pagination({ totalPages, currentPage, onPageChange }) {
+  const renderPageButtons = () => {
+    const pageButtons = []
+    for (let i = 1; i <= totalPages; i++) {
+      pageButtons.push(
+        <li
+          key={i}
+          className={i === currentPage ? 'page-item active' : 'page-item'}
+        >
+          <a
+            href={`http://localhost:3000/news?page=${i}`}
+            className="page-link"
+            onClick={(e) => {
+              e.preventDefault() // 防止默認行為
+              onPageChange(i)
+              // 滾動到頁面頂部
+              window.scrollTo(0, 0)
+            }}
+          >
+            {i}
+          </a>
+        </li>
+      )
+    }
+    return pageButtons
+  }
+
   return (
     <div className="ei-pagination-container mb-3">
       <ul className="ei-pagination">
-        <li className="page-item">
-          <a href="#" className="page-link">
+        <li className={currentPage === 1 ? 'page-item disabled' : 'page-item'}>
+          <a
+            href="#"
+            className="page-link"
+            onClick={(e) => {
+              e.preventDefault() // 防止默認行為
+              onPageChange(currentPage - 1)
+              // 滾動到頁面頂部
+              window.scrollTo(0, 0)
+            }}
+          >
             &laquo;
           </a>
         </li>
-        <li className="page-item">
-          <a href="#" className="page-link">
-            1
-          </a>
-        </li>
-        <li className="page-item">
-          <a href="#" className="page-link">
-            2
-          </a>
-        </li>
-        <li className="page-item">
-          <a href="#" className="page-link">
-            3
-          </a>
-        </li>
-        <li className="page-item">
-          <a href="#" className="page-link">
-            4
-          </a>
-        </li>
-        <li className="page-item disabled">
-          <a href="#" className="page-link">
+        {renderPageButtons()}
+        <li
+          className={
+            currentPage === totalPages ? 'page-item disabled' : 'page-item'
+          }
+        >
+          <a
+            href="#"
+            className="page-link"
+            onClick={(e) => {
+              e.preventDefault() // 防止默認行為
+              onPageChange(currentPage + 1)
+              // 滾動到頁面頂部
+              window.scrollTo(0, 0)
+            }}
+          >
             &raquo;
           </a>
         </li>

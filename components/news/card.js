@@ -2,36 +2,36 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import NewsDatabaseFetch from './NewstDataFetcher'
 import styles from '../../styles/_news.module.scss'
-import Pagination from '../news/pagination'
-import CategoryBtn from './category-btn'
-import OrderBy from './order-by'
 
-export default function Card({ currentSort, newsData }) {
-  // 解構 currentSort
-  const [data, setData] = useState(null)
-  // const [currentSort, setCurrentSort] = useState('default')
+export default function Card({ currentSort, newsData, selectedCategory }) {
+  const [data, setData] = useState({ news: [] })
 
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
-    // onDataFetched(fetchedData)
   }
 
   // 過濾和排序新聞列表
-  const sortedNews = data
-    ? data.news.slice().sort((a, b) => {
-        if (currentSort === 'popular') {
-          return b.views - a.views // 按最多人瀏覽排序
-        } else if (currentSort === 'oldest') {
-          return new Date(a.created_at) - new Date(b.created_at) // 按日期  舊到新
-        } else if (currentSort === 'default') {
-          return new Date(b.created_at) - new Date(a.created_at) //預設按日期 新到舊
-        }
-        return 0
-      })
-    : []
+  const filteredNews = newsData.filter((news) => {
+    if (selectedCategory === 'allnews') {
+      return true // 不進行篩選，顯示所有新聞
+    } else {
+      return news.category === selectedCategory //
+    }
+  })
+
+  const sortedNews = filteredNews.slice().sort((a, b) => {
+    if (currentSort === 'popular') {
+      return b.views - a.views
+    } else if (currentSort === 'oldest') {
+      return new Date(a.created_at) - new Date(b.created_at)
+    } else {
+      return new Date(b.created_at) - new Date(a.created_at)
+    }
+  })
 
   return (
     <>
+      <NewsDatabaseFetch onDataFetched={onDataFetched} />
       <div className="">
         <div className=" row row-cols-1 row-cols-md-2 background ">
           {sortedNews && sortedNews.length > 0 ? (
@@ -61,12 +61,10 @@ export default function Card({ currentSort, newsData }) {
               </div>
             ))
           ) : (
-            <div></div>
+            <div>暫無最新消息可顯示</div>
           )}
         </div>
       </div>
-      <NewsDatabaseFetch onDataFetched={onDataFetched} />
-      {/* <Pagination /> */}
     </>
   )
 }
