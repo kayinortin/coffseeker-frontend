@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 
 export default function Validation(
   userEmail,
+  userName,
   userPassword,
   rePassword,
   userGender,
@@ -29,6 +30,9 @@ export default function Validation(
   } else if (!mailRegex.test(userEmail)) {
     errorSwal('請輸入有效的信箱')
     return false
+  } else if (userName === '') {
+    errorSwal('請輸入您的姓名')
+    return false
   } else if (userPassword === '') {
     errorSwal('密碼不能為空')
     return false
@@ -52,7 +56,7 @@ export default function Validation(
     birthdayMonth === '' ||
     birthdayData === ''
   ) {
-    errorSwal('請完整填入生日')
+    errorSwal('請完整填入生日日期')
     return false
   }
 

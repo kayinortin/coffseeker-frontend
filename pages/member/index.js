@@ -31,7 +31,7 @@ export default function info() {
             <MemSideBar />
           </div>
           <div className={'col-12 col-lg-9 mb-5'}>
-            <div className={'px-5'}>
+            <div className={'container d-flex mb-5'}>
               <InfoChangeForm />
             </div>
           </div>
