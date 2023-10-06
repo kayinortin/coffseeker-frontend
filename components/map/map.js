@@ -247,12 +247,13 @@ export default function Map() {
   const [markData, setMarkData] = useState(cafes)
   //咖啡rating篩選條件預設
   const [filterValues, setFilterValuesValues] = useState({
-    wifi: '',
-    seat: '',
-    quiet: '',
-    tasty: '',
+    wifi: '0',
+    seat: '0',
+    quiet: '0',
+    tasty: '0',
     socket: '',
   })
+
   //監聽filterValues和cafes更改，Rating篩選咖啡店
   useEffect(() => {
     // 使用lodash的_.filter函數篩選咖啡店
