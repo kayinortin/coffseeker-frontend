@@ -4,7 +4,7 @@ import Score from './Score'
 
 export default function Review() {
   return (
-    <div className="my-3">
+    <div className="my-3 ">
       <div className="  ">
         <div className="mx-auto col-sm-8 col-10 border">
           <div className="d-flex mt-3">
