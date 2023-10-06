@@ -4,6 +4,7 @@ import CourseText from '@/components/course/CourseText'
 import Review from './Reviews'
 import CourseDescription from './CourseDescription'
 import TopHits from './TopHits'
+import style from '@/styles/_course.module.scss'
 
 export default function MainContent() {
   return (
@@ -15,7 +16,8 @@ export default function MainContent() {
         </div>
 
         <CourseDescription />
-        <h3 className="text-center">學員評價</h3>
+        <h3 className={`text-center ${style['hw-review-title']}`}>學員評價</h3>
+
         <Review />
         <Review />
         <Review />
