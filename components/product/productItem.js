@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import Skeleton from '@mui/material/Skeleton'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { useShow } from '@/context/showProductDetail'
 import { useCategory } from '@/context/category'
@@ -109,7 +110,6 @@ export default function ProductItem(props) {
 
   return (
     <>
-      {/* {!isFetchingCategory ? ( */}
       <div className="col-12 col-md-4 my-3">
         <div className="card ed-border-none">
           <Link
@@ -117,16 +117,19 @@ export default function ProductItem(props) {
             href={`/product/${id}`}
             onClick={handleShow}
           >
-            <img
+            <Image
               src={`http://localhost:3005/uploads/${image_main}`}
               alt={name}
               className="card-img-top"
+              width={300}
+              height={250}
             />
           </Link>
           <FavIcon size="medium" type="icon" id={id} />
           <div className="card-body ed-card-body">
             <h5 className="card-title ed-card-title">
-              {name} <p>{brand}</p>
+              <p>精選品牌 &gt; {brand}</p>
+              {name}
             </h5>
             <p className="ed-card-origin-price">NT${price}</p>
             <div className="d-flex justify-content-between align-items-center">
@@ -140,16 +143,6 @@ export default function ProductItem(props) {
           </div>
         </div>
       </div>
-      {/* ) : (
-        <>
-          <div className="col-6 col-md-6 col-xl-4">
-            <Skeleton variant="rectangular" animation="wave" />
-            <Skeleton variant="text" animation="wave" />
-            <Skeleton variant="text" animation="wave" />
-            <Skeleton variant="text" animation="wave" />
-          </div>
-        </>
-      )} */}
     </>
   )
 }

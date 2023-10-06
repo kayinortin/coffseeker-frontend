@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Counter from '@/components/Counter'
+import Image from 'next/image'
 
-import Skeleton from '@mui/material/Skeleton'
 import Modal from 'react-bootstrap/Modal'
 import Swal from 'sweetalert2'
 
@@ -28,11 +28,12 @@ export default function ProductDetail(props) {
       let response = await axios.get(
         `http://localhost:3005/api/products/${pid}`
       )
-      // console.log(response.data.image, typeof response.data.image)
-      // typeof response.data.image
       const details = response.data
+
       setDetailData({ ...details })
-      setImage(JSON.parse(response.data.image))
+      if (response.data.image) {
+        setImage(JSON.parse(response.data.image))
+      }
     }
   }
 
@@ -225,41 +226,53 @@ export default function ProductDetail(props) {
               <div className="container ed-detail-left">
                 {/* 照片換置 */}
                 <div className="ed-image-gallery">
-                  <img
+                  <Image
                     src={`http://localhost:3005/uploads/${images[mainImageIndex]}`}
-                    alt="Main product"
+                    alt={`${name}`}
                     className="ed-image-main"
+                    width={300}
+                    height={300}
                   />
                   <ProductDetailFavIcon id={id} />
                   <div className="ed-image-row">
                     {images.map((image, index) => {
                       if (index === mainImageIndex) return null
                       return (
-                        <img
+                        <Image
                           key={index}
                           src={`http://localhost:3005/uploads/${image}`}
                           alt={`Product ${index}`}
                           className="ed-image-small"
+                          width={100}
+                          height={100}
                           onClick={() => setMainImageIndex(index)}
                         />
                       )
                     })}
                   </div>
                 </div>
-                <div>活動置放區</div>
+                <div className="d-flex ed-activity align-items-center">
+                  <div className="ed-activity-title text-center">
+                    新會員優惠
+                  </div>
+                  <div className="ed-activity-detail">
+                    領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
+                  </div>
+                </div>
               </div>
               <div className="ed-detail-right">
                 <div className="d-flex flex-column justify-content-between p-3 p-md-0">
                   <div className="ed-detail__scroll p-md-0">
                     <div className="position-relative">
-                      <h5 className="my-2 ed-detail-title">{name}</h5>
-                      <h6 className="ed-detail-brand">精選品牌 {brand}</h6>
+                      <p className="ed-detail-brand mt-2">
+                        精選品牌 &gt; {brand}
+                      </p>
+                      <h5 className="ed-detail-title">{name}</h5>
                       <div className="my-2">
                         <span className="ed-detail-price">
                           NT{discountPrice}
                         </span>
                       </div>
-
                       <div className="d-flex mt-4">
                         <ul className="ed-detail__list">
                           <li className="ed-detail__item">【國家】：</li>
@@ -297,13 +310,54 @@ export default function ProductDetail(props) {
                             </button>
                           </a>
                         </div>
-
-                        <div></div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <hr />
+            <div className="d-flex flex-column">
+              <Image
+                src="http://localhost:3000/product_detail/banner.png"
+                alt="product-detail-banner"
+                width={907}
+                height={400}
+              />
+              <div className="d-flex flex-column ed-product-intro">
+                <div className="ed-product-intro-title text-center mt-4">
+                  商品特色
+                </div>
+                <div className="mt-2">
+                  <h5>【極精品】</h5>
+                  <p>巴拿馬 翡翠莊園 Jaramillo 綠標瑰夏 日曬</p>
+                </div>
+                <div className="mt-3">
+                  <h5>【烘豆師筆記】</h5>
+                  <div className="ed-product-intro-detail">
+                    生豆時聞得到淡淡的莓果香氣，為了加強這樣美好的風味，前期使用了中等的節奏進行烘焙，將水果般甜膩、果汁般的口感呈現出來。至一爆的發展，將節奏慢下來，讓口感能夠更突出而不掩蓋香氣。
+                    <br />
+                    <br />
+                    初聞乾香氣時，帶有一點藍莓、百香果的調性。在熱時品飲，有些微的枇杷清香，和著熱帶水果的風味。酸甜感有如荔枝輕輕點綴在舌面。尾韻帶一點異國香料感，回甘性強如糖蜜，最後以淡雅的桂圓作陪襯，整杯咖啡給人一種身處於異國的熱帶風情。
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex flex-column">
+                <div className="ed-product-intro-title text-center mt-4">
+                  商品規格
+                </div>
+                <div>
+                  <ol className="ed-product-intro-list">
+                    <li>新鮮咖啡烘焙豆</li>
+                    <li>重量100g</li>
+                    <li>有效期限一年</li>
+                    <li>製造日期見包裝上標示</li>
+                    <li>單向排氣閥鋁箔袋包裝</li>
+                  </ol>
+                </div>
+              </div>
+              <hr />
+              <div></div>
             </div>
           </div>
         </div>

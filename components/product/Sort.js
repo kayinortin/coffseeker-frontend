@@ -23,13 +23,13 @@ export default function Sort() {
         }}
       >
         <option value="default" disabled>
-          　商品排序依...
+          商品排序依...
         </option>
-        <option value="New">　最新上架</option>
-        <option value="Popularity">　熱賣商品</option>
-        <option value="MostViews">　最多人看</option>
-        <option value="priceAsc">　價格由低到高</option>
-        <option value="priceDesc">　價格由高到低</option>
+        <option value="New">最新上架</option>
+        <option value="Popularity">熱賣商品</option>
+        <option value="MostViews">最多人看</option>
+        <option value="priceAsc">價格由低到高</option>
+        <option value="priceDesc">價格由高到低</option>
       </select>
     </div>
   )
