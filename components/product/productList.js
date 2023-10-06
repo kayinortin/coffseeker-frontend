@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import Skeleton from '@mui/material/Skeleton'
-import ProductItem from './ProductItem'
+import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
 import Sort from './Sort'
 

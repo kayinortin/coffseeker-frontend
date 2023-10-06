@@ -144,9 +144,6 @@ export default function HeaderMobile(props) {
             <li className="ed-navbar__item">
               <hr className="ed-hr ed-hr--navbar" />
             </li>
-            <div className="ed-bg1">
-              <img src="http://localhost:3000/bg1.png" alt="menu-bg" />
-            </div>
             <div className="ed-bg2">
               <img
                 src="http://localhost:3000/bg2-sm.png"
