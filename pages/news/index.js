@@ -1,40 +1,63 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Card from '@/components/news/card'
 import CategoryBtn from '@/components/news/category-btn'
-import styles from '../../styles/_news.module.scss'
 import OrderBy from '@/components/news/order-by'
 import Pagination from '@/components/news/pagination'
-import { useState } from 'react'
 
 export default function News() {
   const [currentSort, setCurrentSort] = useState('default')
-  const [selectedCategory, setSelectedCategory] = useState('allnews') // 初始選擇全部消息
+  const [selectedCategory, setSelectedCategory] = useState('allnews')
+  const [newsData, setNewsData] = useState([]) // 存儲新聞數據
+  const [totalPages, setTotalPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  // 定義處理排序方式變化的函數
+  const fetchNewsData = async (page) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3005/api/news?page=${page}`
+      )
+      console.log('API請求URL:', `http://localhost:3005/api/news?page=${page}`)
+
+      if (response.ok) {
+        const jsonData = await response.json()
+        console.log('API響應數據:', jsonData)
+        setNewsData(jsonData.news) // 更新新聞數據
+        setTotalPages(jsonData.totalPages)
+      } else {
+        console.error('API 請求失敗')
+      }
+    } catch (error) {
+      console.error('API 請求失敗:', error)
+    }
+  }
+
   const handleSortChange = (newSort) => {
-    setCurrentSort(newSort) // 更新 currentSort 狀態
+    setCurrentSort(newSort)
   }
 
   function myOwnSort(sortBy, items) {
     if (sortBy === 'popular') {
-      // 根據最多人瀏覽排序
       return items.sort((a, b) => b.views - a.views)
     } else if (sortBy === 'oldest') {
-      // 根據日期排序
       return items.sort(
         (a, b) => new Date(a.created_at) - new Date(b.created_at)
       )
     } else {
-      // 預設排序方式
       return items
     }
   }
 
-  // 定義處理分類變化的函數
   const handleCategoryChange = (category) => {
-    setSelectedCategory(category) // 更新 selectedCategory 狀態
+    setSelectedCategory(category)
   }
+  const handlePageChange = (page) => {
+    setCurrentPage(page)
+  }
+  useEffect(() => {
+    fetchNewsData(currentPage)
+    console.log(currentPage)
+  }, [currentPage])
 
   return (
     <>
@@ -67,6 +90,7 @@ export default function News() {
             <h3 className="text-center news-title fs-2">最新消息</h3>
             <div className="ei-line ms-3"></div>
           </div>
+          {/* 篩選&排序區 */}
           <div className="d-md-flex align-items-end justify-content-center mb-lg-4">
             <div className="me-lg-4">
               <CategoryBtn onSelectCategory={handleCategoryChange} />
@@ -77,9 +101,13 @@ export default function News() {
           </div>
 
           {/* 渲染新聞列表 */}
-          <Card currentSort={currentSort} />
-
-          <Pagination />
+          <Card currentSort={currentSort} newsData={newsData} />
+          {/* 分頁 */}
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </>

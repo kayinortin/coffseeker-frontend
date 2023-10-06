@@ -5,6 +5,7 @@ import { IoEarOutline } from 'react-icons/io5'
 import { PiCoffee } from 'react-icons/pi'
 import { BsPlugin } from 'react-icons/bs'
 import CafeList from './cafeList'
+
 export default function CafeFilter({
   filterValues,
   handleCriteriaChange,
@@ -21,7 +22,9 @@ export default function CafeFilter({
 
   return (
     <div className="cafeFilter">
-      <h4>篩選條件</h4>
+      <div className="">
+        <h4>篩選條件</h4>
+      </div>
       <div className="cafeFilterForm py-3">
         {criteria.map((item) => (
           <div key={item.name}>
@@ -29,32 +32,33 @@ export default function CafeFilter({
               {item.icon}
               <p className="">{item.label}</p>
             </div>
-            <select
-              name={item.name}
-              onChange={handleCriteriaChange}
-              value={filterValues[item.name]}
-            >
-              <option defaultValue value="">
-                不限
-              </option>
-              {item.name === 'socket' ? (
-                <>
-                  <option value="yes">充足</option>
-                  <option value="maybe">也許</option>
-                  <option value="no">很少</option>
-                </>
-              ) : (
-                [5, 4, 3, 2, 1].map((value) => (
-                  <option key={value} value={value}>
-                    {value}★
-                  </option>
-                ))
-              )}
-            </select>
+            {item.name === 'socket' ? (
+              <input
+                type="range"
+                className="form-range"
+                name={item.name}
+                onChange={handleCriteriaChange}
+                value={filterValues[item.name]}
+                min="1"
+                max="3"
+              />
+            ) : (
+              <>
+                <input
+                  type="range"
+                  className="form-range"
+                  name={item.name}
+                  onChange={handleCriteriaChange}
+                  value={filterValues[item.name]}
+                  min="0"
+                  max="5"
+                  list="tickmarks"
+                />
+              </>
+            )}
           </div>
         ))}
       </div>
-
       <h4 className="my-3">篩選結果</h4>
       <div className="">
         <CafeList cafes={cafesFiltered} handleCafeClick={handleCafeClick} />

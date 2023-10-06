@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import ForgetPassword from '@/components/member/ForgetPassword'
+import ForgetPassword from '@/components/member/ForgetPassword/Index'
 export default function Forget() {
   return (
     <>
