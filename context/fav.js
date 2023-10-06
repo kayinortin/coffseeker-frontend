@@ -1,7 +1,20 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 
-export const FavContext = createContext()
+const FavContext = createContext()
 
-export function useFav() {
+export function FavProvider({ children }) {
+  const [favData, setFavData] = useState([])
+  const [favItemsArr, setFavItemsArr] = useState([])
+
+  return (
+    <FavContext.Provider
+      value={{ favData, setFavData, favItemsArr, setFavItemsArr }}
+    >
+      {children}
+    </FavContext.Provider>
+  )
+}
+
+export function useFavorite() {
   return useContext(FavContext)
 }

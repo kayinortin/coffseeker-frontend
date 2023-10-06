@@ -1,11 +1,11 @@
 .ed-border-card01 {
-  border: 6px solid #dfd0af;
+  border: 10px solid #dfd0af;
 }
 .ed-border-card02 {
-  border: 6px solid #dfd0af;
+  border: 10px solid #B29E7A;
 }
 .ed-border-card03 {
-  border: 6px solid #dfd0af;
+  border: 10px solid #845635;
 }
 
 .ed-border-none {
@@ -24,7 +24,7 @@
 
 .ed-card-body {
   border: none;
-  padding: 10px 0  0 0;
+  padding: 10px 0 0 0;
   --tw-bg-opacity: 1;
   background-color: rgb(240 235 226 / var(--tw-bg-opacity));
 }
@@ -35,6 +35,7 @@
   line-height: normal;
   font-weight: bold;
   color: $color--primary;
+  overflow: hidden;
   @media screen and (max-width: 1440px) {
     line-height: 20px;
   }
@@ -77,14 +78,12 @@
   width: 50%;
   z-index: 5;
   @media screen and (max-width: 1440px) {
-    width: 45%;
+    width: 50%;
   }
   @media screen and (max-width: $lg) {
     width: 100%;
   }
-    
-  }
-
+}
 
 .ed-popular-marginTop {
   margin-top: 30px;
@@ -96,50 +95,64 @@
   }
 }
 
-.ed-mt-1440{
+.ed-mt-1440 {
   @media screen and (max-width: 1440px) {
     margin-top: 30px;
   }
-  }
+}
 
 .ed-popular-padding {
-  padding: 20px 45px 0 45px;
+  margin-left: 15px;
+  padding: 20px 0 0 0;
   @media screen and (max-width: 1440px) {
-    padding: 60px 60px 0 60px;
+    margin-top: 40px;
+    padding: 20px 0 0 0;
   }
   @media screen and (max-width: $lg) {
+    margin-left: 0px;
     margin-top: 80px;
     padding: 0px;
   }
 }
 
-.ed-index-left{
-    left:0px
+.ed-index-left {
+  left: 0px;
 }
 
-.ed-no-product{
-    padding-top: 300px;
+.ed-no-product {
+  padding-top: 300px;
 }
 
-.ed-no-product-arrow{
-    position: relative;
-    top: 260px;
-    left:250px;
-    width: 100px;
-    rotate: 180deg;
+.ed-no-product-arrow {
+  position: relative;
+  top: 260px;
+  left: 250px;
+  width: 100px;
+  rotate: 180deg;
 }
 
-.ed-h6-resize-margin{
-    margin-left: 15px;
+.ed-h6-resize-margin {
+  margin-left: 15px;
 }
 
-.ed-addCart{
-   border: none;
-    width: 140px;
+.ed-addCart {
+  border: none;
+  font-size: 14px;
+  width: 100px;
+  height: 26px;
+  color: white;
+  background-color: $color--secondary;
+  &:hover {
+    background-color: $color--primary;
+  }
+  @media screen and (max-width: 1440px) {
+    font-size: 16px;
+    width: 130px;
     height: 30px;
-    color: white;
-    background-color: $color--secondary;
-    &:hover{
-        background-color: $color--primary;
-    }
-}
+  }
+  @media screen and (max-width: $lg) {
+    font-size: 18px;
+    width: 170px;
+    height: 35px;
+  }
+  }

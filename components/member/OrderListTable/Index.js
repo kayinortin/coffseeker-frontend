@@ -3,7 +3,7 @@ import { FaAngleDown } from 'react-icons/fa6'
 import Link from 'next/link'
 import OrderdetailOpened from './OrderdetailOpened'
 
-export default function OrderListForm() {
+export default function OrderListTable() {
   const fakeUser = {
     id: 1,
     name: 'Jone Doe',

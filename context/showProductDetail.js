@@ -1,6 +1,18 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 
-export const ShowContext = createContext()
+const ShowContext = createContext()
+
+export function DetailProvider({ children }) {
+  const [show, setShow] = useState({
+    in: false,
+    out: false,
+  })
+  return (
+    <ShowContext.Provider value={{ show, setShow }}>
+      {children}
+    </ShowContext.Provider>
+  )
+}
 
 export function useShow() {
   return useContext(ShowContext)

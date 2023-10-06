@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Step from '@/components/cart/step'
-import CartList from '@/components/cart/CartList'
+import CartListCopy from '@/components/cart/CartList-copy'
 import Checkout from '@/components/cart/Checkout'
 import Complete from '@/components/cart/Complete'
 
@@ -20,7 +20,7 @@ export default function Cart() {
         <div className={'container'}>
           <Step currentStep={step} />
           {step === 1 && (
-            <CartList
+            <CartListCopy
               step={step}
               handleNextStep={handleNextStep}
               setStep={setStep}

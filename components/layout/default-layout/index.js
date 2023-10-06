@@ -6,10 +6,9 @@ import HeaderDesktop from './Header-desktop'
 import HeaderMobile from './Header-mobile'
 import Footer from './footer'
 
-import productsData from '@/data/cart/product'
-
 import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
+import { useCartList } from '@/context/cart'
 
 // Navbar 電腦版資料
 import navItems from '../../../data/navitems.json'
@@ -52,11 +51,22 @@ export default function DefaultLayout({ title = '', children }) {
     }
   }, [scrollPosition])
 
-  //   const { cartListData } = useCartList()
-  const [cartIconLength, setCartIconLength] = useState()
+  const [cartIconLength, setCartIconLength] = useState(0)
+  const { cartListData, setCartListData } = useCartList()
+
   useEffect(() => {
-    setCartIconLength(productsData.length)
-  }, [productsData])
+    const storedCartData = JSON.parse(localStorage.getItem('cartList'))
+    if (storedCartData) {
+      setCartListData(storedCartData)
+      setCartIconLength(storedCartData.length)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (cartListData) {
+      setCartIconLength(cartListData.length)
+    }
+  }, [cartListData])
 
   // 未登入狀態
 

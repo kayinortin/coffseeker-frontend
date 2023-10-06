@@ -31,12 +31,6 @@
   // background:pink
 }
 
-.content {
-  // height: 100vh;
-  width: 650px;
-  // background: cyan;
-}
-
 // 麵包屑 Start
 .nav-breadcrumb {
   --bs-breadcrumb-divider: '>';
@@ -153,12 +147,9 @@
   width: max-content;
 }
 .disagree {
-    color: #ffffff;
-    font-family: 'Noto Sans TC';
-    font-size: 18px;
-    height: 48px;
-    width: 650px;
+    cursor:not-allowed;
     background: #a7a7a7;
+
 }
 
 .orange-text {

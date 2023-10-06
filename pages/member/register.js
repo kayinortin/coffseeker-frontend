@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import SignUpForm from '@/components/member/SignUpForm'
+import RegisterForm from '@/components/member/RegisterForm/Index'
 export default function SignUp() {
   return (
     <>
@@ -21,8 +21,8 @@ export default function SignUp() {
           </div>
         </div>
         {/* 麵包屑結束 */}
-        <div className={'container d-flex justify-content-center'}>
-          <SignUpForm />
+        <div className={'container d-flex justify-content-center mb-5'}>
+          <RegisterForm />
         </div>
       </div>
     </>

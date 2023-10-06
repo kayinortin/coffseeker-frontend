@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginForm from '@/components/member/LoginForm'
+import LoginForm from '@/components/member/LoginForm/Index'
 import Link from 'next/link'
 
 export default function Login() {
@@ -22,7 +22,7 @@ export default function Login() {
           </div>
         </div>
         {/* 麵包屑結束 */}
-        <div className={'container d-flex justify-content-center'}>
+        <div className={'container d-flex justify-content-center mb-5'}>
           <LoginForm />
         </div>
       </div>

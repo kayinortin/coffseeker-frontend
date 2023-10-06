@@ -541,5 +541,372 @@ div.btngroup{
 
 }
 
+.newcartlist{
+    padding-block: 1rem;
+    
+    // 空購物車
+    div.emptyContainer{
+        margin-block: 2rem;
+        img{
+            width: 20vw;
+        }
+        div.emptyTitle{
+            padding-block: 1rem;
+            font-size: $fs-lg;
+            color: $color--primary;
+            font-weight: $fw-bold;
+        }
+        button.goshop{
+            background-color: $color--secondary;
+            color: $color--white;
+            width: 30vw;
+            height: 2.5rem;
+            &:hover{
+                background-color: $color--primary;
+            }
+        }
+    }
 
+    table{
+        margin-bottom: 2rem;
+    }
 
+    // 咖啡商品
+    table.products{
+        padding-block: 1rem;
+        width: 100%;
+        color: $color--primary;
+        
+        thead.productsLabels{
+            border: 1px solid $color--primary;
+            background-color: $color-lightgray;
+            font-size: $fs-sm;
+            font-weight: $fw-bold;
+            tr{
+               
+                th{
+                    padding-block: 1rem;
+                    padding-inline: 0.5rem;
+                    vertical-align: middle;
+                    text-align: center;
+                    min-width: 80px;
+                }
+            }
+        }
+
+        tbody.productsItem{
+            border: 1px solid $color--primary;
+            margin-block: 16px;
+
+            tr{   
+                border-bottom: 1px solid $color--primary;
+                td{
+                    padding-block: .5rem;
+                    padding-inline: .5rem;
+                    text-align: center;
+                }
+                
+                td.imgContainer{
+                    width: 160px;
+                    height: 160px;
+                    img{
+                        box-sizing: border-box;
+                        background-color: $color--primary;
+                        border: .4rem solid #CBB48B;
+                    }
+                }
+                td.quantity {
+                    div.btn-group{
+                        button {
+                            width: 2.5rem;
+                            height: 2.5rem;
+                            color: $color--primary;
+                            background-color: $color--secondary;
+                            border: 1px solid $color--primary;
+                        }
+                        button.quantityMinus, button.quantityAdd{
+                            &:hover,&:active {
+                                color:$color--white;
+                                background-color: $color--secondary;
+                                border: px solid $color--primary;
+    
+                              }
+                        }
+                       
+                        input.forminput{
+                            width: 3.5rem;
+                            height: 2.5rem;
+                            border-block: 1px solid $color--primary;
+                            text-align: center;
+                            background-color: $color--background;
+                        }
+                    }
+                }
+
+                td.productdelete{
+                    text-align: center;
+                    vertical-align: middle;
+                    button.deleteButton{
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        padding: 0;
+
+                        &:hover,&:active{
+                            border: 1px solid $color--primary;
+                            background-color: $color--secondary;
+                            color:$color--white;
+                        }
+
+                        .trash{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                          
+                        }
+                    }
+
+                }
+                &:hover{
+                    background-color: $color--gray6;
+                }
+            }
+            
+        }
+
+        tfoot{
+            border: 1px solid $color--primary;
+            height: 50px;
+            padding: 2rem;
+            font-size: $fs-md;
+            font-weight: $fw-bold;
+         
+            tr.productTotal{
+                td.total{
+                    vertical-align: middle;
+                    
+                }
+                
+            }
+        }
+    }
+
+    // 課程商品
+    table.courses{
+        padding-block: 1rem;
+        width: 100%;
+        color: $color--primary;
+
+        thead.coursesLabels{
+            border: 1px solid $color--primary;
+            background-color: $color-lightgray;
+            font-size: $fs-sm;
+            font-weight: $fw-bold;
+            tr{
+                th{
+                    padding-block: 1rem;
+                    padding-inline: 0.5rem;
+                    vertical-align: middle;
+                    text-align: center;
+                    min-width: 80px;
+                   
+                }
+            }
+        }
+        tbody.coursesItem{
+            border: 1px solid $color--primary;
+            margin-block: 16px;
+
+            tr{   
+                border-bottom: 1px solid $color--primary;
+                &:hover{
+                    background-color: $color--gray6;
+                }
+
+                td{
+                    padding-block: .5rem;
+                    padding-inline: .5rem;
+                    text-align: center;
+                }
+                td.imgContainer{
+                    width: 160px;
+                    height: 160px;
+                    img{
+                        box-sizing: border-box;
+                        background-color: $color--primary;
+                        border: .4rem solid #CBB48B;
+                    }
+                }
+                td.productdelete{
+                    text-align: center;
+                    vertical-align: middle;
+                    button.deleteButton{
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        padding: 0;
+                        
+                        &:hover,&:active{
+                            border: 1px solid $color--primary;
+                            background-color: $color--secondary;
+                            color:$color--white;
+                        }
+                        .trash{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                        }
+                    }
+
+                }
+                &:hover{
+                    background-color: $color--gray6;
+                }
+            }
+            
+        }
+        tfoot{
+            border: 1px solid $color--primary;
+            height: 50px;
+            padding: 2rem;
+            font-size: $fs-md;
+            font-weight: $fw-bold;
+
+            tr.courseTotal{
+                td.total{
+                    vertical-align: middle;
+                   
+                } 
+            }
+        }
+    }
+
+    //選擇與合計
+    div.selectItems{
+        gap: 2rem;
+
+        //選擇運送與付款方式
+        table.selectContainer{
+            box-sizing: border-box;
+            width: 100%;
+            color: $color--primary;
+            
+    
+            thead.Labels{
+                border: 1px solid $color--primary;
+                background-color: $color-lightgray;
+                font-size: $fs-sm;
+                font-weight: $fw-bold;
+    
+                tr{
+    
+                    th{
+                        padding-block: 1rem;
+                        padding-inline: 0.5rem;
+                        vertical-align: middle;
+                        min-width: 80px;
+                       
+                    }
+                }
+            }
+    
+            tbody.selectItem{
+                border: 1px solid $color--primary;
+                
+                tr{
+                    display: flex;
+                    align-items: center;
+                    
+                    td.selectContainer{
+                        padding-block: .8rem;
+                        padding-inline: 1rem;
+                        
+                        label.selecTitle{
+                            padding-bottom: .5rem;
+                        }
+
+                        select.form-select{
+                            
+                            border: 1px solid $color--primary;
+                            // &:hover{
+                            //     border: 1px solid $color--secondary;
+                            //     color: $color--secondary;
+                            // }
+                        }
+                        
+                    }
+                }
+               
+            }
+        }
+        
+        //付款資訊
+        table.paymentContainer{
+            width: 100%;
+            color: $color--primary;
+            
+    
+            thead.Labels{
+                border: 1px solid $color--primary;
+                background-color: $color-lightgray;
+                font-size: $fs-sm;
+                font-weight: $fw-bold;
+    
+                tr{
+    
+                    th{
+                        padding-block: 1rem;
+                        padding-inline: 0.5rem;
+                        vertical-align: middle;
+                        min-width: 80px;
+                       
+                    }
+                }
+            }
+    
+            tbody.paymentItem{
+                border: 1px solid $color--primary;
+    
+                tr{ 
+    
+                    td{
+                        
+                        
+
+                        button.goCheckout{
+                            width: 100%;
+                            background-color: $color--secondary;
+                            color: $color--white;
+                            font-weight: $fw-black;
+                            font-size: $fs-md;
+                            &:hover{
+                                background-color: $color--primary 
+                            }
+                        }
+
+                        
+                        
+                    }
+                    
+                    td.selectContainer{
+                        padding-block: .8rem;
+                        padding-inline: 1rem;
+                        
+                        div.label-item{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        
+                        }
+                        select.form-select{
+                            width: 60%;
+                            border: 1px solid $color--primary;
+    
+                        }
+                    }
+
+                    
+                }
+            }
+            
+            
+        }
+    }
+
+}

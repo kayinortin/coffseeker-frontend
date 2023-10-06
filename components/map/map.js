@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import {
@@ -18,6 +18,7 @@ import 'leaflet/dist/leaflet.css'
 //icon import
 import { FaMapMarkerAlt, FaGlobeAmericas, FaCity } from 'react-icons/fa'
 import { IoIosWifi } from 'react-icons/io'
+import { FaArrowsLeftRightToLine } from 'react-icons/fa6'
 import { LiaChairSolid } from 'react-icons/lia'
 import { IoEarOutline } from 'react-icons/io5'
 import { TbCurrentLocation } from 'react-icons/tb'
@@ -38,6 +39,8 @@ import {
 
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+
+import CafeFilter from './cafeFilter'
 
 //所在地的mark樣式
 const locationMarker = new L.Icon({
@@ -192,11 +195,12 @@ export default function Map() {
   const [cafes, setCafes] = useState([])
   //所有咖啡廳
   const [allCafeData, setAllCafeData] = useState([])
-
+  //取得咖啡廳資料
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/fetchCafeData')
+        //這邊之後可以新增如果api沒拿到資料的話要怎麼做
         const data = response.data
         setAllCafeData(data)
         //預設顯示桃園咖啡
@@ -272,17 +276,37 @@ export default function Map() {
     //然後更新Marks渲染
     setMarkData(filteredCafes)
   }, [filterValues, cafes])
+  //顯示距離預設
+  const [distanceRangeKm, setDistanceRangeKm] = useState(3)
 
-  //篩選條件預設
-  const criteria = [
-    { icon: <IoIosWifi />, label: '網路', name: 'wifi' },
-    { icon: <LiaChairSolid />, label: '座位', name: 'seat' },
-    { icon: <IoEarOutline />, label: '安靜', name: 'quiet' },
-    { icon: <PiCoffee />, label: '好喝', name: 'tasty' },
-    { icon: <BsPlugin />, label: '插座', name: 'socket' },
-  ]
+  // 在distanceRangeKm發生改變時重新渲染咖啡廳數據
+  useEffect(() => {
+    if (position) {
+      const cafesWithDistance = _.map(allCafeData, (cafe) => {
+        const cafeLat = parseFloat(cafe.latitude)
+        const cafeLng = parseFloat(cafe.longitude)
+        const distanceInKm = distanceCount(
+          position.lat,
+          position.lng,
+          cafeLat,
+          cafeLng,
+          'K'
+        )
+        if (distanceInKm <= distanceRangeKm) {
+          return {
+            ...cafe,
+            distanceInKm,
+          }
+        }
+        return null
+      })
+      const filteredCafes = _.filter(cafesWithDistance, (cafe) => cafe !== null)
+      const sortedCafes = _.orderBy(filteredCafes, 'distanceInKm', 'asc')
+      setCafes(sortedCafes)
+    }
+  }, [position, distanceRangeKm, allCafeData])
 
-  //生成系列，未來可拆component================
+  //=====================生成系列，未來可拆component================
   //生成cafeMarks
   function CafesMarker({ cafes }) {
     return (
@@ -313,8 +337,7 @@ export default function Map() {
   function LocationMarker() {
     const map = useMapEvents({
       locationfound(e) {
-        setPosition(e.latlng)
-        setSelectedCity(null)
+        handlePositionGet(e.latlng)
         map.flyTo(e.latlng, map.getZoom())
       },
     })
@@ -323,6 +346,7 @@ export default function Map() {
         map.locate()
         setTriggerLocate(false) // 重設狀態，以便下次點選按鈕時重新觸發
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [triggerLocate])
 
     return position === null ? null : (
@@ -376,63 +400,6 @@ export default function Map() {
         </Marker>
       )
     }
-  }
-
-  //生成咖啡店LIST
-  function CafeList({ cafes }) {
-    return (
-      <>
-        {cafes.length == 0 ? (
-          <p className="text-center">查無資料，請重設篩選條件</p>
-        ) : (
-          <p className="text-end">共{cafes.length}家</p>
-        )}
-
-        {cafes.map((cafe) => {
-          if (parseFloat(cafe.latitude) === 0) {
-            return null // 如果cafe.latitude等於0，則不渲染按鈕
-          }
-
-          return (
-            <button
-              key={cafe.id}
-              className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
-              onClick={() => {
-                handelChangeCafe(cafe)
-              }}
-            >
-              <h4>{cafe.name}</h4>
-              <h6>
-                <FaMapMarkerAlt />
-                {cafe.address}
-              </h6>
-              <p>
-                <span>
-                  <IoIosWifi />
-                  {cafe.wifi}★
-                </span>
-                <span>
-                  <LiaChairSolid />
-                  {cafe.seat}★
-                </span>
-                <span>
-                  <IoEarOutline />
-                  {cafe.quiet}★
-                </span>
-                <span>
-                  <PiCoffee />
-                  {cafe.tasty}★
-                </span>
-                <span>
-                  <BsPlugin />
-                  {checkValue(cafe.socket)}
-                </span>
-              </p>
-            </button>
-          )
-        })}
-      </>
-    )
   }
 
   //生成測欄資訊
@@ -511,7 +478,14 @@ export default function Map() {
             </span>
           </div>
           <div className="cafeInfos">
-            <h5>店家資訊</h5>
+            <h5 className="d-flex justify-content-between">
+              店家資訊
+              {cafeData.distanceInKm != null && (
+                <span className="distanceText">
+                  {cafeData.distanceInKm.toFixed(3)}公里
+                </span>
+              )}
+            </h5>
             <div className="d-flex ">
               <FaMapMarkerAlt />
               <h6>{cafeData.address}</h6>
@@ -530,52 +504,17 @@ export default function Map() {
               </h6>
             </div>
           </div>
-          <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
-        </div>
-        {/* 篩選 */}
-        <div className="cafeFilter">
-          <h4>篩選條件</h4>
-          <div className="cafeFilterForm py-3">
-            {criteria.map((item) => (
-              <div key={item.name}>
-                <div className="d-flex align-items-center">
-                  {item.icon}
-                  <p className="">{item.label}</p>
-                </div>
-                <select
-                  name={item.name}
-                  onChange={handleCriteriaChange}
-                  value={filterValues[item.name]}
-                >
-                  <option defaultValue value="">
-                    不限
-                  </option>
-                  {item.name === 'socket' ? (
-                    <>
-                      <option value="yes">充足</option>
-                      <option value="maybe">也許</option>
-                      <option value="no">很少</option>
-                    </>
-                  ) : (
-                    [5, 4, 3, 2, 1].map((value) => (
-                      <option key={value} value={value}>
-                        {value}★
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
-            ))}
-          </div>
-          <h4 className="my-3">篩選結果</h4>
-          <div className="">
-            <CafeList cafes={cafesFiltered} />
-          </div>
+          <a
+            href={`https://www.google.com/maps/search/${cafeData.address}+${cafeData.name}`}
+            target="_blank"
+          >
+            <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
+          </a>
         </div>
       </>
     )
   }
-  //handle函式系列========================
+  //====================handle函式系列========================
   //更改條件選擇時
   const handleCriteriaChange = (e) => {
     const { name, value } = e.target
@@ -597,8 +536,57 @@ export default function Map() {
     let targetCity = _.find(cityData, { city: e.target.value })
     setSelectedCity(targetCity)
   }
-  //輔助用函式(不生成物件)==================================
-  //判斷打勾叉叉icon
+
+  //切換顯示距離事件
+  function HandleChangeDistance(e) {
+    setShowCafeInfo(false)
+    let newKm = e.target.value
+    setDistanceRangeKm(newKm)
+  }
+
+  //成功取得定位事件
+  function handlePositionGet(position) {
+    selectCityRef.current.value = ''
+    setPosition(position)
+    setSelectedCity(null)
+    console.log(JSON.stringify(position))
+  }
+  //===================輔助用函式(不生成物件)==================================
+  //經緯度換算距離
+  function distanceCount(lat1, lon1, lat2, lon2, unit) {
+    if (lat1 == lat2 && lon1 == lon2) {
+      return 0
+    } else {
+      var radlat1 = (Math.PI * lat1) / 180
+      var radlat2 = (Math.PI * lat2) / 180
+      var theta = lon1 - lon2
+      var radtheta = (Math.PI * theta) / 180
+      var dist =
+        Math.sin(radlat1) * Math.sin(radlat2) +
+        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
+      if (dist > 1) {
+        dist = 1
+      }
+      dist = Math.acos(dist)
+      dist = (dist * 180) / Math.PI
+      dist = dist * 60 * 1.1515
+      if (unit == 'K') {
+        dist = dist * 1.609344
+      }
+      if (unit == 'N') {
+        dist = dist * 0.8684
+      }
+      return dist
+    }
+  }
+
+  //點擊定位按鈕
+  function LocateBtn() {
+    setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
+    setShowCafeInfo(false)
+    setSelectedCity(null)
+  }
+
   function checkValue(value) {
     switch (value) {
       case 'yes':
@@ -611,13 +599,9 @@ export default function Map() {
         return <BsDashLg />
     }
   }
-  //啟動定位
-  function LocateBtn() {
-    setTriggerLocate(true) // 當按鈕被點選時，設定狀態以觸發定位
-    setShowCafeInfo(false)
-    setSelectedCity(null)
-  }
-  //整體return
+  //========ref宣告區===========
+  const selectCityRef = useRef(null)
+  //========================本體return====================
   return (
     <>
       <div
@@ -636,12 +620,17 @@ export default function Map() {
       <div className="mapArea">
         <div className="mapControl">
           <div className="rangeSelect me-3">
-            <span>
+            <div>
               <FaCity />
-            </span>
-            <select defaultValue={''} onChange={(e) => HandleChangeCity(e)}>
+            </div>
+
+            <select
+              defaultValue={'taoyuan'}
+              onChange={(e) => HandleChangeCity(e)}
+              ref={selectCityRef}
+            >
               <option disabled value="">
-                選擇城市
+                城市
               </option>
               {cityData.map((city, i) => (
                 <option key={i} value={city.city}>
@@ -651,11 +640,16 @@ export default function Map() {
             </select>
           </div>
 
-          <div className="rangeSelect me-3">
-            <span>顯示範圍</span>
-            <select>
-              <option value="">附近1000公尺</option>
-              <option value="">附近500公尺</option>
+          <div
+            className={`rangeSelect me-3 ${position === null ? 'd-none' : ''}`}
+          >
+            <div>
+              <FaArrowsLeftRightToLine />
+            </div>
+            <select onChange={(e) => HandleChangeDistance(e)}>
+              <option value={3}>附近 3公里</option>
+              <option value={2}>附近 2公里</option>
+              <option value={1}>附近 1公里</option>
             </select>
           </div>
           <button className="locateBtn" type="button" onClick={LocateBtn}>
@@ -667,6 +661,12 @@ export default function Map() {
         </div> */}
         <aside className="mapAsideInfo">
           <AsideInfo />
+          <CafeFilter
+            filterValues={filterValues}
+            handleCriteriaChange={handleCriteriaChange}
+            cafesFiltered={cafesFiltered}
+            handleCafeClick={handelChangeCafe}
+          />
         </aside>
 
         <MapContainer
