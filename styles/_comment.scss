@@ -1,0 +1,77 @@
+.rating-container {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+
+    .star {
+        cursor: pointer;
+        color: #bbb;
+        background: none;
+        border: none;
+        font-size: 24px;
+        margin: 0 2px;
+        transition: color 0.3s;
+
+        &:focus {
+            outline: none;
+        }
+
+        &.active-star {
+            color: gold;
+        }
+    }
+}
+
+.ed-comment-textarea{
+    width: 100%;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+
+    &:focus {
+        outline: none;
+        border-color: #aaa;
+    }
+}
+
+.ed-comment-btn {
+    background: $color--secondary;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 500;
+
+    &:hover {
+        color: white;
+        background: $color--primary;
+    }
+}
+
+.ed-comment{
+    &-name{
+        font-size: 24px;
+        font-weight: 500;
+        color: #333;
+        margin-block: 6px;
+    }
+    &-time{
+        font-size: 15px;
+        color: #333;
+    }
+    &-content{
+        font-size: 19px;
+        color: #333;
+        margin-top: 10px;
+    }
+}

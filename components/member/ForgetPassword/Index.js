@@ -3,16 +3,38 @@ import axios from 'axios'
 import Link from 'next/link'
 import useInterval from '@/hooks/useInterval'
 import Swal from 'sweetalert2'
+import { useRouter } from 'next/router'
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('')
   const [token, setToken] = useState('')
   const [password, setPassword] = useState('')
+  const [rePassword, setRePassword] = useState('')
   const [message, setMessage] = useState('')
   const [count, setCount] = useState(10)
   const [delay, setDelay] = useState(null)
   // 判斷使用者如果成功透過按鈕取得OTP切換顯示的表單
   const [gotOTP, setGotOTP] = useState(false)
+
+  // 簡易Swal函式
+  const successSwal = (successMsg) => {
+    Swal.fire({
+      title: successMsg,
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1500,
+    })
+  }
+  const errorSwal = (errorMsg) => {
+    Swal.fire({
+      title: errorMsg,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1500,
+    })
+  }
+
+  const router = useRouter()
 
   useInterval(() => {
     setCount(count - 1)
@@ -73,6 +95,18 @@ export default function ForgetPassword() {
   }
 
   const resetPassword = async () => {
+    const passwordRegex = /^(?=.*[a-zA-Z]).{8,12}$/
+    if (password === '') {
+      errorSwal('密碼不能為空')
+      return false
+    } else if (!passwordRegex.test(password)) {
+      errorSwal('密碼格式不符 請輸入8~12位,英數混合的密碼')
+      return false
+    } else if (rePassword !== password) {
+      errorSwal('密碼不相符')
+      return false
+    }
+
     const res = await axios.post(
       'http://localhost:3005/api/reset-password/reset',
       {
@@ -84,6 +118,8 @@ export default function ForgetPassword() {
 
     if (res.data.message === 'success') {
       setMessage('密碼已成功修改！')
+      successSwal('密碼已成功修改！')
+      router.push('/member/login')
     } else {
       setMessage('密碼修改失敗！')
     }
@@ -156,12 +192,26 @@ export default function ForgetPassword() {
                 新密碼：
               </label>
               <input
-                type="text"
+                type="password"
                 className={'form-control'}
                 value={password}
                 placeholder="請輸入8~12位數,英數混和的密碼"
                 id="newPassword"
                 onChange={(e) => setPassword(e.target.value)}
+              />
+              <div id="emailHelp" className="form-text"></div>
+            </div>
+            <div className={'mb-3'}>
+              <label htmlFor="newPassword" className={'form-label'}>
+                確認密碼：
+              </label>
+              <input
+                type="password"
+                className={'form-control'}
+                value={rePassword}
+                placeholder="請輸入相同的密碼"
+                id="newPassword"
+                onChange={(e) => setRePassword(e.target.value)}
               />
               <div id="emailHelp" className="form-text">
                 <h5>{message}</h5>

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Explore from '../components/index/explore'
-import Hot from '../components/product/Hot'
-import Course from '../components/index/course'
+import Hot from '@/components/product/hot'
+import Course from '@/components/index/course'
 import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 import AOS from 'aos'
 import Loading from '@/components/loading'
 
-const FIRST_VISIT_KEY = 'hasVisitedBefore';
+const FIRST_VISIT_KEY = 'hasVisitedBefore'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
