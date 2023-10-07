@@ -52,7 +52,7 @@ export default function RegisterForm() {
           formData
         )
         console.log(response)
-        if (response.code === '200') {
+        if (response.data.code === '200') {
           Swal.fire({
             title: '註冊成功',
             icon: 'success',
