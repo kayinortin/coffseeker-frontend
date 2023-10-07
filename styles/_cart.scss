@@ -2,6 +2,7 @@
 $color-black: #000;
 $color-gray: #808080;
 $color-lightgray: #E0E0E0;
+$color-background:#f0ebe2;
 
 
 //圓角
@@ -19,10 +20,6 @@ $fs-xl: 2rem;
 $fw-regular:400;
 $fw-bold:700;
 $fw-black:900;
-
-.background{
-    // background-color: #69782e
-}
 
 .steps{
     display: flex;
@@ -94,10 +91,8 @@ $fw-black:900;
 }
 
 .cartlist{
-    padding-block: 1rem;
-    
     // 空購物車
-    div.emptyContainer{
+    .emptyContainer{
         margin-block: 2rem;
         img{
             width: 20vw;
@@ -119,795 +114,317 @@ $fw-black:900;
         }
     }
 
-    table{
-        margin-bottom: 2rem;
-    }
-
-    // 咖啡商品
-    table.products{
-        padding-block: 1rem;
-        width: 100%;
-        color: $color--primary;
-        
-        thead.productsLabels{
-            border: 1px solid $color--primary;
-            background-color: $color-lightgray;
-            font-size: $fs-sm;
-            font-weight: $fw-bold;
-            tr{
-               
-                th{
-                    padding-block: 1rem;
-                    padding-inline: 0.5rem;
-                    vertical-align: middle;
-                    text-align: center;
-                    min-width: 80px;
-                }
-            }
-        }
-
-        tbody.productsItem{
-            border: 1px solid $color--primary;
-            margin-block: 16px;
-
-            tr{   
-                border-bottom: 1px solid $color--primary;
-                td{
-                    padding-block: .5rem;
-                    padding-inline: .5rem;
-                    text-align: center;
-                }
-                
-                td.imgContainer{
-                    width: 160px;
-                    height: 160px;
-                    img{
-                        box-sizing: border-box;
-                        background-color: $color--primary;
-                        border: .4rem solid #CBB48B;
-                    }
-                }
-                td.quantity {
-                    div.btn-group{
-                        button {
-                            width: 2.5rem;
-                            height: 2.5rem;
-                            color: $color--primary;
-                            background-color: $color--background;
-                            border: 1px solid $color--primary;
-                        }
-                        button.quantityMinus, button.quantityAdd{
-                            &:hover,&:active {
-                                color:$color--white;
-                                background-color: $color--secondary;
-                                border: px solid $color--primary;
-    
-                              }
-                        }
-                       
-                        input.forminput{
-                            width: 3.5rem;
-                            height: 2.5rem;
-                            border-block: 1px solid $color--primary;
-                            text-align: center;
-                            background-color: $color--background;
-                        }
-                    }
-                }
-
-                td.productdelete{
-                    text-align: center;
-                    vertical-align: middle;
-                    button.deleteButton{
-                        width: 2.5rem;
-                        height: 2.5rem;
-                        padding: 0;
-
-                        &:hover,&:active{
-                            border: 1px solid $color--primary;
-                            background-color: $color--secondary;
-                            color:$color--white;
-                        }
-
-                        .trash{
-                            width: 1.5rem;
-                            height: 1.5rem;
-                          
-                        }
-                    }
-
-                }
-                &:hover{
-                    background-color: $color--gray6;
-                }
-            }
-            
-        }
-
-        tfoot{
-            border: 1px solid $color--primary;
-            height: 50px;
-            padding: 2rem;
+    //產品
+    .productscart{
+        .labels{
+            // background-color: $color-lightgray;
             font-size: $fs-md;
             font-weight: $fw-bold;
-         
-            tr.productTotal{
-                td.total{
-                    vertical-align: middle;
-                    
-                }
-                
-            }
+            padding-block: 1rem;
+            border-bottom: 1px solid $color--primary;
+            padding-inline: 0.5rem;
+
         }
-    }
-
-    // 課程商品
-    table.courses{
-        padding-block: 1rem;
-        width: 100%;
-        color: $color--primary;
-
-        thead.coursesLabels{
-            border: 1px solid $color--primary;
-            background-color: $color-lightgray;
-            font-size: $fs-sm;
-            font-weight: $fw-bold;
-            tr{
-                th{
-                    padding-block: 1rem;
-                    padding-inline: 0.5rem;
-                    vertical-align: middle;
-                    text-align: center;
-                    min-width: 80px;
-                   
-                }
-            }
-        }
-        tbody.coursesItem{
-            border: 1px solid $color--primary;
-            margin-block: 16px;
-
-            tr{   
+        .products{
+            border-top: 2px solid $color--primary;
+            // border-bottom: 1px solid $color--primary;
+            
+            .productwrap{
                 border-bottom: 1px solid $color--primary;
-                &:hover{
-                    background-color: $color--gray6;
-                }
-
-                td{
-                    padding-block: .5rem;
-                    padding-inline: .5rem;
-                    text-align: center;
-                }
-                td.imgContainer{
-                    width: 160px;
-                    height: 160px;
-                    img{
-                        box-sizing: border-box;
-                        background-color: $color--primary;
-                        border: .4rem solid #CBB48B;
-                    }
-                }
-                td.productdelete{
-                    text-align: center;
-                    vertical-align: middle;
-                    button.deleteButton{
-                        width: 2.5rem;
-                        height: 2.5rem;
-                        padding: 0;
-                        
-                        &:hover,&:active{
-                            border: 1px solid $color--primary;
-                            background-color: $color--secondary;
-                            color:$color--white;
-                        }
-                        .trash{
-                            width: 1.5rem;
-                            height: 1.5rem;
-                        }
-                    }
-
-                }
-                &:hover{
-                    background-color: $color--gray6;
-                }
-            }
-            
-        }
-        tfoot{
-            border: 1px solid $color--primary;
-            height: 50px;
-            padding: 2rem;
-            font-size: $fs-md;
-            font-weight: $fw-bold;
-
-            tr.courseTotal{
-                td.total{
-                    vertical-align: middle;
-                   
-                } 
-            }
-        }
-    }
-
-    //選擇與合計
-    div.selectItems{
-        gap: 2rem;
-
-        //選擇運送與付款方式
-        table.selectContainer{
-            box-sizing: border-box;
-            width: 100%;
-            color: $color--primary;
-            
-    
-            thead.Labels{
-                border: 1px solid $color--primary;
-                background-color: $color-lightgray;
-                font-size: $fs-sm;
-                font-weight: $fw-bold;
-    
-                tr{
-    
-                    th{
-                        padding-block: 1rem;
-                        padding-inline: 0.5rem;
-                        vertical-align: middle;
-                        min-width: 80px;
-                       
-                    }
-                }
-            }
-    
-            tbody.selectItem{
-                border: 1px solid $color--primary;
+                box-sizing: border-box;
+                align-items: center;
+                padding: 0px;
                 
-                tr{
-                    display: flex;
-                    align-items: center;
-                    
-                    td.selectContainer{
-                        padding-block: .8rem;
-                        padding-inline: 1rem;
-                        
-                        label.selecTitle{
-                            padding-bottom: .5rem;
-                        }
-
-                        select.form-select{
+                .imgContainer{
                             
-                            border: 1px solid $color--primary;
-                            // &:hover{
-                            //     border: 1px solid $color--secondary;
-                            //     color: $color--secondary;
-                            // }
-                        }
-                        
+                    img{
+                        background-color: $color--primary;
+                        border: .4rem solid #CBB48B;
                     }
                 }
-               
-            }
-        }
-        
-        //付款資訊
-        table.paymentContainer{
-            width: 100%;
-            color: $color--primary;
-            
-    
-            thead.Labels{
-                border: 1px solid $color--primary;
-                background-color: $color-lightgray;
-                font-size: $fs-sm;
-                font-weight: $fw-bold;
-    
-                tr{
-    
-                    th{
-                        padding-block: 1rem;
-                        padding-inline: 0.5rem;
-                        vertical-align: middle;
-                        min-width: 80px;
-                       
-                    }
-                }
-            }
-    
-            tbody.paymentItem{
-                border: 1px solid $color--primary;
-    
-                tr{ 
-    
-                    td{
-                        
-                        
 
-                        button.goCheckout{
-                            width: 100%;
-                            background-color: $color--secondary;
-                            color: $color--white;
-                            font-weight: $fw-black;
-                            font-size: $fs-md;
-                            &:hover{
-                                background-color: $color--primary 
+                .productContent{
+                    
+                    .topDetails{
+
+                            .Details{
+                                .productTitle{
+                                    color: $color--primary;
+                                    font-size: $fs-md;
+                                    font-weight: $fw-bold;
+                                
+                                }
+                                .productDescription{
+                                    font-size: $fs-sm;
+                                    color: $color--gray3;
+                                }
+                            }
+
+                            .productDelete{
+                                // border: 3px solid violet;
+                            
+                                button.deleteButton{
+                                    width: 2.5rem;
+                                    height: 2.5rem;
+                                    text-align: center;
+                                    align-items: center;
+                                    background-color: $color-background;
+                                    border: 0px solid $color--secondary;
+                                    color: $color--primary;
+                                    border-radius: 8px;
+                                    &:hover,&:active{
+                                        background-color: $color--secondary;
+                                        color: $color--white;
+                                    }
+                
+                                    .trash{
+                                        width: 1.65rem;
+                                        height: 1.65rem; 
+                                    }
+                                }
+                
+                            }
+
+                    }
+
+                    .productPrice{
+
+                        .price{
+                            color: $color--primary;
+                        }
+                        .discountPrice{
+                            color: $color--secondary;
+                        }
+
+                    }
+
+                    .productQuantityTotal{
+                        display: flex;
+                        justify-content: space-between;
+                        
+                        .btn-group{
+                            button {
+                                width: 2.5rem;
+                                height: 2.5rem;
+                                color: $color--primary;
+                                background-color: $color-background;
+                                border: 1px solid $color--primary;
+                            }
+                            button.quantityMinus{
+                                border-radius: 8px 0 0 8px;
+                            }
+                            button.quantityAdd{
+                                border-radius: 0 8px 8px 0;
+                            }
+                            button.quantityMinus, button.quantityAdd{
+                                &:hover,&:active {
+                                    color:$color--white;
+                                    background-color: $color--secondary;
+                                    border: px solid $color--primary;
+                                    }
+                            }
+                            
+                            input.forminput{
+                                width: 3.5rem;
+                                height: 2.5rem;
+                                background-color: $color-background;
+                                border-block: 1px solid $color--primary;
+                                border-inline: 0px;
                             }
                         }
-
-                        
-                        
-                    }
-                    
-                    td.selectContainer{
-                        padding-block: .8rem;
-                        padding-inline: 1rem;
-                        
-                        div.label-item{
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        
-                        }
-                        select.form-select{
-                            width: 60%;
-                            border: 1px solid $color--primary;
-    
+                        .productSubtotal{
+                            // border: 3px solid violet;
                         }
                     }
-
-                    
                 }
+                
+                
             }
+
             
-            
+
+        }
+        .productsFoot{
+            border-bottom: 2px solid $color--primary;
+            padding-block: 1rem;
+            padding-inline: .65rem;
+            font-size: $fs-md;
         }
     }
-
-}
-
-
-div.memberItems{
-    // border: 1px solid red;
-    gap: 2rem;
-
-    table.memberContainer{
-        box-sizing: border-box;
-        width: 100%;
-        color: $color--primary;
-
-
-        thead.Labels{
-            border: 1px solid $color--primary;
-            background-color: $color-lightgray;
-            font-size: $fs-sm;
-            font-weight: $fw-bold;
-            tr{
+    //選擇與合計
+    .infoWrap{
+        // border: 2px solid red;
+        
+        //選擇運送與付款方式
+        .selectWrap{
+            border-block: 2px solid $color--primary;
+            
+            .labels{
+                font-size: $fs-md;
+                font-weight: $fw-bold;
+                padding-block: 1rem;
+                border-bottom: 1px solid $color--primary;
+            }
     
-                th{
-                    padding-block: 1rem;
-                    padding-inline: 0.5rem;
-                    vertical-align: middle;
-                    min-width: 80px;
-                   
+            .infoItems{
+                padding-block: 1rem;    
+                    .selects{ 
+                        padding-bottom: 1.5rem;              
+                        .selectTitle{
+                           font-size: $fs-sm;
+                           padding-bottom: .5rem;
+                        }
+                        select.form-select{ 
+                            border: 1px solid $color--primary;
+                            background-color: $color-background;
+                            &:hover{
+                                border: 1px solid $color--secondary;
+                                color: $color--secondary;
+                            }
+                        }
                 }
             }
         }
-        
-        tbody.memberbody{
-            border: 1px solid $color--primary;
-            margin-block: .5rem;
-            
-            tr{
-                display: flex;
-                align-items: center;
-                
-                td.memberContainer{
-                    padding-block: .5rem;
-                    padding-inline: 1rem;
-                    
-                    label.inputTitle{
-                        // border: 1px solid green;
-                        padding-bottom: .5rem;
-                        
-                    }
-                    
-                    input.form-control{
-                        box-sizing: border-box;
+        //付款資訊
+        .paymentWrap{
+            border-block: 2px solid $color--primary;
+
+            .labels{
+                font-size: $fs-md;
+                font-weight: $fw-bold;
+                padding-block: 1rem;
+                border-bottom: 1px solid $color--primary;
+            }
+
+            .payItems{
+                padding-block: 1.5rem;
+
+                .items{
+                    padding-bottom: 1.5rem;
+                    font-size: $fs-sm;
+
+                    select.form-select{ 
                         border: 1px solid $color--primary;
-                        
-                        &:active,&:hover{
+                        background-color: $color-background;
+                        &:hover{
                             border: 1px solid $color--secondary;
                             color: $color--secondary;
                         }
                     }
+                    button.goCheckout{
+                        width: 100%;
+                        background-color: $color--secondary;
+                        color: $color--white;
+                        font-weight: $fw-bold;
+                        font-size: $fs-md;
+                        &:hover{
+                            background-color: $color--primary 
+                        }
+                    }
                     
                 }
+            }  
+        }
+    } 
+}
+
+.checkout{
+
+    .expandProducts{
+            .allProducts{
+                button.btngroup{
+                background-color: $color--secondary;
+                color: $color--white;
+                padding-inline: 2rem;
+                padding-block: .5rem;
+                }
             }
-           
-        }
+
     }
 
+    .detailsInfo{
+        border-block: 1.5px solid $color--primary;
+        
+        .memberWrap{
+            border-block: 1.5px solid $color--primary;
+            
+            .labels{
+                font-size: $fs-md;
+                font-weight: $fw-bold;
+                padding-block: 1rem;
+                border-bottom: 1px solid $color--primary;
+                
+            }
+            .memberInfo{
+                padding-block: 1rem;
     
-}
-
-div.btngroup{
-    gap: 2rem;
-    button.backStep{
-        background-color: $color--gray4;
-        color: $color--white;
-
-    }
-    button.sendOrder{
-        background-color: $color--secondary;
-        color: $color--white;
-    }
-
-}
-
-.newcartlist{
-    padding-block: 1rem;
+                .deliverInfo{
+                    padding-block: .5rem;
     
-    // 空購物車
-    div.emptyContainer{
-        margin-block: 2rem;
-        img{
-            width: 20vw;
+                    .inputTitle{
+                        font-size: $fs-sm;
+                        padding-bottom: .5rem;
+                        
+                    }
+                    input.form-control{
+                        border: 1px solid $color--primary;
+                        background-color: $color-background;
+                        &:hover{
+                            border: 1px solid $color--secondary;
+                            color: $color--secondary;
+                        }
+                    }
+                }
+                
+                
+            } 
         }
-        div.emptyTitle{
-            padding-block: 1rem;
-            font-size: $fs-lg;
-            color: $color--primary;
-            font-weight: $fw-bold;
+    
+        .cardWrap{
+            border-block: 1.5px solid $color--primary;
+            .labels{
+                font-size: $fs-md;
+                font-weight: $fw-bold;
+                padding-block: 1rem;
+                border-bottom: 1px solid $color--primary;
+            }
+            .payInfo{
+                padding-block: 1rem;
+    
+                .cardInfo{
+                    padding-block: .5rem;
+    
+                    input.form-control{
+                        border: 1px solid $color--primary;
+                        background-color: $color-background;
+                        &:hover{
+                            border: 1px solid $color--secondary;
+                            color: $color--secondary;
+                        }
+                    }
+                }
+            }
         }
-        button.goshop{
+        
+    }
+    
+    .btngroup{
+        gap: 2rem;
+        button.backStep{
+            background-color: $color--gray4;
+            color: $color--white;
+    
+        }
+        button.sendOrder{
             background-color: $color--secondary;
             color: $color--white;
-            width: 30vw;
-            height: 2.5rem;
-            &:hover{
-                background-color: $color--primary;
-            }
         }
+    
     }
-
-    table{
-        margin-bottom: 2rem;
-    }
-
-    // 咖啡商品
-    table.products{
-        padding-block: 1rem;
-        width: 100%;
-        color: $color--primary;
-        
-        thead.productsLabels{
-            border: 1px solid $color--primary;
-            background-color: $color-lightgray;
-            font-size: $fs-sm;
-            font-weight: $fw-bold;
-            tr{
-               
-                th{
-                    padding-block: 1rem;
-                    padding-inline: 0.5rem;
-                    vertical-align: middle;
-                    text-align: center;
-                    min-width: 80px;
-                }
-            }
-        }
-
-        tbody.productsItem{
-            border: 1px solid $color--primary;
-            margin-block: 16px;
-
-            tr{   
-                border-bottom: 1px solid $color--primary;
-                td{
-                    padding-block: .5rem;
-                    padding-inline: .5rem;
-                    text-align: center;
-                }
-                
-                td.imgContainer{
-                    width: 160px;
-                    height: 160px;
-                    img{
-                        box-sizing: border-box;
-                        background-color: $color--primary;
-                        border: .4rem solid #CBB48B;
-                    }
-                }
-                td.quantity {
-                    div.btn-group{
-                        button {
-                            width: 2.5rem;
-                            height: 2.5rem;
-                            color: $color--primary;
-                            background-color: $color--secondary;
-                            border: 1px solid $color--primary;
-                        }
-                        button.quantityMinus, button.quantityAdd{
-                            &:hover,&:active {
-                                color:$color--white;
-                                background-color: $color--secondary;
-                                border: px solid $color--primary;
-    
-                              }
-                        }
-                       
-                        input.forminput{
-                            width: 3.5rem;
-                            height: 2.5rem;
-                            border-block: 1px solid $color--primary;
-                            text-align: center;
-                            background-color: $color--background;
-                        }
-                    }
-                }
-
-                td.productdelete{
-                    text-align: center;
-                    vertical-align: middle;
-                    button.deleteButton{
-                        width: 2.5rem;
-                        height: 2.5rem;
-                        padding: 0;
-
-                        &:hover,&:active{
-                            border: 1px solid $color--primary;
-                            background-color: $color--secondary;
-                            color:$color--white;
-                        }
-
-                        .trash{
-                            width: 1.5rem;
-                            height: 1.5rem;
-                          
-                        }
-                    }
-
-                }
-                &:hover{
-                    background-color: $color--gray6;
-                }
-            }
-            
-        }
-
-        tfoot{
-            border: 1px solid $color--primary;
-            height: 50px;
-            padding: 2rem;
-            font-size: $fs-md;
-            font-weight: $fw-bold;
-         
-            tr.productTotal{
-                td.total{
-                    vertical-align: middle;
-                    
-                }
-                
-            }
-        }
-    }
-
-    // 課程商品
-    table.courses{
-        padding-block: 1rem;
-        width: 100%;
-        color: $color--primary;
-
-        thead.coursesLabels{
-            border: 1px solid $color--primary;
-            background-color: $color-lightgray;
-            font-size: $fs-sm;
-            font-weight: $fw-bold;
-            tr{
-                th{
-                    padding-block: 1rem;
-                    padding-inline: 0.5rem;
-                    vertical-align: middle;
-                    text-align: center;
-                    min-width: 80px;
-                   
-                }
-            }
-        }
-        tbody.coursesItem{
-            border: 1px solid $color--primary;
-            margin-block: 16px;
-
-            tr{   
-                border-bottom: 1px solid $color--primary;
-                &:hover{
-                    background-color: $color--gray6;
-                }
-
-                td{
-                    padding-block: .5rem;
-                    padding-inline: .5rem;
-                    text-align: center;
-                }
-                td.imgContainer{
-                    width: 160px;
-                    height: 160px;
-                    img{
-                        box-sizing: border-box;
-                        background-color: $color--primary;
-                        border: .4rem solid #CBB48B;
-                    }
-                }
-                td.productdelete{
-                    text-align: center;
-                    vertical-align: middle;
-                    button.deleteButton{
-                        width: 2.5rem;
-                        height: 2.5rem;
-                        padding: 0;
-                        
-                        &:hover,&:active{
-                            border: 1px solid $color--primary;
-                            background-color: $color--secondary;
-                            color:$color--white;
-                        }
-                        .trash{
-                            width: 1.5rem;
-                            height: 1.5rem;
-                        }
-                    }
-
-                }
-                &:hover{
-                    background-color: $color--gray6;
-                }
-            }
-            
-        }
-        tfoot{
-            border: 1px solid $color--primary;
-            height: 50px;
-            padding: 2rem;
-            font-size: $fs-md;
-            font-weight: $fw-bold;
-
-            tr.courseTotal{
-                td.total{
-                    vertical-align: middle;
-                   
-                } 
-            }
-        }
-    }
-
-    //選擇與合計
-    div.selectItems{
-        gap: 2rem;
-
-        //選擇運送與付款方式
-        table.selectContainer{
-            box-sizing: border-box;
-            width: 100%;
-            color: $color--primary;
-            
-    
-            thead.Labels{
-                border: 1px solid $color--primary;
-                background-color: $color-lightgray;
-                font-size: $fs-sm;
-                font-weight: $fw-bold;
-    
-                tr{
-    
-                    th{
-                        padding-block: 1rem;
-                        padding-inline: 0.5rem;
-                        vertical-align: middle;
-                        min-width: 80px;
-                       
-                    }
-                }
-            }
-    
-            tbody.selectItem{
-                border: 1px solid $color--primary;
-                
-                tr{
-                    display: flex;
-                    align-items: center;
-                    
-                    td.selectContainer{
-                        padding-block: .8rem;
-                        padding-inline: 1rem;
-                        
-                        label.selecTitle{
-                            padding-bottom: .5rem;
-                        }
-
-                        select.form-select{
-                            
-                            border: 1px solid $color--primary;
-                            // &:hover{
-                            //     border: 1px solid $color--secondary;
-                            //     color: $color--secondary;
-                            // }
-                        }
-                        
-                    }
-                }
-               
-            }
-        }
-        
-        //付款資訊
-        table.paymentContainer{
-            width: 100%;
-            color: $color--primary;
-            
-    
-            thead.Labels{
-                border: 1px solid $color--primary;
-                background-color: $color-lightgray;
-                font-size: $fs-sm;
-                font-weight: $fw-bold;
-    
-                tr{
-    
-                    th{
-                        padding-block: 1rem;
-                        padding-inline: 0.5rem;
-                        vertical-align: middle;
-                        min-width: 80px;
-                       
-                    }
-                }
-            }
-    
-            tbody.paymentItem{
-                border: 1px solid $color--primary;
-    
-                tr{ 
-    
-                    td{
-                        
-                        
-
-                        button.goCheckout{
-                            width: 100%;
-                            background-color: $color--secondary;
-                            color: $color--white;
-                            font-weight: $fw-black;
-                            font-size: $fs-md;
-                            &:hover{
-                                background-color: $color--primary 
-                            }
-                        }
-
-                        
-                        
-                    }
-                    
-                    td.selectContainer{
-                        padding-block: .8rem;
-                        padding-inline: 1rem;
-                        
-                        div.label-item{
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        
-                        }
-                        select.form-select{
-                            width: 60%;
-                            border: 1px solid $color--primary;
-    
-                        }
-                    }
-
-                    
-                }
-            }
-            
-            
-        }
-    }
-
 }
+
+    
+
+
+
+

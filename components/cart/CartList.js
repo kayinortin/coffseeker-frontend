@@ -80,7 +80,6 @@ export default function CartList({ step, handleNextStep, setStep }) {
       setDiscountAmount(0)
     }
   }
-
   //根據user_id條件來呈現優惠卷選項
   // const renderCouponOptions = () => {
   //   const userId = getUserId() // 請使用實際的函數來獲取使用者的 ID
@@ -124,7 +123,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   }
   //單一商品小計＝價格＊數量
   const productSubtotal = (product) => {
-    return product.price * product.amount
+    return product.discountPrice * product.amount
   }
   // 刪除一個商品
   const handleRemoveProduct = (productId) => {
@@ -152,63 +151,82 @@ export default function CartList({ step, handleNextStep, setStep }) {
     setTotalPrice(total)
   }, [cartListData])
 
+  const totalProductCount = cartListData.reduce(
+    (total, product) => total + product.amount,
+    0
+  )
   // 商品列表
   const productItems = cartListData.map((product) => (
-    <tr key={product.id}>
-      <td className="align-middle ps-3 imgContainer">
+    <div key={product.id} className="productwrap row py-3">
+      <div className="imgContainer col-lg-3 col-sm-4 ">
         <img
           className="img-fluid"
-          src={`http://localhost:3005/uploads/${product.image}`}
-          alt={product.image}
+          src={`http://localhost:3005/uploads/${product.image_main}`}
+          alt={product.image_main}
         />
-      </td>
-      <td className="align-middle text-start">
-        <div className="fs-5 mb-2">{product.name}</div>
-        <div className="description">{product.description}</div>
-      </td>
-      <td className="align-middle">{product.price}</td>
-      <td className="align-middle quantity" role="group">
-        <div className="btn-group">
-          <button
-            type="button"
-            className="quantityMinus"
-            onClick={() => {
-              handleamountChange(product.id, -1)
-            }}
-          >
-            <AiOutlineMinus />
-          </button>
-          <input
-            className="form-control forminput"
-            type="text"
-            name="amount"
-            min="0"
-            value={product.amount}
-            readOnly
-          />
-          <button
-            type="button"
-            className="quantityAdd"
-            onClick={() => {
-              handleamountChange(product.id, 1)
-            }}
-          >
-            <AiOutlinePlus />
-          </button>
+      </div>
+      <div className="productContent col-lg-9 col-sm-8 text-start my-2">
+        <div className="topDetails d-flex pb-5 justify-content-between ">
+          <div className="Details d-inline pe-3">
+            <div className="productTitle py-1 lh-sm">{product.name}</div>
+            <div className="productDescription py-1 fw-medium lh-base">
+              {product.description}
+            </div>
+          </div>
+          <div className="d-inline productDelete">
+            <button
+              className="deleteButton"
+              onClick={() => {
+                handleRemoveProduct(product.id)
+              }}
+            >
+              <RiDeleteBin5Line className="trash" />
+            </button>
+          </div>
         </div>
-      </td>
-      <td className="align-middle">{productSubtotal(product)}</td>
-      <td className="align-middle productdelete">
-        <button
-          className="btn deleteButton"
-          onClick={() => {
-            handleRemoveProduct(product.id)
-          }}
-        >
-          <RiDeleteBin5Line className="trash" />
-        </button>
-      </td>
-    </tr>
+        <div className="productPrice fw-medium fs-5 ">
+          <div className="price d-inline text-decoration-line-through fs-6 pe-2">
+            ${product.price}
+          </div>
+          <div className="discountPrice d-inline ">
+            ${product.discountPrice}
+          </div>
+        </div>
+        <div className="productQuantityTotal pt-3 align-items-center">
+          <div className="btn-group">
+            <button
+              type="button"
+              className="quantityMinus"
+              onClick={() => {
+                handleamountChange(product.id, -1)
+              }}
+            >
+              <AiOutlineMinus />
+            </button>
+            <input
+              className="form-control forminput text-center"
+              type="text"
+              name="amount"
+              min="0"
+              value={product.amount}
+              readOnly
+            />
+            <button
+              type="button"
+              className="quantityAdd"
+              onClick={() => {
+                handleamountChange(product.id, 1)
+              }}
+            >
+              <AiOutlinePlus />
+            </button>
+          </div>
+          <div className="productSubtotal d-inline fs-4 fw-bolder">
+            NTD${productSubtotal(product)}
+          </div>
+        </div>
+      </div>
+    </div>
   ))
 
   //購物車沒有商品
@@ -235,58 +253,24 @@ export default function CartList({ step, handleNextStep, setStep }) {
   //購物車有商品
   return (
     <>
-      <div className="cartlist">
+      <div className="cartlist py-5">
         {/* 商品表單 */}
-        <table className="products w-100">
-          <thead className="productsLabels">
-            <tr className="selectTr">
-              <th
-                className="align-middle text-start ps-4"
-                colSpan="2"
-                scope="col"
-              >
-                商品項目({productItems.length})
-              </th>
-              <th className="align-middle" scope="col">
-                單價
-              </th>
-              <th className="align-middle" scope="col">
-                數量
-              </th>
-              <th className="align-middle" scope="col">
-                小計
-              </th>
-              <th className="align-middle" scope="col">
-                刪除
-              </th>
-            </tr>
-          </thead>
-          <tbody className="productsItem">{productItems}</tbody>
-          <tfoot className="productFoot">
-            <tr className="productTotal">
-              <td colSpan="5" className="text-end total">
-                商品小計：
-              </td>
-              <td className="align-middle pe-2">NT${totalPrice}</td>
-            </tr>
-          </tfoot>
-        </table>
-        <div className="d-flex selectItems">
-          {/* 選擇送貨及付款方式 */}
-          <table className="selectContainer">
-            <thead className="Labels">
-              <tr>
-                <th className="align-middle m-2" scope="col">
-                  選擇送貨及付款方式
-                </th>
-              </tr>
-            </thead>
-            <tbody className="selectItem">
-              <tr>
-                <td className="align-middle selectContainer w-100" scope="col">
-                  <label for="deliveryLabel" className="selecTitle">
-                    選擇運送方式：
-                  </label>
+        <div className="productscart pb-5">
+          <div className="labels">商品項目（{productItems.length}）</div>
+          <div className="products container text-center">{productItems}</div>
+          <div className="productsFoot text-end fw-bolder">
+            商品小計：${totalPrice}
+          </div>
+        </div>
+        {/* 資訊表單 */}
+        <div className="infos container pb-5">
+          <div className="infoWrap row">
+            {/* 選擇送貨及付款方式 */}
+            <div className="selectWrap col-lg-6 px-4">
+              <div className="labels">選擇送貨及付款方式</div>
+              <div className="infoItems">
+                <div className="selects">
+                  <div className="selectTitle">選擇運送方式：</div>
                   <select
                     required
                     class="form-select"
@@ -316,13 +300,9 @@ export default function CartList({ step, handleNextStep, setStep }) {
                     <option value="711Store">7-11取貨 NT$80</option>
                     <option value="familyStore">全家取貨 NT$80</option>
                   </select>
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle selectContainer w-100" scope="col">
-                  <label for="paymentLabel" className="selecTitle">
-                    選擇付款方式：
-                  </label>
+                </div>
+                <div className="selects">
+                  <div className="selectTitle">選擇付款方式：</div>
                   <select
                     required
                     className="form-select"
@@ -334,111 +314,62 @@ export default function CartList({ step, handleNextStep, setStep }) {
                     <option value="creditCard">信用卡</option>
                     <option value="ATM">ATM轉帳</option>
                   </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          {/* 付款資訊 */}
-          <table className="paymentContainer">
-            <thead className="Labels">
-              <tr>
-                <th className="align-middle" scope="col">
-                  付款資訊
-                </th>
-              </tr>
-            </thead>
-            <tbody className="paymentItem">
-              <tr>
-                <td className="align-middle selectContainer" scope="col">
-                  <div className="label-item">
-                    <label for="allProductsItems" className="selecTitle">
-                      數量
-                    </label>
-                    <div className="" name="allProductsItems">
-                      {productItems.length}/項
-                    </div>
+                </div>
+              </div>
+            </div>
+            {/* 付款資訊 */}
+            <div className="paymentWrap col-lg-6 px-4">
+              <div className="labels">付款資訊</div>
+              <div className="payItems">
+                <div className="items d-flex justify-content-between">
+                  <div className="payTitle">數量</div>
+                  <div className="payText">共 {totalProductCount} 項商品</div>
+                </div>
+                <div className="items d-flex justify-content-between">
+                  <div className="payTitle">金額</div>
+                  <div className="payText">${totalPrice}</div>
+                </div>
+                <div className="items d-flex justify-content-between align-items-center">
+                  <div className="payTitle">優惠卷</div>
+                  <select
+                    className="form-select payText w-75"
+                    id="coupon"
+                    name="coupon"
+                    aria-label="selectCoupon"
+                    value={selectedCouponCode}
+                    onChange={(e) => handleCouponChange(e.target.value)}
+                  >
+                    <option value="">請選擇</option>
+                    {selectedCoupon.map((coupon) => (
+                      <option key={coupon.coupon_id} value={coupon.coupon_code}>
+                        {coupon.coupon_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="items d-flex justify-content-between">
+                  <div className="payTitle">優惠卷折扣</div>
+                  <div className="payText">-${discountAmount}</div>
+                </div>
+                <div className="items d-flex justify-content-between">
+                  <div className="payTitle">運費</div>
+                  <div className="payText">${deliveryPrice}</div>
+                </div>
+                <hr className="items border-1 opacity-100 m-0" />
+                <div className="items d-flex justify-content-between pb-3 fs-4 fw-bold">
+                  <div className="payTitle">合計</div>
+                  <div className="payText">
+                    ${totalPrice - discountAmount + deliveryPrice}
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle selectContainer" scope="col">
-                  <div className="label-item">
-                    <label for="allPrdouctPrice">金額</label>
-                    <div className="" name="allPrdouctPrice">
-                      ${totalPrice}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle selectContainer" scope="col">
-                  <div className="label-item">
-                    <label for="couponDiscount">優惠卷</label>
-                    <select
-                      className="form-select"
-                      id="coupon"
-                      name="coupon"
-                      aria-label="selectCoupon"
-                      value={selectedCouponCode}
-                      onChange={(e) => handleCouponChange(e.target.value)}
-                    >
-                      <option value="">請選擇</option>
-                      {selectedCoupon.map((coupon) => (
-                        <option
-                          key={coupon.coupon_id}
-                          value={coupon.coupon_code}
-                        >
-                          {coupon.coupon_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle selectContainer" scope="col">
-                  <div className="label-item">
-                    <label for="couponDiscount">優惠卷折扣</label>
-                    <div className="" name="couponDiscount">
-                      -${discountAmount}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle selectContainer" scope="col">
-                  <div className="label-item">
-                    <label for="deliveryPrice">運費</label>
-                    <div className="" name="deliveryPrice">
-                      ${deliveryPrice}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle px-3 py-0" scope="col">
-                  <hr className="border-1 opacity-100" />
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle selectContainer" scope="col">
-                  <div className="label-item">
-                    <label for="sumTotal">合計</label>
-                    <div className="fs-3 fw-bold" name="sumTotal">
-                      ${totalPrice - discountAmount + deliveryPrice}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="align-middle selectContainer" scope="col">
+                </div>
+                <div className="items p-0">
                   <button className="btn goCheckout" onClick={handleCheckout}>
                     前往結賬
                   </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
