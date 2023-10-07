@@ -5,11 +5,13 @@
   $rotation-range: $range-base * 2;
   $rotation-step: $rotation-range / ($number-of-cards - 1);
   $translate-distance: -50px;
-  background-image: url(../public/divination-image/desk4.png);
-  background-position: center;
+  background-image: url(../public/divination-image/bg2.png),
+    url(../public/divination-image/wrap12.png);
+  background-position: -17% bottom, right -100px;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 30% auto, 40% auto;
   position: relative;
+  background-color: $color--background;
   .mask {
     width: 100%;
     height: 250px;
@@ -38,13 +40,14 @@
         padding: 20px;
         line-height: 200%;
         color: $color--gray1;
-        background-color: #ffffff77;
+        // background-color: #ffffff77;
       }
       button {
         margin-top: 50px;
-        padding: 8px 50px;
+        padding: 15px 50px;
         background-color: $color--success;
         border: none;
+        color: #fff;
       }
     }
     .post {
@@ -104,7 +107,8 @@
             height: 100%;
             border-radius: 16px;
             overflow: hidden;
-            background-image: url(../public/divination-image/tarot_cardback.png);
+            background: #275371;
+            background-image: url(../public/divination-image/tarot_cardback_whiteline.png);
             background-position: center center;
             background-size: cover;
           }
@@ -351,11 +355,11 @@
       }
     }
   }
-  .box{
+  .box {
     height: 600px;
     background-color: #b2b2b287;
   }
   .swiper {
     --swiper-theme-color: #909090;
-}
+  }
 }
