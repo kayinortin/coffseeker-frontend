@@ -73,6 +73,7 @@ export default function ProductItem(props) {
       image_main: product.image_main,
       price: product.price,
       discountPrice: product.discountPrice,
+      description: product.description,
       amount: number,
     }
 
@@ -86,6 +87,7 @@ export default function ProductItem(props) {
           image: cartListData[i].image,
           price: cartListData[i].price,
           discountPrice: cartListData[i].discountPrice,
+          description: cartListData[i].description,
           amount: cartListData[i].amount + newItem.amount,
         }
         const oldCartListData = cartListData.filter(
