@@ -17,7 +17,9 @@ export default function CoursePic() {
     setData(fetchedData)
   }
 
-  // console.log(data.course_image)
+  const newSubPics = JSON.parse(data.course_subpics)
+
+  // console.log(typeof data.course_subpics)
 
   return (
     <>
@@ -39,7 +41,7 @@ export default function CoursePic() {
 
           <div className="d-flex mx-auto">
             <Image
-              src={`/course-image/brewing_1.jpg`}
+              src={`/course-image/${data.course_subpics.pic1}`}
               alt={name}
               width={70}
               height={70}
