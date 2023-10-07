@@ -10,31 +10,21 @@ export default function MemSideBar() {
     },
     {
       id: 2,
-      option: '會員資料檢視/修改',
-      href: '/member/info',
-    },
-    {
-      id: 3,
-      option: '修改密碼',
-      href: '/member/change-password',
-    },
-    {
-      id: 4,
       option: '訂單管理',
       href: '/member/order-list',
     },
     {
-      id: 5,
+      id: 3,
       option: '我的收藏',
       href: '/member/likes',
     },
     {
-      id: 6,
+      id: 4,
       option: '優惠券',
       href: '/member/coupon',
     },
     {
-      id: 7,
+      id: 5,
       option: '登出',
       href: '/member/login',
     },

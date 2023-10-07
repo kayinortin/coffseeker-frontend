@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie'
 
 export async function checkLoginStatus() {
-  const token = Cookies.get('accessToken')
+  const accessToken = Cookies.get('accessToken')
   // console.log('accessToken:', token)
 
-  if (!token) {
+  if (!accessToken) {
     return false
   }
 
@@ -13,7 +13,7 @@ export async function checkLoginStatus() {
       'http://localhost:3005/api/auth-jwt/check-login',
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     )
