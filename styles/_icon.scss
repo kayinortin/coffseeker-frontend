@@ -47,7 +47,7 @@
 
     #{$_}__icon {
       top: 0px;
-      right:-6px;
+      right: -6px;
       font-size: 2rem;
     }
   }
@@ -80,5 +80,13 @@
       &::before {
       }
     }
+  }
+}
+
+.swal2-confirm {
+  border-radius: 0 !important;
+  background-color: $color--secondary !important;
+  &:active {
+    background-color: $color--primary !important;
   }
 }

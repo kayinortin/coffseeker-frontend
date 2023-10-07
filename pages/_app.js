@@ -10,6 +10,7 @@ import { CartListProvider } from '@/context/cart'
 import { FavProvider } from '@/context/fav'
 import { DetailProvider } from '@/context/showProductDetail'
 import { CommentProvider } from '@/context/comment'
+import { PaginationProvider } from '@/context/pagination'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -21,19 +22,21 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <UserProvider>
-      <ProductsProvider>
-        <CartListProvider>
-          <FavProvider>
-            <CategoryProvider>
-              <DetailProvider>
-                <CommentProvider>
-                  {getLayout(<Component {...pageProps} />)}
-                </CommentProvider>
-              </DetailProvider>
-            </CategoryProvider>
-          </FavProvider>
-        </CartListProvider>
-      </ProductsProvider>
+      <PaginationProvider>
+        <ProductsProvider>
+          <CartListProvider>
+            <FavProvider>
+              <CategoryProvider>
+                <DetailProvider>
+                  <CommentProvider>
+                    {getLayout(<Component {...pageProps} />)}
+                  </CommentProvider>
+                </DetailProvider>
+              </CategoryProvider>
+            </FavProvider>
+          </CartListProvider>
+        </ProductsProvider>
+      </PaginationProvider>
     </UserProvider>
   )
 }
