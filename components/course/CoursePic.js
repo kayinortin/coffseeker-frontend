@@ -7,31 +7,28 @@ import CourseFetcher from './course-fetch'
 import { use } from 'echarts'
 import { useCourses } from '@/context/course'
 import axios from 'axios'
+import { useShow } from '../../context/showProductDetail'
+
+const INITIAL_DATA = {
+  id: '',
+  course_name: '',
+  course_price: '',
+  course_description: 0,
+  course_image: 0,
+  course_subpics: 0,
+  course_syllabus: 0,
+  teacher_name: '',
+  teacher_qualification: 0,
+  teacher_specialty: 0,
+}
 
 export default function CoursePic({ pid }) {
   const router = useRouter()
-  console.log(pid)
+  const { show, setShow } = useShow()
 
-  //設定圖片
   const [images, setImages] = useState([])
-  const [mainImageIndex, setMainImageIndex] = useState(0)
-  const { CoursesData, setCoursesData } = useCourses()
-
-  // console.log(Object.keys(CoursesData).length)
-  const [detailData, setDetailData] = useState({
-    id: '',
-    course_name: '',
-    course_price: '',
-    course_description: 0,
-    course_image: 0,
-    course_subpics: 0,
-    course_syllabus: 0,
-    teacher_name: '',
-    teacher_qualification: 0,
-    teacher_specialty: 0,
-  })
+  const [detailData, setDetailData] = useState(INITIAL_DATA)
   const {
-    id,
     course_name,
     course_price,
     course_description,
@@ -44,18 +41,29 @@ export default function CoursePic({ pid }) {
   } = detailData
 
   const getDetail = async () => {
-    if (pid) {
-      let response = await axios.get(`http://localhost:3005/api/course/${pid}`)
-      const details = response.data
-
-      setDetailData({ ...details })
-      if (response.data.course_subpic) {
-        setImages(JSON.parse(response.data.course_subpic))
+    try {
+      if (pid) {
+        let response = await axios.get(
+          `http://localhost:3005/api/course/${pid}`
+        )
+        const details = response.data
+        setDetailData({ ...details })
+        if (details.course_subpics) {
+          setImages(JSON.parse(details.course_subpics))
+        }
       }
+    } catch (error) {
+      console.error('Error fetching course details:', error)
     }
   }
 
-  console.log(detailData)
+  useEffect(() => {
+    if (pid) {
+      setDetailData(INITIAL_DATA)
+      getDetail()
+      setShow({ ...show, in: true })
+    }
+  }, [pid])
 
   return (
     <>
@@ -77,16 +85,18 @@ export default function CoursePic({ pid }) {
         </div>
 
         <div className="d-flex mx-auto">
-          {images.map((pic, index) => (
-            <Image
-              key={index}
-              src={`/course-image/${course_subpics[index]}`}
-              alt={name}
-              width={70}
-              height={70}
-              className="m-2 me-1"
-            />
-          ))}
+          {images &&
+            images.length > 0 &&
+            images.map((pic, index) => (
+              <img
+                key={index}
+                src={`/course-image/${images[index]}`}
+                alt={name}
+                width={70}
+                height={70}
+                className="m-2 me-1"
+              />
+            ))}
         </div>
       </div>
     </>

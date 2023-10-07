@@ -28,7 +28,7 @@ export default function CourseDetails() {
         <div className={`container-lg }`}>
           <div className="d-flex">
             <NewSideBar />
-            <MainContent pid={pid} />
+            <MainContent />
           </div>
         </div>
       </main>

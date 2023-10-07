@@ -4,16 +4,20 @@ import style from '@/styles/_course.module.scss'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
 import Link from 'next/link'
 
-export default function Card({ name, image, price, id }) {
+import { useCourses } from '@/context/course'
+
+export default function Card(props) {
+  const { course } = props
+
   return (
     <div
       className={`${style['card']} d-flex py-3 flex-column align-items-center m-3`}
     >
-      <div className={` ${style['img-bg']}`}>
-        <Link href={`http://localhost:3000/course/${id}`}>
-          <Image
-            src={`http://localhost:3000/course-image/${image}`}
-            alt={name}
+      <div className={`${style['img-bg']}`}>
+        <Link href={`http://localhost:3000/course/${course?.id}`}>
+          <img
+            src={`http://localhost:3000/course-image/${course?.course_image}`}
+            alt={course?.name}
             width={250}
             height={250}
             className="m-2"
@@ -22,13 +26,15 @@ export default function Card({ name, image, price, id }) {
       </div>
 
       <div className="d-flex w-100 my-3 ms-5 justify-content-start">
-        <h5 className="fs-5">{name}</h5>
+        <h5 className="fs-5">{course?.name}</h5>
       </div>
 
       <div className="d-flex w-100 align-items-center justify-content-around">
-        <p className={`my-auto fs-6 ${style['price']}`}>價格: ${price}</p>
+        <p className={`my-auto fs-6 ${style['price']}`}>
+          價格: ${course?.course_price}
+        </p>
 
-        <AddCartBtn />
+        <AddCartBtn course={course} />
       </div>
     </div>
   )
