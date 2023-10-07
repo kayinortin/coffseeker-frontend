@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import Counter from '@/components/Counter'
 import Image from 'next/image'
-
-import Modal from 'react-bootstrap/Modal'
 import Swal from 'sweetalert2'
 
 import { useShow } from '../../context/showProductDetail'
 import { useCategory } from '@/context/category'
 import { useCartList } from '@/context/cart'
 import { useUser } from '@/context/UserInfo'
+import { useComment } from '@/context/comment'
+import { useProducts } from '@/context/product'
 
+import Counter from '@/components/Counter'
 import ProductDetailFavIcon from '@/components/product/ProductDetailFavIcon'
-import dayjs from 'dayjs'
-import { set } from 'lodash'
+import Comment from '@/components/Comment'
+import FetchComment from '@/components/FetchComment'
+import TopHits from '@/components/TopHits'
 
 export default function ProductDetail(props) {
   const router = useRouter()
@@ -39,8 +40,8 @@ export default function ProductDetail(props) {
 
   const { show, setShow } = useShow()
   const { cartListData, setCartListData } = useCartList()
-  const { isLoggedIn, setIsLoggedIn } = useUser()
-
+  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useUser()
+  const { productsData, setProductsData } = useProducts()
   const { categoryData } = useCategory()
   const [category, setCategory] = useState({ id: '', name: '' })
 
@@ -90,67 +91,8 @@ export default function ProductDetail(props) {
     }
   }, [pid])
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:3005/api/products').then((res) => {
-  //     console.log(res.data)
-  //     setImage(res.data)
-  //   })
-  // }, [])
-
-  const isFetchingDetail = detailData.id === ''
-  const isFetchingCategory = categoryData.id === ''
-
   // 預設加入購物車數量
   const [number, setNumber] = useState(1)
-
-  // 評論系統
-  const [showComment, setShowComment] = useState({
-    in: false,
-    out: false,
-  })
-  const [commentDetail, setCommentDetail] = useState([])
-  const [commentEmpty, setCommentEmpty] =
-    useState('歡迎所有會員留下評論分享您的咖啡體驗')
-  const [newComment, setNewComment] = useState({
-    product_id: '',
-    comment: '',
-    date: '',
-    user_id: '',
-  })
-
-  /* 控制modal關閉 & 淡出淡入效果 */
-  const handleClose = () => {
-    setShow({ ...show, out: true })
-    setTimeout(() => {
-      setShow({ ...show, in: false, out: false })
-    }, 500)
-    window.history.back()
-  }
-
-  const handleIn = show.in
-    ? 'animation animation__modal animation__modal--in'
-    : ''
-  const handleOut = show.out
-    ? 'animation animation__modal animation__modal--out'
-    : ''
-
-  const handleCommentIn = showComment.in
-    ? 'animation animation__modal animation__modal--in'
-    : ''
-  const handleCommentOut = showComment.out
-    ? 'animation animation__modal animation__modal--out'
-    : ''
-
-  const handleCommentOpen = () => {
-    setShowComment({ ...setShow, in: true })
-  }
-
-  const handleCommentClose = () => {
-    setShowComment({ ...show, out: true })
-    setTimeout(() => {
-      setShowComment({ ...show, in: false, out: false })
-    }, 500)
-  }
 
   // 加入購物車
   const addCart = () => {
@@ -214,6 +156,9 @@ export default function ProductDetail(props) {
       localStorage.setItem('cartList', JSON.stringify([newItem]))
     }
   }
+
+  // 取得評論資訊
+  const { comments, setComments } = useComment()
 
   return (
     <>
@@ -357,8 +302,11 @@ export default function ProductDetail(props) {
                 </div>
               </div>
               <hr />
-              <div></div>
+              <FetchComment pid={pid} />
+              <Comment pid={pid} />
             </div>
+            <hr />
+            <TopHits />
           </div>
         </div>
       </div>
