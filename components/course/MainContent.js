@@ -6,12 +6,13 @@ import CourseDescription from './CourseDescription'
 import TopHits from './TopHits'
 import style from '@/styles/_course.module.scss'
 
-export default function MainContent() {
+export default function MainContent({ pid }) {
+  // console.log(pid)
   return (
     <>
       <div className=" mt-5 ms-sm-5">
         <div className="d-sm-flex">
-          <CoursePic />
+          <CoursePic pid={pid} />
           <CourseText />
         </div>
 

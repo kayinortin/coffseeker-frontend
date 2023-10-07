@@ -49,7 +49,7 @@ export default function FormItems({
       placeholder: '請輸入8~12位數,英數混和的密碼',
       type: 'password',
       aria: null,
-      maxlength: 10,
+      maxlength: 12,
       onChange: (e) => setPassword(e.target.value),
     },
     {

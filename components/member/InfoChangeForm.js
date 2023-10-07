@@ -292,7 +292,7 @@ export default function InfoChangeForm() {
             type="button"
             onClick={handleUserInfoChange}
           >
-            <span>確認並送出</span>
+            確認並送出
           </button>
         </div>
       </form>

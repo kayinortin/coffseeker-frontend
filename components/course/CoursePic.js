@@ -1,71 +1,94 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import CoursePerFetcher from './[pid]'
+import CoursePerFetcher from './CoursePerFetcher'
 import { BreadCrumbs, BreadCrumbsMobile } from './BreadCrumbs'
 import CourseFetcher from './course-fetch'
 import { use } from 'echarts'
+import { useCourses } from '@/context/course'
+import axios from 'axios'
 
-export default function CoursePic() {
+export default function CoursePic({ pid }) {
   const router = useRouter()
-  const { isReady } = router
-  const { pid } = router.query
-  const [data, setData] = useState(null)
-  useEffect(() => {}, [])
+  console.log(pid)
 
-  const onDataFetched = (fetchedData) => {
-    setData(fetchedData)
+  //設定圖片
+  const [images, setImages] = useState([])
+  const [mainImageIndex, setMainImageIndex] = useState(0)
+  const { CoursesData, setCoursesData } = useCourses()
+
+  // console.log(Object.keys(CoursesData).length)
+  const [detailData, setDetailData] = useState({
+    id: '',
+    course_name: '',
+    course_price: '',
+    course_description: 0,
+    course_image: 0,
+    course_subpics: 0,
+    course_syllabus: 0,
+    teacher_name: '',
+    teacher_qualification: 0,
+    teacher_specialty: 0,
+  })
+  const {
+    id,
+    course_name,
+    course_price,
+    course_description,
+    course_image,
+    course_subpics,
+    course_syllabus,
+    teacher_name,
+    teacher_qualification,
+    teacher_specialty,
+  } = detailData
+
+  const getDetail = async () => {
+    if (pid) {
+      let response = await axios.get(`http://localhost:3005/api/course/${pid}`)
+      const details = response.data
+
+      setDetailData({ ...details })
+      if (response.data.course_subpic) {
+        setImages(JSON.parse(response.data.course_subpic))
+      }
+    }
   }
 
-  // console.log(data.course_image)
+  console.log(detailData)
 
   return (
     <>
-      {data && data.course_image.length > 0 ? (
-        <div className="col d-flex flex-column col-sm-4">
-          <div className="mx-auto">
-            <div className="d-sm-none">
-              <BreadCrumbsMobile />
-            </div>
+      {/* <CoursePerFetcher pid={pid} /> */}
 
-            <img
-              src={`/course-image/${data.course_image}`}
-              alt={name}
-              width={250}
-              height={250}
-              className="m-2 me-1"
-            />
+      <div className="col d-flex flex-column col-sm-4">
+        <div className="mx-auto">
+          <div className="d-sm-none">
+            <BreadCrumbsMobile />
           </div>
 
-          <div className="d-flex mx-auto">
-            <Image
-              src={`/course-image/brewing_1.jpg`}
-              alt={name}
-              width={70}
-              height={70}
-              className="m-2 me-1"
-            />
-            <Image
-              src={`/course-image/brewing_1.jpg`}
-              alt={name}
-              width={70}
-              height={70}
-              className="m-2 me-1"
-            />
-            <Image
-              src={`/course-image/brewing_1.jpg`}
-              alt={name}
-              width={70}
-              height={70}
-              className="m-2 me-1"
-            />
-          </div>
+          <img
+            src={`/course-image/${course_image}`}
+            // alt={name}
+            width={250}
+            height={250}
+            className="m-2 me-1"
+          />
         </div>
-      ) : (
-        <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
-      )}
 
-      <CoursePerFetcher pid={pid} onCoursePerFetched={onDataFetched} />
+        <div className="d-flex mx-auto">
+          {images.map((pic, index) => (
+            <Image
+              key={index}
+              src={`/course-image/${course_subpics[index]}`}
+              alt={name}
+              width={70}
+              height={70}
+              className="m-2 me-1"
+            />
+          ))}
+        </div>
+      </div>
     </>
   )
 }

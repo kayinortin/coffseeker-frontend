@@ -7,7 +7,7 @@ import data from '@/data/course/course[pid].json'
 import { useRouter } from 'next/router'
 import Rating from './Rating'
 import Score from './Score'
-import CoursePerFetcher from './[pid]'
+import CoursePerFetcher from './CoursePerFetcher'
 
 export default function CourseText() {
   const router = useRouter()
