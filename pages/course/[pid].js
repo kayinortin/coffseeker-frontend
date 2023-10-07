@@ -6,13 +6,14 @@ import CourseText from '@/components/course/CourseText'
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 import style from '@/styles/_course.module.scss'
 import MainContent from '@/components/course/MainContent'
-import CoursePerFetcher from '@/components/course/[pid]'
+import CoursePerFetcher from '@/components/course/CoursePerFetcher'
 import NewSideBar from '@/components/course/NewSideBar'
 
 export default function CourseDetails() {
   const router = useRouter()
   const { pid } = router.query
   const [data, setData] = useState(null)
+  // console.log(pid)
 
   // const courseData = data.course[pid] || {
   //   image: '',
@@ -27,7 +28,7 @@ export default function CourseDetails() {
         <div className={`container-lg }`}>
           <div className="d-flex">
             <NewSideBar />
-            <MainContent pid={pid} />
+            <MainContent />
           </div>
         </div>
       </main>

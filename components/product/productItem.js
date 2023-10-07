@@ -74,6 +74,7 @@ export default function ProductItem(props) {
       image_main: product.image_main,
       price: product.price,
       discountPrice: product.discountPrice,
+      description: product.description,
       amount: number,
     }
 
@@ -87,6 +88,7 @@ export default function ProductItem(props) {
           image: cartListData[i].image,
           price: cartListData[i].price,
           discountPrice: cartListData[i].discountPrice,
+          description: cartListData[i].description,
           amount: cartListData[i].amount + newItem.amount,
         }
         const oldCartListData = cartListData.filter(
@@ -127,10 +129,8 @@ export default function ProductItem(props) {
           </Link>
           <FavIcon size="medium" type="icon" id={id} />
           <div className="card-body ed-card-body">
-            <h5 className="card-title ed-card-title">
-              <p>精選品牌 &gt; {brand}</p>
-              {name}
-            </h5>
+            <p className="ed-card-brand">精選品牌 &gt; {brand}</p>
+            <h5 className="card-title ed-card-title">{name}</h5>
             <p className="ed-card-origin-price">NT${price}</p>
             <div className="d-flex justify-content-between align-items-center">
               <h6 className="ed-card-price">NT${discountPrice}</h6>

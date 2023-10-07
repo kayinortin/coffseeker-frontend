@@ -1,5 +1,4 @@
 import React from 'react'
-import style from '@/styles/_course.module.scss'
 
 export default function Pagination({ totalPages, currentPage, onPageChange }) {
   const pageNumbers = Array.from(

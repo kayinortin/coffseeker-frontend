@@ -40,13 +40,11 @@ export default function ProductDetail(props) {
 
   const { show, setShow } = useShow()
   const { cartListData, setCartListData } = useCartList()
-  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useUser()
-  const { productsData, setProductsData } = useProducts()
   const { categoryData } = useCategory()
   const [category, setCategory] = useState({ id: '', name: '' })
 
   // 取得商品詳細資訊
-  const [detailData, setDetailData] = useState({
+  const INITIAL_DETAIL_DATA = {
     id: '',
     name: '',
     brand: '',
@@ -57,7 +55,10 @@ export default function ProductDetail(props) {
     description: '',
     category_id: 0,
     popularity: 0,
-  })
+  }
+
+  const [detailData, setDetailData] = useState(INITIAL_DETAIL_DATA)
+
   const {
     id,
     name,
@@ -73,21 +74,9 @@ export default function ProductDetail(props) {
 
   useEffect(() => {
     if (pid) {
-      setDetailData({
-        id: '',
-        image: '',
-        name: '',
-        brand: '',
-        amount: 0,
-        price: 0,
-        discountPrice: 0,
-        views: 0,
-        description: '',
-        category_id: 0,
-        popularity: 0,
-      })
+      setDetailData(INITIAL_DETAIL_DATA)
       getDetail()
-      setShow({ ...show, in: true })
+      setShow((prevShow) => ({ ...prevShow, in: true }))
     }
   }, [pid])
 
@@ -123,6 +112,7 @@ export default function ProductDetail(props) {
       image: detailData.image,
       price: detailData.price,
       discountPrice: detailData.discountPrice,
+      description: detailData.description,
       amount: number,
     }
 
@@ -136,6 +126,7 @@ export default function ProductDetail(props) {
           image: cartListData[i].image,
           price: cartListData[i].price,
           discountPrice: cartListData[i].discountPrice,
+          description: cartListData[i].description,
           amount: cartListData[i].amount + newItem.amount,
         }
         const oldCartListData = cartListData.filter(

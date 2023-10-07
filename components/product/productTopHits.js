@@ -116,20 +116,16 @@ export default function ProductItem(props) {
           href={`/product/${id}`}
           onClick={handleShow}
         >
-          <Image
+          <img
             src={`http://localhost:3005/uploads/${image_main}`}
             alt={name}
             className="card-img-top"
-            width={300}
-            height={250}
           />
         </Link>
         <FavIcon size="medium" type="icon" id={id} />
         <div className="card-body ed-card-body">
-          <h5 className="card-title ed-card-title">
-            <p>精選品牌 &gt; {brand}</p>
-            {name}
-          </h5>
+          <p className="ed-card-brand">精選品牌 &gt; {brand}</p>
+          <h5 className="card-title ed-card-title">{name}</h5>
           <p className="ed-card-origin-price">NT${price}</p>
           <div className="d-flex justify-content-between align-items-center">
             <h6 className="ed-card-price">NT${discountPrice}</h6>

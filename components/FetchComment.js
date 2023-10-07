@@ -21,7 +21,7 @@ export default function FetchComment({ pid }) {
     }
 
     fetchComments()
-  }, [pid, comments])
+  }, [pid, setComments])
 
   return (
     <>
