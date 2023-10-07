@@ -3,6 +3,9 @@ import '../index.scss'
 import DefaultLayout from '@/components/layout/default-layout/index'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+
+import { AuthProviderJWT } from '@/context/useAuthJWT'
+import { AuthProvider } from '@/context/useAuth'
 import { UserProvider } from '@/context/UserInfo'
 import { ProductsProvider } from '@/context/product'
 import { CategoryProvider } from '@/context/category'
@@ -21,22 +24,26 @@ export default function MyApp({ Component, pageProps }) {
     Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
   return (
-    <UserProvider>
-      <PaginationProvider>
-        <ProductsProvider>
-          <CartListProvider>
-            <FavProvider>
-              <CategoryProvider>
-                <DetailProvider>
-                  <CommentProvider>
-                    {getLayout(<Component {...pageProps} />)}
-                  </CommentProvider>
-                </DetailProvider>
-              </CategoryProvider>
-            </FavProvider>
-          </CartListProvider>
-        </ProductsProvider>
-      </PaginationProvider>
-    </UserProvider>
+    <AuthProviderJWT>
+      <AuthProvider>
+        <UserProvider>
+          <PaginationProvider>
+            <ProductsProvider>
+              <CartListProvider>
+                <FavProvider>
+                  <CategoryProvider>
+                    <DetailProvider>
+                      <CommentProvider>
+                        {getLayout(<Component {...pageProps} />)}
+                      </CommentProvider>
+                    </DetailProvider>
+                  </CategoryProvider>
+                </FavProvider>
+              </CartListProvider>
+            </ProductsProvider>
+          </PaginationProvider>
+        </UserProvider>
+      </AuthProvider>
+    </AuthProviderJWT>
   )
 }
