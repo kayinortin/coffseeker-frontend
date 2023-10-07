@@ -9,40 +9,41 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
           key={i}
           className={i === currentPage ? 'page-item active' : 'page-item'}
         >
-          <a
-            href={`http://localhost:3000/news?page=${i}`}
+          <button
             className="page-link"
-            onClick={(e) => {
-              e.preventDefault() // 防止默認行為
+            onClick={() => {
               onPageChange(i)
               // 滾動到頁面頂部
               window.scrollTo(0, 0)
             }}
           >
             {i}
-          </a>
+          </button>
         </li>
       )
     }
     return pageButtons
   }
 
+  const handlePageChange = (page) => {
+    console.log('Page changed to:', page)
+    onPageChange(page) // 記得設置 currentPage 狀態
+    // 滾動到頁面頂部
+    window.scrollTo(0, 0)
+  }
+
   return (
     <div className="ei-pagination-container mb-3">
       <ul className="ei-pagination">
         <li className={currentPage === 1 ? 'page-item disabled' : 'page-item'}>
-          <a
-            href="#"
+          <button
             className="page-link"
-            onClick={(e) => {
-              e.preventDefault() // 防止默認行為
-              onPageChange(currentPage - 1)
-              // 滾動到頁面頂部
-              window.scrollTo(0, 0)
+            onClick={() => {
+              handlePageChange(currentPage - 1)
             }}
           >
             &laquo;
-          </a>
+          </button>
         </li>
         {renderPageButtons()}
         <li
@@ -50,18 +51,14 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
             currentPage === totalPages ? 'page-item disabled' : 'page-item'
           }
         >
-          <a
-            href="#"
+          <button
             className="page-link"
-            onClick={(e) => {
-              e.preventDefault() // 防止默認行為
-              onPageChange(currentPage + 1)
-              // 滾動到頁面頂部
-              window.scrollTo(0, 0)
+            onClick={() => {
+              handlePageChange(currentPage + 1)
             }}
           >
             &raquo;
-          </a>
+          </button>
         </li>
       </ul>
     </div>

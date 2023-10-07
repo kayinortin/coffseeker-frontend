@@ -8,56 +8,48 @@ import Pagination from '@/components/news/pagination'
 export default function News() {
   const [currentSort, setCurrentSort] = useState('default')
   const [selectedCategory, setSelectedCategory] = useState('allnews')
-  const [newsData, setNewsData] = useState([]) // 存儲新聞數據
+  const [newsData, setNewsData] = useState([]) // 儲存新聞數據
   const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 6 // 每頁顯示的資料數量
 
-  const fetchNewsData = async (page) => {
+  const fetchNewsData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3005/api/news?page=${page}`
+        `http://localhost:3005/api/news?sortBy=${currentSort}&page=${currentPage}&itemsPerPage=${itemsPerPage}`
       )
-      console.log('API請求URL:', `http://localhost:3005/api/news?page=${page}`)
 
       if (response.ok) {
         const jsonData = await response.json()
-        console.log('API響應數據:', jsonData)
         setNewsData(jsonData.news) // 更新新聞數據
-        setTotalPages(jsonData.totalPages)
+        setTotalPages(jsonData.totalPages) // 更新總頁數
       } else {
-        console.error('API 請求失敗')
+        console.error('API請求失敗')
       }
     } catch (error) {
-      console.error('API 請求失敗:', error)
+      console.error('API請求失敗:', error)
     }
   }
+
+  useEffect(() => {
+    fetchNewsData()
+  }, [currentSort, currentPage])
 
   const handleSortChange = (newSort) => {
     setCurrentSort(newSort)
   }
 
-  function myOwnSort(sortBy, items) {
-    if (sortBy === 'popular') {
-      return items.sort((a, b) => b.views - a.views)
-    } else if (sortBy === 'oldest') {
-      return items.sort(
-        (a, b) => new Date(a.created_at) - new Date(b.created_at)
-      )
-    } else {
-      return items
-    }
-  }
-
   const handleCategoryChange = (category) => {
     setSelectedCategory(category)
   }
+
   const handlePageChange = (page) => {
+    // console.log('Page changed to:', page)
     setCurrentPage(page)
   }
-  useEffect(() => {
-    fetchNewsData(currentPage)
-    console.log(currentPage)
-  }, [currentPage])
+
+  // console.log('currentPage 值：', currentPage)
+  // console.log('totalPages 值：', totalPages)
 
   return (
     <>
@@ -90,18 +82,23 @@ export default function News() {
             <h3 className="text-center news-title fs-2">最新消息</h3>
             <div className="ei-line ms-3"></div>
           </div>
+
           {/* 篩選&排序區 */}
           <div className="d-md-flex align-items-end justify-content-center mb-lg-4">
             <div className="me-lg-4">
               <CategoryBtn onSelectCategory={handleCategoryChange} />
             </div>
             <div className="mobile-orderby d-flex flex-column align-items-center ms-lg-4 mt-md-1">
-              <OrderBy onChange={handleSortChange} onSort={myOwnSort} />
+              <OrderBy onChange={handleSortChange} />
             </div>
           </div>
 
           {/* 渲染新聞列表 */}
-          <Card currentSort={currentSort} newsData={newsData} />
+          <Card
+            newsData={newsData}
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
           {/* 分頁 */}
           <Pagination
             totalPages={totalPages}
