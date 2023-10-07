@@ -5,7 +5,7 @@ import style from '@/styles/_course.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import CoursePerFetcher from './[pid]'
+import CoursePerFetcher from './CoursePerFetcher'
 
 export default function CourseDescription() {
   const router = useRouter()
