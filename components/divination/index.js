@@ -127,7 +127,7 @@ export default function Divination() {
       cardSelector.classList.remove(`tarotCard${picks[i]}pickup`)
       cardSelector.classList.remove(`tarotCard${picks[i]}Active`)
       cardSelector.classList.add(`forward${i + 1}`)
-      await waittings(300)
+      // await waittings(300)
       cardSelector.classList.add(`forward${i + 1}2`)
       await waittings(300)
     }
@@ -221,12 +221,12 @@ export default function Divination() {
     for (let i = 0; i < 4; i++) {
       const cardSelector = document.querySelector(`.tarotCard${picks[i]}`)
       cardSelector.classList.remove(`forward${i + 1}2`)
-      await waittings(300)
+      // await waittings(300)
       cardSelector.classList.remove(`forward${i + 1}`)
       await waittings(300)
       cardSelector.classList.add(`tarotCard${picks[i]}Active`)
     }
-    await waittings(1000)
+    await waittings(300)
     //動畫：卡片摺疊回去
     for (let i = 1; i <= 10; i++) {
       document
