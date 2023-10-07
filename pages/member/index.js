@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/MemSideBar'
 import InfoChangeForm from '@/components/member/InfoChangeForm'
+
+import ChangePassword from '@/components/member/ChangePassword'
 export default function info() {
   return (
     <>
@@ -16,7 +18,7 @@ export default function info() {
                 </Link>
               </li>
               <li className={'breadcrumb-item'}>
-                <Link href="/" className={'link'}>
+                <Link href="/member" className={'link'}>
                   會員中心
                 </Link>
               </li>
@@ -33,6 +35,9 @@ export default function info() {
           <div className={'col-12 col-lg-9 mb-5'}>
             <div className={'container d-flex mb-5'}>
               <InfoChangeForm />
+            </div>
+            <div className={'container d-flex mb-5'}>
+              <ChangePassword />
             </div>
           </div>
         </div>
