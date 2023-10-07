@@ -305,28 +305,30 @@ export default function Divination() {
     return (
       <>
         <div className="TarotResult">
-          <sections className="result container">
-            <div className="resultCard d-lg-flex">
-              <Lottie
-                play
-                loop
-                style={{ width: 600, height: 600 }}
-                animationData={drinkCoffeeImg}
-                className="lottie"
-              />
-              <div className="title">
-                <h2>測驗結果</h2>
-                <p>
-                  當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
-                  <br />
-                  您的味蕾是一個多彩的舞台，總是上演著糕點之舞。
-                  <br />
-                  而在咖啡的星空下，您像是一位星座探險家，時刻尋求著新的星座。
-                  <br />
-                  您偏好的咖啡口味是花香果味和特殊風味，這反映了您對於生活中多樣性和驚喜的熱愛。
-                  <br />
-                  無論形式如何，您對於咖啡的熱情總是源源不斷。祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
-                </p>
+          <sections className="result">
+            <div className="container d-flex justify-content-center">
+              <div className="resultCard d-lg-flex">
+                <Lottie
+                  play
+                  loop
+                  style={{ width: 600, height: 600 }}
+                  animationData={drinkCoffeeImg}
+                  className="lottie"
+                />
+                <div className="title">
+                  <h2>測驗結果</h2>
+                  <p>
+                    當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
+                    <br />
+                    您的味蕾是一個多彩的舞台，總是上演著糕點之舞。
+                    <br />
+                    而在咖啡的星空下，您像是一位星座探險家，時刻尋求著新的星座。
+                    <br />
+                    您偏好的咖啡口味是花香果味和特殊風味，這反映了您對於生活中多樣性和驚喜的熱愛。
+                    <br />
+                    無論形式如何，您對於咖啡的熱情總是源源不斷。祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
+                  </p>
+                </div>
               </div>
             </div>
           </sections>
