@@ -328,19 +328,25 @@
   }
 }
 .TarotResult {
-  background-image: url(../public/divination-image/desk2.png);
   .result {
     height: 800px;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    background-image: url(../public/divination-image/bg2.png),
+      url(../public/divination-image/wrap12.png);
+    background-position: -17% bottom, right -100px;
+    background-repeat: no-repeat;
+    background-size: 30% auto, 40% auto;
+    position: relative;
+    background-color: $color--background;
     .resultCard {
       position: relative;
       max-width: 600px;
-      background-color: #5b5b5b8f;
+      background-color: #dbdbdb;
+      border: 6px solid $color--primary;
       padding: 20px;
-      box-shadow: 10px 10px 42px 0 rgba(0, 0, 0, 0.75);
+      // box-shadow: 10px 10px 42px 0 rgba(0, 0, 0, 0.75);
     }
     .title {
       h2 {
@@ -350,7 +356,7 @@
       }
       p {
         max-width: 600px;
-        color: #ffffff;
+        // color: #ffffff;
         line-height: 200%;
       }
     }
