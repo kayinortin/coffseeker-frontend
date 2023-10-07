@@ -33,7 +33,9 @@ export default function CourseList({ pid }) {
       {data && data.courses && data.courses.length > 0 ? (
         <div>
           <h3 className="text-center mt-5">課程列表</h3>
-          <BreadCrumbs />
+          <div className="mt-4">
+            <BreadCrumbs />
+          </div>
           <ul className=" row row-cols-sm-3 flex-wrap list-unstyled">
             {totalItems
               .slice(
@@ -60,12 +62,13 @@ export default function CourseList({ pid }) {
                 )
               })}
           </ul>
-
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+          <div className="my-5 d-flex justify-content-center">
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>

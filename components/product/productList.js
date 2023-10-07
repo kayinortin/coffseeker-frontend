@@ -1,10 +1,11 @@
 import { React, useEffect, useState } from 'react'
 import Skeleton from '@mui/material/Skeleton'
-import ProductItem from './ProductItem'
+import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
 import Sort from './Sort'
 
 import { useProducts } from '@/context/product'
+import { usePagination } from '@/context/pagination'
 
 export default function ProductList(props) {
   const { setShow } = props
@@ -37,6 +38,25 @@ export default function ProductList(props) {
     setSortedProducts(sorted)
   }, [productsData, sortBy])
 
+  const { currentPage, setCurrentPage, totalPages, setTotalPages } =
+    usePagination()
+  const itemsPerPage = 12
+  useEffect(() => {
+    setTotalPages(Math.ceil(sortedProducts.length / itemsPerPage))
+  }, [sortedProducts, setTotalPages])
+
+  const currentProducts = sortedProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  )
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
+  }
+
   return (
     <>
       <ProductDataFetcher />
@@ -53,17 +73,66 @@ export default function ProductList(props) {
               </div>
               <Sort />
             </div>
-
             {!isFetchingProducts ? (
-              sortedProducts.map((product, i) => {
-                return (
+              <>
+                {currentProducts.map((product) => (
                   <ProductItem
                     key={product.id}
                     setShow={setShow}
                     product={product}
                   />
-                )
-              })
+                ))}
+                <div className="pagination-container d-flex justify-content-center mt-5">
+                  <ul className="pagination">
+                    <li
+                      className={`ed-page-item ${
+                        currentPage === 1 ? 'disabled' : ''
+                      }`}
+                    >
+                      <button
+                        className="ed-page-link"
+                        href="#"
+                        aria-label="Previous"
+                        onClick={() => {
+                          handlePageChange(currentPage - 1)
+                        }}
+                      >
+                        <span aria-hidden="true">&laquo;</span>
+                      </button>
+                    </li>
+                    {pageNumbers.map((v, i) => {
+                      return (
+                        <li className="ed-page-item" key={i}>
+                          <button
+                            className={`ed-page-link ${
+                              v === currentPage ? 'active' : ''
+                            }`}
+                            href="#"
+                            onClick={() => {
+                              handlePageChange(v)
+                            }}
+                          >
+                            {v}
+                          </button>
+                        </li>
+                      )
+                    })}
+
+                    <li className="ed-page-item">
+                      <button
+                        className={`ed-page-link ${
+                          currentPage === totalPages ? 'disabled' : ''
+                        }`}
+                        href="#"
+                        aria-label="Next"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                      >
+                        <span aria-hidden="true">&raquo;</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </>
             ) : (
               <div className="unavailable">
                 新品即將推出，<br className="d-md-none"></br>持續探索最佳風味 !

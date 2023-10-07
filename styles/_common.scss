@@ -996,7 +996,7 @@ input:checked + label + .expandable-menu {
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
-  
+
     #{$_}__icon {
       font-size: 1.5rem;
     }
@@ -1821,4 +1821,38 @@ div.my-4.d-md-flex a:hover {
 
 .ed-zindex {
   z-index: 6;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  font-weight: 900;
+  color: $color--secondary !important;
+}
+
+.ed-page {
+  &-link {
+    color: $color--primary;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid $color--gray5;
+    color: $color--primary;
+    margin-bottom: 20px;
+    &.disabled{
+      pointer-events: none;
+    }
+    &.active {
+      background-color: $color--secondary;
+      color: white;
+    }
+    
+    &:hover {
+      color: $color--secondary;
+    }
+  }
+  &-item{
+    &.disabled{
+      pointer-events: none;
+    }
+  }
 }

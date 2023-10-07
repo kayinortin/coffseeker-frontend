@@ -14,9 +14,7 @@ const TopHits = () => {
   // store swiper instances
   const [firstSwiper, setFirstSwiper] = useState(null)
   const [secondSwiper, setSecondSwiper] = useState(null)
-  console.log(data)
   const newData = data.course
-  console.log(newData)
 
   return (
     // <div className="w-100">

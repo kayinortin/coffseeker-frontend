@@ -1,14 +1,14 @@
 $color--primary: #1c262c;
-$color--background: #f2f3ee;
+$color--background: #f0ebe2;
 $color--black: #000000;
 $max-card-width: 200px;
 
 .ei-baked-container {
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
-  // min-height: 100vh; 
+  align-items: center;
+  justify-content: center;
+  // min-height: 100vh;
   // padding: 20px 24px;
   // margin-block: 20px;
   background-color: $color--background;
@@ -29,7 +29,7 @@ $max-card-width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; 
+  text-align: center;
 }
 
 .baked-background {
@@ -43,6 +43,16 @@ $max-card-width: 200px;
   right: 0;
   top: 0;
   transition: filter 200ms linear, transform 200ms linear;
+}
+.baked-heading {
+  margin-top: 0px;
+  padding: 10px;
+  color: white;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  height: 100%; 
 }
 
 .ei-baked-card:hover .baked-background {
@@ -59,18 +69,35 @@ $max-card-width: 200px;
 }
 
 .ei-content {
-  padding: 24px;
+  padding: 10px;
   position: absolute;
   top: 0;
 }
 
 .baked-heading {
-  margin-top:0px;
+  margin-top: 0px;
   padding: 10px;
   color: white;
   font-size: 1.8rem;
 }
-.baked-card-content{
+.baked-card-content {
   margin-top: 50px;
   padding-inline: 0 !important;
+}
+
+@media (max-width: 391px) {
+  .ei-selected-card-content{
+    max-width: 390px;
+  }
+  .ei-baked-card {
+    max-width: 150px;
+    max-height: 300px;
+    margin: 0 auto;
+    // padding-inline: 20px;
+  }
+
+  .baked-background {
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
