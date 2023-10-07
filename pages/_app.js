@@ -3,6 +3,9 @@ import '../index.scss'
 import DefaultLayout from '@/components/layout/default-layout/index'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+
+import { AuthProviderJWT } from '@/context/useAuthJWT'
+import { AuthProvider } from '@/context/useAuth'
 import { UserProvider } from '@/context/UserInfo'
 import { ProductsProvider } from '@/context/product'
 import { CategoryProvider } from '@/context/category'
@@ -11,6 +14,7 @@ import { FavProvider } from '@/context/fav'
 import { DetailProvider } from '@/context/showProductDetail'
 import { CommentProvider } from '@/context/comment'
 import { CoursesProvider } from '@/context/course'
+import { PaginationProvider } from '@/context/pagination'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -21,22 +25,28 @@ export default function MyApp({ Component, pageProps }) {
     Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
   return (
-    <UserProvider>
-      <ProductsProvider>
-        <CoursesProvider>
-          <CartListProvider>
-            <FavProvider>
-              <CategoryProvider>
-                <DetailProvider>
-                  <CommentProvider>
-                    {getLayout(<Component {...pageProps} />)}
-                  </CommentProvider>
-                </DetailProvider>
-              </CategoryProvider>
-            </FavProvider>
-          </CartListProvider>
-        </CoursesProvider>
-      </ProductsProvider>
-    </UserProvider>
+    <AuthProviderJWT>
+      <AuthProvider>
+        <UserProvider>
+          <PaginationProvider>
+            <ProductsProvider>
+              <CoursesProvider>
+                <CartListProvider>
+                  <FavProvider>
+                    <CategoryProvider>
+                      <DetailProvider>
+                        <CommentProvider>
+                          {getLayout(<Component {...pageProps} />)}
+                        </CommentProvider>
+                      </DetailProvider>
+                    </CategoryProvider>
+                  </FavProvider>
+                </CartListProvider>
+              </CoursesProvider>
+            </ProductsProvider>
+          </PaginationProvider>
+        </UserProvider>
+      </AuthProvider>
+    </AuthProviderJWT>
   )
 }
