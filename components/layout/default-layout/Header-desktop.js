@@ -4,6 +4,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
+import { cookies } from 'next/dist/client/components/headers'
 
 export default function HeaderDesktop(props) {
   const { navItems, currentRoute, navActions, isTop, isFullScreen } = props
@@ -29,7 +30,6 @@ export default function HeaderDesktop(props) {
         // console.log(res.data.message)
         if (res.data.message === 'success') {
           localStorage.removeItem('hasVisitedBefore')
-          localStorage.removeItem('userInfo')
           Swal.fire({
             title: '登出成功',
             icon: 'success',

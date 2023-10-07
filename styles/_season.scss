@@ -112,7 +112,6 @@
   font-size: 1rem;
   line-height: 200%;
   letter-spacing: 0.05em;
-  font-weight: 300;
   color: $color--primary;
   @media screen and (max-width: $lg) {
     margin-top: 1.5rem;
@@ -556,7 +555,6 @@
   position: absolute;
   top: 160px;
   right: 60px;
-  font-weight: 300;
   @media screen and (max-width: $lg) {
     top: 60px;
     right: 100px;

@@ -110,35 +110,33 @@ export default function ProductItem(props) {
 
   return (
     <>
-      <div className="col-12 col-md-4 my-3">
-        <div className="card ed-border-none">
-          <Link
-            className="ed-border-card01"
-            href={`/product/${id}`}
-            onClick={handleShow}
-          >
-            <Image
-              src={`http://localhost:3005/uploads/${image_main}`}
-              alt={name}
-              className="card-img-top"
-              width={300}
-              height={250}
-            />
-          </Link>
-          <FavIcon size="medium" type="icon" id={id} />
-          <div className="card-body ed-card-body">
-            <h5 className="card-title ed-card-title">
-              <p>精選品牌 &gt; {brand}</p>
-              {name}
-            </h5>
-            <p className="ed-card-origin-price">NT${price}</p>
+      <div className="card ed-border-none">
+        <Link
+          className="ed-border-card01"
+          href={`/product/${id}`}
+          onClick={handleShow}
+        >
+          <Image
+            src={`http://localhost:3005/uploads/${image_main}`}
+            alt={name}
+            className="card-img-top"
+            width={300}
+            height={250}
+          />
+        </Link>
+        <FavIcon size="medium" type="icon" id={id} />
+        <div className="card-body ed-card-body">
+          <h5 className="card-title ed-card-title">
+            <p>精選品牌 &gt; {brand}</p>
+            {name}
+          </h5>
+          <p className="ed-card-origin-price">NT${price}</p>
+          <div className="d-flex justify-content-between align-items-center">
+            <h6 className="ed-card-price">NT${discountPrice}</h6>
             <div className="d-flex justify-content-between align-items-center">
-              <h6 className="ed-card-price">NT${discountPrice}</h6>
-              <div className="d-flex justify-content-between align-items-center">
-                <button className="ed-addCart" onClick={addCart}>
-                  加入購物車
-                </button>
-              </div>
+              <button className="ed-addCart" onClick={addCart}>
+                加入購物車
+              </button>
             </div>
           </div>
         </div>

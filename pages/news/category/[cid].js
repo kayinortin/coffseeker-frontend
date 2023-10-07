@@ -13,25 +13,53 @@ const CategoryNews = () => {
   const { cid } = router.query
   const [currentSort, setCurrentSort] = useState('default')
   const [categoryNews, setCategoryNews] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [totalPages, setTotalPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  useEffect(() => {
-    // 在此處使用 cid 發送 API 請求以獲取分類新聞
-    if (cid) {
-      axios
-        .get(`http://localhost:3005/api/news/category/${cid}`)
-        .then((response) => {
-          setCategoryNews(response.data)
-        })
-        .catch((error) => {
-          console.error('請求出錯:', error)
-        })
-    }
-  }, [cid])
+  // 定義函數以發送分類新聞的API請求
+  const fetchCategoryNews = (
+    cid,
+    page,
+    setCategoryNews,
+    setTotalPages,
+    setCurrentPage
+  ) => {
+    axios
+      .get(`http://localhost:3005/api/news/category/${cid}?page=${page}`)
+      .then((response) => {
+        // console.log('API回應:', response.data)
+        setCategoryNews(response.data.news)
+        setTotalPages(response.data.totalPages)
+
+        const wrappedSetCurrentPage = (newPage) => {
+          if (typeof setCurrentPage === 'function') {
+            setCurrentPage(newPage)
+          }
+        }
+        wrappedSetCurrentPage(page)
+      })
+      .catch((error) => {
+        console.error('請求出錯:', error)
+        const wrappedSetCurrentPage = (newPage) => {
+          if (typeof setCurrentPage === 'function') {
+            setCurrentPage(newPage)
+          }
+        }
+        wrappedSetCurrentPage(page)
+      })
+  }
 
   // 處理排序方式變更，並更新排序方式
   const handleSortChange = (newSort) => {
     setCurrentSort(newSort)
   }
+
+  useEffect(() => {
+    if (cid) {
+      fetchCategoryNews(cid, currentPage, setCategoryNews, setTotalPages)
+    }
+  }, [cid, currentPage])
 
   // 應用排序方式到消息列表
   const sortedCategoryNews = categoryNews.sort((a, b) => {
@@ -39,22 +67,37 @@ const CategoryNews = () => {
       return b.views - a.views // 按最多人瀏覽排序
     } else if (currentSort === 'oldest') {
       return new Date(a.created_at) - new Date(b.created_at) // 舊到新
-    } else return new Date(b.created_at) - new Date(a.created_at) // 預設新到舊
-  })
-  function myOwnSort(sortBy, items) {
-    if (sortBy === 'popular') {
-      // 根據最多人瀏覽排序
-      return items.sort((a, b) => b.views - a.views)
-    } else if (sortBy === 'oldest') {
-      // 根據日期排序
-      return items.sort(
-        (a, b) => new Date(a.created_at) - new Date(b.created_at)
-      )
     } else {
-      // 預設排序方式
-      return items
+      return new Date(b.created_at) - new Date(a.created_at) // 預設新到舊
+    }
+  })
+
+  const handlePageChange = (page) => {
+    // 在這裡觸發分頁變更，並重新載入相應頁面的新聞
+    if (cid) {
+      setCurrentPage(page) // 更新當前頁碼
+      fetchCategoryNews(
+        cid,
+        page,
+        setCategoryNews,
+        setTotalPages,
+        setCurrentPage
+      )
     }
   }
+
+  useEffect(() => {
+    //使用 cid 發送 API 請求以獲取分類新聞
+    if (cid) {
+      fetchCategoryNews(
+        cid,
+        currentPage,
+        setCategoryNews,
+        setTotalPages,
+        setCurrentPage
+      )
+    }
+  }, [cid, currentPage])
 
   return (
     <>
@@ -64,15 +107,15 @@ const CategoryNews = () => {
           <div className="d-flex flex-column align-items-center me-lg-4">
             <CategoryBtn />
           </div>
-          <div className="mt-4 d-flex justify-content-center ms-lg-4">
-            <OrderBy onChange={handleSortChange} onSort={myOwnSort} />
+          <div className="mt-3 d-flex justify-content-center ms-lg-4">
+            <OrderBy onChange={handleSortChange} />
           </div>
         </div>
 
         <div className=" row row-cols-1 row-cols-md-2 background">
           {sortedCategoryNews && sortedCategoryNews.length > 0 ? (
             sortedCategoryNews.map((news, index) => (
-              <div key={news.id} className={`col  ei-mobile-card-margin`}>
+              <div key={news.news_id} className={`col  ei-mobile-card-margin`}>
                 <Link
                   href={`/news/${news.news_id}`}
                   passHref={true}
@@ -100,8 +143,12 @@ const CategoryNews = () => {
             <div></div>
           )}
         </div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
-      <Pagination />
     </>
   )
 }
