@@ -122,6 +122,7 @@ export default function ForgetPassword() {
       router.push('/member/login')
     } else {
       setMessage('密碼修改失敗！')
+      errorSwal('驗證碼錯誤')
     }
     console.log(res.data)
   }
