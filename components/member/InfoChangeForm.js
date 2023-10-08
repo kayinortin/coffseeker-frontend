@@ -3,13 +3,16 @@ import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { checkLoginStatus } from './CheckLoginStaus'
+import { FetchUserData } from './FetchUserData'
+// import jwt from 'jsonwebtoken'
 
 export default function InfoChangeForm() {
-  const { setUserData } = useUser()
+  const { userData, setUserData } = useUser()
 
   // console.log('userData抽取成功', userData)
 
-  const storedUserData = Cookies.get('userInfo')
+  const checkToken = Cookies.get('accessToken')
 
   const [userId, setId] = useState('')
   const [userEmail, setMail] = useState('')
@@ -19,27 +22,37 @@ export default function InfoChangeForm() {
   const [birthdayYear, setBirthdayYear] = useState('')
   const [birthdayMonth, setBirthdayMonth] = useState('')
   const [birthdayData, setBirthdayDate] = useState('')
-
+  console.log('checkTokeng刺刺刺刺', checkToken)
   useEffect(() => {
-    if (storedUserData) {
-      // Cookie存在，解析数据
-      // setUserData(JSON.parse(storedUserData))
-      const userData = JSON.parse(storedUserData)
-      // console.log('測試抓cookie資料', userData)
-      setUserData(userData)
-      setId(userData.id)
-      setMail(userData.email)
-      setName(userData.username)
-      setPhone(userData.phone)
-      setGender(userData.gender)
-      const UserBirthday = userData.birthday.split('-')
-      setBirthdayYear(UserBirthday[0])
-      setBirthdayMonth(UserBirthday[1])
-      setBirthdayDate(UserBirthday[2])
-    } else {
-      // Cookie不存在，采取相应的处理方式
-      console.log('Cookie不存在')
+    async function fetchData() {
+      if (checkToken) {
+        const loginState = await checkLoginStatus()
+        const fetchUser = await FetchUserData()
+        console.log(loginState)
+        console.log(fetchUser)
+        if (loginState) {
+          // Cookie存在，解析数据
+          // setUserData(JSON.parse(storedUserData))
+          // const userData = JSON.parse(storedUserData)
+          // console.log('測試抓cookie資料', userData)
+          setUserData(fetchUser)
+          setId(fetchUser.id)
+          setMail(fetchUser.email)
+          setName(fetchUser.username)
+          setPhone(fetchUser.phone)
+          setGender(fetchUser.gender)
+          const UserBirthday = fetchUser.birthday.split('-')
+          setBirthdayYear(UserBirthday[0])
+          setBirthdayMonth(UserBirthday[1])
+          setBirthdayDate(UserBirthday[2])
+        } else {
+          // Cookie不存在，采取相应的处理方式
+          console.log('Cookie不存在')
+        }
+      }
     }
+
+    fetchData()
   }, [])
 
   // input文字輸入框
@@ -185,7 +198,7 @@ export default function InfoChangeForm() {
         showConfirmButton: false,
         timer: 1500,
       })
-      Cookies.set('userInfo', JSON.stringify(formData))
+      // Cookies.set('userInfo', JSON.stringify(formData))
     } catch (error) {
       console.error('錯誤:', error)
     }
