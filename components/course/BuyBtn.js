@@ -58,7 +58,7 @@ function AddCartBtn(props) {
 
   return (
     <div className={`px-2 py-1 text-center text-white`}>
-      <button className="ed-addCart" onClick={addCart}>
+      <button className="ed-addCart__detail" onClick={addCart}>
         加入購物車
       </button>
     </div>
@@ -67,10 +67,10 @@ function AddCartBtn(props) {
 
 function BuyBtn() {
   return (
-    <div className={`${styles['btn-check']} text-center  px-2 py-1 `}>
+    <div className={`${styles['btn-check']} text-center   `}>
       <Link
         href="http://localhost:3000/cart"
-        className="text-white d-block px-2 py-2"
+        className="text-white ed-addCart__detail d-block "
       >
         立即結帳
       </Link>
