@@ -329,10 +329,10 @@
 }
 .TarotResult {
   .result {
-    height: 800px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-block: 60px;
     background-image: url(../public/divination-image/bg2.png),
       url(../public/divination-image/wrap12.png);
     background-position: -17% bottom, right -100px;
@@ -361,10 +361,44 @@
       }
     }
   }
+  .swiperTitle {
+    h2 {
+      padding: 10px 30px;
+      border-block: 3px solid $color--primary;
+    }
+  }
   .box {
     height: 600px;
+    padding-inline: 40px;
     background-color: #b2b2b287;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-block: 40px;
+    .ratio {
+      height: 500px;
+      width: 500px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .productText {
+      height: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content:space-between;
+      h4 {
+        line-height: 150%;
+      }
+      h5 {
+        line-height: 150%;
+      }
+    }
   }
+
   .swiper {
     --swiper-theme-color: #909090;
   }
