@@ -21,10 +21,10 @@ export default function CourseText(props) {
 
           <h5>{CoursesData.course_name}</h5>
           <Score />
-          <h5 className={`mb-4 ${style['price']}`}>
+          <h5 className={`mb-4 ed-detail-price ${style['price']}`}>
             NT${CoursesData.course_price}
           </h5>
-          <div className="d-flex  justify-content-around d-sm-none">
+          <div className="d-flex  align-items-center d-sm-none">
             <AddCartBtn course={CoursesData} />
             <BuyBtn />
           </div>
@@ -36,7 +36,7 @@ export default function CourseText(props) {
               {CoursesData.course_description}
             </p>
           </div>
-          <div className="w-25 px-2 py-1 ms-auto">
+          <div className=" px-2 py-1 ms-auto">
             <div className="d-none d-sm-block">
               <AddCartBtn course={CoursesData} />
               <BuyBtn />

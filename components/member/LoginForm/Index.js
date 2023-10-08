@@ -61,7 +61,7 @@ export default function LoginForm() {
         'http://localhost:3005/api/auth-jwt/login',
         formData
       )
-      console.log('伺服器回應:', response.data)
+      // console.log('伺服器回應:', response.data)
 
       if (response.data.code === '200' && response.data.accessToken) {
         Cookies.set('accessToken', response.data.accessToken)
@@ -96,10 +96,11 @@ export default function LoginForm() {
         'http://localhost:3005/api/auth/login',
         formData
       )
-      console.log('伺服器回應:', response.data)
+      // console.log('伺服器回應:', response.data)
       // setUserData(response.data.user)
       if (response.data.code === '200' && response.data.user) {
-        Cookies.set('userInfo', JSON.stringify(response.data.user))
+        // Cookies.set('userInfo', JSON.stringify(response.data.user))
+        setUserData(response.data.user)
         router.push('/member')
       } else {
         Swal.fire({

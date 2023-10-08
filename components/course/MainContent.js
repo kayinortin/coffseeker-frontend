@@ -71,12 +71,11 @@ export default function MainContent() {
     <>
       <div className=" mt-5 ms-sm-5">
         <div className="d-sm-flex">
-          <CoursePic pid={pid} course={CoursesData}/>
+          <CoursePic pid={pid} course={CoursesData} />
           <CourseText pid={pid} course={CoursesData} />
         </div>
 
         <div className="container px-5 mt-3">
-          <h5 className="mb-4">NT${CoursesData.course_price}</h5>
           <div className="d-flex justify-content-between d-sm-none">
             <AddCartBtn pid={pid} course={CoursesData} />
             <BuyBtn />
