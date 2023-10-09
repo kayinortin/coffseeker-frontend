@@ -1,13 +1,45 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import Swal from 'sweetalert2'
 
 export default function SendMessage() {
   // const [isPopupOpen, setPopupOpen] = useState(false)
-  const [text, setText] = useState('')
+  const [message, setMessage] = useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+
+  async function handleSubmit() {
+    const response = await fetch('http://localhost:3005/api/email/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, name, email }),
+    })
+
+    if (response.ok) {
+      Swal.fire({
+        icon: 'success',
+        title: '成功！',
+        text: '郵件已成功發送！',
+      }).then(() => {
+        setMessage('')
+        setName('')
+        setEmail('')
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '錯誤！',
+        text: '無法發送郵件！',
+      })
+    }
+  }
+
   return (
     <>
       <div className="d-flex justify-content-center align-items-center ei-contact-us">
         <div className="ei-line me-3"></div>
-        <h3 className="text-center news-title mobile-contact-us fs-2">聯絡我們</h3>
+        <h3 className="text-center news-title mobile-contact-us fs-2">
+          聯絡我們
+        </h3>
         <div className="ei-line ms-3"></div>
       </div>
 
@@ -16,41 +48,40 @@ export default function SendMessage() {
         <div id="ei-form-wrap" className={`ei-form}`}>
           <form className="ei-form ">
             <label htmlFor="email" className="mb-3">
-              訊息:
+              訊息：
             </label>
             <textarea
               className=""
               name="message"
               id="message"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             ></textarea>
             <label htmlFor="name" className="mb-3">
-              姓名:
+              姓名：
             </label>
             <input
               type="text"
               name="name"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
               id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <label htmlFor="email" className="mb-3">
-              Email:
+              Email：
             </label>
             <input
               type="text"
               name="email"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <div className="d-flex justify-content-center">
               <button
-                type="submit"
-                name="submit"
-                // value="NOW, I SEND THANKS!"
-                className="text-center btn btn-dark mt-3"
+                type="button"
+                className="btn btn-dark"
+                onClick={handleSubmit}
               >
                 送出
               </button>
