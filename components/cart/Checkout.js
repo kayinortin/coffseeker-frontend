@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Checkout({ step, handleNextStep, setStep }) {
   //按鈕上一步 //按鈕送出訂單
@@ -12,42 +12,56 @@ function Checkout({ step, handleNextStep, setStep }) {
     }
   }
 
-  // const [totalPrice, setTotalPrice] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+  const handleToggleProducts = () => {
+    setIsOpen(!isOpen)
+  }
 
   //購物車商品即時渲染
   const cartItems = JSON.parse(localStorage.getItem('cartList'))
   cartItems.forEach((product) => {
     console.log(product)
   })
-
+  //單一商品小計＝特價價格＊數量
   function productSubtotal(product) {
     return product.discountPrice * product.amount
   }
+  //商品共計
+  let totalPrice = 0
+  cartItems.forEach((product) => {
+    totalPrice += productSubtotal(product)
+  })
 
   //商品列表
   const productItems = cartItems.map((product) => (
     <div key={product.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-5 col-sm-4 ">
+      <div className="imgContainer col-lg-2 col-sm-3 ">
         <img
           className="img-fluid"
           src={`http://localhost:3005/uploads/${product.image_main}`}
           alt={product.image_main}
         />
       </div>
-      <div className="productContent col-lg-7 col-sm-8 text-start">
-        <div className="topDetails d-flex pb-5 justify-content-between ">
+      <div className="productContent col-lg-10 col-sm-9 text-start">
+        <div className="topDetails d-flex justify-content-between ">
           <div className="details">
-            <div className="productTitle">{product.name}</div>
-            <div className="productDescription">{product.description}</div>
+            <div className="productTitle lh-sm pb-1">{product.name}</div>
+            <div className="productDescription lh-base pb-4">
+              {product.description}
+            </div>
           </div>
         </div>
-        <div className="productPrice ">
-          <div className="price text-decoration-line-through fs-6 pe-2">
+        <div className="productPrice text-end pb-2 align-items-center">
+          <div className="price d-inline text-decoration-line-through fs-6 pe-2">
             ${product.price}
           </div>
-          <div className="discountPrice">{product.discountPrice}</div>
-          <div className="discountPrice">{product.amount}</div>
-          <div className="productSubtotal d-inline fs-4 fw-bolder">
+          <div className="discountPrice d-inline fs-5">
+            ${product.discountPrice}
+          </div>
+          <div className="discountPrice  d-inline fs-5"> x{product.amount}</div>
+        </div>
+        <div className="productQuantityTotal text-end">
+          <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
             ${productSubtotal(product)}
           </div>
         </div>
@@ -60,21 +74,26 @@ function Checkout({ step, handleNextStep, setStep }) {
       <div className="checkout">
         <div className="expandProducts">
           <hr className="border-1 opacity-100" />
-          <div className="text-center checkoutProducts">
-            <div className="closeProducts my-4">
+          <div className={`checkoutProducts ${isOpen ? 'open' : 'close'}`}>
+            <div className="closeProducts text-center my-4">
               <h3>合計: NTD$9999 </h3>
-              <button className="btn btngroup mt-3">查看商品</button>
+              <button
+                className="btn btngroup mt-3"
+                onClick={handleToggleProducts}
+              >
+                {isOpen ? '關閉商品' : '查看商品'}
+              </button>
             </div>
-            <div className="openProducts">
-              <div className="productscart col-lg-8 mb-3">
-                <div className="products container text-center">
-                  {productItems}
-                </div>
-                <div className="productsFoot text-end fw-bolder fs-4">
-                  商品共計 ${totalPrice}
+            {isOpen && (
+              <div className="openProducts">
+                <div className="productscart">
+                  <div className="products container">{productItems}</div>
+                  <div className="productsFoot text-end fw-bolder fs-5 py-3">
+                    商品共計 ${totalPrice}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
           <hr className="border-1 opacity-100" />
         </div>
