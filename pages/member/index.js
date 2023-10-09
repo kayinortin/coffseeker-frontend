@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
-import MemSideBar from '@/components/member/MemSideBar'
-import InfoChangeForm from '@/components/member/InfoChangeForm'
+import MemSideBar from '@/components/member/Sidebar/MemSideBar'
+import InfoChangeForm from '@/components/member/InfoChangeForm/Index'
 
-import ChangePassword from '@/components/member/ChangePassword'
+import ChangePassword from '@/components/member/ChangePassword/Index'
 export default function info() {
   return (
     <>

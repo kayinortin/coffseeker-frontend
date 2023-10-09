@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
+import { checkLoginStatus } from '@/components/member/FetchDatas/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
 import { cookies } from 'next/dist/client/components/headers'
 

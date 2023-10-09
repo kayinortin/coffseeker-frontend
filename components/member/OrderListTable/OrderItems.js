@@ -1,21 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaAngleDown } from 'react-icons/fa'
 import { FaAngleUp } from 'react-icons/fa'
 import Image from 'next/image'
 
-export default function OrderItems() {
-  const order = {
-    img: '/course-image/coffeeImg_1.jpg',
-    discraption: '想望咖啡【獨家風味】蒙馬特的午後咖啡豆 200g/莓果/酒感',
-    type: '莓果/200g',
-    count: '10/包',
-    price: 500,
-  }
-
+export default function OrderItems({ order }) {
   return (
     <>
-      {/*  */}
-      <div className={'d-flex border-bottom border-dark p-2'}>
+      {/* 桌機 */}
+      <div className={'d-none d-lg-flex border-bottom border-dark p-2'}>
         <span className={'col-3 text-center'}>
           <Image
             src={order.img}
@@ -33,7 +25,25 @@ export default function OrderItems() {
           <span className="col-2 text-center">NT${order.price}</span>
         </div>
       </div>
-      {/*  */}
+      {/* 手機版 */}
+      <div className="d-lg-none border-bottom border-dark p-2">
+        <div className={'d-flex align-items-center'}>
+          <div className={'pe-3'}>
+            <Image
+              src={order.img}
+              alt="Image Description"
+              width={100} // 设置图像宽度
+              height={100} // 设置图像高度
+            />
+          </div>
+          <div className={''}>{order.discraption}</div>
+        </div>
+        <div className={'d-flex justify-content-between py-2'}>
+          <div>{order.type}</div>
+          <div>{order.count}</div>
+          <div>NT${order.price}</div>
+        </div>
+      </div>
     </>
   )
 }

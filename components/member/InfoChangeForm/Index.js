@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { checkLoginStatus } from './CheckLoginStaus'
-import { FetchUserData } from './FetchUserData'
-// import jwt from 'jsonwebtoken'
+import { checkLoginStatus } from '../FetchDatas/CheckLoginStaus'
+import { FetchUserData } from '../FetchDatas/FetchUserData'
+
+// 10/09
+// 已知問題 使用者資料編輯更新後
+// 刷新頁面 Token回傳的資料不會取新的 而是編輯前的資料
 
 export default function InfoChangeForm() {
   const { userData, setUserData } = useUser()
-
+  const router = useRouter()
   // console.log('userData抽取成功', userData)
 
   const checkToken = Cookies.get('accessToken')
@@ -22,19 +26,13 @@ export default function InfoChangeForm() {
   const [birthdayYear, setBirthdayYear] = useState('')
   const [birthdayMonth, setBirthdayMonth] = useState('')
   const [birthdayData, setBirthdayDate] = useState('')
-  console.log('checkTokeng刺刺刺刺', checkToken)
+
   useEffect(() => {
     async function fetchData() {
       if (checkToken) {
         const loginState = await checkLoginStatus()
         const fetchUser = await FetchUserData()
-        console.log(loginState)
-        console.log(fetchUser)
         if (loginState) {
-          // Cookie存在，解析数据
-          // setUserData(JSON.parse(storedUserData))
-          // const userData = JSON.parse(storedUserData)
-          // console.log('測試抓cookie資料', userData)
           setUserData(fetchUser)
           setId(fetchUser.id)
           setMail(fetchUser.email)
@@ -45,10 +43,10 @@ export default function InfoChangeForm() {
           setBirthdayYear(UserBirthday[0])
           setBirthdayMonth(UserBirthday[1])
           setBirthdayDate(UserBirthday[2])
-        } else {
-          // Cookie不存在，采取相应的处理方式
-          console.log('Cookie不存在')
         }
+      } else {
+        console.log('Cookie不存在')
+        router.push('/member/login')
       }
     }
 
@@ -198,6 +196,7 @@ export default function InfoChangeForm() {
         showConfirmButton: false,
         timer: 1500,
       })
+      // window.location.reload()
       // Cookies.set('userInfo', JSON.stringify(formData))
     } catch (error) {
       console.error('錯誤:', error)

@@ -10,7 +10,7 @@ export default function MemSideBar() {
     },
     {
       id: 2,
-      option: '訂單管理',
+      option: '歷史訂單',
       href: '/member/order-list',
     },
     {
