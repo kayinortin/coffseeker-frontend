@@ -75,6 +75,7 @@
 .popular-left {
   width: 50%;
   z-index: 5;
+  margin-right: 20px;
   @media screen and (max-width: 1440px) {
     width: 50%;
   }
@@ -83,7 +84,7 @@
   }
 }
 .popular-right {
-  width: 50%;
+  width: 100%;
   z-index: 5;
   @media screen and (max-width: 1440px) {
     width: 50%;
@@ -124,8 +125,12 @@
 }
 
 .ed-index-left {
-  left: 0px;
-}
+  left: -95px;
+  @media screen and (max-width: $lg) {
+    left: -20px;
+  }    
+  }
+
 
 .ed-no-product {
   padding-top: 300px;
