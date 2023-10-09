@@ -32,6 +32,12 @@ export default function FetchComment({ pid }) {
         ) : (
           comments.map((comment, index) => (
             <div key={index} className="comment mt-4">
+              <div>
+                <img
+                  src={`https://ui-avatars.com/api/?background=1C262C&color=fff&bold=true&rounded=true&name=${comment.user_name}`}
+                  alt=""
+                />
+              </div>
               <h5 className="ed-comment-name">{comment.user_name}</h5>
 
               <div className="rating-container my-2">

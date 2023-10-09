@@ -4,7 +4,7 @@
 
 * {
   box-sizing: border-box;
-  outline: 1px red solid;
+  // outline: 1px red solid;
 }
 
 // 全域字形
@@ -74,6 +74,9 @@ nav {
 // 強迫取消bootstrap的樣式
 a {
   text-decoration: none !important;
+}
+a img {
+  vertical-align: bottom;
 }
 ul {
   list-style-type: none;
