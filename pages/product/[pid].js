@@ -23,6 +23,7 @@ export default function ProductDetail(props) {
   // 取得商品圖片路徑
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
+  const [rating, setRating] = useState(0)
 
   const getDetail = async () => {
     if (pid) {
@@ -150,12 +151,22 @@ export default function ProductDetail(props) {
 
   // 取得評論資訊
   const { comments, setComments } = useComment()
+  // console.log(comments[0].rating)
+
+  // 計算平均評分
+  for (let i = 0; i < comments.length; i++) {
+    let everyRating = comments[i].rating
+    let ratingSum = 0
+    ratingSum += everyRating
+    let ratingAvg = ratingSum / comments.length
+  }
 
   return (
     <>
-      <div className="container">
+      {/* 電腦版 */}
+      <div className="container ">
         <div className="d-flex justify-content-between">
-          <div className="sidebar-left">1234</div>
+          <div className="sidebar-left d-none d-md-block">1234</div>
           <div className="ed-sidebar-right">
             {/* 左邊 */}
             <div className="d-flex justify-content-between mt-3">
@@ -267,6 +278,14 @@ export default function ProductDetail(props) {
                 <div className="mt-2">
                   <h5>【極精品】</h5>
                   <p>巴拿馬 翡翠莊園 Jaramillo 綠標瑰夏 日曬</p>
+                  <div className="rating-container mt-4">
+                    評分：
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <div key={index} className={'star'}>
+                        ★
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="mt-3">
                   <h5>【烘豆師筆記】</h5>
@@ -301,6 +320,7 @@ export default function ProductDetail(props) {
           </div>
         </div>
       </div>
+      {/* 手機版 */}
     </>
   )
 }

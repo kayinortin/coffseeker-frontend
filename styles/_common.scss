@@ -1637,3 +1637,10 @@ div.my-4.d-md-flex a:hover {
     padding-inline: 36px;
   }
 }
+
+.ed-content-size{
+  width: 980px;
+  @media screen and (max-width:$lg) {
+    width: 100%;
+  }
+}

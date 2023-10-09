@@ -42,14 +42,14 @@ export default function Card(props) {
         </Link>
       </div>
 
-      <div className="d-flex w-100 my-3 ms-5 justify-content-start">
+      <div className="d-flex w-100 my-3 justify-content-start">
         <h5 className="card-title ed-card-title">{course.course_name}</h5>
       </div>
 
-      <div className="d-flex w-100 align-items-center justify-content-around">
-        <p className={`my-auto fs-6 ed-card-price ${style['price']}`}>
-          價格: ${course?.course_price}
-        </p>
+      <div className="d-flex w-100 align-items-center justify-content-between">
+        <h6 className={`my-auto ed-card-price ${style['price']}`}>
+          ${course?.course_price}
+        </h6>
 
         <AddCartBtn course={course} />
       </div>

@@ -69,7 +69,7 @@ export default function MainContent() {
 
   return (
     <>
-      <div className=" mt-5 ms-sm-5">
+      <div className="mt-5 ms-sm-5 container ed-content-size">
         <div className="d-sm-flex">
           <CoursePic pid={pid} course={CoursesData} />
           <CourseText pid={pid} course={CoursesData} />
@@ -169,9 +169,7 @@ export default function MainContent() {
 
         <Review />
         {/* <h3 className="text-center">熱門課程</h3> */}
-        <div className="w-100">
-          <TopHits />
-        </div>
+        <TopHits />
       </div>
     </>
   )

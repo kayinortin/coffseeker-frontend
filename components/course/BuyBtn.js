@@ -57,7 +57,7 @@ function AddCartBtn(props) {
   }
 
   return (
-    <div className={`px-2 py-1 text-center text-white`}>
+    <div className="text-center text-white">
       <button className="ed-addCart" onClick={addCart}>
         加入購物車
       </button>
@@ -190,7 +190,7 @@ function MobileDetailsBtns(props) {
     }
   }
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-block d-sm-flex align-items-center">
       <button
         className="ed-addCart__detail d-flex align-items-center mt-3"
         onClick={addCart}

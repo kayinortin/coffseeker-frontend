@@ -27,7 +27,7 @@ const TopHits = () => {
     <>
       <ProductDataFetcher />
       <h5 className="mt-4">相關商品</h5>
-      <div className="my-4">
+      <div className="my-4 container">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={25}

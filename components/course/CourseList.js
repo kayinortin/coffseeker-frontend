@@ -29,12 +29,12 @@ export default function CourseList({ pid }) {
   return (
     <>
       {data && data.courses && data.courses.length > 0 ? (
-        <div>
-          <h3 className="text-center mt-5">課程列表</h3>
+        <div className='container'>
+          {/* <h3 className="text-center mt-5">課程列表</h3> */}
           <div className="mt-4">
             <BreadCrumbs />
           </div>
-          <ul className=" row row-cols-sm-3 flex-wrap list-unstyled">
+          <ul className="row list-unstyled">
             {totalItems
               .slice(
                 (currentPage - 1) * itemsPerPage,
@@ -42,15 +42,19 @@ export default function CourseList({ pid }) {
               )
               .map((v, i) => {
                 return (
-                  <li
-                    key={i}
-                    className=" d-flex justify-content-center course-li"
-                  >
-                    <Card
-                      // key={i}
-                      course={v}
-                    />
-                  </li>
+                  <>
+                    <div className="col-12 col-sm-4">
+                      <li
+                        key={i}
+                        className="d-flex justify-content-center course-li"
+                      >
+                        <Card
+                          // key={i}
+                          course={v}
+                        />
+                      </li>
+                    </div>
+                  </>
                 )
               })}
           </ul>
