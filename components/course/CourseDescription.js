@@ -57,8 +57,8 @@ export default function CourseDescription() {
           <section>
             <div className="">
               <CourseInfoBtn
-                activeContent={activeContent}
-                onButtonClick={handleButtonClick}
+              // activeContent={activeContent}
+              // onButtonClick={handleButtonClick}
               />
             </div>
 
