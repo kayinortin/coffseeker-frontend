@@ -1,7 +1,8 @@
 import React from 'react'
-import { useState } from 'react'
-import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { register } from 'swiper/element/bundle'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import drinkCoffeeImg from '@/public/divination-image/Animation - 1695799375022.json'
 let cayPlay = false
 register()
@@ -265,6 +266,59 @@ export default function Divination() {
     )
   }
 
+  //推薦商品取得
+  const [productData, setProductData] = useState(null)
+  const [fetchProductDataEnd, setFetchProductDataEnd] = useState(false)
+  useEffect(() => {
+    if (gameFinish) {
+      const keyWord = '香氣,烘焙'
+      const fetchData = async () => {
+        try {
+          const res = await axios.get(
+            'http://localhost:3005/api/products/qs?search=香氣,烘焙'
+          )
+          const products = res.data.data
+          setProductData(products)
+          setFetchProductDataEnd(true)
+        } catch (error) {
+          console.error('資料獲取失敗:', error)
+        }
+      }
+      fetchData()
+    }
+  }, [gameFinish])
+
+  //生成推薦商品swiper分頁
+
+  function SwiperPages(productData) {
+    if (fetchProductDataEnd) {
+      return (
+        <>
+          {productData.productData.map((product, i) => (
+            <swiper-slide key={i}>
+              <div className="box">
+                <div class="ratio ratio-1x1">
+                  <picture>
+                    <img src="/divination-image/desk2.png" alt="" />
+                  </picture>
+                </div>
+
+                <div className="productText ms-5">
+                  <div className="">
+                    <h4 className="mb-3">{product.name}</h4>
+                    <h5>{product.description}</h5>
+                  </div>
+                  <div className="">
+                    <h4>NT{product.discountPrice}</h4>
+                  </div>
+                </div>
+              </div>
+            </swiper-slide>
+          ))}
+        </>
+      )
+    }
+  }
   //本體return
   if (gameFinish === false) {
     return (
@@ -332,39 +386,27 @@ export default function Divination() {
               </div>
             </div>
           </sections>
-          <section>
-            <swiper-container
-              //左右控制
-              navigation="true"
-              //分頁點點
-              pagination="false"
-              //進度條
-              scrollbar="true"
-              //每頁幾張
-              slides-per-view="1"
-              speed="500"
-              loop="true"
-              css-mode="true"
-            >
-              <swiper-slide>
-                <div className="box">推薦商品1</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品2</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品3</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品4</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品5</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品6</div>
-              </swiper-slide>
-            </swiper-container>
+          <section className="my-5">
+            <div className="container">
+              <div className="swiperTitle mb-5 d-flex justify-content-center ">
+                <h2>推薦商品</h2>
+              </div>
+              <swiper-container
+                //左右控制
+                navigation="true"
+                //分頁點點
+                pagination="false"
+                //進度條
+                scrollbar="false"
+                //每頁幾張
+                slides-per-view="1"
+                speed="500"
+                loop="false"
+                css-mode="true"
+              >
+                <SwiperPages productData={productData} />
+              </swiper-container>
+            </div>
           </section>
         </div>
       </>

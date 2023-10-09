@@ -8,6 +8,7 @@ import { use } from 'echarts'
 import { useCourses } from '@/context/course'
 import axios from 'axios'
 import { useShow } from '../../context/showProductDetail'
+import ProductDetailFavIcon from '@/components/product/ProductDetailFavIcon'
 
 const INITIAL_DATA = {
   id: '',
@@ -75,6 +76,7 @@ export default function CoursePic({ pid }) {
             <BreadCrumbsMobile />
           </div>
 
+          <ProductDetailFavIcon id={pid} />
           <img
             src={`/course-image/${course_image}`}
             // alt={name}
@@ -97,6 +99,12 @@ export default function CoursePic({ pid }) {
                 className="m-2 me-1"
               />
             ))}
+        </div>
+        <div className="d-flex ed-activity align-items-center ">
+          <div className="ed-activity-title text-center">新會員優惠</div>
+          <div className="ed-activity-detail">
+            領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
+          </div>
         </div>
       </div>
     </>
