@@ -9,24 +9,20 @@ export async function FetchUserData() {
   }
 
   try {
-    let response = await fetch(
-      'http://localhost:3005/api/auth-jwt/check-login',
-      {
-        method: 'GET', // 或其他你需要的方法
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(),
-        credentials: 'include', // 使用 'include' 替代 'withCredentials'
-      }
-    )
+    let response = await fetch('http://localhost:3005/api/auth-jwt/private', {
+      method: 'GET', // 或其他你需要的方法
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', // 使用 'include' 替代 'withCredentials'
+    })
 
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
 
     const data = await response.json()
-    console.log(data)
+    // console.log(data)
     return data.user
   } catch (error) {
     console.error('Error fetching profile:', error)
@@ -36,12 +32,11 @@ export async function FetchUserData() {
 //   try {
 //     const response = await axios.get(
 //       'http://localhost:3005/api/auth-jwt/check-login',
+
 //       {
-//         method: 'GET', // 或其他你需要的方法
 //         headers: {
 //           'Content-Type': 'application/json',
 //         },
-//         body: JSON.stringify(),
 //         credentials: 'include', // 使用 'include' 替代 'withCredentials'
 //       }
 //     )

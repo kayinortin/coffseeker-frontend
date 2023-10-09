@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import Validation from './Validation'
 import FormItems from './FormItems'
+import contenOfContract from '@/data/member/contract.json'
 
 export default function RegisterForm() {
   // 表單狀態們
@@ -74,6 +75,17 @@ export default function RegisterForm() {
     }
   }
 
+  const openContract = () => {
+    Swal.fire({
+      title: `使用者隱私合約`,
+      html: `<div class="border border-dark contract">${contenOfContract.contract}</div>`,
+      confirmButtonText: '了解',
+      customClass: {
+        popup: 'contract-popup', // 自定義彈窗的類別
+      },
+    })
+  }
+
   return (
     <>
       <form id="loginForm" className={'form-box'}>
@@ -103,7 +115,7 @@ export default function RegisterForm() {
           />
         </div>
 
-        <div
+        {/* <div
           className={
             'container d-flex justify-content-center mt-4 mb-3 align-items-center'
           }
@@ -118,7 +130,7 @@ export default function RegisterForm() {
               訂閱電子報
             </label>
           </div>
-        </div>
+        </div> */}
         <div
           className={
             'container d-flex justify-content-center mt-3 mb-4 align-items-center'
@@ -139,9 +151,13 @@ export default function RegisterForm() {
             />
             <label className={'form-check-label'} htmlFor="exampleCheck2">
               我已閱讀並同意
-              <Link href="" className={'orange-text'}>
+              <button
+                type="button"
+                className={'orange-text bg-none border-0'}
+                onClick={openContract}
+              >
                 「會員隱私條款」
-              </Link>
+              </button>
             </label>
           </div>
         </div>

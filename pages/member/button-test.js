@@ -1,5 +1,5 @@
 import React from 'react'
-import MemberShipButton from '@/components/member/MemberShipButton'
+import MemberShipButton from '@/components/member/Sidebar/MemberShipButton'
 export default function ButtonTest() {
   return (
     <>

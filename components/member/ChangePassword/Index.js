@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import { useUser } from '@/context/UserInfo'
 
 export default function ChangePassword() {
-  const [userId, setId] = useState(1)
+  // useContext
+  const { userData, setUserData } = useUser()
+  // useState
+  const [userId, setId] = useState('')
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [reNewPassword, setReNewPassword] = useState('')
+
+  useEffect(() => {
+    if (userData) {
+      setId(userData.id)
+      console.log('已取得資料')
+    } else {
+      console.log('未取得資料')
+    }
+  }, [userData])
 
   const inputs = [
     {
@@ -17,6 +29,7 @@ export default function ChangePassword() {
       placeholder: '請輸入未更改前的密碼',
       type: 'password',
       htmlId: 'inputOldPassword',
+      value: oldPassword,
       aria: null,
       maxlength: 12,
       onChange: (e) => setOldPassword(e.target.value),
@@ -28,6 +41,7 @@ export default function ChangePassword() {
       placeholder: '請輸入想更改的新密碼',
       type: 'password',
       htmlId: 'inputNewPassword',
+      value: newPassword,
       aria: null,
       maxlength: 12,
       onChange: (e) => setNewPassword(e.target.value),
@@ -39,6 +53,7 @@ export default function ChangePassword() {
       placeholder: '請再次輸入想更改的新密碼',
       type: 'password',
       htmlId: 'reInputNewPassword',
+      value: reNewPassword,
       aria: null,
       maxlength: 12,
       onChange: (e) => setReNewPassword(e.target.value),
@@ -60,10 +75,6 @@ export default function ChangePassword() {
   // 送出表單後清空表單內容
   // 原密碼驗證
   const handleChangePassword = async () => {
-    const oldPasswordValue = document.querySelector('inputOldPassword')
-    const newPasswordValue = document.querySelector('inputNewPassword')
-    const reNewPasswordValue = document.querySelector('reInputNewPasswordValue')
-
     // if (newPassword === '') {
     //   errorSwal('密碼不能為空')
     //   return false
@@ -121,6 +132,7 @@ export default function ChangePassword() {
                     className={'form-control'}
                     id={input.htmlId}
                     aria-describedby={input.aria}
+                    // value={input.value}
                     maxLength={input.maxlength}
                     onChange={(e) => {
                       input.onChange(e)

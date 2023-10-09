@@ -1,11 +1,11 @@
 import React from 'react'
 
 export default function FormItems({
-  userEmail,
-  userName,
-  userPassword,
-  rePassword,
-  userPhone,
+  // userEmail,
+  // userName,
+  // userPassword,
+  // rePassword,
+  // userPhone,
   userGender,
   birthdayYear,
   birthdayMonth,

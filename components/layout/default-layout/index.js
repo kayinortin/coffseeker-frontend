@@ -6,7 +6,7 @@ import HeaderDesktop from './Header-desktop'
 import HeaderMobile from './Header-mobile'
 import Footer from './footer'
 
-import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
+import { checkLoginStatus } from '@/components/member/FetchDatas/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
 import { useCartList } from '@/context/cart'
 
