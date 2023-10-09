@@ -71,17 +71,16 @@ export default function MainContent() {
     <>
       <div className=" mt-5 ms-sm-5">
         <div className="d-sm-flex">
-          <CoursePic pid={pid} course={CoursesData}/>
+          <CoursePic pid={pid} course={CoursesData} />
           <CourseText pid={pid} course={CoursesData} />
         </div>
 
-        <div className="container px-5 mt-3">
-          <h5 className="mb-4">NT${CoursesData.course_price}</h5>
+        {/* <div className="container px-5 mt-3">
           <div className="d-flex justify-content-between d-sm-none">
             <AddCartBtn pid={pid} course={CoursesData} />
             <BuyBtn />
           </div>
-        </div>
+        </div> */}
 
         {CoursesData && CoursesData.course_syllabus ? (
           <>
@@ -95,9 +94,11 @@ export default function MainContent() {
                         onClick={() => {
                           handleButtonClick('introduction')
                         }}
-                        className={
-                          activeContent === 'introduction' ? 'active' : ''
-                        }
+                        className={`btn hw-bold-text rounded-0 ${
+                          activeContent === 'introduction'
+                            ? 'btn-secondary active'
+                            : 'btn-outline-secondary'
+                        }`}
                       >
                         課程介紹
                       </button>
@@ -105,9 +106,11 @@ export default function MainContent() {
                         onClick={() => {
                           handleButtonClick('teacher-info')
                         }}
-                        className={
-                          activeContent === 'teacher-info' ? 'active' : ''
-                        }
+                        className={`hw-bold-text btn rounded-0 ${
+                          activeContent === 'teacher-info'
+                            ? 'btn-secondary active'
+                            : 'btn-outline-secondary'
+                        }`}
                       >
                         教師簡介
                       </button>
@@ -166,7 +169,9 @@ export default function MainContent() {
 
         <Review />
         {/* <h3 className="text-center">熱門課程</h3> */}
-        <div className="w-100">{/* <TopHits /> */}</div>
+        <div className="w-100">
+          <TopHits />
+        </div>
       </div>
     </>
   )

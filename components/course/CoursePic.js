@@ -8,6 +8,7 @@ import { use } from 'echarts'
 import { useCourses } from '@/context/course'
 import axios from 'axios'
 import { useShow } from '../../context/showProductDetail'
+import CourseDetailFavIcon from '@/components/course/CourseDetailFavIcon'
 
 const INITIAL_DATA = {
   id: '',
@@ -70,33 +71,44 @@ export default function CoursePic({ pid }) {
       {/* <CoursePerFetcher pid={pid} /> */}
 
       <div className="col d-flex flex-column col-sm-4">
-        <div className="mx-auto">
+        <div className="mx-auto hw-detail-left">
           <div className="d-sm-none">
             <BreadCrumbsMobile />
           </div>
+          <div className="ed-image-gallery ">
+            {/* <div className="position-relative"> */}
+            <img
+              src={`/course-image/${course_image}`}
+              // alt={name}
+              width={300}
+              height={300}
+              className="m-2 me-1 ed-image-main"
+            />
+            <CourseDetailFavIcon id={pid} />
+            {/* </div> */}
 
-          <img
-            src={`/course-image/${course_image}`}
-            // alt={name}
-            width={250}
-            height={250}
-            className="m-2 me-1"
-          />
+            <div className="ed-image-row">
+              {images &&
+                images.length > 0 &&
+                images.map((pic, index) => (
+                  <img
+                    key={index}
+                    src={`/course-image/${images[index]}`}
+                    alt={name}
+                    width={100}
+                    height={100}
+                    className="m-2 me-1"
+                  />
+                ))}
+            </div>
+          </div>
         </div>
 
-        <div className="d-flex mx-auto">
-          {images &&
-            images.length > 0 &&
-            images.map((pic, index) => (
-              <img
-                key={index}
-                src={`/course-image/${images[index]}`}
-                alt={name}
-                width={70}
-                height={70}
-                className="m-2 me-1"
-              />
-            ))}
+        <div className="d-flex ed-activity align-items-center ">
+          <div className="ed-activity-title text-center">新會員優惠</div>
+          <div className="ed-activity-detail">
+            領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
+          </div>
         </div>
       </div>
     </>

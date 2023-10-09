@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import styles from '@/styles/_course.module.scss'
 
-export default function CourseInfoBtn({ activeContent, onButtonClick }) {
-  // const [activeButton, setActiveButton] = useState('introduction')
+export default function CourseInfoBtn() {
+  const [activeContent, setActiveContent] = useState('introduction')
+
+  const handleButtonClick = (contentName) => {
+    setActiveContent(contentName)
+  }
 
   return (
     <div className="d-flex justify-content-center my-5 btn-course-group">
@@ -12,17 +16,25 @@ export default function CourseInfoBtn({ activeContent, onButtonClick }) {
           <div className="btn-group mt-3">
             <button
               onClick={() => {
-                onButtonClick('introduction')
+                setActiveContent('introduction')
               }}
-              className={activeContent === 'introduction' ? 'active' : ''}
+              className={`btn hw-bold-text rounded-0 ${
+                activeContent === 'introduction'
+                  ? 'btn-secondary active'
+                  : 'btn-outline-secondary'
+              }`}
             >
               課程介紹
             </button>
             <button
               onClick={() => {
-                onButtonClick('teacher-info')
+                setActiveContent('teacher-info')
               }}
-              className={activeContent === 'teacher-info' ? 'active' : ''}
+              className={`hw-bold-text btn rounded-0 ${
+                activeContent === 'teacher-info'
+                  ? 'btn-secondary active'
+                  : 'btn-outline-secondary'
+              }`}
             >
               教師簡介
             </button>
