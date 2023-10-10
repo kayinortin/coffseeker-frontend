@@ -5,6 +5,7 @@ import Skeleton from '@mui/material/Skeleton'
 import ProductItem from '@/components/product/productItem'
 import ProductDataFetcher from '@/components/product/ProductDataFetcher'
 import Sort from '@/components/product/Sort'
+import Filter from '@/components/product/Filter'
 import navItems from '../../../data/navitems.json'
 
 import { useProducts } from '@/context/product'
@@ -95,69 +96,8 @@ export default function ProductList(props) {
     <>
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
-        <div className="d-none d-md-block ed-left-filter container mt-5">
-          <ul className="ed-navbar__items">
-            <ul className="ed-navbar__items">
-              {navItems.map((item) => {
-                if (!item.children) {
-                  return (
-                    // 沒有下拉式選單的情況
-                    <li
-                      className="ed-navbar__item ed-navbar__link"
-                      key={item.id}
-                    >
-                      <a
-                        className={`ed-navbar__font ${
-                          navItems.find((item) => item.href === currentRoute)
-                            ? 'active'
-                            : ''
-                        }`}
-                        aria-current="page"
-                        href={item.href}
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  )
-                }
-                // 有下拉式選單 (children) 的情況
-                return (
-                  <li className="nav-item dropdown" key={item.id}>
-                    <a
-                      className={`nav-link dropdown-toggle ed-navbar__font ${
-                        item.children.find(
-                          (child) => child.href === currentRoute
-                        )
-                          ? 'active'
-                          : ''
-                      }`}
-                      id="navbarDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      href="#"
-                    >
-                      {item.label}
-                    </a>
-                    <ul className="dropdown-menu">
-                      {item.children.map((child) => (
-                        <li key={child.id}>
-                          <a
-                            className={`dropdown-item ${
-                              currentRoute === child.href ? 'active' : ''
-                            }`}
-                            href={child.href}
-                          >
-                            {child.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                )
-              })}
-            </ul>
-          </ul>
+      <div className="d-none d-md-block ed-left-filter container mt-5">
+          <Filter onFilter={setProductsData} />
         </div>
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">
