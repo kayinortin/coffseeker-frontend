@@ -9,6 +9,7 @@ import style from '@/styles/_course.module.scss'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
+import CourseComment from '@/components/course/CourseComment'
 
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 
@@ -168,7 +169,8 @@ export default function MainContent() {
         <h3 className={`text-center ${style['hw-review-title']}`}>學員評價</h3>
 
         <Review />
-        {/* <h3 className="text-center">熱門課程</h3> */}
+        <CourseComment />
+
         <TopHits />
       </div>
     </>
