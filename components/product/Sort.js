@@ -6,21 +6,30 @@ import { useProducts } from '@/context/product'
 export default function Sort() {
   const router = useRouter()
   const { sortBy, setSortBy } = useProducts()
+  const { cid } = router.query
+
   useEffect(() => {
     if (!router.query.sortBy) {
       setSortBy('default')
     }
   }, [router.query])
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value)
+    if (cid) {
+      router.push(`/product/category/${cid}?sortBy=${e.target.value}`)
+    } else {
+      router.push(`/product?sortBy=${e.target.value}`)
+    }
+  }
+
   return (
     <div className="mt-2 mt-md-0">
       <select
         className="ed-select-control"
         name="form-select"
         value={sortBy}
-        onChange={(e) => {
-          setSortBy(e.target.value)
-          router.push(`/product?sortBy=${e.target.value}`)
-        }}
+        onChange={handleSortChange}
       >
         <option value="default" disabled>
           商品排序依...
