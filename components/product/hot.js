@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import PopularDataFetcher from './PopularProducts'
 import AOS from 'aos'
 import Image from 'next/image'
@@ -10,23 +10,20 @@ import { useProducts } from '@/context/product'
 export default function PopularProducts(props) {
   const { setShow } = props
   const { productsData, setProductsData } = useProducts()
-  const [aosValue, setAosValue] = useState('fade-right')
 
   useEffect(() => {
     AOS.init({
       duration: 1000,
     })
-    setAosValue(isMobile() ? 'fade-up' : 'fade-right')
   }, [])
 
-  const isMobile = () => {
-    if (typeof window !== 'undefined' && window.navigator) {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        window.navigator.userAgent
-      )
-    }
-    return false
-  }
+  const [aosValue, setAosValue] = useState('fade-left')
+
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 768px)').matches
+    setAosValue(mobile ? 'fade-up' : 'fade-left')
+  }, [])
+
   return (
     <>
       <PopularDataFetcher />

@@ -4,10 +4,10 @@ import styles from '@/styles/_course.module.scss'
 import Link from 'next/link'
 import { useSwiper } from 'swiper/react'
 
-import { useCartList } from '@/context/cart'
+import { useCartList } from '@/context/cart_course'
 
 function AddCartBtn(props) {
-  const { cartListData, setCartListData } = useCartList()
+  const { cartList2Data, setCartList2Data } = useCartList()
   const { course } = props
 
   const showToast = () => {
@@ -43,16 +43,16 @@ function AddCartBtn(props) {
       course_image: course.course_image,
     }
 
-    if (cartListData.some((item) => item.id === newItem.id)) {
-      const updatedCartList = cartListData.map((item) =>
+    if (cartList2Data.some((item) => item.id === newItem.id)) {
+      const updatedCartList = cartList2Data.map((item) =>
         item.id === newItem.id ? newItem : item
       )
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      setCartList2Data(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     } else {
-      const updatedCartList = [...cartListData, newItem]
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      const updatedCartList = [...cartList2Data, newItem]
+      setCartList2Data(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     }
   }
 
@@ -79,7 +79,7 @@ function BuyBtn() {
 }
 
 function DetailsAddCart(props) {
-  const { cartListData, setCartListData } = useCartList()
+  const { cartList2Data, setCartList2Data } = useCartList()
   const { course } = props
 
   const showToast = () => {
@@ -115,16 +115,16 @@ function DetailsAddCart(props) {
       course_image: course.course_image,
     }
 
-    if (cartListData.some((item) => item.id === newItem.id)) {
-      const updatedCartList = cartListData.map((item) =>
+    if (cartList2Data.some((item) => item.id === newItem.id)) {
+      const updatedCartList = cartList2Data.map((item) =>
         item.id === newItem.id ? newItem : item
       )
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      setCartList2Data(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     } else {
-      const updatedCartList = [...cartListData, newItem]
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      const updatedCartList = [...cartList2Data, newItem]
+      setCartList2Data(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     }
   }
   return (
@@ -182,11 +182,11 @@ function MobileDetailsBtns(props) {
         item.id === newItem.id ? newItem : item
       )
       setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      localStorage.setItem('cartList_product', JSON.stringify(updatedCartList))
     } else {
       const updatedCartList = [...cartListData, newItem]
       setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      localStorage.setItem('cartList_product', JSON.stringify(updatedCartList))
     }
   }
   return (

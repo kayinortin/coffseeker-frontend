@@ -10,6 +10,7 @@ import { UserProvider } from '@/context/UserInfo'
 import { ProductsProvider } from '@/context/product'
 import { CategoryProvider } from '@/context/category'
 import { CartListProvider } from '@/context/cart'
+import { CartList2Provider } from '@/context/cart_course'
 import { FavProvider } from '@/context/fav'
 import { DetailProvider } from '@/context/showProductDetail'
 import { CommentProvider } from '@/context/comment'
@@ -32,15 +33,17 @@ export default function MyApp({ Component, pageProps }) {
             <ProductsProvider>
               <CoursesProvider>
                 <CartListProvider>
-                  <FavProvider>
-                    <CategoryProvider>
-                      <DetailProvider>
-                        <CommentProvider>
-                          {getLayout(<Component {...pageProps} />)}
-                        </CommentProvider>
-                      </DetailProvider>
-                    </CategoryProvider>
-                  </FavProvider>
+                  <CartList2Provider>
+                    <FavProvider>
+                      <CategoryProvider>
+                        <DetailProvider>
+                          <CommentProvider>
+                            {getLayout(<Component {...pageProps} />)}
+                          </CommentProvider>
+                        </DetailProvider>
+                      </CategoryProvider>
+                    </FavProvider>
+                  </CartList2Provider>
                 </CartListProvider>
               </CoursesProvider>
             </ProductsProvider>
