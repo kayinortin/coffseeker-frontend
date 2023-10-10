@@ -975,17 +975,24 @@ input:checked + label + .expandable-menu {
   font-size: 20px;
   font-weight: 500;
   height: $height__input;
-  background: $color--gray6;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid $color--primary;
   &__btn {
     height: 44px;
-    background: $color--secondary;
-    border: none;
-    #{$_}__icon {
+    background: #f0ebe2;
+    border: 1px solid $color--primary;
+    &:hover {
       color: white;
+      background-color: $color--secondary;
+    }
+    #{$_}__icon {
+      color: $color--primary;
       font-size: 1.25rem;
+      &:hover {
+        color: white;
+      }
     }
   }
   @media screen and (max-width: $md) {
@@ -1281,7 +1288,7 @@ input:checked + label + .expandable-menu {
   font-size: 20px;
   z-index: 5;
   @media screen and (max-width: $lg) {
-    width: 90px;
+    width: 70px;
   }
   &:hover {
     color: white;
@@ -1612,35 +1619,36 @@ div.my-4.d-md-flex a:hover {
     border: 1px solid $color--gray5;
     color: $color--primary;
     margin-bottom: 20px;
-    &.disabled{
+    &.disabled {
       pointer-events: none;
     }
     &.active {
       background-color: $color--secondary;
       color: white;
     }
-    
+
     &:hover {
-      color: $color--secondary;
+      background-color: $color--secondary;
+      color: white;
     }
   }
-  &-item{
-    &.disabled{
+  &-item {
+    &.disabled {
       pointer-events: none;
     }
   }
 }
 
-.ed-hot-content{
+.ed-hot-content {
   padding-inline: 0px;
-  @media screen and (max-width:$lg) {
+  @media screen and (max-width: $lg) {
     padding-inline: 36px;
   }
 }
 
-.ed-content-size{
+.ed-content-size {
   width: 980px;
-  @media screen and (max-width:$lg) {
+  @media screen and (max-width: $lg) {
     width: 100%;
   }
 }

@@ -230,10 +230,8 @@ export default function Explore() {
   }, [showSeasonWrap])
 
   const isMobile = () => {
-    if (typeof window !== 'undefined' && window.navigator) {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        window.navigator.userAgent
-      )
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(max-width: 768px)').matches
     }
     return false
   }

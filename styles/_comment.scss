@@ -4,7 +4,7 @@
     font-size: 17px;
 
     .star {
-        cursor: pointer;
+        // cursor: pointer;
         color: #bbb;
         background: none;
         border: none;
@@ -20,7 +20,11 @@
             color: gold;
         }
     }
+    button.star{
+        cursor: pointer;
+    }
 }
+
 
 .ed-comment-textarea{
     width: 100%;
