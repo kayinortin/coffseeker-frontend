@@ -1,19 +1,24 @@
 import { React, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import Skeleton from '@mui/material/Skeleton'
 import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
 import Sort from './Sort'
+import Filter from './Filter'
+import navItems from '../../data/navitems.json'
 
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 
 export default function ProductList(props) {
   const { setShow } = props
+  const router = useRouter()
+  const currentRoute = router.asPath
   const { productsData, setProductsData, sortBy } = useProducts()
   const isFetchingProducts = productsData.length === 0
 
   const [sortedProducts, setSortedProducts] = useState([])
-
   useEffect(() => {
     let sorted = [...productsData]
     switch (sortBy) {
@@ -62,14 +67,24 @@ export default function ProductList(props) {
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
         <div className="d-none d-md-block ed-left-filter container mt-5">
-          123
+          <Filter onFilter={setProductsData} />
         </div>
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">
-            <h5>精品咖啡豆 單品 | 行家 | 經典 系列咖啡豆</h5>
+            <div className="d-flex">
+              <div className="d-flex align-items-center">
+                <Link href="/product">
+                  <h6>線上購物</h6>
+                </Link>
+                <div style={{ margin: '0 5px' }}> &gt; </div>
+                <Link href="/product">
+                  <h6>全站商品</h6>
+                </Link>
+              </div>
+            </div>
             <div className="d-flex justify-content-between align-items-center">
               <div className="mt-2 d-none d-md-block">
-                共有 {productsData.length} 筆商品
+                共有 {sortedProducts.length} 筆商品
               </div>
               <Sort />
             </div>

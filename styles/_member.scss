@@ -1,9 +1,4 @@
-// $color--secondary: #FF9B1A;
-
-// header的會員按鈕
-// .z-1031{
-//     z-index: 1031;
-// }
+// 10/10:記得有空要整理CSS的程式碼安排
 
 // 大標籤樣式變更
 
@@ -23,6 +18,10 @@
 .background {
   --tw-bg-opacity: 1;
   background-color: rgb(240 235 226 / var(--tw-bg-opacity))
+}
+
+.bg-none{
+  background: none;
 }
 
 .sidebar {
@@ -193,26 +192,7 @@
 }
 
 
-// 訂單頁的表格
 
-.order-state{
-    font-size: 16px;
-    .data{
-        font-size: 12px;
-    }
-    .gray{
-        background: #a7a7a7;
-    }
-    .orange{
-        background: $color--secondary;
-    }
-}
-
-.order-nav{
-  div.text-center{
-    width: 103px;
-  }
-}
 
 // img{
 //     width: 100px;
@@ -221,4 +201,63 @@
 
 .check-change{
     top: -200px;
+}
+
+// 合約swal
+.contract-popup{
+  font-size: 16px;
+  width: 700px;
+  height: fit-content;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity))
+}
+
+.contract{
+  background: #fff;
+  font-size: 16px;
+}
+
+// 訂單頁
+.order-close{
+  overflow: hidden;
+  transition:0.5s ease-in-out;
+}
+
+.order-open{
+  background: none;
+  &:hover,
+  &.active{
+    color: #fff;
+      background: $color--secondary;
+  }
+  @media screen and (max-width: 768px) {
+    &:hover{
+      color: #000000;
+      background: none;
+    }
+    &.active{
+      color: #fff;
+        background: $color--secondary;
+    }
+  }
+}
+
+// 訂單頁的表格
+
+.order-state{
+  font-size: 16px;
+  .data{
+      font-size: 12px;
+  }
+  .gray{
+      background: $color--gray3;
+  }
+  .orange{
+      background: $color--secondary;
+  }
+}
+
+.order-nav{
+  div.text-center{
+    width: 103px;
+  }
 }

@@ -1,7 +1,8 @@
 import React from 'react'
-import { useState } from 'react'
-import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { register } from 'swiper/element/bundle'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import drinkCoffeeImg from '@/public/divination-image/Animation - 1695799375022.json'
 let cayPlay = false
 register()
@@ -55,7 +56,7 @@ export default function Divination() {
       p: [
         '獨特風味 愛不釋手',
         '尋求恰到好處的酸度',
-        '不愛酸味 繞道而行',
+        '偏愛甜度 注重蜜感',
         '沒有特別偏好',
       ],
     },
@@ -120,18 +121,18 @@ export default function Divination() {
 
       await waittings(300)
     }
-    await waittings(500)
+    await waittings(300)
     //動畫：飛向指定位置
     for (let i = 0; i < 4; i++) {
       const cardSelector = document.querySelector(`.tarotCard${picks[i]}`)
       cardSelector.classList.remove(`tarotCard${picks[i]}pickup`)
       cardSelector.classList.remove(`tarotCard${picks[i]}Active`)
       cardSelector.classList.add(`forward${i + 1}`)
-      await waittings(300)
+      // await waittings(300)
       cardSelector.classList.add(`forward${i + 1}2`)
       await waittings(300)
     }
-    await waittings(500)
+    await waittings(300)
     //動畫：翻起卡片
     for (let i = 0; i < picks.length; i++) {
       document
@@ -221,12 +222,12 @@ export default function Divination() {
     for (let i = 0; i < 4; i++) {
       const cardSelector = document.querySelector(`.tarotCard${picks[i]}`)
       cardSelector.classList.remove(`forward${i + 1}2`)
-      await waittings(300)
+      // await waittings(300)
       cardSelector.classList.remove(`forward${i + 1}`)
       await waittings(300)
       cardSelector.classList.add(`tarotCard${picks[i]}Active`)
     }
-    await waittings(1000)
+    await waittings(300)
     //動畫：卡片摺疊回去
     for (let i = 1; i <= 10; i++) {
       document
@@ -242,6 +243,7 @@ export default function Divination() {
       start(sections[nowSection])
       await waittings(500)
     } else {
+      setAnsArr(ans)
       setGameFinish(true)
     }
   }
@@ -265,6 +267,91 @@ export default function Divination() {
     )
   }
 
+  //塔羅結果生成篩選條件
+  const [ansArr, setAnsArr] = useState(null)
+  function ansToKeyWord(ansArr) {
+    const keyWordArr = []
+    console.log('ansArr:' + ansArr)
+    const filterKeyWord = [
+      '蛋糕',
+      '堅果',
+      '經典',
+      '平衡',
+      '驚喜',
+      '特殊',
+      '獨特',
+      '酸',
+      '蜜',
+      '花香',
+      '香氣',
+      '厚',
+      '焦糖',
+    ]
+
+    for (const word of filterKeyWord) {
+      for (const description of ansArr) {
+        if (description.includes(word)) {
+          keyWordArr.push(word)
+        }
+      }
+    }
+    return keyWordArr
+  }
+  //推薦商品取得
+  const [productData, setProductData] = useState(null)
+  const [fetchProductDataEnd, setFetchProductDataEnd] = useState(false)
+  useEffect(() => {
+    if (gameFinish) {
+      const keyWordArr = ansToKeyWord(ansArr)
+      const keyWord = keyWordArr.join()
+      console.log('keyWord:' + keyWord)
+      const fetchData = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:3005/api/products/qs?search=${keyWord}`
+          )
+          const products = res.data.data
+          setProductData(products)
+          setFetchProductDataEnd(true)
+        } catch (error) {
+          console.error('資料獲取失敗:', error)
+        }
+      }
+      fetchData()
+    }
+  }, [gameFinish])
+
+  //生成推薦商品swiper分頁
+
+  function SwiperPages(productData) {
+    if (fetchProductDataEnd) {
+      return (
+        <>
+          {productData.productData.map((product, i) => (
+            <swiper-slide key={i}>
+              <div className="box">
+                <div className="ratio ratio-1x1">
+                  <picture>
+                    <img src="/divination-image/desk2.png" alt="" />
+                  </picture>
+                </div>
+
+                <div className="productText ms-5">
+                  <div className="">
+                    <h4 className="mb-3">{product.name}</h4>
+                    <h5>{product.description}</h5>
+                  </div>
+                  <div className="">
+                    <h4>NT{product.discountPrice}</h4>
+                  </div>
+                </div>
+              </div>
+            </swiper-slide>
+          ))}
+        </>
+      )
+    }
+  }
   //本體return
   if (gameFinish === false) {
     return (
@@ -305,64 +392,54 @@ export default function Divination() {
     return (
       <>
         <div className="TarotResult">
-          <sections className="result container">
-            <div className="resultCard d-lg-flex">
-              <Lottie
-                play
-                loop
-                style={{ width: 600, height: 600 }}
-                animationData={drinkCoffeeImg}
-                className="lottie"
-              />
-              <div className="title">
-                <h2>測驗結果</h2>
-                <p>
-                  當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
-                  <br />
-                  您的味蕾是一個多彩的舞台，總是上演著糕點之舞。
-                  <br />
-                  而在咖啡的星空下，您像是一位星座探險家，時刻尋求著新的星座。
-                  <br />
-                  您偏好的咖啡口味是花香果味和特殊風味，這反映了您對於生活中多樣性和驚喜的熱愛。
-                  <br />
-                  無論形式如何，您對於咖啡的熱情總是源源不斷。祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
-                </p>
+          <section className="result">
+            <div className="container d-flex justify-content-center">
+              <div className="resultCard d-lg-flex">
+                <Lottie
+                  play
+                  loop
+                  style={{ width: 600, height: 600 }}
+                  animationData={drinkCoffeeImg}
+                  className="lottie"
+                />
+                <div className="title">
+                  <h2>測驗結果</h2>
+                  <p>
+                    當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
+                    <br />
+                    您的味蕾是一個多彩的舞台，總是上演著糕點之舞。
+                    <br />
+                    而在咖啡的星空下，您像是一位星座探險家，時刻尋求著新的星座。
+                    <br />
+                    您偏好的咖啡口味是花香果味和特殊風味，這反映了您對於生活中多樣性和驚喜的熱愛。
+                    <br />
+                    無論形式如何，您對於咖啡的熱情總是源源不斷。祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
+                  </p>
+                </div>
               </div>
             </div>
-          </sections>
-          <section>
-            <swiper-container
-              //左右控制
-              navigation="true"
-              //分頁點點
-              pagination="false"
-              //進度條
-              scrollbar="true"
-              //每頁幾張
-              slides-per-view="1"
-              speed="500"
-              loop="true"
-              css-mode="true"
-            >
-              <swiper-slide>
-                <div className="box">推薦商品1</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品2</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品3</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品4</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品5</div>
-              </swiper-slide>
-              <swiper-slide>
-                <div className="box">推薦商品6</div>
-              </swiper-slide>
-            </swiper-container>
+          </section>
+          <section className="my-5">
+            <div className="container">
+              <div className="swiperTitle mb-5 d-flex justify-content-center ">
+                <h2>推薦商品</h2>
+              </div>
+              <swiper-container
+                //左右控制
+                navigation="true"
+                //分頁點點
+                pagination="false"
+                //進度條
+                scrollbar="false"
+                //每頁幾張
+                slides-per-view="1"
+                speed="500"
+                loop="false"
+                css-mode="true"
+              >
+                <SwiperPages productData={productData} />
+              </swiper-container>
+            </div>
           </section>
         </div>
       </>

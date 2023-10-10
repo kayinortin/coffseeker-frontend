@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { checkLoginStatus } from '../FetchDatas/CheckLoginStaus'
+import { FetchUserData } from '../FetchDatas/FetchUserData'
+
+// 10/09
+// 已知問題 使用者資料編輯更新後
+// 刷新頁面 Token回傳的資料不會取新的 而是編輯前的資料
 
 export default function InfoChangeForm() {
-  const { setUserData } = useUser()
-
+  const { userData, setUserData } = useUser()
+  const router = useRouter()
   // console.log('userData抽取成功', userData)
 
-  const storedUserData = Cookies.get('userInfo')
+  const checkToken = Cookies.get('accessToken')
 
   const [userId, setId] = useState('')
   const [userEmail, setMail] = useState('')
@@ -21,25 +28,29 @@ export default function InfoChangeForm() {
   const [birthdayData, setBirthdayDate] = useState('')
 
   useEffect(() => {
-    if (storedUserData) {
-      // Cookie存在，解析数据
-      // setUserData(JSON.parse(storedUserData))
-      const userData = JSON.parse(storedUserData)
-      // console.log('測試抓cookie資料', userData)
-      setUserData(userData)
-      setId(userData.id)
-      setMail(userData.email)
-      setName(userData.username)
-      setPhone(userData.phone)
-      setGender(userData.gender)
-      const UserBirthday = userData.birthday.split('-')
-      setBirthdayYear(UserBirthday[0])
-      setBirthdayMonth(UserBirthday[1])
-      setBirthdayDate(UserBirthday[2])
-    } else {
-      // Cookie不存在，采取相应的处理方式
-      console.log('Cookie不存在')
+    async function fetchData() {
+      if (checkToken) {
+        const loginState = await checkLoginStatus()
+        const fetchUser = await FetchUserData()
+        if (loginState) {
+          setUserData(fetchUser)
+          setId(fetchUser.id)
+          setMail(fetchUser.email)
+          setName(fetchUser.username)
+          setPhone(fetchUser.phone)
+          setGender(fetchUser.gender)
+          const UserBirthday = fetchUser.birthday.split('-')
+          setBirthdayYear(UserBirthday[0])
+          setBirthdayMonth(UserBirthday[1])
+          setBirthdayDate(UserBirthday[2])
+        }
+      } else {
+        console.log('Cookie不存在')
+        router.push('/member/login')
+      }
     }
+
+    fetchData()
   }, [])
 
   // input文字輸入框
@@ -185,7 +196,8 @@ export default function InfoChangeForm() {
         showConfirmButton: false,
         timer: 1500,
       })
-      Cookies.set('userInfo', JSON.stringify(formData))
+      // window.location.reload()
+      // Cookies.set('userInfo', JSON.stringify(formData))
     } catch (error) {
       console.error('錯誤:', error)
     }

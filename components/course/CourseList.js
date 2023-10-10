@@ -5,12 +5,10 @@ import Pagination from './Pagination'
 import { BreadCrumbs } from './BreadCrumbs'
 import CourseFetcher from './course-fetch'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 
 export default function CourseList({ pid }) {
   const [data, setData] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
-  const router = useRouter()
 
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
@@ -31,12 +29,12 @@ export default function CourseList({ pid }) {
   return (
     <>
       {data && data.courses && data.courses.length > 0 ? (
-        <div>
-          <h3 className="text-center mt-5">課程列表</h3>
+        <div className='container'>
+          {/* <h3 className="text-center mt-5">課程列表</h3> */}
           <div className="mt-4">
             <BreadCrumbs />
           </div>
-          <ul className=" row row-cols-sm-3 flex-wrap list-unstyled">
+          <ul className="row list-unstyled">
             {totalItems
               .slice(
                 (currentPage - 1) * itemsPerPage,
@@ -44,21 +42,19 @@ export default function CourseList({ pid }) {
               )
               .map((v, i) => {
                 return (
-                  <li
-                    key={i}
-                    className=" d-flex justify-content-center course-li"
-                  >
-                    <Card
-                      // key={i}
-                      name={v.course_name}
-                      price={v.course_price}
-                      start_date={v.course_start_date}
-                      end_date={v.course_end_date}
-                      description={v.course_description}
-                      image={v.course_image}
-                      id={v.id}
-                    />
-                  </li>
+                  <>
+                    <div className="col-12 col-sm-4">
+                      <li
+                        key={i}
+                        className="d-flex justify-content-center course-li"
+                      >
+                        <Card
+                          // key={i}
+                          course={v}
+                        />
+                      </li>
+                    </div>
+                  </>
                 )
               })}
           </ul>

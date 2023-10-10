@@ -20,12 +20,15 @@ export default function Footer() {
           <div className="col-lg-3 col-md-2 mb-4 mb-md-0 text-center">
             <div className="d-flex flex-column align-items-center">
               {/* footer大圖 */}
-              <a href="http://localhost:3000" className="d-block">
+              <a
+                href="http://localhost:3000"
+                className="d-flex flex-column justify-content-center align-items-center"
+              >
                 <Image
                   src="http://localhost:3000/coffseeker-logo-footer.png"
                   alt="COFFSEEKER"
-                  width={312.5}
-                  height={184.5}
+                  width={144}
+                  height={144}
                   priority
                 />
                 <Image

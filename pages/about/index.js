@@ -1,11 +1,42 @@
-import React from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import style from '../../styles/_about.module.scss'
 import ContactUs from '@/components/about/send-message'
+import Swal from 'sweetalert2'
 // import CoffeeMap from '@/components/index-coffee-map/coffee-map'
 
 export default function About() {
+  const [message, setMessage] = useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+
+  async function handleSubmit() {
+    const response = await fetch('http://localhost:3005/api/email/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, name, email }),
+    })
+
+    if (response.ok) {
+      Swal.fire({
+        icon: 'success',
+        title: '成功！',
+        text: '郵件已成功發送！',
+      }).then(() => {
+        setMessage('')
+        setName('')
+        setEmail('')
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '錯誤！',
+        text: '無法發送郵件！',
+      })
+    }
+  }
+
   return (
     <>
       <section className="background">
@@ -119,7 +150,7 @@ export default function About() {
           <div className="container d-sm-none">
             <div className="row mb-3">
               <label htmlFor="message" className="col-sm-2 col-form-label">
-                訊息:
+                訊息：
               </label>
               <div className="col-sm-10">
                 <textarea
@@ -127,12 +158,14 @@ export default function About() {
                   name="message"
                   id="message"
                   rows="3"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
               </div>
             </div>
             <div className="row mb-3">
               <label htmlFor="name" className="col-sm-2 col-form-label">
-                姓名:
+                姓名：
               </label>
               <div className="col-sm-10">
                 <input
@@ -140,12 +173,14 @@ export default function About() {
                   className="form-control"
                   name="name"
                   id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>
             <div className="row mb-3">
               <label htmlFor="email" className="col-sm-2 col-form-label">
-                Email:
+                Email：
               </label>
               <div className="col-sm-10">
                 <input
@@ -153,16 +188,17 @@ export default function About() {
                   className="form-control"
                   name="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
             <div className="row mb-3">
               <div className="col-sm-12 text-center">
                 <button
-                  type="submit"
-                  name="submit"
-                  // value="NOW, I SEND THANKS!"
+                  type="button"
                   className="btn btn-dark"
+                  onClick={handleSubmit}
                 >
                   送出
                 </button>

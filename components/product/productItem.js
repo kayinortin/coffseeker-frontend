@@ -35,18 +35,11 @@ export default function ProductItem(props) {
     setShow({ ...setShow, in: true })
   }
 
-  useEffect(() => {
-    if (!isFetchingCategory) {
-      const matchedCategory = categoryData.find(
-        (category) => product.category_id === category.id
-      )
-      setCategory({ ...matchedCategory })
-    }
-  }, [categoryData])
-
   //加入購物車
   const addCart = () => {
-    //加入購物車alert
+    const itemInCart = cartListData.some((item) => item.id === product.id)
+
+    // 加入購物車alert
     const Toast = Swal.mixin({
       toast: true,
       showConfirmButton: false,
@@ -58,12 +51,24 @@ export default function ProductItem(props) {
       },
     })
 
+    if (itemInCart) {
+      Toast.fire({
+        icon: 'info',
+        title: '此商品已加入購物車',
+        customClass: {
+          popup: 'ed-alert__toast',
+          title: 'ed-alert__subtitle',
+        },
+      })
+      return
+    }
+
     Toast.fire({
       icon: 'success',
       title: '商品已加入購物車',
       customClass: {
-        popup: 'c-alert__toast',
-        title: 'c-alert__subtitle',
+        popup: 'ed-alert__toast',
+        title: 'ed-alert__subtitle',
       },
     })
 
@@ -71,9 +76,9 @@ export default function ProductItem(props) {
       id: product.id,
       name: product.name,
       image: product.image,
-      image_main: product.image_main,
       price: product.price,
       discountPrice: product.discountPrice,
+      description: product.description,
       amount: number,
     }
 
@@ -87,6 +92,7 @@ export default function ProductItem(props) {
           image: cartListData[i].image,
           price: cartListData[i].price,
           discountPrice: cartListData[i].discountPrice,
+          description: cartListData[i].description,
           amount: cartListData[i].amount + newItem.amount,
         }
         const oldCartListData = cartListData.filter(
@@ -121,7 +127,7 @@ export default function ProductItem(props) {
               src={`http://localhost:3005/uploads/${image_main}`}
               alt={name}
               className="card-img-top"
-              width={300}
+              width={250}
               height={250}
             />
           </Link>

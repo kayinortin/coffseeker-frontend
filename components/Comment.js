@@ -4,6 +4,8 @@ import Swal from 'sweetalert2'
 
 import { useUser } from '@/context/UserInfo'
 import { useComment } from '@/context/comment'
+import { FetchUserData } from './member/FetchDatas/FetchUserData'
+import { set } from 'lodash'
 
 export default function Comment({ totalStars = 5, pid }) {
   const { setComments } = useComment()
@@ -16,17 +18,17 @@ export default function Comment({ totalStars = 5, pid }) {
   const [userName, setName] = useState('')
 
   useEffect(() => {
-    const storedUserData = Cookies.get('userInfo') || '{}'
-    const userData = JSON.parse(storedUserData)
-
-    if (userData && userData.id && userData.email && userData.username) {
-      setUserData(userData)
-      setId(userData.id)
-      setMail(userData.email)
-      setName(userData.username)
-    } else {
-      console.log('Cookie不存在或數據不完整')
+    async function fetchData() {
+      const data = await FetchUserData()
+      if (data) {
+        setIsLoggedIn(true)
+        setUserData(data)
+        setId(data.id)
+        setMail(data.email)
+        setName(data.username)
+      }
     }
+    fetchData()
   }, [])
 
   const handleStarClick = (index) => {

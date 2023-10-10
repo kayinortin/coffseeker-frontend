@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+import axios from 'axios'
+import style from '@/styles/_course.module.scss'
 
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
-import style from '@/styles/_course.module.scss'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
 
-import CoursePerFetcher from './[pid]'
+import { useCourses } from '@/context/course'
 
 export default function CourseDescription() {
   const router = useRouter()
   const { pid } = router.query
-  const [data, setData] = useState(null)
+  const { CoursesData, setCoursesData } = useCourses()
   const [activeContent, setActiveContent] = useState('introduction')
 
   //-------------------------設定按鈕狀態後改變下文
@@ -18,20 +19,46 @@ export default function CourseDescription() {
     setActiveContent(contentName)
   }
 
-  //-------------------------抓資料
-  const onDataFetched = (fetchedData) => {
-    setData(fetchedData)
+  const getDetail = async () => {
+    if (pid) {
+      let response = await axios.get(`http://localhost:3005/api/course/${pid}`)
+
+      const details = response.data
+
+      setCoursesData(details)
+      console.log(details)
+    }
   }
+
+  useEffect(() => {
+    if (pid) {
+      setCoursesData({
+        id: '',
+        course_name: '',
+        course_price: '',
+        course_description: 0,
+        course_image: 0,
+        course_subpics: 0,
+        course_syllabus: 0,
+        teacher_name: '',
+        teacher_qualification: 0,
+        teacher_specialty: 0,
+      })
+      getDetail()
+    }
+  }, [pid])
+
+  console.log(CoursesData)
 
   return (
     <>
-      {data && data.course_image.length > 0 ? (
+      {CoursesData && CoursesData.length > 0 ? (
         <>
           <section>
             <div className="">
               <CourseInfoBtn
-                activeContent={activeContent}
-                onButtonClick={handleButtonClick}
+              // activeContent={activeContent}
+              // onButtonClick={handleButtonClick}
               />
             </div>
 
@@ -42,12 +69,14 @@ export default function CourseDescription() {
                 </div>
                 <h6>【課程大綱】</h6>
                 <div className={`lh-base ${style['course-intro']}`}>
-                  {data.course_syllabus.split('\n').map((line, index) => (
-                    <p key={index}>
-                      {line}
-                      <br />
-                    </p>
-                  ))}
+                  {CoursesData.course_syllabus
+                    .split('\n')
+                    .map((line, index) => (
+                      <p key={index}>
+                        {line}
+                        <br />
+                      </p>
+                    ))}
                 </div>
               </div>
             )}
@@ -62,12 +91,14 @@ export default function CourseDescription() {
                     height={50}
                     className="ms-4 rounded-circle"
                   />
-                  <p className="fw-bold my-3">教師姓名：{data.teacher_name}</p>
                   <p className="fw-bold my-3">
-                    教師資歷：{data.teacher_qualification}
+                    教師姓名：{CoursesData.teacher_name}
+                  </p>
+                  <p className="fw-bold my-3">
+                    教師資歷：{CoursesData.teacher_qualification}
                   </p>
                   <p className="fw-bold my-3">教師自介：</p>
-                  <p>{data.teacher_specialty}</p>
+                  <p>{CoursesData.teacher_specialty}</p>
                 </div>
               </>
             )}
@@ -75,7 +106,7 @@ export default function CourseDescription() {
 
           <section className="course-sp col-10 mt-4  mx-auto">
             <h6>【課程特色】</h6>
-            <div className="lh-base">{data.course_description}</div>
+            <div className="lh-base">{CoursesData.course_description}</div>
 
             {/* {breakedSyllabus} */}
           </section>
@@ -83,8 +114,6 @@ export default function CourseDescription() {
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
       )}
-
-      <CoursePerFetcher pid={pid} onCoursePerFetched={onDataFetched} />
     </>
   )
 }

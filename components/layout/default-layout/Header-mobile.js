@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
+import { checkLoginStatus } from '@/components/member/FetchDatas/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
 
 export default function HeaderMobile(props) {

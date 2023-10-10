@@ -1,65 +1,62 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BreadCrumbs, BreadCrumbsMobile } from './BreadCrumbs'
-import CourseInfoBtn from './CourseInfoBtn'
-import { AddCartBtn, BuyBtn } from './BuyBtn'
+import { AddCartBtn, BuyBtn, MobileDetailsBtns, DetailsAddCart } from './BuyBtn'
 import style from '@/styles/_course.module.scss'
-import data from '@/data/course/course[pid].json'
-import { useRouter } from 'next/router'
 import Rating from './Rating'
 import Score from './Score'
-import CoursePerFetcher from './[pid]'
+import CoursePerFetcher from './CoursePerFetcher'
+import { useCourses } from '@/context/course'
+import { useShow } from '../../context/showProductDetail'
+import { useCategory } from '@/context/category'
+import { useCartList } from '@/context/cart'
+import Link from 'next/link'
 
-export default function CourseText() {
-  const router = useRouter()
-  const { pid } = router.query
-  const [data, setData] = useState(null)
+export default function CourseText(props) {
+  const { course, pid } = props
+  const { CoursesData } = useCourses()
 
-  const onDataFetched = (fetchedData) => {
-    setData(fetchedData)
-  }
-
-  const [activeContent, setActiveContent] = useState('introduction')
-
-  //-------------------------設定按鈕狀態後改變下文
-  const handleButtonClick = (contentName) => {
-    setActiveContent(contentName)
-  }
-
-  // console.log(courseData)
+  const { show, setShow } = useShow()
+  const { cartListData, setCartListData } = useCartList()
+  const { categoryData } = useCategory()
+  const [category, setCategory] = useState({ id: '', name: '' })
 
   return (
     <>
-      {data && data.course_image.length > 0 ? (
-        <div className="m-2 col-10 col-sm-6 mx-auto ms-sm-5">
+      {CoursesData && CoursesData.course_image ? (
+        <div className="m-2 col-10 col-sm-7 mx-auto ms-sm-5">
           <div className="d-none d-sm-block">
             <BreadCrumbs />
           </div>
 
-          <h5>{data.course_name}</h5>
+          <h5 className="ed-detail-title">{CoursesData.course_name}</h5>
           <Score />
-          <h5 className={`mb-4 ${style['price']}`}>NT${data.course_price}</h5>
-          <div className="d-flex  justify-content-around d-sm-none">
-            <AddCartBtn />
-            <BuyBtn />
+          <h5 className={`mb-4 ed-detail-price ${style['price']}`}>
+            NT${CoursesData.course_price}
+          </h5>
+          <div className="d-block align-items-center d-sm-none">
+            <MobileDetailsBtns course={CoursesData} />
           </div>
 
           <div className="  ">
-            <p className="my-4">【教師姓名】：{data.teacher_name}</p>
-            <p className="lh-base">
+            <p className="my-4 ed-detail__item">
+              【教師姓名】：{CoursesData.teacher_name}
+            </p>
+            <p className="lh-base ed-detail__item">
               【課程介紹】：
-              {data.course_description}
+              {CoursesData.course_description}
             </p>
           </div>
-          <div className="w-25 px-2 py-1 ms-auto">
-            <div className="d-none d-sm-block">
-              <BuyBtn />
+          <div className="d-none d-sm-flex justify-content-between align-items-center">
+              <DetailsAddCart course={CoursesData} />
+              <a href="http://localhost:3000/cart">
+                <button className="ms-4 ed-addCart__check">立即結帳</button>
+              </a>
             </div>
-          </div>
         </div>
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
       )}
-      <CoursePerFetcher pid={pid} onCoursePerFetched={onDataFetched} />
+      <CoursePerFetcher pid={pid} />
     </>
   )
 }
