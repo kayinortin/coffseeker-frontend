@@ -10,6 +10,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   const { productsData, setProductsData } = useProducts()
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('') // 運送方式
   const [deliveryPrice, setDeliveryPrice] = useState(0) // 運費金額
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState('') // 付款方式
   const [selectedCoupon, setSelectedCoupon] = useState([]) //選取優惠卷
   const [selectedCouponCode, setSelectedCouponCode] = useState('') //選取優惠卷代碼
   const [discountAmount, setDiscountAmount] = useState(0) //優惠卷金額
@@ -51,6 +52,19 @@ export default function CartList({ step, handleNextStep, setStep }) {
 
   //前往結帳
   const handleCheckout = () => {
+    //創建訂單資料
+    const checkoutData = {
+      selectedDeliveryOption,
+      deliveryPrice,
+      selectedPaymentOption,
+      selectedCouponCode,
+      discountAmount,
+      totalProductCount,
+      totalAmount: totalPrice - discountAmount + deliveryPrice,
+    }
+    //將訂單資料存入localStorage
+    localStorage.setItem('checkoutData', JSON.stringify(checkoutData))
+    //切換上面步驟
     if (handleNextStep) {
       handleNextStep(cartListData) // 調用父組件的處理函數，切換到下一步
     }
@@ -158,14 +172,14 @@ export default function CartList({ step, handleNextStep, setStep }) {
   // 商品列表
   const productItems = cartListData.map((product) => (
     <div key={product.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-5 col-sm-4 ">
+      <div className="imgContainer col-lg-3 col-md-5 ">
         <img
           className="img-fluid"
           src={`http://localhost:3005/uploads/${product.image_main}`}
           alt={product.image_main}
         />
       </div>
-      <div className="productContent col-lg-7 col-sm-8 text-start">
+      <div className="productContent col-lg-9 col-md-7 text-start">
         <div className="topDetails d-flex pb-5 justify-content-between ">
           <div className="details d-inline pe-3">
             <div className="productTitle py-1 lh-sm">{product.name}</div>
@@ -285,21 +299,21 @@ export default function CartList({ step, handleNextStep, setStep }) {
 
                         // 根據所選的運送方式更新運費
                         let updatedDeliveryPrice = 0
-                        if (selectedOption === 'delivery') {
+                        if (selectedOption === '宅配') {
                           updatedDeliveryPrice = 60 // 宅配運費為60元
                         } else if (
-                          selectedOption === '711Store' ||
-                          selectedOption === 'familyStore'
+                          selectedOption === '7-11取貨' ||
+                          selectedOption === '全家取貨'
                         ) {
-                          updatedDeliveryPrice = 80 // 7-11或全家便利商店運費
+                          updatedDeliveryPrice = 80
                         }
                         setDeliveryPrice(updatedDeliveryPrice)
                       }}
                     >
                       <option value="">請選擇</option>
-                      <option value="delivery">宅配 NT$60</option>
-                      <option value="711Store">7-11取貨 NT$80</option>
-                      <option value="familyStore">全家取貨 NT$80</option>
+                      <option value="宅配">宅配 NT$60</option>
+                      <option value="7-11取貨">7-11取貨 NT$80</option>
+                      <option value="全家取貨">全家取貨 NT$80</option>
                     </select>
                   </div>
                   <div className="selects">
@@ -310,10 +324,15 @@ export default function CartList({ step, handleNextStep, setStep }) {
                       id="paymentLabel"
                       name="paymentLabel"
                       aria-label="選擇付款方式"
+                      value={selectedPaymentOption}
+                      onChange={(e) => {
+                        const selectedOption = e.target.value
+                        setSelectedPaymentOption(selectedOption)
+                      }}
                     >
                       <option selected>請選擇</option>
-                      <option value="creditCard">信用卡</option>
-                      <option value="ATM">ATM轉帳</option>
+                      <option value="信用卡">信用卡</option>
+                      <option value="ATM轉帳">ATM轉帳</option>
                     </select>
                   </div>
                 </div>
@@ -324,7 +343,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                 <div className="payItems">
                   <div className="items d-flex justify-content-between">
                     <div className="payTitle">數量</div>
-                    <div className="payText">共 {totalProductCount} 項商品</div>
+                    <div className="payText">共 {totalProductCount} 個商品</div>
                   </div>
                   <div className="items d-flex justify-content-between">
                     <div className="payTitle">金額</div>
