@@ -24,7 +24,7 @@ function Counter(props) {
   return (
     <>
       <div
-        className="btn-group"
+        className="ed-btn-group d-flex"
         role="button"
         tabIndex="0"
         onClick={handleFocus}
