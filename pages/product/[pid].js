@@ -150,12 +150,32 @@ export default function ProductDetail(props) {
 
   // 取得評論資訊
   const { comments, setComments } = useComment()
+  // console.log(comments[0].rating)
+
+  // 計算平均評分
+  let ratingSum = 0
+  for (let i = 0; i < comments.length; i++) {
+    ratingSum += comments[i].rating
+  }
+  let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3;
+  
+  const AerageStars = () => {
+    return Array.from({ length: 5 }).map((_, index) => (
+      <div
+        key={index}
+        className={index < Math.round(ratingAvg) ? 'star active-star' : 'star'}
+      >
+        ★
+      </div>
+    ))
+  }
 
   return (
     <>
-      <div className="container">
+      {/* 電腦版 */}
+      <div className="container ">
         <div className="d-flex justify-content-between">
-          <div className="sidebar-left">1234</div>
+          <div className="sidebar-left d-none d-md-block">1234</div>
           <div className="ed-sidebar-right">
             {/* 左邊 */}
             <div className="d-flex justify-content-between mt-3">
@@ -204,6 +224,7 @@ export default function ProductDetail(props) {
                         精選品牌 &gt; {brand}
                       </p>
                       <h5 className="ed-detail-title">{name}</h5>
+                      <div className="rating-container my-3">{AerageStars()}</div>
                       <div className="my-2">
                         <span className="ed-detail-price">
                           NT{discountPrice}
@@ -301,6 +322,7 @@ export default function ProductDetail(props) {
           </div>
         </div>
       </div>
+      {/* 手機版 */}
     </>
   )
 }

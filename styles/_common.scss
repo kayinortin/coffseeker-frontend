@@ -968,87 +968,6 @@ input:checked + label + .expandable-menu {
   }
 }
 
-.ed-fav-btn {
-  $_: &;
-  background: $color--background;
-  border: none;
-
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  cursor: pointer;
-
-  transition: $transition;
-  &__icon {
-    color: $color--gray5;
-    cursor: pointer;
-  }
-  &__text {
-    margin-left: 0.25rem;
-    @include text--small;
-    @include cursor(pointer);
-  }
-  &--medium {
-    width: 2.75rem;
-    height: 2.75rem;
-
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-
-    #{$_}__icon {
-      font-size: 1.5rem;
-    }
-  }
-  &--large {
-    width: 3.75rem;
-    height: 3.75rem;
-    background: transparent;
-
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-
-    #{$_}__icon {
-      font-size: 2rem;
-    }
-  }
-  @media screen and (max-width: $md) {
-    width: 2rem;
-    height: 2rem;
-
-    border-radius: 0 0.625rem 0 1rem;
-
-    align-items: center;
-    #{$_}__icon {
-      font-size: 1.25rem;
-    }
-  }
-  &--icon-text {
-    width: max-content;
-
-    display: flex;
-    align-items: center;
-
-    right: 0.75rem;
-    @media screen and (max-width: $md) {
-      width: max-content;
-      top: 0.5rem;
-      right: 0;
-    }
-  }
-  &.active {
-    #{$_}__icon {
-      color: $color--error;
-      box-shadow: none;
-      &::before {
-        filter: drop-shadow($box-shadow__icon);
-      }
-    }
-  }
-}
-
 .ed-counter {
   $_: &;
   width: 156px;
@@ -1056,179 +975,30 @@ input:checked + label + .expandable-menu {
   font-size: 20px;
   font-weight: 500;
   height: $height__input;
-  background: $color--gray6;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid $color--primary;
   &__btn {
     height: 44px;
-    background: $color--secondary;
-    border: none;
-    #{$_}__icon {
+    background: #f0ebe2;
+    border: 1px solid $color--primary;
+    &:hover {
       color: white;
+      background-color: $color--secondary;
+    }
+    #{$_}__icon {
+      color: $color--primary;
       font-size: 1.25rem;
+      &:hover {
+        color: white;
+      }
     }
   }
   @media screen and (max-width: $md) {
     #{$_}__icon {
       font-size: 0.875rem;
     }
-  }
-}
-
-.ed-chat {
-  $_: &;
-  height: 100%;
-
-  position: relative;
-  &__action {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  &__header {
-    width: 100%;
-    height: $height__chat-block;
-
-    background: $color--primary;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    position: relative;
-  }
-  &__close {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-  }
-  &__date {
-    margin-bottom: 1.5rem;
-    @include text--small-bold;
-    color: $color--gray4;
-    text-align: center;
-  }
-  &__title {
-    @include text--normal;
-    color: $color--background;
-  }
-  &__subtitle {
-    @include text--extra-small;
-    color: $color--gray6;
-    &.active {
-      color: $color--secondary;
-    }
-  }
-  &__footer {
-    width: 100%;
-    padding: $padding__chat;
-
-    background: $color--gray7;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  &__input {
-    min-height: $height__input !important;
-    padding: 0.7rem;
-    resize: none;
-
-    @include scrollbar--hidden;
-  }
-  &__icon {
-    font-size: 1.25rem;
-  }
-  &__content {
-    @include scrollbar;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  &--client {
-    #{$_}__content {
-      height: calc(100% - $height__chat-block - 5.25rem);
-      padding: $padding__chat;
-    }
-    #{$_}__msg {
-      &[from='client'] {
-        color: $color--background;
-        background: $color--info;
-
-        float: right;
-        #{$_}__time {
-          left: -3rem;
-        }
-      }
-      &[from='admin'] {
-        color: $color--font;
-        background: $color--gray6;
-
-        float: left;
-        #{$_}__time {
-          right: -3rem;
-        }
-      }
-    }
-    #{$_}__btn {
-      margin-left: 0.5rem;
-      width: $size__icon-btn;
-      min-width: $size__icon-btn;
-      height: $size__icon-btn;
-    }
-  }
-  &--admin {
-    #{$_}__content {
-      height: calc(100vh - $height__navbar - 20.875rem);
-      padding-right: $padding__chat;
-      margin-bottom: $padding__chat;
-    }
-    #{$_}__msg {
-      &[from='admin'] {
-        color: $color--background;
-        background: $color--info;
-
-        float: right;
-        #{$_}__time {
-          left: -3rem;
-        }
-      }
-      &[from='client'] {
-        color: $color--font;
-        background: $color--gray6;
-
-        float: left;
-        #{$_}__time {
-          right: -3rem;
-        }
-      }
-    }
-    #{$_}__btn {
-      width: max-content;
-      white-space: nowrap;
-    }
-  }
-  &__msg {
-    width: max-content;
-    max-width: 60%;
-    padding: $padding__chat-msg;
-    margin-bottom: 1.5rem;
-
-    @include text--small;
-    border-radius: $border-radius__input;
-
-    clear: both;
-    display: block;
-    position: relative;
-  }
-  &__time {
-    @include text--extra-small;
-    color: $color--gray4;
-    position: absolute;
-    bottom: 0;
   }
 }
 
@@ -1373,6 +1143,12 @@ input:checked + label + .expandable-menu {
     padding-inline: 60px;
     margin-left: 30px;
   }
+  @media screen and (max-width: $lg) {
+    line-height: 30px;
+    padding-inline: 60px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+  }
 }
 
 .ed-course-intro {
@@ -1396,7 +1172,7 @@ input:checked + label + .expandable-menu {
   @media screen and (max-width: $lg) {
     width: 100%;
     margin-left: 0;
-    margin-top: 7rem;
+    margin-top: 1rem;
   }
 }
 
@@ -1415,6 +1191,11 @@ input:checked + label + .expandable-menu {
     margin-top: 20px;
     grid-template-columns: repeat(6, 100px);
     height: 700px;
+  }
+  @media screen and (max-width: $lg) {
+    margin-top: 20px;
+    grid-template-columns: repeat(6, 100px);
+    height: 850px;
   }
   img {
     width: 100%;
@@ -1507,7 +1288,7 @@ input:checked + label + .expandable-menu {
   font-size: 20px;
   z-index: 5;
   @media screen and (max-width: $lg) {
-    width: 90px;
+    width: 70px;
   }
   &:hover {
     color: white;
@@ -1838,21 +1619,36 @@ div.my-4.d-md-flex a:hover {
     border: 1px solid $color--gray5;
     color: $color--primary;
     margin-bottom: 20px;
-    &.disabled{
+    &.disabled {
       pointer-events: none;
     }
     &.active {
       background-color: $color--secondary;
       color: white;
     }
-    
+
     &:hover {
-      color: $color--secondary;
+      background-color: $color--secondary;
+      color: white;
     }
   }
-  &-item{
-    &.disabled{
+  &-item {
+    &.disabled {
       pointer-events: none;
     }
+  }
+}
+
+.ed-hot-content {
+  padding-inline: 0px;
+  @media screen and (max-width: $lg) {
+    padding-inline: 36px;
+  }
+}
+
+.ed-content-size {
+  width: 980px;
+  @media screen and (max-width: $lg) {
+    width: 100%;
   }
 }

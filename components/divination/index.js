@@ -56,7 +56,7 @@ export default function Divination() {
       p: [
         '獨特風味 愛不釋手',
         '尋求恰到好處的酸度',
-        '不愛酸味 繞道而行',
+        '偏愛甜度 注重蜜感',
         '沒有特別偏好',
       ],
     },
@@ -121,7 +121,7 @@ export default function Divination() {
 
       await waittings(300)
     }
-    await waittings(500)
+    await waittings(300)
     //動畫：飛向指定位置
     for (let i = 0; i < 4; i++) {
       const cardSelector = document.querySelector(`.tarotCard${picks[i]}`)
@@ -132,7 +132,7 @@ export default function Divination() {
       cardSelector.classList.add(`forward${i + 1}2`)
       await waittings(300)
     }
-    await waittings(500)
+    await waittings(300)
     //動畫：翻起卡片
     for (let i = 0; i < picks.length; i++) {
       document
@@ -243,6 +243,7 @@ export default function Divination() {
       start(sections[nowSection])
       await waittings(500)
     } else {
+      setAnsArr(ans)
       setGameFinish(true)
     }
   }
@@ -266,16 +267,48 @@ export default function Divination() {
     )
   }
 
+  //塔羅結果生成篩選條件
+  const [ansArr, setAnsArr] = useState(null)
+  function ansToKeyWord(ansArr) {
+    const keyWordArr = []
+    console.log('ansArr:' + ansArr)
+    const filterKeyWord = [
+      '蛋糕',
+      '堅果',
+      '經典',
+      '平衡',
+      '驚喜',
+      '特殊',
+      '獨特',
+      '酸',
+      '蜜',
+      '花香',
+      '香氣',
+      '厚',
+      '焦糖',
+    ]
+
+    for (const word of filterKeyWord) {
+      for (const description of ansArr) {
+        if (description.includes(word)) {
+          keyWordArr.push(word)
+        }
+      }
+    }
+    return keyWordArr
+  }
   //推薦商品取得
   const [productData, setProductData] = useState(null)
   const [fetchProductDataEnd, setFetchProductDataEnd] = useState(false)
   useEffect(() => {
     if (gameFinish) {
-      const keyWord = '香氣,烘焙'
+      const keyWordArr = ansToKeyWord(ansArr)
+      const keyWord = keyWordArr.join()
+      console.log('keyWord:' + keyWord)
       const fetchData = async () => {
         try {
           const res = await axios.get(
-            'http://localhost:3005/api/products/qs?search=香氣,烘焙'
+            `http://localhost:3005/api/products/qs?search=${keyWord}`
           )
           const products = res.data.data
           setProductData(products)
@@ -297,7 +330,7 @@ export default function Divination() {
           {productData.productData.map((product, i) => (
             <swiper-slide key={i}>
               <div className="box">
-                <div class="ratio ratio-1x1">
+                <div className="ratio ratio-1x1">
                   <picture>
                     <img src="/divination-image/desk2.png" alt="" />
                   </picture>
@@ -359,7 +392,7 @@ export default function Divination() {
     return (
       <>
         <div className="TarotResult">
-          <sections className="result">
+          <section className="result">
             <div className="container d-flex justify-content-center">
               <div className="resultCard d-lg-flex">
                 <Lottie
@@ -385,7 +418,7 @@ export default function Divination() {
                 </div>
               </div>
             </div>
-          </sections>
+          </section>
           <section className="my-5">
             <div className="container">
               <div className="swiperTitle mb-5 d-flex justify-content-center ">

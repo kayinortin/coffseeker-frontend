@@ -33,7 +33,7 @@ export default function CourseText(props) {
           <h5 className={`mb-4 ed-detail-price ${style['price']}`}>
             NT${CoursesData.course_price}
           </h5>
-          <div className="d-flex  align-items-center d-sm-none">
+          <div className="d-block align-items-center d-sm-none">
             <MobileDetailsBtns course={CoursesData} />
           </div>
 
@@ -46,14 +46,12 @@ export default function CourseText(props) {
               {CoursesData.course_description}
             </p>
           </div>
-          <div className=" px-2 py-1 ms-auto">
-            <div className="d-none d-sm-block d-flex align-items-center">
+          <div className="d-none d-sm-flex justify-content-between align-items-center">
               <DetailsAddCart course={CoursesData} />
               <a href="http://localhost:3000/cart">
                 <button className="ms-4 ed-addCart__check">立即結帳</button>
               </a>
             </div>
-          </div>
         </div>
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>

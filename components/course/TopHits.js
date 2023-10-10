@@ -1,60 +1,52 @@
-import Card from './Card'
-import data from '@/data/course/course[pid].json'
-import { BiLeftArrow, BiRightArrow } from 'react-icons/bi'
-
 import React, { useState } from 'react'
-import { Controller } from 'swiper/modules'
+
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/scss'
-import 'swiper/scss/pagination'
-import 'swiper/scss/navigation'
-import style from '@/styles/_swiper.module.scss'
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from 'swiper/modules'
+// import Swiper and modules styles
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+import 'swiper/css/autoplay'
+
+import ProductDataFetcher from '@/components/product/ProductDataFetcher'
+import ProductTopHits from '@/components/product/productTopHits'
+
+import { useProducts } from '@/context/product'
 
 const TopHits = () => {
-  // store swiper instances
-  const [firstSwiper, setFirstSwiper] = useState(null)
-  const [secondSwiper, setSecondSwiper] = useState(null)
-  const newData = data.course
+  const { productsData, setProductsData } = useProducts()
 
   return (
-    // <div className="w-100">
-    <Swiper spaceBetween={20} slidesPerView={3}>
-      {newData.map((v, i) => {
-        return (
-          <SwiperSlide key={i} className={`${style['swiper-slide']}`}>
-            <Card
-              name={v.name}
-              price={v.price}
-              start_date={v.start_date}
-              image={v.image}
-              id={v.id}
-            />
-          </SwiperSlide>
-        )
-      })}
-    </Swiper>
-    // </div>
-
-    //------------------------------------------------------
-    // <div className="swiper">
-    //   {/* <!-- Additional required wrapper --> */}
-    //   <div className="swiper-wrapper">
-    //     {/* <!-- Slides --> */}
-    //     <div className="swiper-slide">Slide 1</div>
-    //     <div className="swiper-slide">Slide 2</div>
-    //     <div className="swiper-slide">Slide 3</div>
-    //     ...
-    //   </div>
-    //   {/* <!-- If we need pagination --> */}
-    //   <div className="swiper-pagination"></div>
-
-    //   {/* <!-- If we need navigation buttons --> */}
-    //   <div className="swiper-button-prev"></div>
-    //   <div className="swiper-button-next"></div>
-
-    //   {/* <!-- If we need scrollbar --> */}
-    //   <div className="swiper-scrollbar"></div>
-    // </div>
+    <>
+      <ProductDataFetcher />
+      <h5 className="mt-4">相關商品</h5>
+      <div className="my-4 container">
+        <Swiper
+          modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+          spaceBetween={25}
+          slidesPerView={3}
+          navigation
+          autoplay={{ delay: 3000 }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log('slide change')}
+        >
+          {productsData.map((product, i) => {
+            return (
+              <SwiperSlide key={i}>
+                <ProductTopHits key={product.id} product={product} />
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
+      </div>
+    </>
   )
 }
 

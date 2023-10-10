@@ -6,9 +6,10 @@ import HeaderDesktop from './Header-desktop'
 import HeaderMobile from './Header-mobile'
 import Footer from './footer'
 
-import { checkLoginStatus } from '@/components/member/CheckLoginStaus'
+import { checkLoginStatus } from '@/components/member/FetchDatas/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
 import { useCartList } from '@/context/cart'
+import { useCartListCourse } from '@/context/cart_course'
 
 // Navbar 電腦版資料
 import navItems from '../../../data/navitems.json'
@@ -53,20 +54,35 @@ export default function DefaultLayout({ title = '', children }) {
 
   const [cartIconLength, setCartIconLength] = useState(0)
   const { cartListData, setCartListData } = useCartList()
+  const { cartListData_course, setCartListData_course } = useCartListCourse()
 
   useEffect(() => {
     const storedCartData = JSON.parse(localStorage.getItem('cartList'))
+    const storedCartCourseData = JSON.parse(
+      localStorage.getItem('cartList_course')
+    )
+
     if (storedCartData) {
       setCartListData(storedCartData)
-      setCartIconLength(storedCartData.length)
     }
+
+    if (storedCartCourseData) {
+      setCartListData_course(storedCartCourseData)
+    }
+
+    const combinedLength =
+      (storedCartData ? storedCartData.length : 0) +
+      (storedCartCourseData ? storedCartCourseData.length : 0)
+    setCartIconLength(combinedLength)
   }, [])
 
+  // 當購物車資料更新時, 更新icon的數量
   useEffect(() => {
-    if (cartListData) {
-      setCartIconLength(cartListData.length)
-    }
-  }, [cartListData])
+    const combinedLength =
+      (cartListData ? cartListData.length : 0) +
+      (cartListData_course ? cartListData_course.length : 0)
+    setCartIconLength(combinedLength)
+  }, [cartListData, cartListData_course])
 
   // 未登入狀態
 
@@ -100,7 +116,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas fa-shopping-cart ed-navbar__font"></i>,
       tagDesktop: <div className="ed-tag ed-tag--corner">{cartIconLength}</div>,
-      href: '/cart',
+      href: '/member/login',
     },
   ]
   const navActionsLogin = [

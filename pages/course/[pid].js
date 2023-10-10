@@ -25,7 +25,7 @@ export default function CourseDetails() {
   return (
     <>
       <main className={`${style['course-bg']}`}>
-        <div className={`container-lg }`}>
+        <div className={`container-lg`}>
           <div className="d-flex">
             <NewSideBar />
             <MainContent />

@@ -505,12 +505,14 @@ export default function Map() {
               </h6>
             </div>
           </div>
-          <a
-            href={`https://www.google.com/maps/search/${cafeData.address}+${cafeData.name}`}
-            target="_blank"
-          >
-            <div className="googleMapLink mt-3 text-end">在GoogleMap打開</div>
-          </a>
+          <div className="googleMapLink mt-3 text-end">
+            <a
+              href={`https://www.google.com/maps/search/${cafeData.address}+${cafeData.name}`}
+              target="_blank"
+            >
+              在GoogleMap打開
+            </a>
+          </div>
         </div>
       </>
     )
@@ -606,10 +608,9 @@ export default function Map() {
   return (
     <>
       <div
-        className={`mapArea justify-content-center align-items-center ${
+        className={`mapArea loading justify-content-center align-items-center ${
           showLoading ? '' : 'd-none'
         }`}
-        id="loading"
       >
         <Lottie
           play
@@ -678,7 +679,7 @@ export default function Map() {
           zoomControl={false}
         >
           <TileLayer
-            attribution='&copy; <a href="http://cartodb.com/attributions">CartoDB</a> contributors'
+            attribution='Data from <a href="https://cafenomad.tw/developers/docs/v1.2">Cafe Nomad</a> |&copy; <a href="http://cartodb.com/attributions">CartoDB</a> contributors'
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png"
           />
           <ZoomControl position="topright" />

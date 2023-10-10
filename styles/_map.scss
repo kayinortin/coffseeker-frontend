@@ -4,13 +4,13 @@
   position: relative;
   display: flex;
   overflow: hidden;
+  &.loading {
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+  }
 }
 
-#loading {
-  position: absolute;
-  z-index: 5;
-  width: 100%;
-}
 .map {
   width: 100%;
   height: 100%;
@@ -131,7 +131,7 @@
     height: calc(100% - 40px);
     position: absolute;
     padding: 20px 24px;
-    width: 360px;
+    width: 380px;
     margin-block: 20px;
     transition: 0.3s;
     left: 380px;
@@ -162,6 +162,10 @@
         padding: 0px 5px;
         align-items: center;
         flex-wrap: nowrap;
+        > div {
+          text-align: center;
+          line-height: 27px;
+        }
       }
     }
     .cafeInfos {

@@ -9,6 +9,7 @@ import style from '@/styles/_course.module.scss'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
+import CourseComment from '@/components/course/CourseComment'
 
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 
@@ -69,7 +70,7 @@ export default function MainContent() {
 
   return (
     <>
-      <div className=" mt-5 ms-sm-5">
+      <div className="mt-5 ms-sm-5 container ed-content-size">
         <div className="d-sm-flex">
           <CoursePic pid={pid} course={CoursesData} />
           <CourseText pid={pid} course={CoursesData} />
@@ -168,8 +169,9 @@ export default function MainContent() {
         <h3 className={`text-center ${style['hw-review-title']}`}>學員評價</h3>
 
         <Review />
-        {/* <h3 className="text-center">熱門課程</h3> */}
-        <div className="w-100">{/* <TopHits /> */}</div>
+        <CourseComment />
+
+        <TopHits />
       </div>
     </>
   )

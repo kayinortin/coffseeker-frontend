@@ -123,7 +123,7 @@ export default function ProductItem(props) {
               src={`http://localhost:3005/uploads/${image_main}`}
               alt={name}
               className="card-img-top"
-              width={300}
+              width={250}
               height={250}
             />
           </Link>

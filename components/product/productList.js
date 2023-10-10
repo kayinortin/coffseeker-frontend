@@ -1,14 +1,18 @@
 import { React, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Skeleton from '@mui/material/Skeleton'
 import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
 import Sort from './Sort'
+import navItems from '../../data/navitems.json'
 
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 
 export default function ProductList(props) {
   const { setShow } = props
+  const router = useRouter()
+  const currentRoute = router.asPath
   const { productsData, setProductsData, sortBy } = useProducts()
   const isFetchingProducts = productsData.length === 0
 
@@ -62,7 +66,68 @@ export default function ProductList(props) {
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
         <div className="d-none d-md-block ed-left-filter container mt-5">
-          123
+          <ul className="ed-navbar__items">
+            <ul className="ed-navbar__items">
+              {navItems.map((item) => {
+                if (!item.children) {
+                  return (
+                    // 沒有下拉式選單的情況
+                    <li
+                      className="ed-navbar__item ed-navbar__link"
+                      key={item.id}
+                    >
+                      <a
+                        className={`ed-navbar__font ${
+                          navItems.find((item) => item.href === currentRoute)
+                            ? 'active'
+                            : ''
+                        }`}
+                        aria-current="page"
+                        href={item.href}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  )
+                }
+                // 有下拉式選單 (children) 的情況
+                return (
+                  <li className="nav-item dropdown" key={item.id}>
+                    <a
+                      className={`nav-link dropdown-toggle ed-navbar__font ${
+                        item.children.find(
+                          (child) => child.href === currentRoute
+                        )
+                          ? 'active'
+                          : ''
+                      }`}
+                      id="navbarDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      href="#"
+                    >
+                      {item.label}
+                    </a>
+                    <ul className="dropdown-menu">
+                      {item.children.map((child) => (
+                        <li key={child.id}>
+                          <a
+                            className={`dropdown-item ${
+                              currentRoute === child.href ? 'active' : ''
+                            }`}
+                            href={child.href}
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                )
+              })}
+            </ul>
+          </ul>
         </div>
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">

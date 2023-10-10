@@ -7,6 +7,12 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
 import Swal from 'sweetalert2'
+import contenOfContract from '@/data/member/contract.json'
+
+// 10/10 尚未完成
+// 1.記住密碼
+// 2.密碼顯示切換
+// 3.拆分component
 
 export default function LoginForm() {
   const { userData, setUserData, isLoggedIn, setIsLoggedIn } = useUser()
@@ -117,6 +123,18 @@ export default function LoginForm() {
       console.error('錯誤：請確認後台API功能', error)
     }
   }
+
+  const openContract = () => {
+    Swal.fire({
+      title: `使用者隱私合約`,
+      html: `<div class="border border-dark contract">${contenOfContract.contract}</div>`,
+      confirmButtonText: '了解',
+      customClass: {
+        popup: 'contract-popup', // 自定義彈窗的類別
+      },
+    })
+  }
+
   // ===================================
 
   return (
@@ -191,9 +209,13 @@ export default function LoginForm() {
         </div>
 
         <div className={'d-flex justify-content-between'}>
-          <Link href="/" className={'forget-password'}>
+          <button
+            className={'forget-password border-0 bg-none'}
+            type="button"
+            onClick={openContract}
+          >
             會員隱私條款
-          </Link>
+          </button>
           <Link href="/member/forget-password" className={'forget-password'}>
             忘記密碼
           </Link>
