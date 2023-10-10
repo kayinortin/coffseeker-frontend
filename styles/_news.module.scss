@@ -1,9 +1,9 @@
 $color--primary: #1c262c;
-$color--background: #f2f2f2;
+$color--background: #f0ebe2;
 $color--black: #000000;
 
 //index.js區
-.ei-news-container{
+.ei-news-container {
   // background-color: $color--background;
   // padding-inline: 50px;
   // max-width: 1400px;
@@ -18,9 +18,9 @@ $color--black: #000000;
 
 @media (max-width: 391px) {
   .mobile-orderby {
-   margin-top: 20px;
-  }}
-
+    margin-top: 20px;
+  }
+}
 
 // 卡片區
 .news-link {
@@ -43,10 +43,12 @@ $color--black: #000000;
   align-items: center !important;
 }
 
+
+
 .ei-card {
   // width: 80%;
   // max-width: 700px;
-  height: 380px;
+  height: 400px;
   margin-inline: 30px;
   margin-top: 30px;
   margin-bottom: 20px;
@@ -101,7 +103,7 @@ $color--black: #000000;
   .ei-mobile-category-btn {
     width: 100%;
   }
-  .mobile-news-title{
+  .mobile-news-title {
     margin-top: 2rem !important;
   }
   .ei-card {
@@ -122,7 +124,7 @@ $color--black: #000000;
   .ei-mobile-card-margin {
     margin-bottom: 0px !important;
     padding-right: 0 !important;
-    padding-left:  0 !important;
+    padding-left: 0 !important;
     // height: 400px !important;
   }
   // 卡片圖片高度
@@ -142,13 +144,13 @@ $color--black: #000000;
 // }
 
 // [nid].js頁面
-.ei-container-nid{
+.ei-container-nid {
   max-width: 80%;
 }
 .news-detail {
   // width: 90%;
   margin: 0 auto;
-  padding-inline: 200px; 
+  padding-inline: 200px;
   img {
     width: 100%;
   }
@@ -162,15 +164,14 @@ $color--black: #000000;
 
 // [nid].js  RWD區
 @media (max-width: 391px) {
-  .ei-container-nid{
+  .ei-container-nid {
     padding: 0;
     max-width: 90% !important;
-    
   }
   .news-detail {
-    padding-inline: 10px; 
+    padding-inline: 10px;
   }
-  .mobile-news-title{
+  .mobile-news-title {
     // text-align: left !important;
   }
 }
@@ -190,8 +191,11 @@ $color--black: #000000;
   gap: 0px;
 }
 
-.page-item {
+.ei-page-item {
   &.active {
+    font-weight: bold;
+    background: #6c757d;
+    color: white;
     font-weight: bold;
   }
 
@@ -201,20 +205,22 @@ $color--black: #000000;
   }
 }
 
-.page-link {
+.ei-page-link {
   text-decoration: none;
-  color: #333;
+  color: $color--primary;
   padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid $color--primary;
+  // border-radius: 4px;
   transition: background-color 0.2s;
+  background-color: $color--background;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #6c757d;
+    color: white;
   }
 }
 
-.ei-bold-text{
+.ei-bold-text {
   font-weight: bold;
   color: $color--primary;
 }

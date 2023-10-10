@@ -174,7 +174,7 @@ $fw-black:900;
                                         background-color: $color-background;
                                         border: 0px solid $color--secondary;
                                         color: $color--primary;
-                                        border-radius: 8px;
+                                        // border-radius: 8px;
                                         &:hover,&:active{
                                             background-color: $color--secondary;
                                             color: $color--white;
@@ -204,6 +204,7 @@ $fw-black:900;
                         .productQuantityTotal{
                             display: flex;
                             justify-content: space-between;
+                      
                             
                             .btn-group{
                                 button {
@@ -214,10 +215,10 @@ $fw-black:900;
                                     border: 1px solid $color--primary;
                                 }
                                 button.quantityMinus{
-                                    border-radius: 8px 0 0 8px;
+                                    // border-radius: 8px 0 0 8px;
                                 }
                                 button.quantityAdd{
-                                    border-radius: 0 8px 8px 0;
+                                    // border-radius: 0 8px 8px 0;
                                 }
                                 button.quantityMinus, button.quantityAdd{
                                     &:hover,&:active {
@@ -406,6 +407,30 @@ $fw-black:900;
                            }
 
                         }
+                    }
+                    .infoWrap{      
+
+                        .paymentWrap{
+                            border: 1px solid $color--primary;
+                            padding-inline: 1rem;
+
+                            .labels{
+                                font-size: $fs-md;
+                                font-weight: $fw-bold;
+                                padding-block: 1rem;
+                                border-bottom: 1px solid $color--primary;
+                            }
+                            .payItems{
+                                padding-block: 1.5rem;
+    
+                                .items{
+                                    padding-bottom: 1.5rem;
+                                    font-size: $fs-sm;
+                                }
+                            }
+                        }
+
+                        
                     }
                 }
             }

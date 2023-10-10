@@ -1,50 +1,38 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import AOS from 'aos'
 
 export default function Course() {
-  const [aosValue, setAosValue] = useState('fade-left')
-
-  // 檢查是否為手機介面
-  const isMobile = () => {
-    if (typeof window !== 'undefined' && window.navigator) {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        window.navigator.userAgent
-      )
-    }
-    return false
-  }
-
   // 課程按鈕動畫
-  useEffect(() => {
-    const btnGroups = {
-      btn1: 'group1',
-      btn2: 'group2',
-      btn3: 'group3',
-    }
+  // useEffect(() => {
+  //   const btnGroups = {
+  //     btn1: 'group1',
+  //     btn2: 'group2',
+  //     btn3: 'group3',
+  //   }
 
-    const gallery = document.querySelector('.gallery')
+  //   const gallery = document.querySelector('.gallery')
 
-    Object.keys(btnGroups).forEach((btnId) => {
-      const btn = document.getElementById(btnId)
-      if (btn) {
-        btn.addEventListener('mouseover', function () {
-          gallery.setAttribute('data-active-group', btnGroups[btnId])
-        })
-        btn.addEventListener('mouseout', function () {
-          gallery.dataset.activeGroup = ' '
-        })
-      }
-    })
-  }, [])
+  //   Object.keys(btnGroups).forEach((btnId) => {
+  //     const btn = document.getElementById(btnId)
+  //     if (btn) {
+  //       btn.addEventListener('mouseover', function () {
+  //         gallery.setAttribute('data-active-group', btnGroups[btnId])
+  //       })
+  //       btn.addEventListener('mouseout', function () {
+  //         gallery.dataset.activeGroup = ' '
+  //       })
+  //     }
+  //   })
+  // }, [])
 
   // AOS動畫
   useEffect(() => {
     AOS.init({
       duration: 2000,
     })
-    setAosValue(isMobile() ? 'fade-up' : 'fade-left')
   }, [])
+
 
   return (
     <>
@@ -52,7 +40,7 @@ export default function Course() {
         <a className="ed-zindex" href="./course">
           <div
             className="gallery flex-column"
-            data-aos={aosValue}
+            data-aos="fade-up"
             data-aos-delay={200}
           >
             <img
@@ -146,7 +134,7 @@ export default function Course() {
             <div className="container d-flex flex-column px-4 px-lg-0">
               <div
                 className="my-5 my-md-2 d-md-flex justify-content-center align-items-center"
-                data-aos={aosValue}
+                data-aos="fade-up"
                 data-aos-delay={300}
               >
                 <a href="./course/category/1">
@@ -159,7 +147,7 @@ export default function Course() {
                     alt=""
                     width={150}
                     height={150}
-                    data-aos={aosValue}
+                    data-aos="fade-up"
                     data-aos-delay={300}
                   />
                 </a>
@@ -173,7 +161,7 @@ export default function Course() {
               </div>
               <div
                 className="my-3 my-md-5 d-md-flex justify-content-center align-items-center"
-                data-aos={aosValue}
+                data-aos="fade-up"
                 data-aos-delay={600}
               >
                 <a href="./course/category/1">
@@ -186,7 +174,7 @@ export default function Course() {
                     alt=""
                     width={150}
                     height={150}
-                    data-aos={aosValue}
+                    data-aos="fade-up"
                     data-aos-delay={600}
                   />
                 </a>
@@ -200,7 +188,7 @@ export default function Course() {
               </div>
               <div
                 className="my-5 my-md-3 d-md-flex justify-content-center align-items-center"
-                data-aos={aosValue}
+                data-aos="fade-up"
                 data-aos-delay={900}
               >
                 <a href="./course/category/1">
@@ -213,7 +201,7 @@ export default function Course() {
                     alt=""
                     width={150}
                     height={150}
-                    data-aos={aosValue}
+                    data-aos="fade-up"
                     data-aos-delay={900}
                   />
                 </a>
@@ -229,7 +217,7 @@ export default function Course() {
               <div
                 className="ed-my-md-5 d-md-flex d-block justify-content-center align-items-center ed-course-enter"
                 data-aos="fade-down"
-                data-aos-delay={600}
+                data-aos-delay={1200}
               >
                 <img
                   className="arrow me-5 me-md-0"

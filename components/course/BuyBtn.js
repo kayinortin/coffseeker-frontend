@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
+import React from 'react'
 import Swal from 'sweetalert2'
 import styles from '@/styles/_course.module.scss'
 import Link from 'next/link'
 import { useSwiper } from 'swiper/react'
 
-import { useCartList } from '@/context/cart'
+import { useCartListCourse } from '@/context/cart_course'
 
 function AddCartBtn(props) {
-  const { cartListData, setCartListData } = useCartList()
+  const { cartListData_course, setCartListData_course } = useCartListCourse()
   const { course } = props
 
   const showToast = () => {
@@ -43,16 +43,16 @@ function AddCartBtn(props) {
       course_image: course.course_image,
     }
 
-    if (cartListData.some((item) => item.id === newItem.id)) {
-      const updatedCartList = cartListData.map((item) =>
+    if (cartListData_course.some((item) => item.id === newItem.id)) {
+      const updatedCartList = cartListData_course.map((item) =>
         item.id === newItem.id ? newItem : item
       )
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      setCartListData_course(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     } else {
-      const updatedCartList = [...cartListData, newItem]
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      const updatedCartList = [...cartListData_course, newItem]
+      setCartListData_course(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     }
   }
 
@@ -79,7 +79,7 @@ function BuyBtn() {
 }
 
 function DetailsAddCart(props) {
-  const { cartListData, setCartListData } = useCartList()
+  const { cartListData_course, setCartListData_course } = useCartListCourse()
   const { course } = props
 
   const showToast = () => {
@@ -115,16 +115,16 @@ function DetailsAddCart(props) {
       course_image: course.course_image,
     }
 
-    if (cartListData.some((item) => item.id === newItem.id)) {
-      const updatedCartList = cartListData.map((item) =>
+    if (cartListData_course.some((item) => item.id === newItem.id)) {
+      const updatedCartList = cartListData_course.map((item) =>
         item.id === newItem.id ? newItem : item
       )
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      setCartListData_course(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     } else {
-      const updatedCartList = [...cartListData, newItem]
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      const updatedCartList = [...cartListData_course, newItem]
+      setCartListData_course(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     }
   }
   return (
@@ -141,7 +141,7 @@ function DetailsAddCart(props) {
 }
 
 function MobileDetailsBtns(props) {
-  const { cartListData, setCartListData } = useCartList()
+  const { cartListData_course, setCartListData_course } = useCartListCourse()
   const { course } = props
 
   const showToast = () => {
@@ -177,16 +177,16 @@ function MobileDetailsBtns(props) {
       course_image: course.course_image,
     }
 
-    if (cartListData.some((item) => item.id === newItem.id)) {
-      const updatedCartList = cartListData.map((item) =>
+    if (cartListData_course.some((item) => item.id === newItem.id)) {
+      const updatedCartList = cartListData_course.map((item) =>
         item.id === newItem.id ? newItem : item
       )
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      setCartListData_course(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     } else {
-      const updatedCartList = [...cartListData, newItem]
-      setCartListData(updatedCartList)
-      localStorage.setItem('cartList', JSON.stringify(updatedCartList))
+      const updatedCartList = [...cartListData_course, newItem]
+      setCartListData_course(updatedCartList)
+      localStorage.setItem('cartList_course', JSON.stringify(updatedCartList))
     }
   }
   return (
