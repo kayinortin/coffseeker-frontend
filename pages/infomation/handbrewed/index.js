@@ -1,10 +1,8 @@
-import HandBrewedCard from '@/components/handbrewed/handbrewed-card'
 import React from 'react'
+import HandBrewCard from '@/components/handbrewed/handbrewed-card'
 
-export default function HandBrewed() {
-  return (
-    <>
-      <HandBrewedCard />
-    </>
-  )
+const HandBrew = () => {
+  return <HandBrewCard />
 }
+
+export default HandBrew

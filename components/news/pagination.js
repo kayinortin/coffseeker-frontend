@@ -7,10 +7,10 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
       pageButtons.push(
         <li
           key={i}
-          className={i === currentPage ? 'page-item active' : 'page-item'}
+          className={i === currentPage ? 'ei-page-item active' : 'ei-page-item'}
         >
           <button
-            className="page-link"
+            className="ei-page-link"
             onClick={() => {
               onPageChange(i)
               // 滾動到頁面頂部
@@ -27,7 +27,7 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
 
   const handlePageChange = (page) => {
     console.log('Page changed to:', page)
-    onPageChange(page) // 記得設置 currentPage 狀態
+    onPageChange(page)
     // 滾動到頁面頂部
     window.scrollTo(0, 0)
   }
@@ -35,9 +35,13 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
   return (
     <div className="ei-pagination-container mb-3">
       <ul className="ei-pagination">
-        <li className={currentPage === 1 ? 'page-item disabled' : 'page-item'}>
+        <li
+          className={
+            currentPage === 1 ? 'ei-page-item disabled' : 'ei-page-item'
+          }
+        >
           <button
-            className="page-link"
+            className="ei-page-link"
             onClick={() => {
               handlePageChange(currentPage - 1)
             }}
@@ -48,11 +52,13 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
         {renderPageButtons()}
         <li
           className={
-            currentPage === totalPages ? 'page-item disabled' : 'page-item'
+            currentPage === totalPages
+              ? 'ei-page-item disabled'
+              : 'ei-page-item'
           }
         >
           <button
-            className="page-link"
+            className="ei-page-link"
             onClick={() => {
               handlePageChange(currentPage + 1)
             }}
