@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import axios from 'axios'
 import Image from 'next/image'
 import Swal from 'sweetalert2'
@@ -20,30 +21,10 @@ import TopHits from '@/components/TopHits'
 export default function ProductDetail(props) {
   const router = useRouter()
   const { pid } = router.query
-  // 取得商品圖片路徑
+  // 定義商品圖片路徑
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
-
-  const getDetail = async () => {
-    if (pid) {
-      let response = await axios.get(
-        `http://localhost:3005/api/products/${pid}`
-      )
-      const details = response.data
-
-      setDetailData({ ...details })
-      if (response.data.image) {
-        setImage(JSON.parse(response.data.image))
-      }
-    }
-  }
-
-  const { show, setShow } = useShow()
-  const { cartListData, setCartListData } = useCartList()
-  const { categoryData } = useCategory()
-  const [category, setCategory] = useState({ id: '', name: '' })
-
-  // 取得商品詳細資訊
+  // 定義商品詳細資訊
   const INITIAL_DETAIL_DATA = {
     id: '',
     name: '',
@@ -55,6 +36,14 @@ export default function ProductDetail(props) {
     description: '',
     category_id: 0,
     popularity: 0,
+    origin: '',
+    manor: '',
+    Production_area: '',
+    Processing: '',
+    altitude: '',
+    Variety: '',
+    Roast_degree: '',
+    note: '',
   }
 
   const [detailData, setDetailData] = useState(INITIAL_DETAIL_DATA)
@@ -70,21 +59,49 @@ export default function ProductDetail(props) {
     description,
     category_id,
     popularity,
+    origin,
+    manor,
+    Production_area,
+    Processing,
+    altitude,
+    Variety,
+    Roast_degree,
+    note,
   } = detailData
 
+  // 取得商品資訊
   useEffect(() => {
+    const getDetail = async () => {
+      if (pid) {
+        let response = await axios.get(
+          `http://localhost:3005/api/products/${pid}`
+        )
+        const details = response.data
+
+        setDetailData({ ...details })
+        if (response.data.image) {
+          setImage(JSON.parse(response.data.image))
+        }
+      }
+    }
+
     if (pid) {
-      setDetailData(INITIAL_DETAIL_DATA)
       getDetail()
       setShow((prevShow) => ({ ...prevShow, in: true }))
     }
   }, [pid])
+
+  const { show, setShow } = useShow()
+  const { cartListData, setCartListData } = useCartList()
+  const { isLoggedIn, setIsLoggedIn } = useUser()
 
   // 預設加入購物車數量
   const [number, setNumber] = useState(1)
 
   // 加入購物車
   const addCart = () => {
+    const itemInCart = cartListData.some((item) => item.id === detailData.id)
+
     // 加入購物車alert
     const Toast = Swal.mixin({
       toast: true,
@@ -97,12 +114,24 @@ export default function ProductDetail(props) {
       },
     })
 
+    if (itemInCart) {
+      Toast.fire({
+        icon: 'info',
+        title: '此商品已加入購物車',
+        customClass: {
+          popup: 'ed-alert__toast',
+          title: 'ed-alert__subtitle',
+        },
+      })
+      return
+    }
+
     Toast.fire({
       icon: 'success',
       title: '商品已加入購物車',
       customClass: {
-        popup: 'c-alert__toast',
-        title: 'c-alert__subtitle',
+        popup: 'ed-alert__toast',
+        title: 'ed-alert__subtitle',
       },
     })
 
@@ -148,17 +177,19 @@ export default function ProductDetail(props) {
     }
   }
 
+  // 文本分段
+  const [firstPart, secondPart] = note.split('T')
+
   // 取得評論資訊
-  const { comments, setComments } = useComment()
-  // console.log(comments[0].rating)
+  const { comments } = useComment()
 
   // 計算平均評分
   let ratingSum = 0
   for (let i = 0; i < comments.length; i++) {
     ratingSum += comments[i].rating
   }
-  let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3;
-  
+  let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3
+
   const AerageStars = () => {
     return Array.from({ length: 5 }).map((_, index) => (
       <div
@@ -175,7 +206,58 @@ export default function ProductDetail(props) {
       {/* 電腦版 */}
       <div className="container ">
         <div className="d-flex justify-content-between">
-          <div className="sidebar-left d-none d-md-block">1234</div>
+          <div className="sidebar-left d-none d-md-block">
+            <div className="d-flex flex-column">
+              <div className="mt-5">
+                <h5>加購商品</h5>
+              </div>
+              <div className="mt-4 d-flex justify-content-between align-items-center">
+                <div>
+                  <img src="" alt="圖片放置" />
+                </div>
+                <div>
+                  <h6>其他咖啡豆推薦</h6>
+                  <p>NT$ 100</p>
+                </div>
+              </div>
+              <hr />
+              <div className="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <img src="" alt="圖片放置" />
+                </div>
+                <div>
+                  <h6>其他咖啡豆推薦</h6>
+                  <p>NT$ 100</p>
+                </div>
+              </div>
+              <hr />
+              <div className="mt-2 d-block">
+                <ul className="ed-sidebar-li">
+                  <Link href="http://localhost:3000/product">
+                    <li>全站商品</li>
+                  </Link>
+                  <Link href="http://localhost:3000/product/category/1">
+                    <li className="mt-3">咖啡豆</li>
+                  </Link>
+                  <Link href="http://localhost:3000/product/category/2">
+                    <li className="mt-3">濾掛包</li>
+                  </Link>
+                  <Link href="http://localhost:3000/product/category/3">
+                    <li className="mt-3">中淺焙 &gt; 偏酸</li>
+                  </Link>
+                  <Link href="http://localhost:3000/product/category/4">
+                    <li className="mt-3">中　焙 &gt; 不酸不苦</li>
+                  </Link>
+                  <Link href="http://localhost:3000/product/category/5">
+                    <li className="mt-3">中深焙 &gt; 偏苦</li>
+                  </Link>
+                  <Link href="http://localhost:3000/product/category/6">
+                    <li className="mt-3">送禮推薦</li>
+                  </Link>
+                </ul>
+              </div>
+            </div>
+          </div>
           <div className="ed-sidebar-right">
             {/* 左邊 */}
             <div className="d-flex justify-content-between mt-3">
@@ -224,7 +306,9 @@ export default function ProductDetail(props) {
                         精選品牌 &gt; {brand}
                       </p>
                       <h5 className="ed-detail-title">{name}</h5>
-                      <div className="rating-container my-3">{AerageStars()}</div>
+                      <div className="rating-container my-3">
+                        {AerageStars()}
+                      </div>
                       <div className="my-2">
                         <span className="ed-detail-price">
                           NT{discountPrice}
@@ -232,24 +316,56 @@ export default function ProductDetail(props) {
                       </div>
                       <div className="d-flex mt-4">
                         <ul className="ed-detail__list">
-                          <li className="ed-detail__item">【國家】：</li>
-                          <li className="ed-detail__item">【莊園】：</li>
-                          <li className="ed-detail__item">【產區】：</li>
-                          <li className="ed-detail__item">【處理法】：</li>
-                          <li className="ed-detail__item">【海拔】：</li>
-                          <li className="ed-detail__item">【品種】：</li>
-                          <li className="ed-detail__item">【焙度】：</li>
-                          <li className="ed-detail__item">【風味描述】</li>
-                          <li className="ed-detail__item__descript">
-                            描述內容
-                          </li>
+                          {origin && (
+                            <li className="ed-detail__item">
+                              【國家】：{origin}
+                            </li>
+                          )}
+                          {manor && (
+                            <li className="ed-detail__item">
+                              【莊園】：{manor}
+                            </li>
+                          )}
+                          {Production_area && (
+                            <li className="ed-detail__item">
+                              【產區】：{Production_area}
+                            </li>
+                          )}
+                          {Processing && (
+                            <li className="ed-detail__item">
+                              【處理法】：{Processing}
+                            </li>
+                          )}
+                          {altitude && (
+                            <li className="ed-detail__item">
+                              【海拔】：{altitude}
+                            </li>
+                          )}
+                          {Variety && (
+                            <li className="ed-detail__item">
+                              【品種】：{Variety}
+                            </li>
+                          )}
+                          {Roast_degree && (
+                            <li className="ed-detail__item">
+                              【焙度】：{Roast_degree}
+                            </li>
+                          )}
+                          {note && (
+                            <>
+                              <li className="ed-detail__item">【風味描述】</li>
+                              <li className="ed-detail__item__descript lh-base">
+                                {description}
+                              </li>
+                            </>
+                          )}
                         </ul>
                       </div>
                       <div className="d-flex flex-column">
                         <div className="d-flex align-items-center">
                           <Counter number={number} setNumber={setNumber} />
-                          <p className="ms-4">
-                            <span className="h4 fw-bold">{amount}</span>{' '}
+                          <p className="ms-5">
+                            <span className="h4 fw-bold">{amount}</span>
                             組庫存量
                           </p>
                         </div>
@@ -261,11 +377,11 @@ export default function ProductDetail(props) {
                             加入購物車
                             <i className="fas fa-shopping-cart"></i>
                           </button>
-                          <a href="http://localhost:3000/cart">
+                          <Link href="http://localhost:3000/cart">
                             <button className="ms-4 ed-addCart__check">
                               立即結帳
                             </button>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -282,20 +398,20 @@ export default function ProductDetail(props) {
                 height={400}
               />
               <div className="d-flex flex-column ed-product-intro">
-                <div className="ed-product-intro-title text-center mt-4">
+                <div className="ed-product-intro-title text-center mt-4 ">
                   商品特色
                 </div>
                 <div className="mt-2">
                   <h5>【極精品】</h5>
-                  <p>巴拿馬 翡翠莊園 Jaramillo 綠標瑰夏 日曬</p>
+                  <p>{name}</p>
                 </div>
                 <div className="mt-3">
                   <h5>【烘豆師筆記】</h5>
-                  <div className="ed-product-intro-detail">
-                    生豆時聞得到淡淡的莓果香氣，為了加強這樣美好的風味，前期使用了中等的節奏進行烘焙，將水果般甜膩、果汁般的口感呈現出來。至一爆的發展，將節奏慢下來，讓口感能夠更突出而不掩蓋香氣。
+                  <div className="ed-product-intro-detail lh-lg">
+                    {firstPart}
                     <br />
                     <br />
-                    初聞乾香氣時，帶有一點藍莓、百香果的調性。在熱時品飲，有些微的枇杷清香，和著熱帶水果的風味。酸甜感有如荔枝輕輕點綴在舌面。尾韻帶一點異國香料感，回甘性強如糖蜜，最後以淡雅的桂圓作陪襯，整杯咖啡給人一種身處於異國的熱帶風情。
+                    {secondPart}
                   </div>
                 </div>
               </div>
@@ -304,7 +420,7 @@ export default function ProductDetail(props) {
                   商品規格
                 </div>
                 <div>
-                  <ol className="ed-product-intro-list">
+                  <ol className="ed-product-intro-list lh-lg">
                     <li>新鮮咖啡烘焙豆</li>
                     <li>重量100g</li>
                     <li>有效期限一年</li>
@@ -315,7 +431,20 @@ export default function ProductDetail(props) {
               </div>
               <hr />
               <FetchComment pid={pid} />
-              <Comment pid={pid} />
+              {isLoggedIn ? (
+                <>
+                  <Comment pid={pid} />
+                </>
+              ) : (
+                <div className="mx-auto text-center">
+                  <h5 className="my-3">請先登入再進行評論</h5>
+                  <div className="my-4">
+                    <Link href="http://localhost:3000/member/login">
+                      <button className="ed-addCart">登入會員</button>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
             <hr />
             <TopHits />

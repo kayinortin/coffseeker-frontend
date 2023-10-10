@@ -1652,3 +1652,29 @@ div.my-4.d-md-flex a:hover {
     width: 100%;
   }
 }
+
+
+.ed-btn-group{
+  button {
+      width: 2.5rem;
+      height: 2.5rem;
+      color: $color--primary;
+      background-color: #f0ebe2;
+      border: 1px solid $color--primary;
+  }
+  button.quantityMinus, button.quantityAdd{
+      &:hover,&:active {
+          color:$color--white;
+          background-color: $color--secondary;
+          border: px solid $color--primary;
+          }
+  }
+  
+  span.forminput{
+      width: 3.5rem;
+      height: 2.5rem;
+      background-color: #f0ebe2;
+      border-block: 1px solid $color--primary;
+      border-inline: 0px;
+  }
+}
