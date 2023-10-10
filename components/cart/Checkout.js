@@ -1,10 +1,14 @@
-import { dataTool } from 'echarts'
-import { check } from 'prettier'
 import React, { useEffect, useState } from 'react'
+import { useAuthJWT } from '@/context/useAuthJWT'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
   const [checkoutData, setCheckoutData] = useState(null)
+  const [isInfoVisible, setIsInfoVisible] = useState(false)
+
+  //會員資料
+  const { authJWT } = useAuthJWT()
+  const userData = authJWT.userData
 
   //localStorage checkoutData
   useEffect(() => {
@@ -42,7 +46,12 @@ function Checkout({ step, handleNextStep, setStep }) {
   cartItems.forEach((product) => {
     totalPrice += productSubtotal(product)
   })
-  //
+
+  //收件人與會員相符
+  const handleCheckboxChange = (e) => {
+    setIsInfoVisible(e.target.checked)
+  }
+
   const discountAmount = checkoutData ? checkoutData.discountAmount : 0 // 默认为0
   const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0
   const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
@@ -155,7 +164,12 @@ function Checkout({ step, handleNextStep, setStep }) {
               <div className="labels">收件人資料</div>
               <div className="memberInfo">
                 <div className="deliverInfo d-flex align-items-center">
-                  <input type="checkbox" className="me-2" />
+                  <input
+                    type="checkbox"
+                    className="me-2"
+                    onChange={handleCheckboxChange}
+                    checked={isInfoVisible}
+                  />
                   <div className="selectTitle">收件人姓名與會員資料相符</div>
                 </div>
                 <div className="deliverInfo">
@@ -166,6 +180,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                     placeholder="輸入名稱"
                     aria-label="Username"
                     aria-describedby="addon-wrapping"
+                    value={isInfoVisible ? userData.username : ''}
                   />
                 </div>
                 <div className="deliverInfo">
@@ -176,6 +191,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                     placeholder="輸入電話號碼"
                     aria-label="Username"
                     aria-describedby="addon-wrapping"
+                    value={isInfoVisible ? userData.phone : ''}
                   />
                 </div>
                 <div className="deliverInfo">
@@ -186,6 +202,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                     placeholder="輸入地址"
                     aria-label="Username"
                     aria-describedby="addon-wrapping"
+                    value={isInfoVisible ? userData.address : ''}
                   />
                 </div>
               </div>
