@@ -3,6 +3,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import { useCartList } from '@/context/cart'
 import { useProducts } from '@/context/product'
+import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
 
 export default function CartList({ step, handleNextStep, setStep }) {
@@ -14,18 +15,23 @@ export default function CartList({ step, handleNextStep, setStep }) {
   const [selectedCoupon, setSelectedCoupon] = useState([]) //選取優惠卷
   const [selectedCouponCode, setSelectedCouponCode] = useState('') //選取優惠卷代碼
   const [discountAmount, setDiscountAmount] = useState(0) //優惠卷金額
+  const { authJWT } = useAuthJWT() //取userId
+
+  //優惠卷API
   const couponsDataFetch = async () => {
     try {
+      const id = authJWT.userData.id
       const couponResponse = await axios.get(
-        'http://localhost:3005/api/coupons'
+        `http://localhost:3005/api/coupons/userCoupons/${id}`
       )
-      const couponsData = couponResponse.data.coupons
+      // console.log(couponResponse.data.orders)
+      const couponsData = couponResponse.data.orders
+      // if(){}
       setSelectedCoupon(Array.isArray(couponsData) ? couponsData : [])
     } catch (error) {
       console.error('資料獲取失敗:', error)
     }
   }
-
   // 購物車列表即時渲染
   useEffect(() => {
     couponsDataFetch()
