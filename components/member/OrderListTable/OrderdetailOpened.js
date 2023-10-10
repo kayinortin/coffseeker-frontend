@@ -2,63 +2,168 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaAngleDown } from 'react-icons/fa'
 import { FaAngleUp } from 'react-icons/fa'
 import OrderItems from './OrderItems'
+import axios from 'axios'
 
-// 1010 尚未完成
+// 10/10 尚未完成
 // 1.針對訂單編號取得該訂單下訂的所有商品資訊
 // 2.透過判斷讓展開明細可以看到訂單進度變化
 // 3.訂單日期只顯示到日期 不顯示時間
+// 4.訂單時間排序
+
+// 10/11
+// order_detail資料表中需要總數的欄位
+// 1.折扣前總價
 
 export default function OrderDetailOpened({ order }) {
   const [openDetail, setOpenDetail] = useState(false)
+  const [orderItem, setOrderItem] = useState([])
+  const [TotalAmount, setTotalAmount] = useState(0)
+  const [TotalPrice, setTotalPrice] = useState(0)
+  const [SubTotal, setSubTotal] = useState(0)
+
   const contentRef = useRef(null)
 
   useEffect(() => {
+    // console.log(order)
+    // console.log(order.id)
+    const fetchItems = async () => {
+      try {
+        const orderId = order.id
+        const response = await axios.get(
+          `http://localhost:3005/api/order/orderItems/${orderId}`
+        )
+        // 獲得指定使用者的所有訂單
+        console.log('Item資料', response.data.orderItems)
+        setOrderItem(response.data.orderItems)
+      } catch (error) {
+        console.error('錯誤:', error)
+      }
+    }
+    fetchItems()
+  }, [])
+
+  // 算出數量及價格總和
+  useEffect(() => {
+    let totalPrice = 0
+    let totalAmount = 0
+    let subTotal = 0
+    orderItem.map((v) => {
+      totalPrice += v.discountPrice * v.amount
+      totalAmount += v.amount
+      subTotal = totalPrice + parseInt(order.shipping_fee - order.discount)
+    })
+
+    setTotalPrice(totalPrice)
+    setTotalAmount(totalAmount)
+    setSubTotal(subTotal)
+  }, [orderItem])
+
+  useEffect(() => {
+    // 展開訂單:
     if (openDetail) {
-      // 计算内容的高度并将其应用到元素上
+      // 計算內容高度並套用在元素上
       const contentHeight = contentRef.current.scrollHeight
       contentRef.current.style.height = `${contentHeight}px`
     } else {
-      // 关闭时将高度设置为0
+      // 關閉時將高度設為0
       contentRef.current.style.height = '0px'
     }
   }, [openDetail])
 
-  const OrderItem = [
+  const OrderTbody = [
+    order.order_date.match(/\d{4}-\d{2}-\d{2}/)[0],
+    `${order.total_price}`,
+    order.order_status,
+    order.payment_method,
+  ]
+
+  const OrderTbodyRWD = [
     {
-      img: '/course-image/coffeeImg_1.jpg',
-      discraption: '想望咖啡【獨家風味】蒙馬特的午後咖啡豆 100g/莓果/酒感',
-      type: '莓果/200g',
-      count: '10/包',
-      price: 100,
+      title: '訂單日期',
+      value: order.order_date.match(/\d{4}-\d{2}-\d{2}/)[0],
     },
     {
-      img: '/course-image/coffeeImg_1.jpg',
-      discraption: '想望咖啡【獨家風味】蒙馬特的午後咖啡豆 200g/葡萄/酒感',
-      type: '葡萄/200g',
-      count: '10/包',
-      price: 200,
+      title: '訂單總額',
+      value: `NT$${order.total_price}`,
     },
     {
-      img: '/course-image/coffeeImg_1.jpg',
-      discraption: '想望咖啡【獨家風味】蒙馬特的午後咖啡豆 200g/蘋果/酒感',
-      type: '蘋果/200g',
-      count: '10/包',
-      price: 300,
+      title: '訂單狀態',
+      value: order.order_status,
     },
     {
-      img: '/course-image/coffeeImg_1.jpg',
-      discraption: '想望咖啡【獨家風味】蒙馬特的午後咖啡豆 200g/檸檬/酒感',
-      type: '檸檬/200g',
-      count: '10/包',
-      price: 400,
+      title: '付款方式',
+      value: order.payment_method,
+    },
+  ]
+
+  const statusStyles = {
+    待付款: {
+      state1: ['未付款', 'gray'],
+      state2: ['未理貨', 'gray'],
+      state3: ['未發貨', 'gray'],
+      state4: ['未完成', 'gray'],
+    },
+    已付款: {
+      state1: ['已付款', 'orange'],
+      state2: ['未理貨', 'gray'],
+      state3: ['未發貨', 'gray'],
+      state4: ['未完成', 'gray'],
+    },
+    理貨中: {
+      state1: ['已下訂', 'orange'],
+      state2: ['理貨中', 'orange'],
+      state3: ['未發貨', 'gray'],
+      state4: ['未完成', 'gray'],
+    },
+    已發貨: {
+      state1: ['已下訂', 'orange'],
+      state2: ['理貨中', 'orange'],
+      state3: ['已發貨', 'orange'],
+      state4: ['未完成', 'gray'],
+    },
+    已完成: {
+      state1: ['已下訂', 'orange'],
+      state2: ['理貨中', 'orange'],
+      state3: ['已發貨', 'orange'],
+      state4: ['已完成', 'orange'],
+    },
+    已取消: {
+      state1: ['-----', 'gray'],
+      state2: ['-----', 'gray'],
+      state3: ['-----', 'gray'],
+      state4: ['-----', 'gray'],
+    },
+  }
+
+  const orderStatus = statusStyles[order.order_status]
+
+  const OrderStatus = [
+    {
+      state: orderStatus.state1[0],
+      time: order.order_date,
+      class: orderStatus.state1[1],
+    },
+    {
+      state: orderStatus.state2[0],
+      time: order.tally_date,
+      class: orderStatus.state2[1],
+    },
+    {
+      state: orderStatus.state3[0],
+      time: order.shipping_date,
+      class: orderStatus.state3[1],
+    },
+    {
+      state: orderStatus.state4[0],
+      time: order.finish_date,
+      class: orderStatus.state4[1],
     },
   ]
 
   return (
     <>
-      {/*  */}
-      <div className={'p-3 d-none d-lg-block'}>
-        {/*  */}
+      {/* 桌機板 */}
+      <div className={'p-3 d-none d-lg-block border border-dark'}>
         <div className={'d-none d-lg-flex align-items-center'}>
           <span className={'col-4 text-center'}>{order.tracking_number}</span>
           <div
@@ -66,10 +171,11 @@ export default function OrderDetailOpened({ order }) {
               'col-8 d-flex justify-content-between order-nav align-items-center'
             }
           >
-            <div className="text-center">{order.order_date}</div>
-            <div className="text-center">NT${order.total_price}</div>
-            <div className="text-center">{order.order_status}</div>
-            <div className="text-center">{order.payment_method}</div>
+            {OrderTbody.map((tr, i) => (
+              <div className={'text-center'} key={i}>
+                {tr}
+              </div>
+            ))}
             <button
               className={`text-center border border-dark py-1 order-open ${
                 openDetail ? 'active' : ''
@@ -90,22 +196,12 @@ export default function OrderDetailOpened({ order }) {
           <div className={'d-flex py-2'}>
             <div className="ps-3">{order.tracking_number}</div>
           </div>
-          <div className={'d-flex justify-content-between py-2'}>
-            <div>訂單日期 : </div>
-            <div>{order.order_date}</div>
-          </div>
-          <div className={'d-flex justify-content-between py-2'}>
-            <div>訂單總額 : </div>
-            <div>NT${order.total_price}</div>
-          </div>
-          <div className={'d-flex justify-content-between py-2'}>
-            <div>訂單狀態 : </div>
-            <div>{order.order_status}</div>
-          </div>
-          <div className={'d-flex justify-content-between py-2'}>
-            <div>付款方式 : </div>
-            <div>{order.payment_method}</div>
-          </div>
+          {OrderTbodyRWD.map((v, i) => (
+            <div className={'d-flex justify-content-between py-2'} key={i}>
+              <div>{v.title} </div>
+              <div>{v.value}</div>
+            </div>
+          ))}
           <div className={'text-center d-flex'}>
             <button
               className={
@@ -122,85 +218,66 @@ export default function OrderDetailOpened({ order }) {
           </div>
         </div>
       </div>
-      {/*  */}
-
       <div
         ref={contentRef}
-        className={
-          'border-bottom border-dark order-close ' +
-          (openDetail ? 'active' : '')
-        }
+        className={'order-close ' + (openDetail ? 'active' : '')}
       >
-        <div className={'p-2'}>
+        <div className={'p-2 border-top border-bottom border-dark'}>
           <div className="border border-dark d-flex order-state align-items-end">
-            <div
-              className={'d-flex flex-column justify-content-center col-3 pt-1'}
-            >
-              <div className="text-center">已下訂</div>
-              <div className="text-center data py-1">2023-08-29 11:24</div>
-              <div className="p-1 border orange"></div>
-            </div>
-            <div
-              className={'d-flex flex-column justify-content-center col-3 pt-1'}
-            >
-              <div className="text-center">未理貨</div>
-              <div className="text-center data py-1">---------- --:--</div>
-              <div className="p-1 border gray"></div>
-            </div>
-            <div
-              className={'d-flex flex-column justify-content-center col-3 pt-1'}
-            >
-              <div className="text-center">未出貨</div>
-              <div className="text-center data py-1">---------- --:--</div>
-              <div className="p-1 border gray"></div>
-            </div>
-            <div
-              className={'d-flex flex-column justify-content-center col-3 pt-1'}
-            >
-              <div className="text-center">未完成</div>
-              <div className="text-center data py-1">---------- --:--</div>
-              <div className="p-1 border gray"></div>
-            </div>
+            {/* 訂單狀態管理 */}
+            {OrderStatus.map((v, i) => (
+              <div
+                className={
+                  'd-flex flex-column justify-content-center col-3 pt-1'
+                }
+                key={i}
+              >
+                <div className="text-center">{v.state}</div>
+                <div className="text-center data py-1">
+                  {v.time && v.state !== '-----'
+                    ? v.time
+                    : '---------- --:--:--'}
+                </div>
+                <div className={`p-1 border ${v.class}`}></div>
+              </div>
+            ))}
           </div>
         </div>
-        {/*  */}
-        {OrderItem.map((v, i) => {
+        {/* 明細列表 */}
+        {orderItem.map((v, i) => {
           return <OrderItems key={i} order={v} />
         })}
-        {/*  */}
         <div className={'p-2 border'}>
           <div className={'border border-dark p-2'}>
             <div className="d-flex justify-content-between p-2">
-              <span>商品</span>
-              <span>4 / 項</span>
+              <span>數量</span>
+              <span>{TotalAmount} / 個</span>
             </div>
             {/*  */}
             <div className="d-flex justify-content-between p-2">
               <span>小計</span>
-              <span>NT$ 2380</span>
+              <span>NT$ {TotalPrice}</span>
             </div>
             {/*  */}
             <div className="d-flex justify-content-between p-2">
               <span>運費</span>
-              <span>0</span>
+              <span>{order.shipping_fee}</span>
             </div>
             {/*  */}
             <div className="d-flex justify-content-between p-2">
               <span>優惠</span>
-              <span className={'text-danger'}>-380</span>
+              <span className={'text-danger'}>{order.discount}</span>
             </div>
             {/*  */}
             <hr />
             <div className="d-flex justify-content-between p-2">
               <span>合計</span>
-              <span className={'orange-text'}>NT${order.total_price}</span>
+              <span className={'orange-text'}>NT${SubTotal}</span>
             </div>
             {/*  */}
           </div>
         </div>
       </div>
-      {/* {openDetail ? (
-      ) : null} */}
     </>
   )
 }

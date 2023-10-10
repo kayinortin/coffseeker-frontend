@@ -192,26 +192,7 @@
 }
 
 
-// 訂單頁的表格
 
-.order-state{
-    font-size: 16px;
-    .data{
-        font-size: 12px;
-    }
-    .gray{
-        background: #a7a7a7;
-    }
-    .orange{
-        background: $color--secondary;
-    }
-}
-
-.order-nav{
-  div.text-center{
-    width: 103px;
-  }
-}
 
 // img{
 //     width: 100px;
@@ -257,5 +238,26 @@
       color: #fff;
         background: $color--secondary;
     }
+  }
+}
+
+// 訂單頁的表格
+
+.order-state{
+  font-size: 16px;
+  .data{
+      font-size: 12px;
+  }
+  .gray{
+      background: $color--gray3;
+  }
+  .orange{
+      background: $color--secondary;
+  }
+}
+
+.order-nav{
+  div.text-center{
+    width: 103px;
   }
 }
