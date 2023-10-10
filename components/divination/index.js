@@ -7,10 +7,11 @@ import drinkCoffeeImg from '@/public/divination-image/Animation - 1695799375022.
 let cayPlay = false
 register()
 export default function Divination() {
+  const [iconStyle, setIconStyle] = useState('')
   const [gameFinish, setGameFinish] = useState(false)
   const sections = [
     {
-      h2: '咖啡測驗',
+      h2: '咖啡占卜',
       h6: `日安，迷惘的咖啡靈魂。
          <br />
          歡迎進入探索咖啡心靈的奇妙世界。
@@ -23,35 +24,7 @@ export default function Divination() {
     },
     {
       h2: 'Q1',
-      h6: `在咖啡的世界中，你更傾向於從哪個角落尋找一杯心靈的滋養？`,
-      svg: ['shop1', 'shop2', 'shop3', 'shop4'],
-      p: ['自營咖啡坊', '高級連鎖咖啡廳', '平價連鎖咖啡廳', '便利商店'],
-    },
-    {
-      h2: 'Q2',
-      h6: `咖啡與甜點共譜的和諧交響曲中，你會選擇哪份甜蜜伴奏？`,
-      svg: ['cake1', 'cake2', 'cake3', 'cake4'],
-      p: [
-        '輕盈無負擔 戚風蛋糕',
-        '均衡營養 堅果塔',
-        '濃郁奶香 起司蛋糕',
-        '不太喜歡甜點',
-      ],
-    },
-    {
-      h2: 'Q3',
-      h6: `咖啡靈魂的渴望在你耳邊低語，訴說它傾向於何種風味？`,
-      svg: ['faver1', 'faver2', 'faver3', 'faver4'],
-      p: [
-        '經典濃郁 純正香氣',
-        '輕微獨特 不失平衡',
-        '充滿驚喜 風味特殊',
-        '沒有特別偏好',
-      ],
-    },
-    {
-      h2: 'Q4',
-      h6: `咖啡心靈對於酸度和獨特風味，有著怎樣的渴望？`,
+      h6: `咖啡心靈對於酸度和風味，有著怎樣的渴望？`,
       svg: ['like1', 'like2', 'like3', 'like4'],
       p: [
         '獨特風味 愛不釋手',
@@ -61,9 +34,9 @@ export default function Divination() {
       ],
     },
     {
-      h2: 'Q5',
+      h2: 'Q2',
       h6: ` 面前是咖啡之旅的十字路口，你會選擇走向哪一條指示的道路？`,
-      svg: ['teast1', 'teast2', 'teast3', 'teast4'],
+      svg: ['taste1', 'taste2', 'taste3', 'taste4'],
       p: [
         '花香果味 明亮果酸',
         '酸甜平衡 香氣溫和',
@@ -72,10 +45,10 @@ export default function Divination() {
       ],
     },
     {
-      h2: 'Q6',
+      h2: 'Q3',
       h6: `旅程即將結束，伴手禮是咖啡心靈的種子，你更傾向於哪種形式？`,
       svg: ['beans1', 'beans2', 'beans3', 'beans4'],
-      p: ['純粹原豆', '研磨豆粉', '輕鬆濾掛', '便利即溶'],
+      p: ['原形豆體', '研磨豆粉', '輕鬆濾掛', '便利即溶'],
     },
   ]
   const ans = []
@@ -117,7 +90,10 @@ export default function Divination() {
       ).innerText = section.p[i]
       document
         .querySelector(`.tarotCard${picks[i]} .back .cardImage img`)
-        .setAttribute('src', '/divination-image/' + section.svg[i] + '.svg')
+        .setAttribute(
+          'src',
+          `/divination-image/${iconStyle}` + section.svg[i] + '.svg'
+        )
 
       await waittings(300)
     }
@@ -236,7 +212,7 @@ export default function Divination() {
     }
     await waittings(500)
     //接續下個題目
-    if (nowSection < 6) {
+    if (nowSection < 3) {
       nowSection += 1
       picks = []
       cayPlay = false
@@ -269,25 +245,12 @@ export default function Divination() {
 
   //塔羅結果生成篩選條件
   const [ansArr, setAnsArr] = useState(null)
+  const [keyWordArr, setKeyWordArr] = useState(null)
+
   function ansToKeyWord(ansArr) {
     const keyWordArr = []
     console.log('ansArr:' + ansArr)
-    const filterKeyWord = [
-      '蛋糕',
-      '堅果',
-      '經典',
-      '平衡',
-      '驚喜',
-      '特殊',
-      '獨特',
-      '酸',
-      '蜜',
-      '花香',
-      '香氣',
-      '厚',
-      '焦糖',
-    ]
-
+    const filterKeyWord = ['獨特', '酸', '蜜', '花香', '香氣', '厚', '焦糖']
     for (const word of filterKeyWord) {
       for (const description of ansArr) {
         if (description.includes(word)) {
@@ -302,8 +265,9 @@ export default function Divination() {
   const [fetchProductDataEnd, setFetchProductDataEnd] = useState(false)
   useEffect(() => {
     if (gameFinish) {
-      const keyWordArr = ansToKeyWord(ansArr)
-      const keyWord = keyWordArr.join()
+      const word = ansToKeyWord(ansArr)
+      setKeyWordArr(word)
+      const keyWord = word.join()
       console.log('keyWord:' + keyWord)
       const fetchData = async () => {
         try {
@@ -332,17 +296,31 @@ export default function Divination() {
               <div className="box">
                 <div className="ratio ratio-1x1">
                   <picture>
-                    <img src="/divination-image/desk2.png" alt="" />
+                    <img
+                      className="ed-image-main"
+                      src={`http://localhost:3005/uploads/${product.image_main}`}
+                      alt={`${product.name}`}
+                    />
                   </picture>
                 </div>
 
-                <div className="productText ms-5">
+                <div className="productText ms-lg-5">
                   <div className="">
-                    <h4 className="mb-3">{product.name}</h4>
+                    <h5>精選品牌 &gt; {product.brand}</h5>
+                    <h4 className="ed-detail-title mb-3">{product.name}</h4>
                     <h5>{product.description}</h5>
                   </div>
-                  <div className="">
-                    <h4>NT{product.discountPrice}</h4>
+                  <div className="d-flex justify-content-between">
+                    <span className="ed-detail-price">
+                      NT{product.discountPrice}
+                    </span>
+                    <a
+                      className="me-0"
+                      href={`http://localhost:3000/product/${product.id}`}
+                      target="_blank"
+                    >
+                      <button className="">前往商品</button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -359,7 +337,31 @@ export default function Divination() {
         <div className="desk">
           <div className="mask"></div>
           <div className="game">
-            <div className="textArea mb-auto mt-5 ">
+            <div className="position-absolute top-0 text-center">
+              <button
+                onClick={() => {
+                  setIconStyle('')
+                }}
+              >
+                style1
+              </button>
+              <button
+                onClick={() => {
+                  setIconStyle('lineal-color/')
+                }}
+              >
+                style2
+              </button>
+              <button
+                onClick={() => {
+                  setIconStyle('lineal/')
+                }}
+              >
+                style3
+              </button>
+              <p>↑測試用，請在開始測驗前點擊切換樣式↑</p>
+            </div>
+            <div className="textArea mb-auto mt-lg-5 mt-2">
               <h2 className="focus-in-contract">咖啡測驗</h2>
               <h5 className="focus-in-contract">
                 日安，迷惘的咖啡靈魂。
@@ -392,13 +394,12 @@ export default function Divination() {
     return (
       <>
         <div className="TarotResult">
-          <section className="result">
+          <div className="result">
             <div className="container d-flex justify-content-center">
               <div className="resultCard d-lg-flex">
                 <Lottie
                   play
                   loop
-                  style={{ width: 600, height: 600 }}
                   animationData={drinkCoffeeImg}
                   className="lottie"
                 />
@@ -407,19 +408,17 @@ export default function Divination() {
                   <p>
                     當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
                     <br />
-                    您的味蕾是一個多彩的舞台，總是上演著糕點之舞。
+                    而在咖啡的星空下，您像是一位星座探險家。
                     <br />
-                    而在咖啡的星空下，您像是一位星座探險家，時刻尋求著新的星座。
-                    <br />
-                    您偏好的咖啡口味是花香果味和特殊風味，這反映了您對於生活中多樣性和驚喜的熱愛。
+                    您偏好的咖啡口味是{keyWordArr}
                     <br />
                     無論形式如何，您對於咖啡的熱情總是源源不斷。祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
                   </p>
                 </div>
               </div>
             </div>
-          </section>
-          <section className="my-5">
+          </div>
+          <div className="my-5">
             <div className="container">
               <div className="swiperTitle mb-5 d-flex justify-content-center ">
                 <h2>推薦商品</h2>
@@ -440,7 +439,7 @@ export default function Divination() {
                 <SwiperPages productData={productData} />
               </swiper-container>
             </div>
-          </section>
+          </div>
         </div>
       </>
     )
