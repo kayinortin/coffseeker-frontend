@@ -4,15 +4,9 @@ import { FaAngleUp } from 'react-icons/fa'
 import OrderItems from './OrderItems'
 import axios from 'axios'
 
-// 10/10 尚未完成
-// 1.針對訂單編號取得該訂單下訂的所有商品資訊
-// 2.透過判斷讓展開明細可以看到訂單進度變化
-// 3.訂單日期只顯示到日期 不顯示時間
-// 4.訂單時間排序
-
-// 10/11
-// order_detail資料表中需要總數的欄位
-// 1.折扣前總價
+// 10/11 尚未完成
+// 1.訂單時間排序
+// 2.商品圖片尚未連接資料庫
 
 export default function OrderDetailOpened({ order }) {
   const [openDetail, setOpenDetail] = useState(false)
