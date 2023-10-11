@@ -152,26 +152,32 @@ function Checkout({ step, handleNextStep, setStep }) {
             {isOpen && (
               <div className="openProducts container">
                 <div className="row">
-                  {/* 購物車 */}
+                  {/* 商品列表 */}
                   <div className="productscart col-lg-8">
-                    <div className="wrapcart">
-                      <div className="labels">
-                        商品項目({productItems.length})
+                    {/* 咖啡列表 */}
+                    {cartData.length > 0 && (
+                      <div className="wrapcart">
+                        <div className="labels">
+                          商品項目({productItems.length})
+                        </div>
+                        <div className="products container">{productItems}</div>
+                        <div className="productsFoot text-end fw-bolder fs-5 py-3">
+                          商品共計 ${totalPrice}
+                        </div>
                       </div>
-                      <div className="products container">{productItems}</div>
-                      <div className="productsFoot text-end fw-bolder fs-5 py-3">
-                        商品共計 ${totalPrice}
+                    )}
+                    {/* 課程列表 */}
+                    {courseData.length > 0 && (
+                      <div className="wrapcart">
+                        <div className="labels">
+                          課程項目({courseItems.length})
+                        </div>
+                        <div className="products container">{courseItems}</div>
+                        <div className="productsFoot text-end fw-bolder fs-5 py-3">
+                          課程共計 ${totalCoursePrice}
+                        </div>
                       </div>
-                    </div>
-                    <div className="wrapcart">
-                      <div className="labels">
-                        課程項目({courseItems.length})
-                      </div>
-                      <div className="products container">{courseItems}</div>
-                      <div className="productsFoot text-end fw-bolder fs-5 py-3">
-                        課程共計 ${totalCoursePrice}
-                      </div>
-                    </div>
+                    )}
                   </div>
                   {/* 資訊 */}
                   <div className="infoWrap col-lg-4">
