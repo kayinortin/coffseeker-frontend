@@ -321,7 +321,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   ))
 
   //購物車沒有商品
-  if (cartListData.length === 0) {
+  if (cartListData.length === 0 && cartListData_course.length === 0) {
     return (
       <>
         <div className="cartlist">
@@ -333,7 +333,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
             />
             <div className="emptyTitle">您的購物車目前無商品</div>
             <button type="button" className="btn goshop">
-              <a href="/pages/product">前往商城</a>
+              <a href="/product">前往商城</a>
             </button>
           </div>
         </div>
@@ -349,25 +349,29 @@ export default function CartList({ step, handleNextStep, setStep }) {
           {/* 商品表單 */}
           <div className="productscart col-lg-8">
             {/* 咖啡列表 */}
-            <div className="wrapcart">
-              <div className="labels">商品項目({productItems.length})</div>
-              <div className="products container text-center">
-                {productItems}
+            {cartListData.length > 0 && (
+              <div className="wrapcart">
+                <div className="labels">商品項目({productItems.length})</div>
+                <div className="products container text-center">
+                  {productItems}
+                </div>
+                <div className="productsFoot text-end fw-bolder fs-4">
+                  商品共計 ${totalPrice}
+                </div>
               </div>
-              <div className="productsFoot text-end fw-bolder fs-4">
-                商品共計 ${totalPrice}
-              </div>
-            </div>
+            )}
             {/* 課程列表 */}
-            <div className="wrapcart">
-              <div className="labels">課程項目({courseItems.length})</div>
-              <div className="products container text-center">
-                {courseItems}
+            {cartListData_course.length > 0 && (
+              <div className="wrapcart">
+                <div className="labels">課程項目({courseItems.length})</div>
+                <div className="products container text-center">
+                  {courseItems}
+                </div>
+                <div className="productsFoot text-end fw-bolder fs-4">
+                  課程共計 ${courseTotalPrice}
+                </div>
               </div>
-              <div className="productsFoot text-end fw-bolder fs-4">
-                課程共計 ${courseTotalPrice}
-              </div>
-            </div>
+            )}
           </div>
           {/* 資訊表單 */}
           <div className="infos col-lg-4 mb-3">
