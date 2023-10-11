@@ -5,7 +5,8 @@ import Review from './Reviews'
 // import CourseDescription from './CourseDescription'
 import TopHits from './TopHits'
 import style from '@/styles/_course.module.scss'
-
+import { useUser } from '@/context/UserInfo'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
@@ -37,6 +38,7 @@ export default function MainContent() {
   const [activeContent, setActiveContent] = useState('introduction')
   const [images, setImages] = useState([])
   const { show, setShow } = useShow()
+  const {isLoggedIn, setIsLoggedIn}=useUser()
 
   const getDetail = async () => {
     try {
@@ -76,12 +78,7 @@ export default function MainContent() {
           <CourseText pid={pid} course={CoursesData} />
         </div>
 
-        {/* <div className="container px-5 mt-3">
-          <div className="d-flex justify-content-between d-sm-none">
-            <AddCartBtn pid={pid} course={CoursesData} />
-            <BuyBtn />
-          </div>
-        </div> */}
+        
 
         {CoursesData && CoursesData.course_syllabus ? (
           <>
@@ -89,6 +86,11 @@ export default function MainContent() {
               <div className="d-flex justify-content-center my-5 btn-course-group">
                 <div className="row">
                   {/* 網頁版（非手機板）*/}
+                  <hr/>
+                  <img
+                src="http://localhost:3000/product_detail/banner.png"
+                alt="product-detail-banner"
+              />
                   <div className="col-sm-12 text-start  ">
                     <div className="btn-group mt-3">
                       <button
@@ -162,14 +164,24 @@ export default function MainContent() {
               <h6>【課程特色】</h6>
               <div className="lh-base">{CoursesData.course_description}</div>
             </section>
+            <hr/>
           </>
         ) : (
           <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
         )}
-        <h3 className={`text-center ${style['hw-review-title']}`}>學員評價</h3>
+        
 
-        <Review />
-        <CourseComment pid={pid}/>
+        <Review pid={pid}/>
+
+{isLoggedIn?<CourseComment pid={pid}/>:<div className="mx-auto text-center">
+                  <h5 className="my-3">請先登入再進行評論</h5>
+                  <div className="my-4">
+                    <Link href="http://localhost:3000/member/login">
+                      <button className="ed-addCart">登入會員</button>
+                    </Link>
+                  </div>
+                </div>}
+        
 
         <TopHits />
       </div>
