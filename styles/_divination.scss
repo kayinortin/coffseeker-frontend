@@ -107,8 +107,8 @@
             height: 100%;
             border-radius: 16px;
             overflow: hidden;
-            background: #275371;
-            background-image: url(../public/divination-image/tarot_cardback_whiteline.png);
+            background: $color--success;
+            background-image: url(../public/divination-image/tarot_cardback_goldline.png);
             background-position: center center;
             background-size: cover;
           }
@@ -342,11 +342,14 @@
     background-color: $color--background;
     .resultCard {
       position: relative;
-      max-width: 600px;
-      background-color: #dbdbdb;
-      border: 6px solid $color--primary;
+      max-width: 1000px;
+      background-color: #dbdbdbc1;
+      border: 6px solid $color--success;
       padding: 20px;
       // box-shadow: 10px 10px 42px 0 rgba(0, 0, 0, 0.75);
+      .lottie {
+        width: 600px;
+      }
     }
     .title {
       h2 {
@@ -356,7 +359,7 @@
       }
       p {
         max-width: 600px;
-        // color: #ffffff;
+        font-size: 20px;
         line-height: 200%;
       }
     }
@@ -370,6 +373,10 @@
   .box {
     height: 600px;
     padding-inline: 40px;
+    background-image: url(../public/divination-image/bg2.png);
+    background-position: -30% bottom;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
     background-color: #b2b2b287;
     display: flex;
     justify-content: center;
@@ -396,10 +403,76 @@
       h5 {
         line-height: 150%;
       }
+      button {
+        border: none;
+        font-size: 20px;
+        width: 170px;
+        height: 40px;
+        color: white;
+        background-color: rgb(181, 75, 51);
+      }
     }
   }
-
-  .swiper {
-    --swiper-theme-color: #909090;
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: rgb(181, 75, 51) !important;
+  }
+}
+@media (max-width: 720px) {
+  .desk {
+    background-image: none;
+    .game {
+      .textArea {
+        text-align: center;
+        padding-block: 20px;
+        h2 {
+          margin-bottom: 0px;
+        }
+        h5 {
+          padding: 10px;
+        }
+      }
+      .tarotCard {
+        width: 160px;
+        height: 240px;
+      }
+      .forward12 {
+        bottom: 400px;
+        margin-left: -190px;
+      }
+      .forward22 {
+        bottom: 400px;
+        margin-left: 190px;
+      }
+      .forward32 {
+        bottom: 150px;
+        margin-left: -190px;
+      }
+      .forward42 {
+        bottom: 150px;
+        margin-left: 190px;
+      }
+    }
+  }
+  .TarotResult {
+    .result {
+      background-image: none;
+      .resultCard {
+        width: 100%;
+        .lottie {
+          width: 100%;
+        }
+      }
+    }
+    .box {
+      background-image: none;
+      height: calc(100vh - 60px);
+      flex-direction: column;
+      align-items: top;
+      .ratio {
+        width: 100%;
+        height: auto;
+      }
+    }
   }
 }

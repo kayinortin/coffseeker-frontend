@@ -160,6 +160,18 @@ export default function DefaultLayout({ title = '', children }) {
       tagDesktop: <div className="ed-tag ed-tag--corner">{cartIconLength}</div>,
       href: '/cart',
     },
+    {
+      id: 12,
+      label: '歷史訂單',
+      iconMobile: (
+        <i className="fas fa-receipt ed-navbar__font ed-navbar__icon ed-navbar__icon--inline"></i>
+      ),
+      iconDesktop: (
+        <i className="fas  fa-receipt fa-sheet-plastic ed-navbar__font"></i>
+      ),
+      tagDesktop: ``,
+      href: '/member/order-list',
+    },
   ]
 
   // cookies 設定

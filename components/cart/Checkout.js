@@ -33,18 +33,21 @@ function Checkout({ step, handleNextStep, setStep }) {
     setIsOpen(!isOpen)
   }
   //購物車商品即時渲染
-  const cartItems = JSON.parse(localStorage.getItem('cartList'))
-  cartItems.forEach((product) => {
-    console.log(product)
-  })
+  const cartData = JSON.parse(localStorage.getItem('cartList'))
+  const courseData = JSON.parse(localStorage.getItem('cartList_course'))
+
   //單一商品小計＝特價價格＊數量
   function productSubtotal(product) {
     return product.discountPrice * product.amount
   }
   //商品共計
   let totalPrice = 0
-  cartItems.forEach((product) => {
+  cartData.forEach((product) => {
     totalPrice += productSubtotal(product)
+  })
+  let totalCoursePrice = 0
+  courseData.forEach((course) => {
+    totalCoursePrice += course.course_price
   })
 
   //收件人與會員相符
@@ -56,9 +59,10 @@ function Checkout({ step, handleNextStep, setStep }) {
   const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0
   const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
   const totalAmount = checkoutData ? checkoutData.totalAmount : 0
+  const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0
 
   //商品列表
-  const productItems = cartItems.map((product) => (
+  const productItems = cartData.map((product) => (
     <div key={product.id} className="productwrap row py-3">
       <div className="imgContainer col-lg-2 col-sm-3 ">
         <img
@@ -70,13 +74,13 @@ function Checkout({ step, handleNextStep, setStep }) {
       <div className="productContent col-lg-10 col-sm-9 text-start">
         <div className="topDetails d-flex justify-content-between ">
           <div className="details">
-            <div className="productTitle lh-sm pb-3">{product.name}</div>
-            <div className="productDescription lh-base pb-5">
+            <div className="productTitle lh-sm pb-1">{product.name}</div>
+            <div className="productDescription lh-base">
               {product.description}
             </div>
           </div>
         </div>
-        <div className="productPrice text-end pb-3 align-items-center">
+        <div className="productPrice text-end pt-2 align-items-center">
           <div className="price d-inline text-decoration-line-through fs-6 pe-2">
             ${product.price}
           </div>
@@ -85,9 +89,45 @@ function Checkout({ step, handleNextStep, setStep }) {
           </div>
           <div className="discountPrice  d-inline fs-5"> x{product.amount}</div>
         </div>
-        <div className="productQuantityTotal text-end ">
+        <div className="productQuantityTotal text-end pt-2">
           <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
             ${productSubtotal(product)}
+          </div>
+        </div>
+      </div>
+    </div>
+  ))
+  //課程列表
+  const courseItems = courseData.map((course) => (
+    <div key={course.id} className="productwrap row py-3">
+      <div className="imgContainer col-lg-2 col-sm-3 ">
+        <img
+          className="img-fluid"
+          src={`http://localhost:3005/uploads/${course.course_image}`}
+          alt={course.course_image}
+        />
+      </div>
+      <div className="productContent col-lg-10 col-sm-9 text-start">
+        <div className="topDetails d-flex justify-content-between ">
+          <div className="details">
+            <div className="productTitle lh-sm pb-1">{course.course_name}</div>
+            <div className="productDescription lh-base">
+              {course.course_description}
+            </div>
+          </div>
+        </div>
+        <div className="productPrice text-end align-items-cente pt-2">
+          {/* <div className="price d-inline text-decoration-line-through fs-6 pe-2">
+            ${course.course_price}
+          </div> */}
+          <div className="discountPrice d-inline fs-5">
+            ${course.course_price}
+          </div>
+          <div className="discountPrice  d-inline fs-5"> x1</div>
+        </div>
+        <div className="productQuantityTotal text-end pt-2">
+          <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
+            ${course.course_price}
           </div>
         </div>
       </div>
@@ -113,14 +153,28 @@ function Checkout({ step, handleNextStep, setStep }) {
               <div className="openProducts container">
                 <div className="row">
                   {/* 購物車 */}
-                  <div className="productscart col-lg-9">
-                    <div className="products container">{productItems}</div>
-                    <div className="productsFoot text-end fw-bolder fs-5 py-3">
-                      商品共計 ${totalPrice}
+                  <div className="productscart col-lg-8">
+                    <div className="wrapcart">
+                      <div className="labels">
+                        商品項目({productItems.length})
+                      </div>
+                      <div className="products container">{productItems}</div>
+                      <div className="productsFoot text-end fw-bolder fs-5 py-3">
+                        商品共計 ${totalPrice}
+                      </div>
+                    </div>
+                    <div className="wrapcart">
+                      <div className="labels">
+                        課程項目({courseItems.length})
+                      </div>
+                      <div className="products container">{courseItems}</div>
+                      <div className="productsFoot text-end fw-bolder fs-5 py-3">
+                        課程共計 ${totalCoursePrice}
+                      </div>
                     </div>
                   </div>
                   {/* 資訊 */}
-                  <div className="infoWrap col-lg-3">
+                  <div className="infoWrap col-lg-4">
                     <div className="paymentWrap">
                       <div className="labels">付款資訊</div>
                       <div className="payItems">
@@ -132,7 +186,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                         </div>
                         <div className="items d-flex justify-content-between">
                           <div className="payTitle">金額</div>
-                          <div className="payText">${totalPrice}</div>
+                          <div className="payText">${allTotalPrice}</div>
                         </div>
 
                         <div className="items d-flex justify-content-between">

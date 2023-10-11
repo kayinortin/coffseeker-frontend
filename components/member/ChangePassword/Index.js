@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { useUser } from '@/context/UserInfo'
+// 10/10 尚未完成
+// 未增加前端驗證
+// 送出表單後清空表單內容
+// 原密碼驗證
 
 export default function ChangePassword() {
   // useContext
@@ -15,9 +19,9 @@ export default function ChangePassword() {
   useEffect(() => {
     if (userData) {
       setId(userData.id)
-      console.log('已取得資料')
+      // console.log('已取得資料')
     } else {
-      console.log('未取得資料')
+      // console.log('未取得資料')
     }
   }, [userData])
 
@@ -71,9 +75,7 @@ export default function ChangePassword() {
       timer: 1500,
     })
   }
-  // 出門前備註 未增加前端驗證
-  // 送出表單後清空表單內容
-  // 原密碼驗證
+
   const handleChangePassword = async () => {
     // if (newPassword === '') {
     //   errorSwal('密碼不能為空')

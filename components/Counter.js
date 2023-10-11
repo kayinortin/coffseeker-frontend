@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 
 function Counter(props) {
   const { number, setNumber, show } = props
@@ -23,7 +24,7 @@ function Counter(props) {
   return (
     <>
       <div
-        className={show ? 'ed-counter w-50 mobile-counter' : 'ed-counter'}
+        className="ed-btn-group d-flex"
         role="button"
         tabIndex="0"
         onClick={handleFocus}
@@ -36,24 +37,14 @@ function Counter(props) {
       >
         <button
           type="button"
-          className="ed-counter__btn"
+          className="quantityMinus"
           onClick={handleMinusClick}
         >
-          <i className="fas fa-minus e-icon ed-counter__icon"></i>
+          <AiOutlineMinus />
         </button>
-        <span
-          className={
-            isFocused ? 'ed-counter__number focused' : 'ed-counter__number'
-          }
-        >
-          {number}
-        </span>
-        <button
-          type="button"
-          className="ed-counter__btn"
-          onClick={handlePlusClick}
-        >
-          <i className="fas fa-plus e-icon ed-counter__icon"></i>
+        <span className="form-control forminput text-center">{number}</span>
+        <button type="button" className="quantityAdd" onClick={handlePlusClick}>
+          <AiOutlinePlus />
         </button>
       </div>
     </>

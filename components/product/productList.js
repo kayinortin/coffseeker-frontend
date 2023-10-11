@@ -1,23 +1,28 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { useMediaQuery } from 'react-responsive'
 import Skeleton from '@mui/material/Skeleton'
 import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
+import FilterMobile from './FilterMobile'
 import Sort from './Sort'
-import navItems from '../../data/navitems.json'
+import Filter from './Filter'
+import ProductDetailMobile from '@/components/product/productDetailMobile'
 
+import { useShow } from '@/context/showProductDetail'
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 
 export default function ProductList(props) {
-  const { setShow } = props
+  const { show, setShow, selectedPid } = useShow()
   const router = useRouter()
+  const { pid } = router.query
   const currentRoute = router.asPath
   const { productsData, setProductsData, sortBy } = useProducts()
   const isFetchingProducts = productsData.length === 0
 
   const [sortedProducts, setSortedProducts] = useState([])
-
   useEffect(() => {
     let sorted = [...productsData]
     switch (sortBy) {
@@ -61,82 +66,36 @@ export default function ProductList(props) {
     setCurrentPage(newPage)
   }
 
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
   return (
     <>
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
         <div className="d-none d-md-block ed-left-filter container mt-5">
-          <ul className="ed-navbar__items">
-            <ul className="ed-navbar__items">
-              {navItems.map((item) => {
-                if (!item.children) {
-                  return (
-                    // 沒有下拉式選單的情況
-                    <li
-                      className="ed-navbar__item ed-navbar__link"
-                      key={item.id}
-                    >
-                      <a
-                        className={`ed-navbar__font ${
-                          navItems.find((item) => item.href === currentRoute)
-                            ? 'active'
-                            : ''
-                        }`}
-                        aria-current="page"
-                        href={item.href}
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  )
-                }
-                // 有下拉式選單 (children) 的情況
-                return (
-                  <li className="nav-item dropdown" key={item.id}>
-                    <a
-                      className={`nav-link dropdown-toggle ed-navbar__font ${
-                        item.children.find(
-                          (child) => child.href === currentRoute
-                        )
-                          ? 'active'
-                          : ''
-                      }`}
-                      id="navbarDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      href="#"
-                    >
-                      {item.label}
-                    </a>
-                    <ul className="dropdown-menu">
-                      {item.children.map((child) => (
-                        <li key={child.id}>
-                          <a
-                            className={`dropdown-item ${
-                              currentRoute === child.href ? 'active' : ''
-                            }`}
-                            href={child.href}
-                          >
-                            {child.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                )
-              })}
-            </ul>
-          </ul>
+          <Filter onFilter={setProductsData} />
         </div>
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">
-            <h5>精品咖啡豆 單品 | 行家 | 經典 系列咖啡豆</h5>
+            <div className="d-flex">
+              <div className="d-flex align-items-center">
+                <Link href="/product">
+                  <h6>線上購物</h6>
+                </Link>
+                <div style={{ margin: '0 5px' }}> &gt; </div>
+                <Link href="/product">
+                  <h6>全站商品</h6>
+                </Link>
+              </div>
+            </div>
             <div className="d-flex justify-content-between align-items-center">
               <div className="mt-2 d-none d-md-block">
-                共有 {productsData.length} 筆商品
+                共有 {sortedProducts.length} 筆商品
               </div>
               <Sort />
+              <div className="d-block d-md-none mt-2">
+                <FilterMobile onFilter={setProductsData} />
+              </div>
             </div>
             {!isFetchingProducts ? (
               <>
@@ -147,6 +106,9 @@ export default function ProductList(props) {
                     product={product}
                   />
                 ))}
+                {show.in && isMobile && (
+                  <ProductDetailMobile pid={selectedPid} />
+                )}
                 <div className="pagination-container d-flex justify-content-center mt-5">
                   <ul className="pagination">
                     <li

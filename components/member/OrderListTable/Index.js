@@ -13,10 +13,12 @@ export default function OrderListTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (checkToken) {
-        const fetchUser = await FetchUserData()
-        console.log('fetchUser是是是 ', fetchUser)
-        await setUserData(fetchUser)
+      if (!userData) {
+        if (checkToken) {
+          const fetchUser = await FetchUserData()
+          // console.log('fetchUser是是是 ', fetchUser)
+          await setUserData(fetchUser)
+        }
       }
     }
     fetchData()
@@ -30,13 +32,7 @@ export default function OrderListTable() {
           const response = await axios.get(
             `http://localhost:3005/api/order/userOrders/${userId}`
           )
-          console.log('response 是是是', response)
-          // Swal.fire({
-          //   title: '修改資料成功',
-          //   icon: 'success',
-          //   showConfirmButton: false,
-          //   timer: 1500,
-          // })
+          // 獲得指定使用者的所有訂單
           setOrderData(response.data.orders)
         } catch (error) {
           console.error('錯誤:', error)
@@ -99,10 +95,14 @@ export default function OrderListTable() {
               ))}
             </div>
           </div>
+          {orderData.length == 0 ? (
+            <div className={'text-center py-5'}>尚未成立任何訂單</div>
+          ) : (
+            orderData.map((v) => {
+              return <OrderDetailOpened key={v.id} order={v} />
+            })
+          )}
           {/* 訂單列表 */}
-          {orderData.map((v) => {
-            return <OrderDetailOpened key={v.id} order={v} />
-          })}
         </div>
       </div>
     </>

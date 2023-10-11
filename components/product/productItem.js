@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+
 import Swal from 'sweetalert2'
 import Skeleton from '@mui/material/Skeleton'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useMediaQuery } from 'react-responsive'
 
 import { useShow } from '@/context/showProductDetail'
 import { useCategory } from '@/context/category'
@@ -11,6 +14,8 @@ import { useCartList } from '@/context/cart'
 import FavIcon from '../FavIcon'
 
 export default function ProductItem(props) {
+  const router = useRouter()
+
   const [number, setNumber] = useState(1)
   const { product } = props
   const {
@@ -31,22 +36,25 @@ export default function ProductItem(props) {
 
   const isFetchingCategory = categoryData.length === 0
 
-  const handleShow = () => {
-    setShow({ ...setShow, in: true })
-  }
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
 
-  useEffect(() => {
-    if (!isFetchingCategory) {
-      const matchedCategory = categoryData.find(
-        (category) => product.category_id === category.id
-      )
-      setCategory({ ...matchedCategory })
+  const handleShow = (e) => {
+    if (!isDesktop) {
+      e.preventDefault()
     }
-  }, [categoryData])
+  }
+  const handleClick = () => {
+    setShow({
+      in: true,
+      selectedPid: product.id,
+    })
+  }
 
   //加入購物車
   const addCart = () => {
-    //加入購物車alert
+    const itemInCart = cartListData.some((item) => item.id === product.id)
+
+    // 加入購物車alert
     const Toast = Swal.mixin({
       toast: true,
       showConfirmButton: false,
@@ -58,12 +66,24 @@ export default function ProductItem(props) {
       },
     })
 
+    if (itemInCart) {
+      Toast.fire({
+        icon: 'info',
+        title: '此商品已加入購物車',
+        customClass: {
+          popup: 'ed-alert__toast',
+          title: 'ed-alert__subtitle',
+        },
+      })
+      return
+    }
+
     Toast.fire({
       icon: 'success',
       title: '商品已加入購物車',
       customClass: {
-        popup: 'c-alert__toast',
-        title: 'c-alert__subtitle',
+        popup: 'ed-alert__toast',
+        title: 'ed-alert__subtitle',
       },
     })
 
@@ -71,7 +91,6 @@ export default function ProductItem(props) {
       id: product.id,
       name: product.name,
       image: product.image,
-      image_main: product.image_main,
       price: product.price,
       discountPrice: product.discountPrice,
       description: product.description,
@@ -112,7 +131,7 @@ export default function ProductItem(props) {
 
   return (
     <>
-      <div className="col-12 col-md-4 my-3">
+      <div className="col-12 col-md-4 my-3" onClick={handleClick}>
         <div className="card ed-border-none">
           <Link
             className="ed-border-card01"

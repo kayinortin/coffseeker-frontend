@@ -385,17 +385,30 @@
     & li a:hover {
       color: $color--white !important;
       background-color: $color--primary;
+      @media screen and (max-width: $lg) {
+        color: $color--secondary !important;
+        background-color: transparent;
+      }
     }
     & li a:active {
       color: $color--white !important;
       background-color: $color--primary;
+      @media screen and (max-width: $lg) {
+        color: $color--secondary !important;
+        background-color: transparent;
+      }
     }
   }
 }
 .dropdown-item.active {
   color: $color--white !important;
   background-color: $color--primary !important;
+  @media screen and (max-width: $lg) {
+    color: $color--secondary !important;
+    background-color: transparent !important;
+  }
 }
+
 .dropdown-item {
   padding-block: 10px;
   @media screen and (max-width: $lg) {
@@ -1650,5 +1663,32 @@ div.my-4.d-md-flex a:hover {
   width: 980px;
   @media screen and (max-width: $lg) {
     width: 100%;
+  }
+}
+
+.ed-btn-group {
+  button {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: $color--primary;
+    background-color: #f0ebe2;
+    border: 1px solid $color--primary;
+  }
+  button.quantityMinus,
+  button.quantityAdd {
+    &:hover,
+    &:active {
+      color: $color--white;
+      background-color: $color--secondary;
+      border: px solid $color--primary;
+    }
+  }
+
+  span.forminput {
+    width: 3.5rem;
+    height: 2.5rem;
+    background-color: #f0ebe2;
+    border-block: 1px solid $color--primary;
+    border-inline: 0px;
   }
 }

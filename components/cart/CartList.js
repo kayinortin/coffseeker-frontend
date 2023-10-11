@@ -2,38 +2,55 @@ import React, { useState, useEffect } from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import { useCartList } from '@/context/cart'
-import { useProducts } from '@/context/product'
+import { useCartListCourse } from '@/context/cart_course'
+import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
 
 export default function CartList({ step, handleNextStep, setStep }) {
   const { cartListData, setCartListData } = useCartList() //商品資料
-  const { productsData, setProductsData } = useProducts()
+  const { cartListData_course, setCartListData_course } = useCartListCourse() //課程資料
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('') // 運送方式
   const [deliveryPrice, setDeliveryPrice] = useState(0) // 運費金額
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('') // 付款方式
   const [selectedCoupon, setSelectedCoupon] = useState([]) //選取優惠卷
   const [selectedCouponCode, setSelectedCouponCode] = useState('') //選取優惠卷代碼
   const [discountAmount, setDiscountAmount] = useState(0) //優惠卷金額
+  const { authJWT } = useAuthJWT() //取userId
+
+  //優惠卷API
   const couponsDataFetch = async () => {
     try {
+      const id = authJWT.userData.id
       const couponResponse = await axios.get(
-        'http://localhost:3005/api/coupons'
+        `http://localhost:3005/api/coupons/userCoupons/${id}`
       )
-      const couponsData = couponResponse.data.coupons
+      // console.log(couponResponse.data.orders)
+      const couponsData = couponResponse.data.orders
       setSelectedCoupon(Array.isArray(couponsData) ? couponsData : [])
     } catch (error) {
       console.error('資料獲取失敗:', error)
     }
   }
-
   // 購物車列表即時渲染
   useEffect(() => {
     couponsDataFetch()
 
     const initialData = JSON.parse(localStorage.getItem('cartList'))
+    const initialCourseData = JSON.parse(
+      localStorage.getItem('cartList_course')
+    )
+
+    let courseData = initialCourseData
+    if (initialCourseData && Array.isArray(initialCourseData)) {
+      courseData = initialCourseData.map((item) => ({
+        ...item,
+        course_amount: 1,
+      }))
+    }
 
     if (initialData) {
       setCartListData(initialData)
+      setCartListData_course(courseData)
     }
 
     const handleStorageChange = (e) => {
@@ -49,7 +66,6 @@ export default function CartList({ step, handleNextStep, setStep }) {
       window.removeEventListener('storage', handleStorageChange)
     }
   }, [])
-
   //前往結帳
   const handleCheckout = () => {
     //創建訂單資料
@@ -60,7 +76,8 @@ export default function CartList({ step, handleNextStep, setStep }) {
       selectedCouponCode,
       discountAmount,
       totalProductCount,
-      totalAmount: totalPrice - discountAmount + deliveryPrice,
+      allTotalPrice,
+      totalAmount: allTotalPrice - discountAmount + deliveryPrice,
     }
     //將訂單資料存入localStorage
     localStorage.setItem('checkoutData', JSON.stringify(checkoutData))
@@ -82,8 +99,8 @@ export default function CartList({ step, handleNextStep, setStep }) {
       if (selectedCouponData.discount_type === '百分比') {
         // 百分比折扣
         const discountPercentage = selectedCouponData.discount_value / 100
-        const discountPrice = Math.round(totalPrice * discountPercentage)
-        const discount = totalPrice - discountPrice
+        const discountPrice = Math.round(allTotalPrice * discountPercentage)
+        const discount = allTotalPrice - discountPrice
         setDiscountAmount(discount)
       } else if (selectedCouponData.discount_type === '金額') {
         // 固定金額折扣
@@ -154,6 +171,19 @@ export default function CartList({ step, handleNextStep, setStep }) {
     // 更新localStorage數據
     localStorage.setItem('cartList', JSON.stringify(updatedCart))
   }
+  //刪除一個課程
+  const handleRemoveCourse = (courseId) => {
+    // localStorage 獲取目前的商品
+    const storedCourseData = JSON.parse(localStorage.getItem('cartList_course'))
+
+    // 過濾出不包含要删除的商品
+    const updatedCart = storedCourseData.filter((item) => item.id !== courseId)
+    // 更新購物車狀態
+    setCartListData_course(updatedCart)
+
+    // 更新localStorage數據
+    localStorage.setItem('cartList_course', JSON.stringify(updatedCart))
+  }
   //商品小計
   const [totalPrice, setTotalPrice] = useState(0)
   useEffect(() => {
@@ -161,15 +191,25 @@ export default function CartList({ step, handleNextStep, setStep }) {
       const subtotal = productSubtotal(product)
       return total + subtotal
     }, 0)
-
     setTotalPrice(total)
   }, [cartListData])
+  //課程小計
+  const [courseTotalPrice, setCourseTotalPrice] = useState(0)
+  useEffect(() => {
+    const courseTotal = cartListData_course.reduce((total, course) => {
+      return total + course.course_price
+    }, 0)
 
-  const totalProductCount = cartListData.reduce(
-    (total, product) => total + product.amount,
-    0
-  )
-  // 商品列表
+    setCourseTotalPrice(courseTotal)
+  }, [cartListData_course])
+
+  const allTotalPrice = totalPrice + courseTotalPrice
+  //數量總計
+  const totalProductCount =
+    cartListData.reduce((total, product) => total + product.amount, 0) +
+    cartListData_course.length
+
+  //商品列表
   const productItems = cartListData.map((product) => (
     <div key={product.id} className="productwrap row py-3">
       <div className="imgContainer col-lg-3 col-md-5 ">
@@ -242,6 +282,43 @@ export default function CartList({ step, handleNextStep, setStep }) {
       </div>
     </div>
   ))
+  //課程列表
+  const courseItems = cartListData_course.map((course) => (
+    <div key={course.id} className="productwrap row py-3">
+      <div className="imgContainer col-lg-3 col-md-5 ">
+        <img
+          className="img-fluid"
+          src={`http://localhost:3005/uploads/${course.course_image}`}
+          alt={course.course_image}
+        />
+      </div>
+      <div className="productContent col-lg-9 col-md-7 text-start">
+        <div className="topDetails d-flex pb-5 justify-content-between ">
+          <div className="details d-inline pe-3">
+            <div className="productTitle py-1 lh-sm">{course.course_name}</div>
+            <div className="productDescription py-1 fw-medium lh-base">
+              {course.course_description}
+            </div>
+          </div>
+          <div className="d-inline productDelete">
+            <button
+              className="deleteButton"
+              onClick={() => {
+                handleRemoveCourse(course.id)
+              }}
+            >
+              <RiDeleteBin5Line className="trash" />
+            </button>
+          </div>
+        </div>
+        <div className="productQuantityTotal justify-content-end">
+          <div className="productSubtotal fs-4 fw-bolder">
+            ${course.course_price}
+          </div>
+        </div>
+      </div>
+    </div>
+  ))
 
   //購物車沒有商品
   if (cartListData.length === 0) {
@@ -270,11 +347,26 @@ export default function CartList({ step, handleNextStep, setStep }) {
       <div className="cartlist container py-3">
         <div className="cartWrap row">
           {/* 商品表單 */}
-          <div className="productscart col-lg-8 mb-3">
-            <div className="labels">商品項目({productItems.length})</div>
-            <div className="products container text-center">{productItems}</div>
-            <div className="productsFoot text-end fw-bolder fs-4">
-              商品共計 ${totalPrice}
+          <div className="productscart col-lg-8">
+            {/* 咖啡列表 */}
+            <div className="wrapcart">
+              <div className="labels">商品項目({productItems.length})</div>
+              <div className="products container text-center">
+                {productItems}
+              </div>
+              <div className="productsFoot text-end fw-bolder fs-4">
+                商品共計 ${totalPrice}
+              </div>
+            </div>
+            {/* 課程列表 */}
+            <div className="wrapcart">
+              <div className="labels">課程項目({courseItems.length})</div>
+              <div className="products container text-center">
+                {courseItems}
+              </div>
+              <div className="productsFoot text-end fw-bolder fs-4">
+                課程共計 ${courseTotalPrice}
+              </div>
             </div>
           </div>
           {/* 資訊表單 */}
@@ -347,7 +439,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                   </div>
                   <div className="items d-flex justify-content-between">
                     <div className="payTitle">金額</div>
-                    <div className="payText">${totalPrice}</div>
+                    <div className="payText">${allTotalPrice}</div>
                   </div>
                   <div className="items d-flex justify-content-between align-items-center">
                     <div className="payTitle">優惠卷</div>
@@ -382,7 +474,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                   <div className="items d-flex justify-content-between pb-3 fs-4 fw-bold">
                     <div className="payTitle">合計</div>
                     <div className="payText">
-                      ${totalPrice - discountAmount + deliveryPrice}
+                      ${allTotalPrice - discountAmount + deliveryPrice}
                     </div>
                   </div>
                   <div className="items p-0">
