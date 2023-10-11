@@ -141,7 +141,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <hr className="border-1 opacity-100" />
           <div className={`checkoutProducts ${isOpen ? 'open' : 'close'}`}>
             <div className="closeProducts text-center">
-              <h3>合計: NTD$9999 </h3>
+              <h3>合計: ${totalAmount} </h3>
               <button
                 className="btn btngroup my-4"
                 onClick={handleToggleProducts}
@@ -214,110 +214,118 @@ function Checkout({ step, handleNextStep, setStep }) {
         <div className="detailsInfo container">
           <div className="detailsWrap row">
             {/* 收件人資料 */}
-            <div className="memberWrap col-lg-6 px-4">
-              <div className="labels">收件人資料</div>
-              <div className="memberInfo">
-                <div className="deliverInfo d-flex align-items-center">
-                  <input
-                    type="checkbox"
-                    className="me-2"
-                    onChange={handleCheckboxChange}
-                    checked={isInfoVisible}
-                  />
-                  <div className="selectTitle">收件人姓名與會員資料相符</div>
-                </div>
-                <div className="deliverInfo">
-                  <div className="inputTitle">收件人名稱</div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="輸入名稱"
-                    aria-label="Username"
-                    aria-describedby="addon-wrapping"
-                    value={isInfoVisible ? userData.username : ''}
-                  />
-                </div>
-                <div className="deliverInfo">
-                  <div className="inputTitle">收件人電話號碼</div>
-                  <input
-                    type="number"
-                    class="form-control"
-                    placeholder="輸入電話號碼"
-                    aria-label="Username"
-                    aria-describedby="addon-wrapping"
-                    value={isInfoVisible ? userData.phone : ''}
-                  />
-                </div>
-                <div className="deliverInfo">
-                  <div className="inputTitle">配送地址</div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="輸入地址"
-                    aria-label="Username"
-                    aria-describedby="addon-wrapping"
-                    value={isInfoVisible ? userData.address : ''}
-                  />
+            <div className="memberWrap col-lg-6">
+              <div className="wrapcart">
+                <div className="labels">收件人資料</div>
+                <div className="memberInfo">
+                  <div className="deliverInfo d-flex align-items-center">
+                    <input
+                      type="checkbox"
+                      className="me-2"
+                      onChange={handleCheckboxChange}
+                      checked={isInfoVisible}
+                    />
+                    <div className="selectTitle">收件人姓名與會員資料相符</div>
+                  </div>
+                  <div className="deliverInfo">
+                    <div className="inputTitle">收件人名稱</div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="輸入名稱"
+                      aria-label="Username"
+                      aria-describedby="addon-wrapping"
+                      value={isInfoVisible ? userData.username : ''}
+                    />
+                  </div>
+                  <div className="deliverInfo">
+                    <div className="inputTitle">收件人電話號碼</div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="輸入電話號碼"
+                      aria-label="Username"
+                      aria-describedby="addon-wrapping"
+                      value={isInfoVisible ? userData.phone : ''}
+                    />
+                  </div>
+                  <div className="deliverInfo">
+                    <div className="inputTitle">配送地址</div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="輸入地址"
+                      aria-label="Username"
+                      aria-describedby="addon-wrapping"
+                      value={isInfoVisible ? userData.address : ''}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
             {/* 付款資料 */}
-            <div className="cardWrap col-lg-6 px-4">
-              <div className="labels">付款資料</div>
-              <div className="payInfo">
-                <div className="cardInfo">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="卡號"
-                    aria-label="CardNumber"
-                    aria-describedby="addon-wrapping"
-                  />
-                </div>
-                <div className="cardInfo">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="持卡人姓名"
-                    aria-label="Cardname"
-                    aria-describedby="addon-wrapping"
-                  />
-                </div>
-                <div className="cardInfo">
-                  <input
-                    type="number"
-                    class="form-control"
-                    placeholder="有效期限（ＭＭ/YY）"
-                    aria-label="CardDate"
-                    aria-describedby="addon-wrapping"
-                  />
-                </div>
-                <div className="cardInfo">
-                  <input
-                    type="number"
-                    class="form-control"
-                    placeholder="安全碼"
-                    aria-label="securityCode"
-                    aria-describedby="addon-wrapping"
-                  />
+            <div className="cardWrap col-lg-6">
+              <div className="wrapcart">
+                <div className="labels">付款資料</div>
+                <div className="payInfo">
+                  <div className="cardInfo">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="卡號"
+                      aria-label="CardNumber"
+                      aria-describedby="addon-wrapping"
+                    />
+                  </div>
+                  <div className="cardInfo">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="持卡人姓名"
+                      aria-label="Cardname"
+                      aria-describedby="addon-wrapping"
+                    />
+                  </div>
+                  <div className="cardInfo">
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="有效期限（ＭＭ/YY）"
+                      aria-label="CardDate"
+                      aria-describedby="addon-wrapping"
+                    />
+                  </div>
+                  <div className="cardInfo">
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="安全碼"
+                      aria-label="securityCode"
+                      aria-describedby="addon-wrapping"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="d-flex btngroup my-5">
-          <button
-            className="btn backStep w-100 fw-medium lh-base"
-            onClick={handleCheckout}
-          >
-            上一步
-          </button>
-          <button
-            className="btn sendOrder w-100 fw-medium lh-base"
-            onClick={() => setStep(3)}
-          >
-            送出訂單
-          </button>
+        <div className="btngroup my-5 row">
+          <div className="col-lg-6 mb-3">
+            <button
+              className="btn backStep w-100 fw-medium lh-base"
+              onClick={handleCheckout}
+            >
+              上一步
+            </button>
+          </div>
+          <div className="col-lg-6 mb-3">
+            <button
+              className="btn sendOrder w-100 fw-medium lh-base"
+              onClick={() => setStep(3)}
+            >
+              送出訂單
+            </button>
+          </div>
         </div>
       </div>
     </>
