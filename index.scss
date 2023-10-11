@@ -5,14 +5,10 @@
 @import "./styles/global";
 @import "./styles/common";
 @import "./styles/icon";
-
+@import "./styles/sidebar";
 
 // 首頁樣式
 @import "./styles/season";
-
-// 購物車
-@import './styles/cart';
-@import './styles/addCart.scss';
 
 // 會員頁面
 @import './styles/member';
@@ -22,6 +18,10 @@
 @import './styles/productCard';
 @import './styles/productDetail';
 @import './styles/comment';
+
+// 購物車
+@import './styles/cart';
+@import './styles/addCart.scss';
 
 //最新消息
 @import './styles/news.module';

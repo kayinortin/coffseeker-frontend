@@ -1,0 +1,99 @@
+.ed-sidebar-li {
+  li {
+    color: $color--primary;
+  }
+}
+.ed-checkbox {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid $color--primary;
+}
+
+.ed-checkbox:checked {
+  background: url(https://cdn-icons-png.flaticon.com/512/3388/3388530.png)
+    no-repeat top left/cover;
+}
+
+.ed-filter-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $color--primary;
+  margin-bottom: 10px;
+}
+
+.ed-btn-filter {
+  width: 100%;
+  border: 1px solid $color--secondary;
+  color: $color--secondary;
+  background-color: transparent;
+  font-size: 1.1rem;
+  padding: 6px;
+  &:hover {
+    background-color: $color--secondary;
+    color: $color--white;
+  }
+}
+
+.horizontal-slider {
+  width: 100%;
+  height: 25px;
+}
+
+.thumb {
+  height: 25px;
+  line-height: 25px;
+  width: 25px;
+  text-align: center;
+  background-color: $color--secondary;
+  color: #fff;
+  border-radius: 50%;
+  cursor: grab;
+}
+
+.track {
+  top: 10px;
+  bottom: 0;
+  background: #ddd;
+  height: 5px;
+}
+
+.track-1 {
+  background: $color--secondary;
+}
+.track-2 {
+  background: #ddd;
+}
+
+.price-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  font-size: 14px;
+}
+
+.price-labels span {
+  color: #333;
+}
+
+.ed-filter-mobile-btn{
+  background-color: #F2F3EE;
+  border: none;
+  box-shadow: inset 0 0 0 1px #ccc;
+  height: 40px;
+}
+
+.modal-dialog {
+  margin-top: 0;
+  overflow-y: auto;
+  transition: all 0.4s;
+}
+
+.modal.fade .modal-dialog {
+  transform: translate(0, -100%);
+  transition: transform 0.4s ease-out;
+}
+
+.modal.show .modal-dialog {
+  transform: translate(0, 0);
+}

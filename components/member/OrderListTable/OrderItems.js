@@ -3,14 +3,23 @@ import { FaAngleDown } from 'react-icons/fa'
 import { FaAngleUp } from 'react-icons/fa'
 import Image from 'next/image'
 
+// 圖片的src
+// http://localhost:3005/uploads/${image_main}
 export default function OrderItems({ order }) {
+  const [imageArr, setImageArr] = useState([])
+  useEffect(() => {
+    if (order.image !== '') {
+      const Images = JSON.parse(order.image)
+      setImageArr(Images)
+    }
+  }, [])
   return (
     <>
       {/* 桌機 */}
       <div className={'d-none d-lg-flex border-bottom border-dark p-2'}>
         <span className={'col-3 text-center'}>
           <Image
-            src={order.img}
+            src={`http://localhost:3005/uploads/images/none-img.png`}
             alt="Image Description"
             width={100} // 设置图像宽度
             height={100} // 设置图像高度
@@ -19,10 +28,12 @@ export default function OrderItems({ order }) {
         <div
           className={'col-9 d-flex justify-content-between align-items-center'}
         >
-          <span className="col-6">{order.discraption}</span>
-          <span className="col-2 text-center">{order.type}</span>
-          <span className="col-2 text-center">{order.count}</span>
-          <span className="col-2 text-center">NT${order.price}</span>
+          <span className="col-6">{order.name}</span>
+          <span className="col-2 text-center">NT${order.discountPrice}</span>
+          <span className="col-2 text-center">{order.amount}/個</span>
+          <span className="col-2 text-center">
+            NT${order.discountPrice * order.amount}
+          </span>
         </div>
       </div>
       {/* 手機版 */}
@@ -30,18 +41,18 @@ export default function OrderItems({ order }) {
         <div className={'d-flex align-items-center'}>
           <div className={'pe-3'}>
             <Image
-              src={order.img}
+              src={`http://localhost:3005/uploads/images/none-img.png`}
               alt="Image Description"
               width={100} // 设置图像宽度
               height={100} // 设置图像高度
             />
           </div>
-          <div className={''}>{order.discraption}</div>
+          <div className={''}>{order.name}</div>
         </div>
         <div className={'d-flex justify-content-between py-2'}>
-          <div>{order.type}</div>
-          <div>{order.count}</div>
-          <div>NT${order.price}</div>
+          <div>NT${order.discountPrice}</div>
+          <div>{order.amount}/個</div>
+          <div>NT${order.discountPrice * order.amount}</div>
         </div>
       </div>
     </>
