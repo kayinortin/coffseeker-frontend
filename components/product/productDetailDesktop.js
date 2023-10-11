@@ -20,7 +20,7 @@ import Comment from '@/components/Comment'
 import FetchComment from '@/components/FetchComment'
 import TopHits from '@/components/TopHits'
 
-export default function ProductDetailDesktop({pid}) {
+export default function ProductDetailDesktop({ pid }) {
   const router = useRouter()
   // 定義商品圖片路徑
   const [images, setImage] = useState([])
@@ -190,26 +190,25 @@ export default function ProductDetailDesktop({pid}) {
     ratingSum += comments[i].rating
   }
   let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3
+  let roundedRating = Math.floor(ratingAvg)
+  let hasHalfStar = ratingAvg - roundedRating >= 0.5 ? true : false
 
   const AerageStars = () => {
-    return Array.from({ length: 5 }).map((_, index) => (
-      <div
-        key={index}
-        className={index < Math.round(ratingAvg) ? 'star active-star' : 'star'}
-      >
-        ★
-      </div>
-    ))
-  }
+    return Array.from({ length: 5 }).map((_, index) => {
+      let starClass = 'star'
 
-  const [showModal, setShowModal] = useState(false)
+      if (index < roundedRating) {
+        starClass += ' active-star'
+      } else if (index === roundedRating && hasHalfStar) {
+        starClass += ' half-star'
+      }
 
-  const handleOpenModal = () => {
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
+      return (
+        <div key={index} className={starClass}>
+          ★
+        </div>
+      )
+    })
   }
 
   return (
