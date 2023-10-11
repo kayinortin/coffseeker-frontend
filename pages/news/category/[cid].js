@@ -28,25 +28,13 @@ const CategoryNews = () => {
     axios
       .get(`http://localhost:3005/api/news/category/${cid}?page=${page}`)
       .then((response) => {
-        // console.log('API回應:', response.data)
+        console.log('API回應:', response.data) // 添加此行以輸出API回應
         setCategoryNews(response.data.news)
-        setTotalPages(response.data.totalPages)
-
-        const wrappedSetCurrentPage = (newPage) => {
-          if (typeof setCurrentPage === 'function') {
-            setCurrentPage(newPage)
-          }
-        }
-        wrappedSetCurrentPage(page)
+        setTotalPages(response.data.totalPages) // 設置總頁數
+        setCurrentPage(page) // 更新當前頁碼
       })
       .catch((error) => {
         console.error('請求出錯:', error)
-        const wrappedSetCurrentPage = (newPage) => {
-          if (typeof setCurrentPage === 'function') {
-            setCurrentPage(newPage)
-          }
-        }
-        wrappedSetCurrentPage(page)
       })
   }
 
@@ -87,15 +75,9 @@ const CategoryNews = () => {
   }
 
   useEffect(() => {
-    //使用 cid 發送 API 請求以獲取分類新聞
+    // 在此處使用 cid 發送 API 請求以獲取分類新聞
     if (cid) {
-      fetchCategoryNews(
-        cid,
-        currentPage,
-        setCategoryNews,
-        setTotalPages,
-        setCurrentPage
-      )
+      fetchCategoryNews(cid, currentPage)
     }
   }, [cid, currentPage])
 
@@ -107,7 +89,7 @@ const CategoryNews = () => {
           <div className="d-flex flex-column align-items-center me-lg-4">
             <CategoryBtn />
           </div>
-          <div className="mt-3 d-flex justify-content-center ms-lg-4">
+          <div className="mt-4 d-flex justify-content-center ms-lg-4">
             <OrderBy onChange={handleSortChange} />
           </div>
         </div>
