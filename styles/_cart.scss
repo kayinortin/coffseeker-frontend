@@ -358,6 +358,7 @@ $fw-black:900;
             .checkoutProducts{
 
                 .closeProducts{
+
                     button.btngroup{
                     background-color: $color--secondary;
                     color: $color--white;
@@ -381,7 +382,7 @@ $fw-black:900;
                                 font-size: $fs-md;
                                 font-weight: $fw-bold;
                                 padding-block: 1rem;
-                                border-bottom: 1px solid $color--primary;
+                                border-bottom: 2px solid $color--primary;
                             }
                             .products{
                                 .productwrap{
@@ -446,7 +447,7 @@ $fw-black:900;
                                 font-size: $fs-md;
                                 font-weight: $fw-bold;
                                 padding-block: 1rem;
-                                border-bottom: 1px solid $color--primary;
+                                border-bottom: 2px solid $color--primary;
                             }
                             .payItems{
                                 padding-top: 1.5rem;
@@ -469,66 +470,75 @@ $fw-black:900;
         .detailsWrap{
            
             .memberWrap{
-                border: 1px solid $color--primary;
+                // border: 1px solid $color--primary;
 
-                .labels{
-                    font-size: $fs-md;
-                    font-weight: $fw-bold;
-                    padding-block: 1rem;
-                    border-bottom: 1px solid $color--primary;
-                    
-                }
-                .memberInfo{
-                    padding-block: 1rem;
-        
-                    .deliverInfo{
-                        padding-block: .5rem;
-        
-                        .inputTitle{
-                            font-size: $fs-sm;
-                            padding-bottom: .5rem;
-                            
-                        }
-                        input.form-control{
-                            border: 1px solid $color--primary;
-                            background-color: $color-background;
-                            &:hover{
-                                border: 1px solid $color--secondary;
-                                color: $color--secondary;
+                .wrapcart{
+                    border: 1px solid $color--primary;
+                    padding-inline: 1rem;
+
+                    .labels{
+                        font-size: $fs-md;
+                        font-weight: $fw-bold;
+                        padding-block: 1rem;
+                        border-bottom: 2px solid $color--primary;
+                        
+                    }
+                    .memberInfo{
+                        padding-block: 1rem;
+            
+                        .deliverInfo{
+                            padding-block: .5rem;
+            
+                            .inputTitle{
+                                font-size: $fs-sm;
+                                padding-bottom: .5rem;
+                                
+                            }
+                            input.form-control{
+                                border: 1px solid $color--primary;
+                                background-color: $color-background;
+                                &:hover{
+                                    border: 1px solid $color--secondary;
+                                    color: $color--secondary;
+                                }
                             }
                         }
-                    }
-                    
-                    
-                } 
-
+                        
+                        
+                    } 
+                }
             }
         
             .cardWrap{
-                border: 1px solid $color--primary;
                 
-                .labels{
-                    font-size: $fs-md;
-                    font-weight: $fw-bold;
-                    padding-block: 1rem;
-                    border-bottom: 1px solid $color--primary;
-                }
-                .payInfo{
-                    padding-block: 1rem;
-        
-                    .cardInfo{
-                        padding-block: .5rem;
-        
-                        input.form-control{
-                            border: 1px solid $color--primary;
-                            background-color: $color-background;
-                            &:hover{
-                                border: 1px solid $color--secondary;
-                                color: $color--secondary;
+                .wrapcart{
+                    border: 1px solid $color--primary;
+                    padding-inline: 1rem;
+
+                    .labels{
+                        font-size: $fs-md;
+                        font-weight: $fw-bold;
+                        padding-block: 1rem;
+                        border-bottom: 2px solid $color--primary;
+                    }
+                    .payInfo{
+                        padding-block: 1rem;
+            
+                        .cardInfo{
+                            padding-block: .5rem;
+            
+                            input.form-control{
+                                border: 1px solid $color--primary;
+                                background-color: $color-background;
+                                &:hover{
+                                    border: 1px solid $color--secondary;
+                                    color: $color--secondary;
+                                }
                             }
                         }
                     }
                 }
+                
                
             }
         }
@@ -537,7 +547,7 @@ $fw-black:900;
     }
     
     .btngroup{
-        gap: 2rem;
+       
         button.backStep{
             background-color: $color--gray4;
             color: $color--white;
