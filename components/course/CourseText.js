@@ -23,7 +23,7 @@ export default function CourseText(props) {
   return (
     <>
       {CoursesData && CoursesData.course_image ? (
-        <div className="m-2 col-10 col-sm-7 mx-auto ms-sm-5">
+        <div className="m-2 col-10 col-sm-7 mx-auto ms-sm-5 d-flex flex-column justify-content-around">
           <div className="d-none d-sm-block">
             <BreadCrumbs />
           </div>
@@ -31,7 +31,7 @@ export default function CourseText(props) {
           <h5 className="ed-detail-title">{CoursesData.course_name}</h5>
           <Score />
           <h5 className={`mb-4 ed-detail-price ${style['price']}`}>
-            NT${CoursesData.course_price}
+            NT{CoursesData.course_price}
           </h5>
           <div className="d-block align-items-center d-sm-none">
             <MobileDetailsBtns course={CoursesData} />
@@ -47,11 +47,11 @@ export default function CourseText(props) {
             </p>
           </div>
           <div className="d-none d-sm-flex justify-content-between align-items-center">
-              <DetailsAddCart course={CoursesData} />
-              <a href="http://localhost:3000/cart">
-                <button className="ms-4 ed-addCart__check">立即結帳</button>
-              </a>
-            </div>
+            <DetailsAddCart course={CoursesData} />
+            <a href="http://localhost:3000/cart">
+              <button className="ms-4 ed-addCart__check">立即結帳</button>
+            </a>
+          </div>
         </div>
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
