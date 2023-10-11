@@ -195,9 +195,33 @@ export default function LoginForm() {
             'container d-flex justify-content-center mt-4 mb-3 align-items-center'
           }
         >
-          <FaFacebook className={'h2 me-5'} />
-          <FaGoogle className={'h2'} />
-          <FaXTwitter className={'h2 ms-5'} />
+          <button
+            className={'border-0 bg-none third-login me-5'}
+            type="button"
+            onClick={() => {
+              console.log('test')
+            }}
+          >
+            <FaFacebook className={'h2'} />
+          </button>
+          <button
+            className={'border-0 bg-none third-login'}
+            type="button"
+            onClick={() => {
+              console.log('test')
+            }}
+          >
+            <FaGoogle className={'h2'} />
+          </button>
+          <button
+            className={'border-0 bg-none third-login ms-5'}
+            type="button"
+            onClick={() => {
+              console.log('test')
+            }}
+          >
+            <FaXTwitter className={'h2'} />
+          </button>
         </div>
         <div className={'d-flex justify-content-center mb-3'}>
           <div className={'ask-for-register'}>

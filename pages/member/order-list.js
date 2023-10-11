@@ -8,7 +8,7 @@ export default function info() {
       <div className={'container'}>
         {/* 麵包屑 */}
         <div className={'row'}>
-          <nav className={'nav-breadcrumb'}>
+          <nav className={'col-lg-3 nav-breadcrumb'}>
             <ol className={'breadcrumb my-3'}>
               <li className={'breadcrumb-item'}>
                 <Link href="/" className={'link'}>
@@ -23,6 +23,17 @@ export default function info() {
               <li className={'breadcrumb-item'}>歷史訂單</li>
             </ol>
           </nav>
+          <div className={'col-12 col-lg-9'}>
+            <div className={'container'}>
+              <div className={'position-relative'}>
+                <select className={'position-absolute end-0'}>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
         {/* 麵包屑結束 */}
 

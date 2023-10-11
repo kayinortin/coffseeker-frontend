@@ -43,8 +43,6 @@ $color--black: #000000;
   align-items: center !important;
 }
 
-
-
 .ei-card {
   // width: 80%;
   // max-width: 700px;
@@ -194,7 +192,7 @@ $color--black: #000000;
 .ei-page-item {
   &.active {
     font-weight: bold;
-    background: #6c757d;
+    background-color: $color--primary;
     color: white;
     font-weight: bold;
   }
@@ -215,7 +213,7 @@ $color--black: #000000;
   background-color: $color--background;
 
   &:hover {
-    background-color: #6c757d;
+    background-color: $color--primary;
     color: white;
   }
 }
