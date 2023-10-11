@@ -6,7 +6,7 @@ import axios from 'axios'
 
 // 10/11 尚未完成
 // 1.訂單時間排序
-// 2.商品圖片尚未連接資料庫
+// 2.分頁
 
 export default function OrderDetailOpened({ order }) {
   const [openDetail, setOpenDetail] = useState(false)
@@ -27,7 +27,7 @@ export default function OrderDetailOpened({ order }) {
           `http://localhost:3005/api/order/orderItems/${orderId}`
         )
         // 獲得指定使用者的所有訂單
-        console.log('Item資料', response.data.orderItems)
+        // console.log('Item資料', response.data.orderItems)
         setOrderItem(response.data.orderItems)
       } catch (error) {
         console.error('錯誤:', error)
@@ -70,7 +70,7 @@ export default function OrderDetailOpened({ order }) {
     order.order_status,
     order.payment_method,
   ]
-
+  // 未展開訂單的顯示資訊
   const OrderTbodyRWD = [
     {
       title: '訂單日期',
@@ -90,6 +90,7 @@ export default function OrderDetailOpened({ order }) {
     },
   ]
 
+  // 訂單狀態的判斷
   const statusStyles = {
     待付款: {
       state1: ['未付款', 'gray'],
@@ -104,19 +105,19 @@ export default function OrderDetailOpened({ order }) {
       state4: ['未完成', 'gray'],
     },
     理貨中: {
-      state1: ['已下訂', 'orange'],
+      state1: ['已付款', 'orange'],
       state2: ['理貨中', 'orange'],
       state3: ['未發貨', 'gray'],
       state4: ['未完成', 'gray'],
     },
     已發貨: {
-      state1: ['已下訂', 'orange'],
+      state1: ['已付款', 'orange'],
       state2: ['理貨中', 'orange'],
       state3: ['已發貨', 'orange'],
       state4: ['未完成', 'gray'],
     },
     已完成: {
-      state1: ['已下訂', 'orange'],
+      state1: ['已付款', 'orange'],
       state2: ['理貨中', 'orange'],
       state3: ['已發貨', 'orange'],
       state4: ['已完成', 'orange'],
@@ -151,6 +152,26 @@ export default function OrderDetailOpened({ order }) {
       state: orderStatus.state4[0],
       time: order.finish_date,
       class: orderStatus.state4[1],
+    },
+  ]
+
+  // 結算欄位
+  const orderResult = [
+    {
+      result: '數量',
+      sum: `${TotalAmount} / 個`,
+    },
+    {
+      result: '小計',
+      sum: `NT$ ${TotalPrice}`,
+    },
+    {
+      result: '運費',
+      sum: order.shipping_fee,
+    },
+    {
+      result: '優惠',
+      sum: order.discount,
     },
   ]
 
@@ -243,32 +264,19 @@ export default function OrderDetailOpened({ order }) {
         })}
         <div className={'p-2 border'}>
           <div className={'border border-dark p-2'}>
-            <div className="d-flex justify-content-between p-2">
-              <span>數量</span>
-              <span>{TotalAmount} / 個</span>
-            </div>
-            {/*  */}
-            <div className="d-flex justify-content-between p-2">
-              <span>小計</span>
-              <span>NT$ {TotalPrice}</span>
-            </div>
-            {/*  */}
-            <div className="d-flex justify-content-between p-2">
-              <span>運費</span>
-              <span>{order.shipping_fee}</span>
-            </div>
-            {/*  */}
-            <div className="d-flex justify-content-between p-2">
-              <span>優惠</span>
-              <span className={'text-danger'}>{order.discount}</span>
-            </div>
-            {/*  */}
+            {orderResult.map((v, i) => (
+              <div className="d-flex justify-content-between p-2" key={i}>
+                <span>{v.result}</span>
+                <span className={v.result === '優惠' ? 'text-danger' : ''}>
+                  {v.sum}
+                </span>
+              </div>
+            ))}
             <hr />
             <div className="d-flex justify-content-between p-2">
               <span>合計</span>
-              <span className={'orange-text'}>NT${SubTotal}</span>
+              <span className={'orange-text h5'}>NT${SubTotal}</span>
             </div>
-            {/*  */}
           </div>
         </div>
       </div>

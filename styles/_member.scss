@@ -92,7 +92,7 @@
 
 // 表格類的統規
 .table-box{
-    width: 878px;
+    width: 100%;
     font-family: 'Noto Sans TC', sans-serif;
 }
 
@@ -259,5 +259,13 @@
 .order-nav{
   div.text-center{
     width: 103px;
+  }
+}
+
+
+.third-login{
+
+  svg{
+    cursor: pointer;
   }
 }
