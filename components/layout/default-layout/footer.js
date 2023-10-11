@@ -15,7 +15,7 @@ export default function Footer() {
     // footer全版區塊
     <div className="bg-primary-color">
       {/* footer內容書寫區 */}
-      <div className="container pb-5 pt-5 ed-resize">
+      <div className="container pb-5 pt-5">
         <div className="row">
           <div className="col-lg-3 col-md-2 mb-4 mb-md-0 text-center">
             <div className="d-flex flex-column align-items-center">

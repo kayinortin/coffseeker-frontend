@@ -117,8 +117,8 @@ export default function CoffeeMap() {
               className="d-block ed-orgin-img"
               src="/index-image/origin.png"
               alt="COFFSEEKER"
-              width={400}
-              height={80}
+              width={360}
+              height={72}
             />
           </div>
           <h4

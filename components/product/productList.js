@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Skeleton from '@mui/material/Skeleton'
 import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
+import FilterMobile from './FilterMobile'
 import Sort from './Sort'
 import Filter from './Filter'
 import navItems from '../../data/navitems.json'
@@ -87,6 +88,9 @@ export default function ProductList(props) {
                 共有 {sortedProducts.length} 筆商品
               </div>
               <Sort />
+              <div className="d-block d-md-none mt-2">
+                <FilterMobile onFilter={setProductsData} />
+              </div>
             </div>
             {!isFetchingProducts ? (
               <>

@@ -385,10 +385,18 @@
     & li a:hover {
       color: $color--white !important;
       background-color: $color--primary;
+      @media screen and (max-width: $lg) {
+        color: $color--secondary !important;
+        background-color: transparent;
+      }
     }
     & li a:active {
       color: $color--white !important;
       background-color: $color--primary;
+      @media screen and (max-width: $lg) {
+        color: $color--secondary !important;
+        background-color: transparent;
+      }
     }
   }
 }

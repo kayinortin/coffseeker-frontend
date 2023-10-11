@@ -2,10 +2,13 @@ import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Skeleton from '@mui/material/Skeleton'
+
 import ProductItem from '@/components/product/productItem'
 import ProductDataFetcher from '@/components/product/ProductDataFetcher'
 import Sort from '@/components/product/Sort'
 import Filter from '@/components/product/Filter'
+import FilterMobile from '@/components/product/FilterMobile'
+
 import navItems from '../../../data/navitems.json'
 
 import { useProducts } from '@/context/product'
@@ -96,9 +99,10 @@ export default function ProductList(props) {
     <>
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
-      <div className="d-none d-md-block ed-left-filter container mt-5">
+        <div className="d-none d-md-block ed-left-filter container mt-5">
           <Filter onFilter={setProductsData} />
         </div>
+
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">
             <div className="d-flex">
@@ -122,6 +126,9 @@ export default function ProductList(props) {
                 共有 {filteredProducts.length} 筆商品
               </div>
               <Sort />
+              <div className="d-block d-md-none mt-2">
+                <FilterMobile onFilter={setProductsData} />
+              </div>
             </div>
             {!isFetchingProducts ? (
               <>
