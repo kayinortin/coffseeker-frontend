@@ -200,16 +200,25 @@ export default function ProductDetailMobile({ pid }) {
     ratingSum += comments[i].rating
   }
   let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3
+  let roundedRating = Math.floor(ratingAvg)
+  let hasHalfStar = ratingAvg - roundedRating >= 0.5 ? true : false
 
   const AerageStars = () => {
-    return Array.from({ length: 5 }).map((_, index) => (
-      <div
-        key={index}
-        className={index < Math.round(ratingAvg) ? 'star active-star' : 'star'}
-      >
-        ★
-      </div>
-    ))
+    return Array.from({ length: 5 }).map((_, index) => {
+      let starClass = 'star'
+
+      if (index < roundedRating) {
+        starClass += ' active-star'
+      } else if (index === roundedRating && hasHalfStar) {
+        starClass += ' half-star'
+      }
+
+      return (
+        <div key={index} className={starClass}>
+          ★
+        </div>
+      )
+    })
   }
 
   return (
