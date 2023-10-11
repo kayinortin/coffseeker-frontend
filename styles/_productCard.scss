@@ -51,6 +51,20 @@
   }
 }
 
+.ed-card-description {
+  height: 100px;
+  font-size: 15px;
+  line-height: normal;
+  color: $color--primary;
+  overflow: hidden;
+  @media screen and (max-width: 1440px) {
+    line-height: 20px;
+  }
+  @media screen and (max-width: $lg) {
+    height: 70px;
+  }
+}
+
 .ed-card-origin-price {
   font-size: 12px;
   color: $color--gray4;
@@ -83,6 +97,7 @@
   }
   @media screen and (max-width: $lg) {
     width: 100%;
+    margin-left: 0px;
   }
 }
 .popular-right {

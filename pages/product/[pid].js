@@ -1,9 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 
-import ProductDetailMobile from '@/components/product/productDetailMobile'
 import ProductDetailDesktop from '@/components/product/productDetailDesktop'
 
 export default function ProductDetail() {
