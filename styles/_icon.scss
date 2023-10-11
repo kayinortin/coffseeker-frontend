@@ -40,10 +40,12 @@
     // background: transparent;
     top: 10px;
     right: 20px;
-
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
+    @media screen and (max-width: $lg) {
+      right:5px;
+    }
 
     #{$_}__icon {
       top: 0px;
