@@ -169,7 +169,7 @@ export default function MainContent() {
         <h3 className={`text-center ${style['hw-review-title']}`}>學員評價</h3>
 
         <Review />
-        <CourseComment />
+        <CourseComment pid={pid}/>
 
         <TopHits />
       </div>
