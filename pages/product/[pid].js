@@ -3,23 +3,23 @@ import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
-
 import ProductDetailMobile from '@/components/product/productDetailMobile'
 import ProductDetailDesktop from '@/components/product/productDetailDesktop'
 
 export default function ProductDetail() {
   const router = useRouter()
   const { pid } = router.query
-
-  const [showModal, setShowModal] = useState(false)
-
-  const handleOpenModal = () => {
-    setShowModal(true)
-  }
+  const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
+
+  // useEffect(() => {
+  //   if (pid) {
+  //     setShowModal(true);
+  //   }
+  // }, [pid]);
 
   return (
     <>
@@ -27,7 +27,9 @@ export default function ProductDetail() {
         <ProductDetailDesktop pid={pid} />
       </div>
       <div className="d-block d-sm-none">
-        <ProductDetailMobile pid={pid} />
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <ProductDetailMobile pid={pid} />
+        </Modal>
       </div>
     </>
   )
