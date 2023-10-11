@@ -37,7 +37,6 @@ export default function ProductItem(props) {
   const isFetchingCategory = categoryData.length === 0
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
-  console.log(isDesktop)
 
   const handleShow = (e) => {
     if (!isDesktop) {
