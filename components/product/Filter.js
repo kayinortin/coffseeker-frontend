@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
@@ -142,6 +143,24 @@ function Filter(props) {
 
   return (
     <div>
+      <div className="mt-2 mb-4 d-block">
+        <ul className="ed-sidebar-li">
+          <li className="mt-1 ed-filter-title">線上購物</li>
+          <Link href="http://localhost:3000/product">
+            <li className="mt-3">全站商品</li>
+          </Link>
+          <Link href="http://localhost:3000/product/category/1">
+            <li className="mt-3">咖啡豆</li>
+          </Link>
+          <Link href="http://localhost:3000/product/category/2">
+            <li className="mt-3">濾掛包</li>
+          </Link>
+          <Link href="http://localhost:3000/product/category/6">
+            <li className="mt-3">送禮推薦</li>
+          </Link>
+        </ul>
+      </div>
+      <hr />
       <form onSubmit={handleFormSubmit}>
         <div className="price-slider-container">
           <label className="ed-filter-title">價格</label>

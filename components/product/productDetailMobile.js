@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
@@ -18,12 +18,9 @@ import Counter from '@/components/Counter'
 import ProductDetailFavIcon from '@/components/product/ProductDetailFavIcon'
 import Comment from '@/components/Comment'
 import FetchComment from '@/components/FetchComment'
-import TopHits from '@/components/TopHits'
+import TopHitsMobile from '@/components/TopHitsMobile'
 
-export default function ProductDetailMobile(props) {
-  const router = useRouter()
-  const { pid } = router.query
-  // 定義商品圖片路徑
+export default function ProductDetailMobile({ pid }) {
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
   // 定義商品詳細資訊
@@ -71,12 +68,16 @@ export default function ProductDetailMobile(props) {
     note,
   } = detailData
 
+  const [showModal, setShowModal] = useState()
+
+  const { show, setShow } = useShow()
+  const selectedPid = show.selectedPid
   // 取得商品資訊
   useEffect(() => {
     const getDetail = async () => {
-      if (pid) {
+      if (selectedPid) {
         let response = await axios.get(
-          `http://localhost:3005/api/products/${pid}`
+          `http://localhost:3005/api/products/${selectedPid}`
         )
         const details = response.data
 
@@ -87,13 +88,21 @@ export default function ProductDetailMobile(props) {
       }
     }
 
-    if (pid) {
+    if (selectedPid) {
       getDetail()
       setShow((prevShow) => ({ ...prevShow, in: true }))
     }
-  }, [pid])
+  }, [selectedPid])
 
-  const { show, setShow } = useShow()
+  useEffect(() => {
+    setShowModal(show.in)
+  }, [show.in])
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setShow((prevShow) => ({ ...prevShow, in: false })) // Also set the show.in to false
+  }
+
   const { cartListData, setCartListData } = useCartList()
   const { isLoggedIn, setIsLoggedIn } = useUser()
 
@@ -191,278 +200,229 @@ export default function ProductDetailMobile(props) {
     ratingSum += comments[i].rating
   }
   let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3
+  let roundedRating = Math.floor(ratingAvg)
+  let hasHalfStar = ratingAvg - roundedRating >= 0.5 ? true : false
 
   const AerageStars = () => {
-    return Array.from({ length: 5 }).map((_, index) => (
-      <div
-        key={index}
-        className={index < Math.round(ratingAvg) ? 'star active-star' : 'star'}
-      >
-        ★
-      </div>
-    ))
-  }
+    return Array.from({ length: 5 }).map((_, index) => {
+      let starClass = 'star'
 
-  const [showModal, setShowModal] = useState(false)
+      if (index < roundedRating) {
+        starClass += ' active-star'
+      } else if (index === roundedRating && hasHalfStar) {
+        starClass += ' half-star'
+      }
 
-  const handleOpenModal = () => {
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
+      return (
+        <div key={index} className={starClass}>
+          ★
+        </div>
+      )
+    })
   }
 
   return (
     <>
       {/* 手機版 */}
-      <Modal show={showModal} onHide={handleCloseModal} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>商品詳情</Modal.Title>
-        </Modal.Header>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        centered
+        className="upwardModal"
+      >
+        <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
-          <div className="container d-none">
-            <div className="d-flex justify-content-between">
-              <div className="sidebar-left d-none d-md-block">
-                <div className="d-flex flex-column">
-                  <div className="mt-5">
-                    <h5>加購商品</h5>
+          <div className="container">
+            <div className="d-flex flex-column mt-3">
+              <div className="ed-detail-left">
+                {/* 照片換置 */}
+                <div className="ed-image-gallery">
+                  <Image
+                    src={`http://localhost:3005/uploads/${images[mainImageIndex]}`}
+                    alt={`${name}`}
+                    className="ed-image-main"
+                    width={300}
+                    height={300}
+                  />
+                  <ProductDetailFavIcon id={id} />
+                  <div className="ed-image-row">
+                    {images.map((image, index) => {
+                      if (index === mainImageIndex) return null
+                      return (
+                        <Image
+                          key={index}
+                          src={`http://localhost:3005/uploads/${image}`}
+                          alt={`Product ${index}`}
+                          className="ed-image-small"
+                          width={100}
+                          height={100}
+                          onClick={() => setMainImageIndex(index)}
+                        />
+                      )
+                    })}
                   </div>
-                  <div className="mt-4 d-flex justify-content-between align-items-center">
-                    <div>
-                      <img src="" alt="圖片" />
-                    </div>
-                    <div>
-                      <h6>其他咖啡豆推薦</h6>
-                      <p>NT$ 100</p>
-                    </div>
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
+                  <div className="ed-activity-mobile-title text-center mt-4">
+                    新會員優惠
                   </div>
-                  <hr />
-                  <div className="mt-3 d-flex justify-content-between align-items-center">
-                    <div>
-                      <img src="" alt="圖片" />
-                    </div>
-                    <div>
-                      <h6>其他咖啡豆推薦</h6>
-                      <p>NT$ 100</p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="mt-2 d-block">
-                    <ul className="ed-sidebar-li">
-                      <li className="mt-1 fw-bold">線上購物</li>
-                      <Link href="http://localhost:3000/product">
-                        <li className="mt-3">全站商品</li>
-                      </Link>
-                      <Link href="http://localhost:3000/product/category/1">
-                        <li className="mt-3">咖啡豆</li>
-                      </Link>
-                      <Link href="http://localhost:3000/product/category/2">
-                        <li className="mt-3">濾掛包</li>
-                      </Link>
-                      <Link href="http://localhost:3000/product/category/6">
-                        <li className="mt-3">送禮推薦</li>
-                      </Link>
-                    </ul>
+                  <div className="ed-activity-mobile-detail mt-4">
+                    領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
                   </div>
                 </div>
               </div>
-              <div className="ed-sidebar-right">
-                {/* 左邊 */}
-                <div className="d-flex justify-content-between mt-3">
-                  <div className="container ed-detail-left">
-                    {/* 照片換置 */}
-                    <div className="ed-image-gallery">
-                      <Image
-                        src={`http://localhost:3005/uploads/${images[mainImageIndex]}`}
-                        alt={`${name}`}
-                        className="ed-image-main"
-                        width={300}
-                        height={300}
-                      />
-                      <ProductDetailFavIcon id={id} />
-                      <div className="ed-image-row">
-                        {images.map((image, index) => {
-                          if (index === mainImageIndex) return null
-                          return (
-                            <Image
-                              key={index}
-                              src={`http://localhost:3005/uploads/${image}`}
-                              alt={`Product ${index}`}
-                              className="ed-image-small"
-                              width={100}
-                              height={100}
-                              onClick={() => setMainImageIndex(index)}
-                            />
-                          )
-                        })}
+              <div className="ed-detail-right">
+                <div className="d-flex flex-column justify-content-between p-md-0">
+                  <div className="ed-detail__scroll p-md-0">
+                    <div className="position-relative">
+                      <p className="ed-detail-brand mt-2">
+                        精選品牌 &gt; {brand}
+                      </p>
+                      <h5 className="ed-detail-title">{name}</h5>
+                      <div className="rating-container my-3">
+                        {AerageStars()}
                       </div>
-                    </div>
-                    <div className="d-flex ed-activity align-items-center">
-                      <div className="ed-activity-title text-center">
-                        新會員優惠
+                      <div className="my-2">
+                        <span className="ed-detail-price">
+                          NT{discountPrice}
+                        </span>
                       </div>
-                      <div className="ed-activity-detail">
-                        領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
+                      <div className="d-flex mt-4">
+                        <ul className="ed-detail__list">
+                          {origin && (
+                            <li className="ed-detail__item">
+                              【國家】：{origin}
+                            </li>
+                          )}
+                          {manor && (
+                            <li className="ed-detail__item">
+                              【莊園】：{manor}
+                            </li>
+                          )}
+                          {Production_area && (
+                            <li className="ed-detail__item lh-base">
+                              【產區】：{Production_area}
+                            </li>
+                          )}
+                          {Processing && (
+                            <li className="ed-detail__item">
+                              【處理法】：{Processing}
+                            </li>
+                          )}
+                          {altitude && (
+                            <li className="ed-detail__item">
+                              【海拔】：{altitude}
+                            </li>
+                          )}
+                          {Variety && (
+                            <li className="ed-detail__item">
+                              【品種】：{Variety}
+                            </li>
+                          )}
+                          {Roast_degree && (
+                            <li className="ed-detail__item">
+                              【焙度】：{Roast_degree}
+                            </li>
+                          )}
+                          {note && (
+                            <>
+                              <li className="ed-detail__item">【風味描述】</li>
+                              <li className="ed-detail__item__descript lh-base">
+                                {description}
+                              </li>
+                            </>
+                          )}
+                        </ul>
                       </div>
-                    </div>
-                  </div>
-                  <div className="ed-detail-right">
-                    <div className="d-flex flex-column justify-content-between p-3 p-md-0">
-                      <div className="ed-detail__scroll p-md-0">
-                        <div className="position-relative">
-                          <p className="ed-detail-brand mt-2">
-                            精選品牌 &gt; {brand}
+                      <div className="d-flex flex-column">
+                        <div className="d-flex align-items-center justify-content-between">
+                          <Counter number={number} setNumber={setNumber} />
+                          <p className="ms-5">
+                            <span className="h4 fw-bold">{amount}</span>
+                            組庫存量
                           </p>
-                          <h5 className="ed-detail-title">{name}</h5>
-                          <div className="rating-container my-3">
-                            {AerageStars()}
-                          </div>
-                          <div className="my-2">
-                            <span className="ed-detail-price">
-                              NT{discountPrice}
-                            </span>
-                          </div>
-                          <div className="d-flex mt-4">
-                            <ul className="ed-detail__list">
-                              {origin && (
-                                <li className="ed-detail__item">
-                                  【國家】：{origin}
-                                </li>
-                              )}
-                              {manor && (
-                                <li className="ed-detail__item">
-                                  【莊園】：{manor}
-                                </li>
-                              )}
-                              {Production_area && (
-                                <li className="ed-detail__item">
-                                  【產區】：{Production_area}
-                                </li>
-                              )}
-                              {Processing && (
-                                <li className="ed-detail__item">
-                                  【處理法】：{Processing}
-                                </li>
-                              )}
-                              {altitude && (
-                                <li className="ed-detail__item">
-                                  【海拔】：{altitude}
-                                </li>
-                              )}
-                              {Variety && (
-                                <li className="ed-detail__item">
-                                  【品種】：{Variety}
-                                </li>
-                              )}
-                              {Roast_degree && (
-                                <li className="ed-detail__item">
-                                  【焙度】：{Roast_degree}
-                                </li>
-                              )}
-                              {note && (
-                                <>
-                                  <li className="ed-detail__item">
-                                    【風味描述】
-                                  </li>
-                                  <li className="ed-detail__item__descript lh-base">
-                                    {description}
-                                  </li>
-                                </>
-                              )}
-                            </ul>
-                          </div>
-                          <div className="d-flex flex-column">
-                            <div className="d-flex align-items-center">
-                              <Counter number={number} setNumber={setNumber} />
-                              <p className="ms-5">
-                                <span className="h4 fw-bold">{amount}</span>
-                                組庫存量
-                              </p>
-                            </div>
-                            <div className="d-flex align-items-center">
-                              <button
-                                className="ed-addCart__detail d-flex align-items-center mt-3"
-                                onClick={addCart}
-                              >
-                                加入購物車
-                                <i className="fas fa-shopping-cart"></i>
-                              </button>
-                              <Link href="http://localhost:3000/cart">
-                                <button className="ms-4 ed-addCart__check">
-                                  立即結帳
-                                </button>
-                              </Link>
-                            </div>
-                          </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center">
+                          <button
+                            className="ed-addCart__detail-mobile d-flex align-items-center mt-3"
+                            onClick={addCart}
+                          >
+                            加入購物車
+                            <i className="fas fa-shopping-cart"></i>
+                          </button>
+                          <Link href="http://localhost:3000/cart">
+                            <button className="ms-4 ed-addCart__check">
+                              立即結帳
+                            </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <hr />
-                <div className="d-flex flex-column">
-                  <img
-                    src="http://localhost:3000/product_detail/banner.png"
-                    alt="product-detail-banner"
-                  />
-                  <div className="d-flex flex-column ed-product-intro">
-                    <div className="ed-product-intro-title text-center mt-4 ">
-                      商品特色
-                    </div>
-                    <div className="mt-2">
-                      <h5>【極精品】</h5>
-                      <p>{name}</p>
-                    </div>
-                    <div className="mt-3">
-                      <h5>【烘豆師筆記】</h5>
-                      <div className="ed-product-intro-detail lh-lg">
-                        {firstPart}
-                        <br />
-                        <br />
-                        {secondPart}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex flex-column">
-                    <div className="ed-product-intro-title text-center mt-4">
-                      商品規格
-                    </div>
-                    <div>
-                      <ol className="ed-product-intro-list lh-lg">
-                        <li>新鮮咖啡烘焙豆</li>
-                        <li>重量100g</li>
-                        <li>有效期限一年</li>
-                        <li>製造日期見包裝上標示</li>
-                        <li>單向排氣閥鋁箔袋包裝</li>
-                      </ol>
-                    </div>
-                  </div>
-                  <hr />
-                  <FetchComment pid={pid} />
-                  {isLoggedIn ? (
-                    <>
-                      <Comment pid={pid} />
-                    </>
-                  ) : (
-                    <div className="mx-auto text-center">
-                      <h5 className="my-3">請先登入再進行評論</h5>
-                      <div className="my-4">
-                        <Link href="http://localhost:3000/member/login">
-                          <button className="ed-addCart">登入會員</button>
-                        </Link>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <hr />
-                <TopHits />
               </div>
             </div>
+            <hr />
+            <div className="d-flex flex-column">
+              <img
+                src="http://localhost:3000/product_detail/banner.png"
+                alt="product-detail-banner"
+              />
+              <div className="d-flex flex-column ed-product-intro">
+                <div className="ed-product-intro-title text-center mt-4 ">
+                  商品特色
+                </div>
+                <div className="mt-2">
+                  <h5>【極精品】</h5>
+                  <p>{name}</p>
+                </div>
+                <div className="mt-3">
+                  <h5>【烘豆師筆記】</h5>
+                  <div className="ed-product-intro-detail lh-lg">
+                    {firstPart}
+                    <br />
+                    <br />
+                    {secondPart}
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex flex-column">
+                <div className="ed-product-intro-title text-center mt-4">
+                  商品規格
+                </div>
+                <div>
+                  <ol className="ed-product-intro-list lh-lg">
+                    <li>新鮮咖啡烘焙豆</li>
+                    <li>重量100g</li>
+                    <li>有效期限一年</li>
+                    <li>製造日期見包裝上標示</li>
+                    <li>單向排氣閥鋁箔袋包裝</li>
+                  </ol>
+                </div>
+              </div>
+              <hr />
+              <FetchComment pid={selectedPid} />
+              {isLoggedIn ? (
+                <>
+                  <Comment pid={selectedPid} />
+                </>
+              ) : (
+                <div className="mx-auto text-center">
+                  <h5 className="my-3">請先登入再進行評論</h5>
+                  <div className="my-4">
+                    <Link href="http://localhost:3000/member/login">
+                      <button className="ed-addCart">登入會員</button>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+            <hr />
+            <TopHitsMobile />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button className="ed-btn-close" onClick={handleCloseModal}>
             關閉
           </Button>
         </Modal.Footer>

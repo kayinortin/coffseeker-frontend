@@ -29,7 +29,7 @@ const BreadCrumbs = ({
 
   return (
     <>
-      <nav aria-label="breadcrumb">
+      <nav aria-label="breadcrumb ed-detail-brand">
         <ol
           className={`breadcrumb px-3 py-1  rounded-3 ${
             isChevron ? styles['breadcrumb-chevron'] : ''

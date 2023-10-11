@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+
 import Swal from 'sweetalert2'
 import Skeleton from '@mui/material/Skeleton'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useMediaQuery } from 'react-responsive'
 
 import { useShow } from '@/context/showProductDetail'
 import { useCategory } from '@/context/category'
@@ -11,6 +14,8 @@ import { useCartList } from '@/context/cart'
 import FavIcon from '../FavIcon'
 
 export default function ProductItem(props) {
+  const router = useRouter()
+
   const [number, setNumber] = useState(1)
   const { product } = props
   const {
@@ -31,8 +36,18 @@ export default function ProductItem(props) {
 
   const isFetchingCategory = categoryData.length === 0
 
-  const handleShow = () => {
-    setShow({ ...setShow, in: true })
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
+
+  const handleShow = (e) => {
+    if (!isDesktop) {
+      e.preventDefault()
+    }
+  }
+  const handleClick = () => {
+    setShow({
+      in: true,
+      selectedPid: product.id,
+    })
   }
 
   //加入購物車
@@ -116,7 +131,7 @@ export default function ProductItem(props) {
 
   return (
     <>
-      <div className="col-12 col-md-4 my-3">
+      <div className="col-12 col-md-4 my-3" onClick={handleClick}>
         <div className="card ed-border-none">
           <Link
             className="ed-border-card01"
