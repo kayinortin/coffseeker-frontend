@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import Swal from 'sweetalert2'
 import Skeleton from '@mui/material/Skeleton'
 import Link from 'next/link'
@@ -24,25 +25,16 @@ export default function ProductItem(props) {
     views,
     popularity,
   } = product
-  const { show, setShow } = useShow()
-  const { categoryData } = useCategory()
+
   const { cartListData, setCartListData } = useCartList()
-  const [category, setCategory] = useState({ id: '', name: '' })
 
-  const isFetchingCategory = categoryData.length === 0
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
 
-  const handleShow = () => {
-    setShow({ ...setShow, in: true })
+  const handleShow = (e) => {
+    if (!isDesktop) {
+      e.preventDefault()
+    }
   }
-
-  // useEffect(() => {
-  //   if (!isFetchingCategory) {
-  //     const matchedCategory = categoryData.find(
-  //       (category) => product.category_id === category.id
-  //     )
-  //     setCategory({ ...matchedCategory })
-  //   }
-  // }, [categoryData])
 
   // 加入購物車
   const addCart = () => {

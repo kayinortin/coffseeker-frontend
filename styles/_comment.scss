@@ -4,7 +4,6 @@
     font-size: 17px;
 
     .star {
-        // cursor: pointer;
         color: #bbb;
         background: none;
         border: none;
@@ -19,7 +18,15 @@
         &.active-star {
             color: gold;
         }
+
+        &.half-star {
+            background: linear-gradient(90deg, gold 50%, #bbb 50%);
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
     }
+
     button.star{
         cursor: pointer;
     }

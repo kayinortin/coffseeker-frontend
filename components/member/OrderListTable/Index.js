@@ -7,7 +7,7 @@ import { FetchUserData } from '../FetchDatas/FetchUserData'
 import Cookies from 'js-cookie'
 
 export default function OrderListTable() {
-  const [orderData, setOrderData] = useState([])
+  const [orderData, setOrderData] = useState(null)
   const { userData, setUserData } = useUser()
   const checkToken = Cookies.get('accessToken')
 
@@ -95,14 +95,20 @@ export default function OrderListTable() {
               ))}
             </div>
           </div>
-          {orderData.length == 0 ? (
-            <div className={'text-center py-5'}>尚未成立任何訂單</div>
-          ) : (
-            orderData.map((v) => {
-              return <OrderDetailOpened key={v.id} order={v} />
-            })
-          )}
           {/* 訂單列表 */}
+          {orderData ? (
+            orderData.length == 0 ? (
+              <div className={'text-center py-5'}>尚未成立任何訂單</div>
+            ) : (
+              orderData.map((v) => (
+                <div key={v.id}>
+                  <OrderDetailOpened order={v} />
+                </div>
+              ))
+            )
+          ) : (
+            <div className={'text-center py-5'}>資料讀取中</div>
+          )}
         </div>
       </div>
     </>

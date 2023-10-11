@@ -23,6 +23,8 @@ import { useProducts } from '@/context/product'
 const TopHits = () => {
   const { productsData, setProductsData } = useProducts()
 
+
+  
   return (
     <>
       <ProductDataFetcher />

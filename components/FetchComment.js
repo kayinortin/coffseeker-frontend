@@ -42,16 +42,27 @@ export default function FetchComment({ pid }) {
 
               <div className="rating-container my-2">
                 評分：
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <span
-                    key={index}
-                    className={
-                      index < comment.rating ? 'star active-star' : 'star'
-                    }
-                  >
-                    ★
-                  </span>
-                ))}
+                {Array.from({ length: 5 }).map((_, index) => {
+                  const isFullStar = index < Math.floor(comment.rating)
+                  const isHalfStar =
+                    index < comment.rating &&
+                    index >= Math.floor(comment.rating)
+
+                  return (
+                    <span
+                      key={index}
+                      className={
+                        isFullStar
+                          ? 'star active-star'
+                          : isHalfStar
+                          ? 'star half-star'
+                          : 'star'
+                      }
+                    >
+                      ★
+                    </span>
+                  )
+                })}
               </div>
               <p className="ed-comment-content">{comment.comment}</p>
               <p className="ed-comment-time my-4">時間： {comment.create_at}</p>
