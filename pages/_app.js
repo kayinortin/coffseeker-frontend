@@ -10,7 +10,7 @@ import { UserProvider } from '@/context/UserInfo'
 import { ProductsProvider } from '@/context/product'
 import { CategoryProvider } from '@/context/category'
 import { CartListProvider } from '@/context/cart'
-import { CartList2Provider } from '@/context/cart_course'
+import { CartListCourseProvider } from '@/context/cart_course'
 import { FavProvider } from '@/context/fav'
 import { DetailProvider } from '@/context/showProductDetail'
 import { CommentProvider } from '@/context/comment'
@@ -33,7 +33,7 @@ export default function MyApp({ Component, pageProps }) {
             <ProductsProvider>
               <CoursesProvider>
                 <CartListProvider>
-                  <CartList2Provider>
+                  <CartListCourseProvider>
                     <FavProvider>
                       <CategoryProvider>
                         <DetailProvider>
@@ -43,7 +43,7 @@ export default function MyApp({ Component, pageProps }) {
                         </DetailProvider>
                       </CategoryProvider>
                     </FavProvider>
-                  </CartList2Provider>
+                  </CartListCourseProvider>
                 </CartListProvider>
               </CoursesProvider>
             </ProductsProvider>
