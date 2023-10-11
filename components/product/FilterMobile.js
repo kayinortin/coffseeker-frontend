@@ -24,7 +24,7 @@ export default function FilterMobile(props) {
     description: [],
   })
 
-  const [isDegreeExpanded, setDegreeExpanded] = useState(false)
+  const [isDegreeExpanded, setDegreeExpanded] = useState(true)
   const roastDegrees = ['淺烘焙', '中淺焙', '中焙', '中深焙', '深焙']
   const [isOriginExpanded, setOriginExpanded] = useState(false)
   const origins = [
@@ -158,7 +158,7 @@ export default function FilterMobile(props) {
       {/* Modal 篩選器 */}
       <Modal show={show} onHide={handleClose} centered className="mt-4">
         <Modal.Header closeButton>
-          <Modal.Title>選擇最佳的咖啡風味</Modal.Title>
+          <h5>擇你所愛，忠於原味</h5>
         </Modal.Header>
         <Modal.Body>
           <div className="mt-4">
@@ -371,7 +371,7 @@ export default function FilterMobile(props) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
+          <Button className="ed-btn-close" onClick={handleClose}>
             關閉
           </Button>
         </Modal.Footer>

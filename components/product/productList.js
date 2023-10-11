@@ -1,20 +1,23 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useMediaQuery } from 'react-responsive'
 import Skeleton from '@mui/material/Skeleton'
 import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
 import FilterMobile from './FilterMobile'
 import Sort from './Sort'
 import Filter from './Filter'
-import navItems from '../../data/navitems.json'
+import ProductDetailMobile from '@/components/product/productDetailMobile'
 
+import { useShow } from '@/context/showProductDetail'
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 
 export default function ProductList(props) {
-  const { setShow } = props
+  const { show, setShow, selectedPid } = useShow()
   const router = useRouter()
+  const { pid } = router.query
   const currentRoute = router.asPath
   const { productsData, setProductsData, sortBy } = useProducts()
   const isFetchingProducts = productsData.length === 0
@@ -63,6 +66,8 @@ export default function ProductList(props) {
     setCurrentPage(newPage)
   }
 
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
   return (
     <>
       <ProductDataFetcher />
@@ -101,6 +106,9 @@ export default function ProductList(props) {
                     product={product}
                   />
                 ))}
+                {show.in && isMobile && (
+                  <ProductDetailMobile pid={selectedPid} />
+                )}
                 <div className="pagination-container d-flex justify-content-center mt-5">
                   <ul className="pagination">
                     <li
