@@ -16,7 +16,11 @@ import { useShow } from '@/context/showProductDetail'
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 
+import FetchFavProductId from '../fav/FetchFavProductId'
+
 export default function ProductList() {
+  FetchFavProductId()
+
   const { show, setShow, selectedPid } = useShow()
   const { productsData, setProductsData, sortBy } = useProducts()
   const isFetchingProducts = productsData.length === 0
