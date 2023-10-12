@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import Image from 'next/image'
-import Swal from 'sweetalert2'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
+import useAddCart from '@/hooks/useAddCart'
+
 import { useShow } from '../../context/showProductDetail'
-import { useCategory } from '@/context/category'
-import { useCartList } from '@/context/cart'
 import { useUser } from '@/context/UserInfo'
 import { useComment } from '@/context/comment'
-import { useProducts } from '@/context/product'
 
 import Counter from '@/components/Counter'
 import ProductDetailFavIcon from '@/components/product/ProductDetailFavIcon'
@@ -20,10 +17,10 @@ import Comment from '@/components/Comment'
 import FetchComment from '@/components/FetchComment'
 import TopHitsMobile from '@/components/TopHitsMobile'
 
-export default function ProductDetailMobile({ pid }) {
+export default function ProductDetailMobile() {
+  const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
-  // 定義商品詳細資訊
   const INITIAL_DETAIL_DATA = {
     id: '',
     name: '',
@@ -44,9 +41,7 @@ export default function ProductDetailMobile({ pid }) {
     Roast_degree: '',
     note: '',
   }
-
   const [detailData, setDetailData] = useState(INITIAL_DETAIL_DATA)
-
   const {
     id,
     name,
@@ -69,7 +64,6 @@ export default function ProductDetailMobile({ pid }) {
   } = detailData
 
   const [showModal, setShowModal] = useState()
-
   const { show, setShow } = useShow()
   const selectedPid = show.selectedPid
   // 取得商品資訊
@@ -100,100 +94,17 @@ export default function ProductDetailMobile({ pid }) {
 
   const handleCloseModal = () => {
     setShowModal(false)
-    setShow((prevShow) => ({ ...prevShow, in: false })) // Also set the show.in to false
+    setShow((prevShow) => ({ ...prevShow, in: false }))
   }
 
-  const { cartListData, setCartListData } = useCartList()
+  const { addCart } = useAddCart(detailData)
+
   const { isLoggedIn, setIsLoggedIn } = useUser()
-
-  // 預設加入購物車數量
-  const [number, setNumber] = useState(1)
-
-  // 加入購物車
-  const addCart = () => {
-    const itemInCart = cartListData.some((item) => item.id === detailData.id)
-
-    // 加入購物車alert
-    const Toast = Swal.mixin({
-      toast: true,
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: false,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      },
-    })
-
-    if (itemInCart) {
-      Toast.fire({
-        icon: 'info',
-        title: '此商品已加入購物車',
-        customClass: {
-          popup: 'ed-alert__toast',
-          title: 'ed-alert__subtitle',
-        },
-      })
-      return
-    }
-
-    Toast.fire({
-      icon: 'success',
-      title: '商品已加入購物車',
-      customClass: {
-        popup: 'ed-alert__toast',
-        title: 'ed-alert__subtitle',
-      },
-    })
-
-    const newItem = {
-      id: detailData.id,
-      name: detailData.name,
-      image: detailData.image,
-      price: detailData.price,
-      discountPrice: detailData.discountPrice,
-      description: detailData.description,
-      amount: number,
-    }
-
-    const newItemData = [...cartListData, newItem]
-
-    for (let i = 0; i < cartListData.length; i++) {
-      if (cartListData[i].id === newItem.id) {
-        const newAmountItem = {
-          id: cartListData[i].id,
-          name: cartListData[i].name,
-          image: cartListData[i].image,
-          price: cartListData[i].price,
-          discountPrice: cartListData[i].discountPrice,
-          description: cartListData[i].description,
-          amount: cartListData[i].amount + newItem.amount,
-        }
-        const oldCartListData = cartListData.filter(
-          (item, i) => item.id !== newItem.id
-        )
-        const newCartListData = [...oldCartListData, newAmountItem]
-
-        setCartListData(newCartListData)
-        return localStorage.setItem('cartList', JSON.stringify(newCartListData))
-      }
-    }
-
-    if (cartListData.length !== 0) {
-      setCartListData(newItemData)
-      localStorage.setItem('cartList', JSON.stringify(newItemData))
-    } else {
-      setCartListData([newItem])
-      localStorage.setItem('cartList', JSON.stringify([newItem]))
-    }
-  }
-
-  // 文本分段
-  const [firstPart, secondPart] = note.split('T')
 
   // 取得評論資訊
   const { comments } = useComment()
-
+  // 文本分段
+  const [firstPart, secondPart] = note.split('T')
   // 計算平均評分
   let ratingSum = 0
   for (let i = 0; i < comments.length; i++) {
@@ -223,7 +134,6 @@ export default function ProductDetailMobile({ pid }) {
 
   return (
     <>
-      {/* 手機版 */}
       <Modal
         show={showModal}
         onHide={handleCloseModal}
@@ -235,7 +145,6 @@ export default function ProductDetailMobile({ pid }) {
           <div className="container">
             <div className="d-flex flex-column mt-3">
               <div className="ed-detail-left">
-                {/* 照片換置 */}
                 <div className="ed-image-gallery">
                   <Image
                     src={`http://localhost:3005/uploads/${images[mainImageIndex]}`}
@@ -262,11 +171,11 @@ export default function ProductDetailMobile({ pid }) {
                     })}
                   </div>
                 </div>
-                <div className="d-flex align-items-center justify-content-center">
+                <div className="d-flex align-items-center justify-content-start">
                   <div className="ed-activity-mobile-title text-center mt-4">
                     新會員優惠
                   </div>
-                  <div className="ed-activity-mobile-detail mt-4">
+                  <div className="ed-activity-mobile-detail mt-4 ms-3">
                     領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
                   </div>
                 </div>

@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-
-import Swal from 'sweetalert2'
-import Skeleton from '@mui/material/Skeleton'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useMediaQuery } from 'react-responsive'
+
+import useAddCart from '@/hooks/useAddCart'
 
 import { useShow } from '@/context/showProductDetail'
 import { useCategory } from '@/context/category'
@@ -14,9 +12,7 @@ import { useCartList } from '@/context/cart'
 import FavIcon from '../FavIcon'
 
 export default function ProductItem(props) {
-  const router = useRouter()
-
-  const [number, setNumber] = useState(1)
+  const { addCart } = useAddCart(props.product)
   const { product } = props
   const {
     id,
@@ -50,85 +46,6 @@ export default function ProductItem(props) {
     })
   }
 
-  //加入購物車
-  const addCart = () => {
-    const itemInCart = cartListData.some((item) => item.id === product.id)
-
-    // 加入購物車alert
-    const Toast = Swal.mixin({
-      toast: true,
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: false,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      },
-    })
-
-    if (itemInCart) {
-      Toast.fire({
-        icon: 'info',
-        title: '此商品已加入購物車',
-        customClass: {
-          popup: 'ed-alert__toast',
-          title: 'ed-alert__subtitle',
-        },
-      })
-      return
-    }
-
-    Toast.fire({
-      icon: 'success',
-      title: '商品已加入購物車',
-      customClass: {
-        popup: 'ed-alert__toast',
-        title: 'ed-alert__subtitle',
-      },
-    })
-
-    const newItem = {
-      id: product.id,
-      name: product.name,
-      image: product.image,
-      price: product.price,
-      discountPrice: product.discountPrice,
-      description: product.description,
-      amount: number,
-    }
-
-    const newItemData = [...cartListData, newItem]
-
-    for (let i = 0; i < cartListData.length; i++) {
-      if (cartListData[i].id === newItem.id) {
-        const newAmountItem = {
-          id: cartListData[i].id,
-          name: cartListData[i].name,
-          image: cartListData[i].image,
-          price: cartListData[i].price,
-          discountPrice: cartListData[i].discountPrice,
-          description: cartListData[i].description,
-          amount: cartListData[i].amount + newItem.amount,
-        }
-        const oldCartListData = cartListData.filter(
-          (item, i) => item.id !== newItem.id
-        )
-        const newCartListData = [...oldCartListData, newAmountItem]
-
-        setCartListData(newCartListData)
-        return localStorage.setItem('cartList', JSON.stringify(newCartListData))
-      }
-    }
-
-    if (cartListData.length !== 0) {
-      setCartListData(newItemData)
-      localStorage.setItem('cartList', JSON.stringify(newItemData))
-    } else {
-      setCartListData([newItem])
-      localStorage.setItem('cartList', JSON.stringify([newItem]))
-    }
-  }
-
   return (
     <>
       <div className="col-12 col-md-4 my-3" onClick={handleClick}>
@@ -138,7 +55,7 @@ export default function ProductItem(props) {
             href={`/product/${id}`}
             onClick={handleShow}
           >
-            <Image
+            <img
               src={`http://localhost:3005/uploads/${image_main}`}
               alt={name}
               className="card-img-top"
@@ -154,9 +71,9 @@ export default function ProductItem(props) {
             <div className="d-flex justify-content-between align-items-center">
               <h6 className="ed-card-price">NT${discountPrice}</h6>
               <div className="d-flex justify-content-between align-items-center">
-                <button className="ed-addCart" onClick={addCart}>
-                  加入購物車
-                </button>
+                <Link href={`/product/${id}`} onClick={handleShow}>
+                  <button className="ed-addCart">查看商品</button>
+                </Link>
               </div>
             </div>
           </div>

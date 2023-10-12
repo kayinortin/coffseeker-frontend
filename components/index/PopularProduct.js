@@ -1,27 +1,34 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import PopularDataFetcher from './PopularProducts'
-import AOS from 'aos'
+import React, { useState, useEffect } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import Image from 'next/image'
-import ProductItem from './productItem'
+import AOS from 'aos'
+
+import PopularDataFetcher from '../product/PopularDataFetcher'
+import ProductItem from '../product/productItem'
+
 import { useProducts } from '@/context/product'
+import { useShow } from '@/context/showProductDetail'
+
+import ProductDetailMobile from '@/components/product/productDetailMobile'
 
 // 02 跟 03 的圓圈放在這裡
 
-export default function PopularProducts(props) {
-  const { setShow } = props
+export default function PopularProducts() {
+  const { show, setShow, selectedPid } = useShow()
   const { productsData, setProductsData } = useProducts()
+
+
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+  const [aosValue, setAosValue] = useState(isMobile ? 'fade-up' : 'fade-left')
+
+  useEffect(() => {
+    setAosValue(isMobile ? 'fade-up' : 'fade-left')
+  }, [isMobile])
 
   useEffect(() => {
     AOS.init({
       duration: 1000,
     })
-  }, [])
-
-  const [aosValue, setAosValue] = useState('fade-left')
-
-  useEffect(() => {
-    const mobile = window.matchMedia('(max-width: 768px)').matches
-    setAosValue(mobile ? 'fade-up' : 'fade-left')
   }, [])
 
   return (
@@ -58,7 +65,7 @@ export default function PopularProducts(props) {
                   data-aos={aosValue}
                   data-aos-delay={300}
                 >
-                  <a href="./product/category/04">
+                  <a href="./product/category/1">
                     <button id="btn1" className="btn my-2 btn-color-1 me-md-3">
                       中淺 <br /> 烘焙
                     </button>
@@ -86,7 +93,7 @@ export default function PopularProducts(props) {
                   data-aos={aosValue}
                   data-aos-delay={600}
                 >
-                  <a href="./product/category/05">
+                  <a href="./product/category/1">
                     <button id="btn2" className="btn my-2 btn-color-2 me-md-3">
                       中度 <br /> 烘焙
                     </button>
@@ -111,12 +118,12 @@ export default function PopularProducts(props) {
                 <div
                   className="my-5 my-md-3 d-md-flex justify-content-center align-items-center"
                   data-aos={aosValue}
-                  data-aos-delay={900}
+                  data-aos-delay={700}
                 >
-                  <a href="./product/category/06">
+                  <a href="./product/category/2">
                     <button id="btn3" className="btn my-2 btn-color-3 me-md-3">
                       中深 <br /> 烘焙
-                    </button>{' '}
+                    </button>
                     <Image
                       className="ed-course-index ed-index-left"
                       src="http://localhost:3000/index-image/course03.png"
@@ -124,7 +131,7 @@ export default function PopularProducts(props) {
                       width={150}
                       height={150}
                       data-aos={aosValue}
-                      data-aos-delay={900}
+                      data-aos-delay={700}
                     />
                   </a>
 
@@ -139,7 +146,7 @@ export default function PopularProducts(props) {
                 <div
                   className="ed-my-md-5 d-md-flex d-block justify-content-center align-items-center ed-course-enter"
                   data-aos="fade-down"
-                  data-aos-delay={600}
+                  data-aos-delay={750}
                 >
                   <img
                     className="arrow me-5 me-md-0"
@@ -169,7 +176,11 @@ export default function PopularProducts(props) {
           <div className="popular-right ed-mt-1440">
             {productsData && productsData.length > 0 ? (
               <div>
-                <div className="row ed-hot-content">
+                <div
+                  className="row ed-hot-content"
+                  data-aos={aosValue}
+                  data-aos-delay={300}
+                >
                   {productsData.map((product) => {
                     return (
                       <ProductItem
@@ -180,6 +191,9 @@ export default function PopularProducts(props) {
                     )
                   })}
                 </div>
+                {show.in && isMobile && (
+                  <ProductDetailMobile pid={selectedPid} />
+                )}
               </div>
             ) : (
               <div className="container">

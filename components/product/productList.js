@@ -1,24 +1,23 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { useMediaQuery } from 'react-responsive'
+import Link from 'next/link'
 import Skeleton from '@mui/material/Skeleton'
+
 import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
 import FilterMobile from './FilterMobile'
 import Sort from './Sort'
 import Filter from './Filter'
+
 import ProductDetailMobile from '@/components/product/productDetailMobile'
 
 import { useShow } from '@/context/showProductDetail'
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 
-export default function ProductList(props) {
+export default function ProductList() {
   const { show, setShow, selectedPid } = useShow()
-  const router = useRouter()
-  const { pid } = router.query
-  const currentRoute = router.asPath
   const { productsData, setProductsData, sortBy } = useProducts()
   const isFetchingProducts = productsData.length === 0
 
@@ -67,6 +66,18 @@ export default function ProductList(props) {
   }
 
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
+  function ProductSkeleton() {
+    return (
+      <div className="product-skeleton">
+        <Skeleton variant="rectangular" width={250} height={250} />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+      </div>
+    )
+  }
 
   return (
     <>
@@ -161,9 +172,9 @@ export default function ProductList(props) {
                 </div>
               </>
             ) : (
-              <div className="unavailable">
-                新品即將推出，<br className="d-md-none"></br>持續探索最佳風味 !
-              </div>
+              Array.from({ length: itemsPerPage }).map((_, idx) => (
+                <ProductSkeleton key={idx} />
+              ))
             )}
           </div>
         </div>
