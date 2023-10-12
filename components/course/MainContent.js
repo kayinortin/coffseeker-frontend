@@ -17,6 +17,7 @@ import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 import { useCourses } from '@/context/course'
 import { useShow } from '../../context/showProductDetail'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
+import TopHitsMobile from './TopHitsMobile'
 
 const INITIAL_DATA = {
   id: '',
@@ -182,8 +183,13 @@ export default function MainContent() {
                   </div>
                 </div>}
         
-
-        <TopHits />
+          <div className='d-none d-sm-block'>
+          <TopHits />
+          </div>
+          {/* 手機版 */}
+       <div className='d-sm-none'>
+        <TopHitsMobile/>
+       </div>
       </div>
     </>
   )
