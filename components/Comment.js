@@ -76,6 +76,8 @@ export default function Comment({ totalStars = 5, pid }) {
           icon: 'success',
           title: '成功',
           text: '評論和評分已送出',
+        }).then(() => {
+          setCommentText('')
         })
         const newComment = {
           user_name: userData.username,

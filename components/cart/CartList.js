@@ -7,8 +7,8 @@ import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
 
 export default function CartList({ step, handleNextStep, setStep }) {
-  const { cartListData, setCartListData } = useCartList() //商品資料
-  const { cartListData_course, setCartListData_course } = useCartListCourse() //課程資料
+  const { cartListData, setCartListData } = useCartList([]) //商品資料
+  const { cartListData_course, setCartListData_course } = useCartListCourse([]) //課程資料
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('') // 運送方式
   const [deliveryPrice, setDeliveryPrice] = useState(0) // 運費金額
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('') // 付款方式
@@ -35,9 +35,10 @@ export default function CartList({ step, handleNextStep, setStep }) {
   useEffect(() => {
     couponsDataFetch()
 
-    const initialData = JSON.parse(localStorage.getItem('cartList')) || []
-    const initialCourseData =
-      JSON.parse(localStorage.getItem('cartList_course')) || []
+    const initialData = JSON.parse(localStorage.getItem('cartList'))
+    const initialCourseData = JSON.parse(
+      localStorage.getItem('cartList_course')
+    )
 
     let courseData = initialCourseData
     if (initialCourseData && Array.isArray(initialCourseData)) {
@@ -47,10 +48,8 @@ export default function CartList({ step, handleNextStep, setStep }) {
       }))
     }
 
-    if (initialData) {
-      setCartListData(initialData)
-      setCartListData_course(courseData)
-    }
+    setCartListData(initialData || [])
+    setCartListData_course(courseData || [])
 
     const handleStorageChange = (e) => {
       if (e.key === 'cartList') {

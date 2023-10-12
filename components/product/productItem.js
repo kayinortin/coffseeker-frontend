@@ -12,7 +12,6 @@ import { useCartList } from '@/context/cart'
 import FavIcon from '../FavIcon'
 
 export default function ProductItem(props) {
-  const { addCart } = useAddCart(props.product)
   const { product } = props
   const {
     id,
@@ -48,7 +47,7 @@ export default function ProductItem(props) {
 
   return (
     <>
-      <div className="col-12 col-md-4 my-3" onClick={handleClick}>
+      <div className="col-12 col-md-4 my-3">
         <div className="card ed-border-none">
           <Link
             className="ed-border-card01"
@@ -61,6 +60,7 @@ export default function ProductItem(props) {
               className="card-img-top"
               width={250}
               height={250}
+              onClick={handleClick}
             />
           </Link>
           <FavIcon size="medium" type="icon" id={id} />
@@ -72,7 +72,9 @@ export default function ProductItem(props) {
               <h6 className="ed-card-price">NT${discountPrice}</h6>
               <div className="d-flex justify-content-between align-items-center">
                 <Link href={`/product/${id}`} onClick={handleShow}>
-                  <button className="ed-addCart">查看商品</button>
+                  <button className="ed-addCart" onClick={handleClick}>
+                    查看商品
+                  </button>
                 </Link>
               </div>
             </div>

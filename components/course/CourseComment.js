@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 
 import { useUser } from '@/context/UserInfo'
 import { useComment } from '@/context/comment'
+import { FetchUserData } from '../member/FetchDatas/FetchUserData'
 
 export default function CourseComment({ totalStars = 5, pid }) {
   const { setComments } = useComment()
@@ -16,17 +17,17 @@ export default function CourseComment({ totalStars = 5, pid }) {
   const [userName, setName] = useState('')
 
   useEffect(() => {
-    const storedUserData = Cookies.get('userInfo') || '{}'
-    const userData = JSON.parse(storedUserData)
-
-    if (userData && userData.id && userData.email && userData.username) {
-      setUserData(userData)
-      setId(userData.id)
-      setMail(userData.email)
-      setName(userData.username)
-    } else {
-      console.log('Cookie不存在或數據不完整')
+    async function fetchData() {
+      const data = await FetchUserData()
+      if (data) {
+        setIsLoggedIn(true)
+        setUserData(data)
+        setId(data.id)
+        setMail(data.email)
+        setName(data.username)
+      }
     }
+    fetchData()
   }, [])
 
   const handleStarClick = (index) => {
@@ -42,6 +43,7 @@ export default function CourseComment({ totalStars = 5, pid }) {
       })
       return
     }
+
     if (rating === 0) {
       Swal.fire({
         icon: 'warning',
@@ -52,21 +54,24 @@ export default function CourseComment({ totalStars = 5, pid }) {
     }
 
     try {
-      const response = await fetch('http://localhost:3005/api/comment/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          product_id: pid,
-          user_id: userData.id,
-          user_email: userData.email,
-          user_name: userData.username,
-          comment: commentText,
-          date: new Date().toISOString().split('T')[0],
-          rating: rating,
-        }),
-      })
+      const response = await fetch(
+        'http://localhost:3005/api/course-comment/add',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            course_id: pid,
+            user_id: userData.id,
+            user_email: userData.email,
+            user_name: userData.username,
+            comment: commentText,
+            date: new Date().toISOString().split('T')[0],
+            rating: rating,
+          }),
+        }
+      )
 
       const data = await response.json()
 
@@ -80,7 +85,7 @@ export default function CourseComment({ totalStars = 5, pid }) {
           user_name: userData.username,
           rating: rating,
           comment: commentText,
-          create_at: new Date().toISOString().split('T')[0],
+          creat_at: new Date().toISOString().split('T')[0],
         }
 
         setComments((prevComments) => [...prevComments, newComment])
@@ -103,7 +108,7 @@ export default function CourseComment({ totalStars = 5, pid }) {
           text: '請您確認評論和評分是否正確',
         })
       }
-    } catch (error) {
+    } catch (err) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
