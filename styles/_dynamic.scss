@@ -1,0 +1,176 @@
+.ed {
+  &-margin {
+    &--page-bottom {
+      margin-bottom: 3.75rem;
+    }
+  }
+  &-height {
+    &--empty-page {
+      height: max-content;
+      min-height: calc(100vh - $height__navbar - 15.375rem);
+    }
+    &--page {
+      height: max-content;
+      min-height: calc(100vh - $height__navbar - 15.375rem);
+    }
+    &--full-page {
+      height: max-content;
+      min-height: calc(100vh - $height__navbar);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &-padding {
+    &--product-top {
+      @media screen and (max-width: $lg) {
+        padding-top: $height__floating-filter-body - 1.5rem;
+      }
+    }
+  }
+}
+
+.ed-placeholder {
+  &__img {
+    width: 25rem;
+    height: 10rem;
+    margin: 0 auto;
+  }
+  &__action {
+    animation: wobble 4s both infinite;
+  }
+}
+
+.ed-btn {
+  width: max-content;
+  padding: 0 1.25rem;
+
+  @include text--normal;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.5;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &--primary {
+    border: none;
+    background: $color--secondary;
+    color: white;
+    box-shadow: $box-shadow__element;
+
+    transition: $transition;
+
+    &:hover {
+      color: white;
+      background: $color--primary;
+      box-shadow: none;
+    }
+
+    &:focus,
+    &:active {
+      color: white;
+      background: $color--primary;
+      box-shadow: none;
+    }
+  }
+
+  &--light {
+    border: none;
+    background: $color--light;
+    border-radius: $border-radius__btn;
+    color: $color--primary;
+    box-shadow: $box-shadow__element;
+
+    transition: $transition;
+
+    &:hover {
+      color: $color--light;
+      background: $color--hover;
+      box-shadow: none;
+    }
+
+    &:focus,
+    &:active {
+      color: $color--light;
+      background: $color--active;
+      box-shadow: none;
+    }
+  }
+
+  &--w100 {
+    width: 100%;
+  }
+
+  &--large {
+    height: $height__btn--large;
+
+    @media screen and (max-width: $md) {
+      height: $height__btn--meduim;
+    }
+  }
+
+  &--medium {
+    height: $height__btn--meduim;
+  }
+
+  &--icon {
+    width: $size__icon-btn;
+    height: $size__icon-btn;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: $border-radius__btn;
+    @include interaction__tab;
+  }
+
+  &--mobile {
+    @include cursor(pointer);
+
+    @media screen and (max-width: $md) {
+      width: $width__btn--square;
+      min-width: $width__btn--square;
+
+      background: $color--light;
+      color: $color--primary;
+      box-shadow: $box-shadow__block;
+
+      &:hover {
+        color: $color--light;
+      }
+
+      &:focus,
+      &:active {
+        color: $color--light;
+      }
+    }
+  }
+
+  &--secondary {
+    @include text--normal;
+    background: $color--gray6;
+  }
+
+  &--outline {
+    border: $border__input;
+    border-radius: $border-radius__input;
+    @include interaction__tab;
+  }
+  &--none {
+    &:hover {
+      background: transparent;
+    }
+    &:focus,
+    &:active {
+      background: transparent;
+    }
+  }
+}
