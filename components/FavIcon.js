@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useFavorite } from '@/context/fav'
-
+import AddFavProduct from './fav/AddFavProduct'
+import RemoveFavProduct from './fav/RemoveFavProduct'
 function FavIcon(props) {
   const { size, type, id } = props
   const [fav, setFav] = useState(false)
@@ -21,10 +22,12 @@ function FavIcon(props) {
       if (favItemsArr.includes(id)) {
         return
       }
+      AddFavProduct(id)
       setFavItemsArr(favArr)
       localStorage.setItem('fav', favArr)
     } else {
       //收藏 -> 取消收藏
+      RemoveFavProduct(id)
       const remainFavArr = favArr.filter((item) => item !== id)
       setFavItemsArr([...remainFavArr])
       localStorage.setItem('fav', remainFavArr)
