@@ -125,23 +125,43 @@ export default function ProductDetailDesktop({ pid }) {
                 <h5>加購商品</h5>
               </div>
               <div className="mt-4 d-flex justify-content-between align-items-center">
-                <div>
-                  <img src="" alt="圖片" />
-                </div>
-                <div>
-                  <h6>其他咖啡豆推薦</h6>
-                  <p>NT$ 100</p>
-                </div>
+                <Link
+                  href="http://localhost:3000/product/10"
+                  className="d-flex justify-content-center align-items-center"
+                >
+                  <div>
+                    <img
+                      src="http://localhost:3000/cart-image/product_1.png"
+                      width={70}
+                      height={70}
+                      alt="圖片"
+                    />
+                  </div>
+                  <div>
+                    <h6>巴西 皇后莊園</h6>
+                    <p className='text-dark'>NT$ 190</p>
+                  </div>
+                </Link>
               </div>
               <hr />
               <div className="mt-3 d-flex justify-content-between align-items-center">
-                <div>
-                  <img src="" alt="圖片" />
-                </div>
-                <div>
-                  <h6>其他咖啡豆推薦</h6>
-                  <p>NT$ 100</p>
-                </div>
+              <Link
+                  href="http://localhost:3000/product/32"
+                  className="d-flex justify-content-center align-items-center"
+                >
+                  <div>
+                    <img
+                      src="http://localhost:3000/cart-image/product_2.png"
+                      width={70}
+                      height={70}
+                      alt="圖片"
+                    />
+                  </div>
+                  <div>
+                    <h6>頂級藝伎濾掛</h6>
+                    <p className='text-dark'>NT$ 170</p>
+                  </div>
+                </Link>
               </div>
               <hr />
               <div className="mt-2 d-block">

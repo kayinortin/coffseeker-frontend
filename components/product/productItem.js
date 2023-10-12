@@ -55,7 +55,7 @@ export default function ProductItem(props) {
             href={`/product/${id}`}
             onClick={handleShow}
           >
-            <Image
+            <img
               src={`http://localhost:3005/uploads/${image_main}`}
               alt={name}
               className="card-img-top"
@@ -71,9 +71,9 @@ export default function ProductItem(props) {
             <div className="d-flex justify-content-between align-items-center">
               <h6 className="ed-card-price">NT${discountPrice}</h6>
               <div className="d-flex justify-content-between align-items-center">
-                <button className="ed-addCart" onClick={addCart}>
-                  加入購物車
-                </button>
+                <Link href={`/product/${id}`} onClick={handleShow}>
+                  <button className="ed-addCart">查看商品</button>
+                </Link>
               </div>
             </div>
           </div>

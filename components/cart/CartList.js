@@ -333,7 +333,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
             />
             <div className="emptyTitle">您的購物車目前無商品</div>
             <button type="button" className="btn goshop">
-              <a href="/product">前往商城</a>
+              <a href="http://localhost:3000/product">前往商城</a>
             </button>
           </div>
         </div>
