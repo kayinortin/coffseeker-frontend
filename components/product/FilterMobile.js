@@ -164,7 +164,7 @@ export default function FilterMobile(props) {
           <div className="mt-4">
             <form onSubmit={handleFormSubmit}>
               <div className="price-slider-container">
-                <label className="ed-filter-title">價格</label>
+                <p className="ed-filter-title">價格區間</p>
                 <ReactSlider
                   className="horizontal-slider"
                   thumbClassName="thumb"

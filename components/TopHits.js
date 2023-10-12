@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
@@ -8,7 +8,7 @@ import {
   A11y,
   Autoplay,
 } from 'swiper/modules'
-// import Swiper and modules styles
+
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -34,8 +34,6 @@ const TopHits = () => {
           slidesPerView={3}
           navigation
           autoplay={{ delay: 3000 }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}
         >
           {productsData.map((product, i) => {
             return (

@@ -1,18 +1,12 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import Image from 'next/image'
-import Swal from 'sweetalert2'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 
-import { useShow } from '../../context/showProductDetail'
-import { useCategory } from '@/context/category'
-import { useCartList } from '@/context/cart'
+import useAddCart from '@/hooks/useAddCart'
+
 import { useUser } from '@/context/UserInfo'
 import { useComment } from '@/context/comment'
-import { useProducts } from '@/context/product'
 
 import Counter from '@/components/Counter'
 import ProductDetailFavIcon from '@/components/product/ProductDetailFavIcon'
@@ -20,12 +14,10 @@ import Comment from '@/components/Comment'
 import FetchComment from '@/components/FetchComment'
 import TopHits from '@/components/TopHits'
 
-export default function ProductDetailDesktop({pid}) {
-  const router = useRouter()
-  // 定義商品圖片路徑
+export default function ProductDetailDesktop({ pid }) {
+  const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
-  // 定義商品詳細資訊
   const INITIAL_DETAIL_DATA = {
     id: '',
     name: '',
@@ -46,9 +38,7 @@ export default function ProductDetailDesktop({pid}) {
     Roast_degree: '',
     note: '',
   }
-
   const [detailData, setDetailData] = useState(INITIAL_DETAIL_DATA)
-
   const {
     id,
     name,
@@ -88,133 +78,45 @@ export default function ProductDetailDesktop({pid}) {
 
     if (pid) {
       getDetail()
-      setShow((prevShow) => ({ ...prevShow, in: true }))
     }
   }, [pid])
+  const { addCart } = useAddCart(detailData)
 
-  const { show, setShow } = useShow()
-  const { cartListData, setCartListData } = useCartList()
   const { isLoggedIn, setIsLoggedIn } = useUser()
-
-  // 預設加入購物車數量
-  const [number, setNumber] = useState(1)
-
-  // 加入購物車
-  const addCart = () => {
-    const itemInCart = cartListData.some((item) => item.id === detailData.id)
-
-    // 加入購物車alert
-    const Toast = Swal.mixin({
-      toast: true,
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: false,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      },
-    })
-
-    if (itemInCart) {
-      Toast.fire({
-        icon: 'info',
-        title: '此商品已加入購物車',
-        customClass: {
-          popup: 'ed-alert__toast',
-          title: 'ed-alert__subtitle',
-        },
-      })
-      return
-    }
-
-    Toast.fire({
-      icon: 'success',
-      title: '商品已加入購物車',
-      customClass: {
-        popup: 'ed-alert__toast',
-        title: 'ed-alert__subtitle',
-      },
-    })
-
-    const newItem = {
-      id: detailData.id,
-      name: detailData.name,
-      image: detailData.image,
-      price: detailData.price,
-      discountPrice: detailData.discountPrice,
-      description: detailData.description,
-      amount: number,
-    }
-
-    const newItemData = [...cartListData, newItem]
-
-    for (let i = 0; i < cartListData.length; i++) {
-      if (cartListData[i].id === newItem.id) {
-        const newAmountItem = {
-          id: cartListData[i].id,
-          name: cartListData[i].name,
-          image: cartListData[i].image,
-          price: cartListData[i].price,
-          discountPrice: cartListData[i].discountPrice,
-          description: cartListData[i].description,
-          amount: cartListData[i].amount + newItem.amount,
-        }
-        const oldCartListData = cartListData.filter(
-          (item, i) => item.id !== newItem.id
-        )
-        const newCartListData = [...oldCartListData, newAmountItem]
-
-        setCartListData(newCartListData)
-        return localStorage.setItem('cartList', JSON.stringify(newCartListData))
-      }
-    }
-
-    if (cartListData.length !== 0) {
-      setCartListData(newItemData)
-      localStorage.setItem('cartList', JSON.stringify(newItemData))
-    } else {
-      setCartListData([newItem])
-      localStorage.setItem('cartList', JSON.stringify([newItem]))
-    }
-  }
-
-  // 文本分段
-  const [firstPart, secondPart] = note.split('T')
 
   // 取得評論資訊
   const { comments } = useComment()
-
+  // 文本分段
+  const [firstPart, secondPart] = note.split('T')
   // 計算平均評分
   let ratingSum = 0
   for (let i = 0; i < comments.length; i++) {
     ratingSum += comments[i].rating
   }
   let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3
+  let roundedRating = Math.floor(ratingAvg)
+  let hasHalfStar = ratingAvg - roundedRating >= 0.5 ? true : false
 
   const AerageStars = () => {
-    return Array.from({ length: 5 }).map((_, index) => (
-      <div
-        key={index}
-        className={index < Math.round(ratingAvg) ? 'star active-star' : 'star'}
-      >
-        ★
-      </div>
-    ))
-  }
+    return Array.from({ length: 5 }).map((_, index) => {
+      let starClass = 'star'
 
-  const [showModal, setShowModal] = useState(false)
+      if (index < roundedRating) {
+        starClass += ' active-star'
+      } else if (index === roundedRating && hasHalfStar) {
+        starClass += ' half-star'
+      }
 
-  const handleOpenModal = () => {
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
+      return (
+        <div key={index} className={starClass}>
+          ★
+        </div>
+      )
+    })
   }
 
   return (
     <>
-      {/* 電腦版 */}
       <div className="container">
         <div className="d-flex justify-content-between">
           <div className="sidebar-left d-none d-md-block">
@@ -223,23 +125,43 @@ export default function ProductDetailDesktop({pid}) {
                 <h5>加購商品</h5>
               </div>
               <div className="mt-4 d-flex justify-content-between align-items-center">
-                <div>
-                  <img src="" alt="圖片" />
-                </div>
-                <div>
-                  <h6>其他咖啡豆推薦</h6>
-                  <p>NT$ 100</p>
-                </div>
+                <Link
+                  href="http://localhost:3000/product/10"
+                  className="d-flex justify-content-center align-items-center"
+                >
+                  <div>
+                    <img
+                      src="http://localhost:3000/cart-image/product_1.png"
+                      width={70}
+                      height={70}
+                      alt="圖片"
+                    />
+                  </div>
+                  <div>
+                    <h6>巴西 皇后莊園</h6>
+                    <p className='text-dark'>NT$ 190</p>
+                  </div>
+                </Link>
               </div>
               <hr />
               <div className="mt-3 d-flex justify-content-between align-items-center">
-                <div>
-                  <img src="" alt="圖片" />
-                </div>
-                <div>
-                  <h6>其他咖啡豆推薦</h6>
-                  <p>NT$ 100</p>
-                </div>
+              <Link
+                  href="http://localhost:3000/product/32"
+                  className="d-flex justify-content-center align-items-center"
+                >
+                  <div>
+                    <img
+                      src="http://localhost:3000/cart-image/product_2.png"
+                      width={70}
+                      height={70}
+                      alt="圖片"
+                    />
+                  </div>
+                  <div>
+                    <h6>頂級藝伎濾掛</h6>
+                    <p className='text-dark'>NT$ 170</p>
+                  </div>
+                </Link>
               </div>
               <hr />
               <div className="mt-2 d-block">
@@ -262,10 +184,8 @@ export default function ProductDetailDesktop({pid}) {
             </div>
           </div>
           <div className="ed-sidebar-right">
-            {/* 左邊 */}
             <div className="d-flex justify-content-between mt-3">
               <div className="container ed-detail-left">
-                {/* 照片換置 */}
                 <div className="ed-image-gallery">
                   <Image
                     src={`http://localhost:3005/uploads/${images[mainImageIndex]}`}

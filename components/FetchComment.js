@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useComment } from '@/context/comment'
 
 export default function FetchComment({ pid }) {
@@ -35,7 +35,7 @@ export default function FetchComment({ pid }) {
               <div>
                 <img
                   src={`https://ui-avatars.com/api/?background=1C262C&color=fff&bold=true&rounded=true&name=${comment.user_name}`}
-                  alt=""
+                  alt="User Name"
                 />
               </div>
               <h5 className="ed-comment-name">{comment.user_name}</h5>

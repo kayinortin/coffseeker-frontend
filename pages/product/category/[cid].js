@@ -2,23 +2,25 @@ import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Skeleton from '@mui/material/Skeleton'
+import { useMediaQuery } from 'react-responsive'
 
 import ProductItem from '@/components/product/productItem'
 import ProductDataFetcher from '@/components/product/ProductDataFetcher'
 import Sort from '@/components/product/Sort'
 import Filter from '@/components/product/Filter'
 import FilterMobile from '@/components/product/FilterMobile'
+import ProductDetailMobile from '@/components/product/productDetailMobile'
 
 import navItems from '../../../data/navitems.json'
 
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
+import { useShow } from '@/context/showProductDetail'
 
-export default function ProductList(props) {
-  const { setShow } = props
+export default function ProductList() {
+  const { show, setShow, selectedPid } = useShow()
   const router = useRouter()
   const { cid } = router.query
-  const currentRoute = router.asPath
   const { productsData, setProductsData, sortBy } = useProducts()
   const [filteredProducts, setfilteredProducts] = useState([])
   const [sortedProducts, setSortedProducts] = useState([])
@@ -31,8 +33,6 @@ export default function ProductList(props) {
   }, [productsData, cid])
 
   const isFetchingProducts = filteredProducts.length === 0
-
-  console.log(isFetchingProducts)
 
   useEffect(() => {
     let sorted = [...filteredProducts]
@@ -94,6 +94,19 @@ export default function ProductList(props) {
   }
 
   const breadcrumbItems = generateBreadcrumb(navItems, cid)
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
+  function ProductSkeleton() {
+    return (
+      <div className="product-skeleton">
+        <Skeleton variant="rectangular" width={250} height={250} />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+      </div>
+    )
+  }
 
   return (
     <>
@@ -139,6 +152,9 @@ export default function ProductList(props) {
                     product={product}
                   />
                 ))}
+                {show.in && isMobile && (
+                  <ProductDetailMobile pid={selectedPid} />
+                )}
                 <div className="pagination-container d-flex justify-content-center mt-5">
                   <ul className="pagination">
                     <li
@@ -191,9 +207,9 @@ export default function ProductList(props) {
                 </div>
               </>
             ) : (
-              <div className="unavailable">
-                新品即將推出，<br className="d-md-none"></br>持續探索最佳風味 !
-              </div>
+              Array.from({ length: itemsPerPage }).map((_, idx) => (
+                <ProductSkeleton key={idx} />
+              ))
             )}
           </div>
         </div>

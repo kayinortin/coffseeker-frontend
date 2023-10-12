@@ -2,7 +2,7 @@
   border: 10px solid #dfd0af;
 }
 .ed-border-card02 {
-  border: 10px solid #B29E7A;
+  border: 10px solid #b29e7a;
 }
 .ed-border-card03 {
   border: 10px solid #845635;
@@ -29,7 +29,7 @@
   background-color: rgb(240 235 226 / var(--tw-bg-opacity));
 }
 
-.ed-card-brand{
+.ed-card-brand {
   font-size: 12px;
   font-weight: 300;
   padding-left: 2px;
@@ -48,6 +48,20 @@
     line-height: 20px;
   }
   @media screen and (max-width: $lg) {
+  }
+}
+
+.ed-card-description {
+  height: 100px;
+  font-size: 15px;
+  line-height: normal;
+  color: $color--primary;
+  overflow: hidden;
+  @media screen and (max-width: 1440px) {
+    line-height: 20px;
+  }
+  @media screen and (max-width: $lg) {
+    height: 70px;
   }
 }
 
@@ -83,6 +97,7 @@
   }
   @media screen and (max-width: $lg) {
     width: 100%;
+    margin-left: 0px;
   }
 }
 .popular-right {
@@ -130,9 +145,8 @@
   left: -95px;
   @media screen and (max-width: $lg) {
     left: -20px;
-  }    
   }
-
+}
 
 .ed-no-product {
   padding-top: 300px;
@@ -155,11 +169,14 @@
   font-size: 14px;
   width: 100px;
   height: 26px;
-  color: white;
-  background-color: $color--secondary;
+  color: $color--secondary;
+  border: 1px solid $color--secondary;
+  background-color: transparent;
   &:hover {
-    background-color: $color--primary;
+    color: white;
+    background-color: $color--secondary;
   }
+
   @media screen and (max-width: 1440px) {
     font-size: 16px;
     width: 130px;
@@ -170,4 +187,4 @@
     width: 170px;
     height: 35px;
   }
-  }
+}
