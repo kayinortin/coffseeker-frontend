@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { FaFacebook, FaGoogle } from 'react-icons/fa'
+import { FaFacebook, FaGoogle, FaEyeSlash, FaEye } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -19,6 +19,13 @@ export default function LoginForm() {
   // 定義表單的值
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
+  const [checkPassword, setCheckPassword] = useState(false)
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleLoginFormSubmit()
+    }
+  }
 
   const inputs = [
     {
@@ -31,17 +38,19 @@ export default function LoginForm() {
       aria: null,
       maxlength: 50,
       onChange: (e) => setMail(e.target.value),
+      onKeyDown: handleInputKeyDown,
     },
     {
       id: 2,
       htmlFor: 'InputPassword',
       title: '密碼',
       placeholder: '請輸入密碼',
-      type: 'password',
+      type: checkPassword ? 'text' : 'password',
       htmlId: 'InputPassword',
       aria: null,
       maxlength: 12,
       onChange: (e) => setPassword(e.target.value),
+      onKeyDown: handleInputKeyDown,
     },
   ]
   const router = useRouter()
@@ -161,6 +170,9 @@ export default function LoginForm() {
                     onChange={(e) => {
                       input.onChange(e)
                     }}
+                    onKeyDown={(e) => {
+                      input.onKeyDown(e)
+                    }}
                   />
                   <div
                     id={'error' + input.id}
@@ -169,7 +181,20 @@ export default function LoginForm() {
                 </div>
               )
             })}
-            <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>
+            <div className={'d-flex justify-content-end position-relative'}>
+              <button
+                className={'position-absolute eyes h5'}
+                type="button"
+                onClick={() => {
+                  checkPassword
+                    ? setCheckPassword(false)
+                    : setCheckPassword(true)
+                }}
+              >
+                {checkPassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
+            <div className={'form-check ps-0 d-flex align-items-center'}>
               <input
                 type="checkbox"
                 className={'check-input me-3 rounded-0'}

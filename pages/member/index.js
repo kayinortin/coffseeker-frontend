@@ -22,7 +22,7 @@ export default function info() {
                   會員中心
                 </Link>
               </li>
-              <li className={'breadcrumb-item'}>會員資料檢視</li>
+              <li className={'breadcrumb-item'}>會員資料檢視 / 修改</li>
             </ol>
           </nav>
         </div>
