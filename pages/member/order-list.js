@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/Sidebar/MemSideBar'
 import OrderListTable from '@/components/member/OrderListTable/Index'
-export default function info() {
+export default function OrderList() {
+  const [orderBy, setOrderBy] = useState('DESC')
   return (
     <>
       <div className={'container'}>
@@ -16,7 +17,7 @@ export default function info() {
                 </Link>
               </li>
               <li className={'breadcrumb-item'}>
-                <Link href="/" className={'link'}>
+                <Link href="/member" className={'link'}>
                   會員中心
                 </Link>
               </li>
@@ -24,14 +25,21 @@ export default function info() {
             </ol>
           </nav>
           <div className={'col-12 col-lg-9'}>
-            <div className={'container'}>
-              <div className={'position-relative'}>
-                <select className={'position-absolute end-0'}>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
+            <div
+              className={
+                'container h-100 d-lg-flex justify-content-end align-items-center'
+              }
+            >
+              <select
+                className={'ed-select-control order-select my-2 my-lg-0'}
+                onChange={(e) => {
+                  setOrderBy(e.target.value)
+                  console.log(orderBy)
+                }}
+              >
+                <option value={'DESC'}>時間:新到舊</option>
+                <option value={'ASC'}>時間:舊到新</option>
+              </select>
             </div>
           </div>
         </div>
@@ -43,7 +51,7 @@ export default function info() {
           </div>
           <div className={'col-12 col-lg-9 mb-5'}>
             <div className={'container d-flex mb-5'}>
-              <OrderListTable />
+              <OrderListTable orderBy={orderBy} setOrderBy={setOrderBy} />
             </div>
           </div>
         </div>
