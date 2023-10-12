@@ -6,8 +6,9 @@ import { useUser } from '@/context/UserInfo'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
 import Cookies from 'js-cookie'
 
-export default function OrderListTable() {
+export default function OrderListTable({ orderBy, setOrderBy }) {
   const [orderData, setOrderData] = useState(null)
+
   const { userData, setUserData } = useUser()
   const checkToken = Cookies.get('accessToken')
 
@@ -30,7 +31,7 @@ export default function OrderListTable() {
         try {
           const userId = userData.id
           const response = await axios.get(
-            `http://localhost:3005/api/order/userOrders/${userId}`
+            `http://localhost:3005/api/order/userOrders/${userId}/${orderBy}`
           )
           // 獲得指定使用者的所有訂單
           setOrderData(response.data.orders)
@@ -40,7 +41,7 @@ export default function OrderListTable() {
       }
     }
     fetchOrders()
-  }, [userData])
+  }, [userData, orderBy])
 
   const fakeOrderData = [
     {

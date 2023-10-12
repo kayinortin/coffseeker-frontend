@@ -45,7 +45,7 @@ export default function useAddCart(product) {
     const newItem = {
       id: product.id,
       name: product.name,
-      image: product.image,
+      image_main: product.image_main,
       price: product.price,
       discountPrice: product.discountPrice,
       description: product.description,
@@ -59,7 +59,7 @@ export default function useAddCart(product) {
         const newAmountItem = {
           id: cartListData[i].id,
           name: cartListData[i].name,
-          image: cartListData[i].image,
+          image_main: cartListData[i].image_main,
           price: cartListData[i].price,
           discountPrice: cartListData[i].discountPrice,
           description: cartListData[i].description,

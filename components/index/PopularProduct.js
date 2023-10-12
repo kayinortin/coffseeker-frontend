@@ -7,12 +7,16 @@ import PopularDataFetcher from '../product/PopularDataFetcher'
 import ProductItem from '../product/productItem'
 
 import { useProducts } from '@/context/product'
+import { useShow } from '@/context/showProductDetail'
+
+import ProductDetailMobile from '@/components/product/productDetailMobile'
 
 // 02 跟 03 的圓圈放在這裡
 
-export default function PopularProducts(props) {
-  const { setShow } = props
+export default function PopularProducts() {
+  const { show, setShow, selectedPid } = useShow()
   const { productsData, setProductsData } = useProducts()
+
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const [aosValue, setAosValue] = useState(isMobile ? 'fade-up' : 'fade-left')
@@ -61,7 +65,7 @@ export default function PopularProducts(props) {
                   data-aos={aosValue}
                   data-aos-delay={300}
                 >
-                  <a href="./product/category/04">
+                  <a href="./product/category/1">
                     <button id="btn1" className="btn my-2 btn-color-1 me-md-3">
                       中淺 <br /> 烘焙
                     </button>
@@ -89,7 +93,7 @@ export default function PopularProducts(props) {
                   data-aos={aosValue}
                   data-aos-delay={600}
                 >
-                  <a href="./product/category/05">
+                  <a href="./product/category/1">
                     <button id="btn2" className="btn my-2 btn-color-2 me-md-3">
                       中度 <br /> 烘焙
                     </button>
@@ -116,7 +120,7 @@ export default function PopularProducts(props) {
                   data-aos={aosValue}
                   data-aos-delay={700}
                 >
-                  <a href="./product/category/06">
+                  <a href="./product/category/2">
                     <button id="btn3" className="btn my-2 btn-color-3 me-md-3">
                       中深 <br /> 烘焙
                     </button>
@@ -187,6 +191,9 @@ export default function PopularProducts(props) {
                     )
                   })}
                 </div>
+                {show.in && isMobile && (
+                  <ProductDetailMobile pid={selectedPid} />
+                )}
               </div>
             ) : (
               <div className="container">
