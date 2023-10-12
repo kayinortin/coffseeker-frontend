@@ -1,38 +1,23 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import Image from 'next/image'
 import AOS from 'aos'
 
 export default function Course() {
-  // 課程按鈕動畫
-  // useEffect(() => {
-  //   const btnGroups = {
-  //     btn1: 'group1',
-  //     btn2: 'group2',
-  //     btn3: 'group3',
-  //   }
+  const [activeGroup, setActiveGroup] = useState(null)
 
-  //   const gallery = document.querySelector('.gallery')
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+  const [aosValue, setAosValue] = useState(isMobile ? 'fade-up' : 'fade-right')
 
-  //   Object.keys(btnGroups).forEach((btnId) => {
-  //     const btn = document.getElementById(btnId)
-  //     if (btn) {
-  //       btn.addEventListener('mouseover', function () {
-  //         gallery.setAttribute('data-active-group', btnGroups[btnId])
-  //       })
-  //       btn.addEventListener('mouseout', function () {
-  //         gallery.dataset.activeGroup = ' '
-  //       })
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    setAosValue(isMobile ? 'fade-up' : 'fade-right')
+  }, [isMobile])
 
-  // AOS動畫
   useEffect(() => {
     AOS.init({
-      duration: 2000,
+      duration: 1000,
     })
   }, [])
-
 
   return (
     <>
@@ -40,71 +25,95 @@ export default function Course() {
         <a className="ed-zindex" href="./course">
           <div
             className="gallery flex-column"
-            data-aos="fade-up"
-            data-aos-delay={200}
+            data-active-group={activeGroup}
+            data-aos={aosValue}
+            data-aos-delay={300}
           >
-            <img
-              className="gallery_img-2x2 group-1"
-              src="http://localhost:3000/course-gallery/3.jpg"
+            <Image
+              className="gallery_img-2x2 group-2"
+              src="/course-gallery/3.jpg"
               alt="course-gallery"
+              width={400}
+              height={400}
             />
-            <img
+            <Image
               className="gallery_img-2x1 group-2"
-              src="http://localhost:3000/course-gallery/11.jpg"
+              src="/course-gallery/11.jpg"
               alt="course-gallery"
+              width={400}
+              height={200}
             />
-            <img
-              className="gallery_img-1x2 group-3"
-              src="http://localhost:3000/course-gallery/1.jpg"
+            <Image
+              className="gallery_img-1x2 group-1"
+              src="/course-gallery/1.jpg"
               alt="course-gallery"
-            />
-
-            <img
-              className="gallery_img-1x1 group-1"
-              src="http://localhost:3000/course-gallery/4.jpg"
-              alt="course-gallery"
+              width={200}
+              height={400}
             />
 
-            <img
-              className="gallery_img-2x2 group-1"
+            <Image
+              className="gallery_img-1x1 group-3"
+              src="/course-gallery/4.jpg"
+              alt="course-gallery"
+              width={200}
+              height={200}
+            />
+            <Image
+              className="gallery_img-2x2 group-2"
               src="http://localhost:3000/course-gallery/10.jpg"
               alt="course-gallery"
+              width={400}
+              height={400}
             />
-            <img
-              className="gallery_img-2x2 group-2"
+            <Image
+              className="gallery_img-2x2 group-1"
               src="http://localhost:3000/course-gallery/9.jpg"
               alt="course-gallery"
+              width={400}
+              height={400}
             />
-            <img
+            <Image
               className="gallery_img-1x1 group-3"
               src="http://localhost:3000/course-gallery/15.jpg"
               alt="course-gallery"
+              width={200}
+              height={200}
             />
-            <img
+            <Image
               className="gallery_img-2x2 group-3"
               src="http://localhost:3000/course-gallery/8.jpg"
               alt="course-gallery"
+              width={400}
+              height={400}
             />
-            <img
-              className="gallery_img-2x2 group-1"
+            <Image
+              className="gallery_img-2x2 group-2"
               src="http://localhost:3000/course-gallery/12.jpg"
               alt="course-gallery"
+              width={400}
+              height={400}
             />
-            <img
-              className="gallery_img-2x2 group-2"
+            <Image
+              className="gallery_img-2x2 group-1"
               src="http://localhost:3000/course-gallery/13.jpg"
               alt="course-gallery"
+              width={400}
+              height={400}
             />
 
-            <img
+            <Image
               className="gallery_img-2x2 group-2"
               src="http://localhost:3000/course-gallery/7.jpg"
               alt="course-gallery"
+              width={400}
+              height={400}
             />
-            <img
+            <Image
               className="gallery_img-2x1 group-3"
               src="http://localhost:3000/course-gallery/14.jpg"
               alt="course-gallery"
+              width={400}
+              height={200}
             />
           </div>
         </a>
@@ -134,11 +143,16 @@ export default function Course() {
             <div className="container d-flex flex-column px-4 px-lg-0">
               <div
                 className="my-5 my-md-2 d-md-flex justify-content-center align-items-center"
-                data-aos="fade-up"
+                data-aos={aosValue}
                 data-aos-delay={300}
               >
                 <a href="./course/category/1">
-                  <button id="btn1" className="btn my-2 btn-color-1 me-md-3">
+                  <button
+                    id="btn1"
+                    className="btn my-2 btn-color-1 me-md-3"
+                    onMouseEnter={() => setActiveGroup('group1')}
+                    onMouseLeave={() => setActiveGroup(null)}
+                  >
                     拉花 <br /> 課程
                   </button>
                   <Image
@@ -147,7 +161,7 @@ export default function Course() {
                     alt=""
                     width={150}
                     height={150}
-                    data-aos="fade-up"
+                    data-aos={aosValue}
                     data-aos-delay={300}
                   />
                 </a>
@@ -161,11 +175,16 @@ export default function Course() {
               </div>
               <div
                 className="my-3 my-md-5 d-md-flex justify-content-center align-items-center"
-                data-aos="fade-up"
+                data-aos={aosValue}
                 data-aos-delay={600}
               >
                 <a href="./course/category/1">
-                  <button id="btn2" className="btn my-2 btn-color-2 me-md-3">
+                  <button
+                    id="btn2"
+                    className="btn my-2 btn-color-2 me-md-3"
+                    onMouseEnter={() => setActiveGroup('group2')}
+                    onMouseLeave={() => setActiveGroup(null)}
+                  >
                     烘豆 <br /> 課程
                   </button>
                   <Image
@@ -174,7 +193,7 @@ export default function Course() {
                     alt=""
                     width={150}
                     height={150}
-                    data-aos="fade-up"
+                    data-aos={aosValue}
                     data-aos-delay={600}
                   />
                 </a>
@@ -188,11 +207,16 @@ export default function Course() {
               </div>
               <div
                 className="my-5 my-md-3 d-md-flex justify-content-center align-items-center"
-                data-aos="fade-up"
-                data-aos-delay={900}
+                data-aos={aosValue}
+                data-aos-delay={700}
               >
                 <a href="./course/category/1">
-                  <button id="btn3" className="btn my-2 btn-color-3 me-md-3">
+                  <button
+                    id="btn3"
+                    className="btn my-2 btn-color-3 me-md-3"
+                    onMouseEnter={() => setActiveGroup('group3')}
+                    onMouseLeave={() => setActiveGroup(null)}
+                  >
                     手沖 <br /> 課程
                   </button>
                   <Image
@@ -201,8 +225,8 @@ export default function Course() {
                     alt=""
                     width={150}
                     height={150}
-                    data-aos="fade-up"
-                    data-aos-delay={900}
+                    data-aos={aosValue}
+                    data-aos-delay={700}
                   />
                 </a>
 
@@ -217,7 +241,7 @@ export default function Course() {
               <div
                 className="ed-my-md-5 d-md-flex d-block justify-content-center align-items-center ed-course-enter"
                 data-aos="fade-down"
-                data-aos-delay={1200}
+                data-aos-delay={750}
               >
                 <img
                   className="arrow me-5 me-md-0"
@@ -229,7 +253,7 @@ export default function Course() {
                   href="./course"
                 >
                   <br />
-                  <button id="btn4" className="btn my-2 btn-color-4 me-md-3">
+                  <button className="btn my-2 btn-color-4 me-md-3">
                     進入課程
                   </button>
                   <h6 className="ed-h6-resize">

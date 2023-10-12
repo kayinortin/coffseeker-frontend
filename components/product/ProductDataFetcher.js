@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useProducts } from '@/context/product'
 
 export default function ProductDataFetcher() {
-  const { setProductsData } = useProducts() // 從上下文取得 setProductsData 函數
+  const { setProductsData } = useProducts()
 
   useEffect(() => {
     const fetchData = async () => {

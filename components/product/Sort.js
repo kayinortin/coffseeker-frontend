@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useProducts } from '@/context/product'
 
