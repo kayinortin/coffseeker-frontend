@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FaFacebook, FaGoogle, FaEyeSlash, FaEye } from 'react-icons/fa'
@@ -21,7 +21,17 @@ export default function LoginForm() {
   const [password, setPassword] = useState('')
   const [checkPassword, setCheckPassword] = useState(false)
 
-  const handleInputKeyDown = (e) => {
+  const handleKeyDown = (event, index) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      const nextIndex = index + 1
+      if (nextIndex < inputs.length) {
+        inputs[nextIndex].ref.current.focus()
+      }
+    }
+  }
+
+  const handleFormSubmit = (e) => {
     if (e.key === 'Enter') {
       handleLoginFormSubmit()
     }
@@ -37,8 +47,9 @@ export default function LoginForm() {
       htmlId: 'InputEmail',
       aria: null,
       maxlength: 50,
+      ref: useRef(),
       onChange: (e) => setMail(e.target.value),
-      onKeyDown: handleInputKeyDown,
+      onKeyDown: (e) => handleKeyDown(e, 0),
     },
     {
       id: 2,
@@ -49,8 +60,9 @@ export default function LoginForm() {
       htmlId: 'InputPassword',
       aria: null,
       maxlength: 12,
+      ref: useRef(),
       onChange: (e) => setPassword(e.target.value),
-      onKeyDown: handleInputKeyDown,
+      onKeyDown: handleFormSubmit,
     },
   ]
   const router = useRouter()
@@ -154,7 +166,7 @@ export default function LoginForm() {
             會員登入
           </div>
           <div className="p-5">
-            {inputs.map((input) => {
+            {inputs.map((input, index) => {
               return (
                 <div className="mb-3" key={input.id}>
                   <label htmlFor={input.htmlFor} className={'form-label'}>
@@ -167,6 +179,7 @@ export default function LoginForm() {
                     id={input.htmlId}
                     aria-describedby={input.aria}
                     maxLength={input.maxlength}
+                    ref={input.ref}
                     onChange={(e) => {
                       input.onChange(e)
                     }}
