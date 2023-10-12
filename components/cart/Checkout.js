@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthJWT } from '@/context/useAuthJWT'
+import axios from 'axios'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
   const [checkoutData, setCheckoutData] = useState(null)
+  const [receiverName, setReceiverName] = useState('')
+  const [receiverPhone, setReceiverPhone] = useState('')
+  const [receiverAddress, setReceiverAddress] = useState('')
   const [isInfoVisible, setIsInfoVisible] = useState(false)
 
   //會員資料
@@ -17,6 +21,44 @@ function Checkout({ step, handleNextStep, setStep }) {
       setCheckoutData(checkoutData)
     }
   }, [])
+
+  //後端API
+  function sendOrder(orderData) {
+    axios
+      .post('http://localhost:3005/api/ordercart/neworder', orderData)
+      .then((response) => {
+        console.log('訂單送入後端成功', response.data)
+      })
+      .catch((error) => {
+        console.error('訂單送入後端錯誤', error)
+      })
+  }
+
+  //送出訂單
+  function handleSendOrder() {
+    const orderList = {
+      user_id: authJWT.userData.id,
+      total_price: allTotalPrice,
+      shipping_fee: deliveryPrice,
+      discount_price: discountAmount,
+      All_price: totalAmount,
+      payment_option: selectedPaymentOption,
+      delivery_option: selectedDeliveryOption,
+      receiver_name: isInfoVisible ? userData.username : receiverName,
+      receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
+      receiver_address: isInfoVisible ? userData.address : receiverAddress,
+    }
+    // const productDetail={
+    // }
+    // const courseDetail={
+    // }
+    const orderData = {
+      orderList,
+      // productDetail,
+      // courseDetail,
+    }
+    sendOrder(orderData)
+  }
 
   //按鈕上一步 //按鈕送出訂單
   const handleCheckout = () => {
@@ -60,6 +102,12 @@ function Checkout({ step, handleNextStep, setStep }) {
   const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
   const totalAmount = checkoutData ? checkoutData.totalAmount : 0
   const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0
+  const selectedDeliveryOption = checkoutData
+    ? checkoutData.selectedDeliveryOption
+    : ''
+  const selectedPaymentOption = checkoutData
+    ? checkoutData.selectedPaymentOption
+    : ''
 
   //商品列表
   const productItems = cartData.map((product) => (
@@ -241,7 +289,15 @@ function Checkout({ step, handleNextStep, setStep }) {
                       placeholder="輸入名稱"
                       aria-label="Username"
                       aria-describedby="addon-wrapping"
-                      value={isInfoVisible ? userData.username : ''}
+                      value={isInfoVisible ? userData.username : receiverName}
+                      onChange={(e) => {
+                        if (isInfoVisible) {
+                          // 如果相符，可以采取其他操作，例如忽略输入
+                        } else {
+                          // 否则，更新收件人名稱的值
+                          setReceiverName(e.target.value)
+                        }
+                      }}
                     />
                   </div>
                   <div className="deliverInfo">
@@ -252,7 +308,15 @@ function Checkout({ step, handleNextStep, setStep }) {
                       placeholder="輸入電話號碼"
                       aria-label="Username"
                       aria-describedby="addon-wrapping"
-                      value={isInfoVisible ? userData.phone : ''}
+                      value={isInfoVisible ? userData.phone : receiverPhone}
+                      onChange={(e) => {
+                        if (isInfoVisible) {
+                          // 如果相符，可以采取其他操作，例如忽略输入
+                        } else {
+                          // 否则，更新收件人電話號碼的值
+                          setReceiverPhone(e.target.value)
+                        }
+                      }}
                     />
                   </div>
                   <div className="deliverInfo">
@@ -263,7 +327,15 @@ function Checkout({ step, handleNextStep, setStep }) {
                       placeholder="輸入地址"
                       aria-label="Username"
                       aria-describedby="addon-wrapping"
-                      value={isInfoVisible ? userData.address : ''}
+                      value={isInfoVisible ? userData.address : receiverAddress}
+                      onChange={(e) => {
+                        if (isInfoVisible) {
+                          // 如果相符，可以采取其他操作，例如忽略输入
+                        } else {
+                          // 否则，更新配送地址的值
+                          setReceiverAddress(e.target.value)
+                        }
+                      }}
                     />
                   </div>
                 </div>
@@ -327,7 +399,10 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="col-lg-6 mb-3">
             <button
               className="btn sendOrder w-100 fw-medium lh-base"
-              onClick={() => setStep(3)}
+              onClick={() => {
+                setStep(3)
+                handleSendOrder()
+              }}
             >
               送出訂單
             </button>
