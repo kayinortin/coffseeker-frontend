@@ -48,10 +48,8 @@ export default function CartList({ step, handleNextStep, setStep }) {
       }))
     }
 
-    if (initialData) {
-      setCartListData(initialData)
-      setCartListData_course(courseData)
-    }
+    setCartListData(initialData || [])
+    setCartListData_course(courseData || [])
 
     const handleStorageChange = (e) => {
       if (e.key === 'cartList') {
