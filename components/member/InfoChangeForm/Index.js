@@ -22,6 +22,7 @@ export default function InfoChangeForm() {
   const [userEmail, setMail] = useState('')
   const [userName, setName] = useState('')
   const [userPhone, setPhone] = useState('')
+  const [userAddress, setAddress] = useState('')
   const [userGender, setGender] = useState('')
   const [birthdayYear, setBirthdayYear] = useState('')
   const [birthdayMonth, setBirthdayMonth] = useState('')
@@ -39,6 +40,7 @@ export default function InfoChangeForm() {
           setName(fetchUser.username)
           setPhone(fetchUser.phone)
           setGender(fetchUser.gender)
+          setAddress(fetchUser.address)
           const UserBirthday = fetchUser.birthday.split('-')
           setBirthdayYear(UserBirthday[0])
           setBirthdayMonth(UserBirthday[1])
@@ -90,6 +92,18 @@ export default function InfoChangeForm() {
       maxlength: 10,
       disabled: false,
       onChange: (e) => setPhone(e.target.value),
+    },
+    {
+      id: 4,
+      htmlForId: 'InputAddress',
+      class: 'form-control',
+      title: '收貨地址',
+      value: userAddress,
+      type: 'tel',
+      aria: null,
+      maxlength: 30,
+      disabled: false,
+      onChange: (e) => setAddress(e.target.value),
     },
   ]
 
@@ -181,6 +195,7 @@ export default function InfoChangeForm() {
       username: userName,
       gender: userGender,
       phone: userPhone,
+      address: userAddress,
       birthday: birthdayYear + '-' + birthdayMonth + '-' + birthdayData,
     }
 
@@ -189,6 +204,7 @@ export default function InfoChangeForm() {
         `http://localhost:3005/api/users/${userId}`,
         formData
       )
+      console.log(userId)
       console.log(response)
       Swal.fire({
         title: '修改資料成功',
@@ -196,8 +212,19 @@ export default function InfoChangeForm() {
         showConfirmButton: false,
         timer: 1500,
       })
-      // window.location.reload()
-      // Cookies.set('userInfo', JSON.stringify(formData))
+    } catch (error) {
+      console.error('錯誤:', error)
+    }
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3005/api/auth-jwt/info-change-jwt',
+        { id: userId }
+      )
+      console.log('成功取得Token', response)
+      if (response.data.code === '200' && response.data.accessToken) {
+        Cookies.set('accessToken', response.data.accessToken)
+      }
     } catch (error) {
       console.error('錯誤:', error)
     }
