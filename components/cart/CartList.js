@@ -35,10 +35,9 @@ export default function CartList({ step, handleNextStep, setStep }) {
   useEffect(() => {
     couponsDataFetch()
 
-    const initialData = JSON.parse(localStorage.getItem('cartList'))
-    const initialCourseData = JSON.parse(
-      localStorage.getItem('cartList_course')
-    )
+    const initialData = JSON.parse(localStorage.getItem('cartList')) || []
+    const initialCourseData =
+      JSON.parse(localStorage.getItem('cartList_course')) || []
 
     let courseData = initialCourseData
     if (initialCourseData && Array.isArray(initialCourseData)) {
