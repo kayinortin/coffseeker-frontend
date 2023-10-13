@@ -66,9 +66,11 @@ export default function CoursePic({ pid }) {
     }
   }, [pid])
 
+  const imgIndex=[1,2,3]
+
   return (
     <>
-      {/* <CoursePerFetcher pid={pid} /> */}
+      
 
       <div className="col d-flex flex-column col-sm-4">
         <div className="mx-auto hw-detail-left">
@@ -90,14 +92,14 @@ export default function CoursePic({ pid }) {
             <div className="ed-image-row">
               {images &&
                 images.length > 0 &&
-                images.map((pic, index) => (
+                imgIndex.map((pic, index) => (
                   <img
                     key={index}
-                    src={`/course-image/${images[index]}`}
+                    src={`/${images[index]}`}
                     alt={name}
                     width={100}
                     height={100}
-                    className="m-2 me-1"
+                    className="ed-image-small"
                   />
                 ))}
             </div>

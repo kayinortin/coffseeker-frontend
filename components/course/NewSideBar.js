@@ -7,7 +7,7 @@ import {
 import ReactSlider from 'react-slider'
 import axios from 'axios'
 
-function Accordion() {
+function Accordion(props) {
   const [isArtExpanded, setIsArtExpanded] = useState(true)
   const [isPourExpanded, setIsPourExpanded] = useState(true)
   const [isRoastExpanded, setIsRoastExpanded] = useState(true)
@@ -36,6 +36,8 @@ function Accordion() {
     }
     try {
       const response = await axios.get(queryString)
+      props.onFilter(response.data.data)
+      console.log(response)
     } catch (err) {
       console.log(err)
     }
