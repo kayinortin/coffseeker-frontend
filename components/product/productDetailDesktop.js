@@ -13,8 +13,10 @@ import ProductDetailFavIcon from '@/components/product/ProductDetailFavIcon'
 import Comment from '@/components/Comment'
 import FetchComment from '@/components/FetchComment'
 import TopHits from '@/components/TopHits'
+import FetchFavProductId from '../fav/FetchFavProductId'
 
 export default function ProductDetailDesktop({ pid }) {
+  FetchFavProductId()
   const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
@@ -139,13 +141,13 @@ export default function ProductDetailDesktop({ pid }) {
                   </div>
                   <div>
                     <h6>巴西 皇后莊園</h6>
-                    <p className='text-dark'>NT$ 190</p>
+                    <p className="text-dark">NT$ 190</p>
                   </div>
                 </Link>
               </div>
               <hr />
               <div className="mt-3 d-flex justify-content-between align-items-center">
-              <Link
+                <Link
                   href="http://localhost:3000/product/32"
                   className="d-flex justify-content-center align-items-center"
                 >
@@ -159,7 +161,7 @@ export default function ProductDetailDesktop({ pid }) {
                   </div>
                   <div>
                     <h6>頂級藝伎濾掛</h6>
-                    <p className='text-dark'>NT$ 170</p>
+                    <p className="text-dark">NT$ 170</p>
                   </div>
                 </Link>
               </div>

@@ -1,31 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
-import { useFavorite } from '../../context/fav';
-
+import { useFavorite } from '../../context/fav'
+import AddFavProduct from '../fav/AddFavProduct'
+import RemoveFavProduct from '../fav/RemoveFavProduct'
 function ProductDetailFavIcon(props) {
-  const { id } = props;
-  const { favItemsArr, setFavItemsArr } = useFavorite();
-  const [fav, setFav] = useState(false);
-
+  const { id } = props
+  const { favItemsArr, setFavItemsArr } = useFavorite()
+  const [fav, setFav] = useState(false)
+  if (favItemsArr.includes(id) && !fav) {
+    setFav(true)
+  }
   const handleSetFav = () => {
-    setFav(!fav);
-    const favArr = [...favItemsArr, id];
     if (fav === false) {
       //未收藏 -> 收藏
       if (favItemsArr.includes(id)) {
-        return;
+        return
       }
-      setFavItemsArr(favArr);
-      localStorage.setItem('fav', favArr);
+      setFav(!fav)
+      const favArr = [...favItemsArr, id]
+      AddFavProduct(id)
+      setFavItemsArr(favArr)
+      localStorage.setItem('fav', favArr)
     } else {
       //收藏 -> 取消收藏
-      const remainFavArr = favArr.filter((item) => item !== id);
-      setFavItemsArr([...remainFavArr]);
-      localStorage.setItem('fav', remainFavArr);
+      setFav(!fav)
+      RemoveFavProduct(id)
+      const remainFavArr = favItemsArr.filter((item) => item !== id)
+      setFavItemsArr([...remainFavArr])
+      localStorage.setItem('fav', remainFavArr)
     }
-  };
+  }
 
-  const isActive = favItemsArr.findIndex((item) => item === id) !== -1;
+  const isActive = favItemsArr.findIndex((item) => item === id) !== -1
 
   return (
     <>
@@ -39,7 +45,7 @@ function ProductDetailFavIcon(props) {
         <i className="fas fa-heart ed-fav-btn__icon"></i>
       </button>
     </>
-  );
+  )
 }
 
-export default ProductDetailFavIcon;
+export default ProductDetailFavIcon
