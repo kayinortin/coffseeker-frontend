@@ -14,7 +14,7 @@ export default function CourseList({ pid }) {
     setData(fetchedData)
   }
 
-  console.log(data)
+  
 
   //--------------------------------pagination
   const itemsPerPage = 9
@@ -30,7 +30,7 @@ export default function CourseList({ pid }) {
     <>
       {data && data.courses && data.courses.length > 0 ? (
         <div className='container'>
-          {/* <h3 className="text-center mt-5">課程列表</h3> */}
+          
           <div className="mt-4">
             <BreadCrumbs />
           </div>
@@ -43,13 +43,13 @@ export default function CourseList({ pid }) {
               .map((v, i) => {
                 return (
                   <>
-                    <div className="col-12 col-sm-4">
+                    <div key={i} className="col-12 col-sm-4">
                       <li
-                        key={i}
+                        
                         className="d-flex justify-content-center course-li"
                       >
                         <Card
-                          // key={i}
+                          
                           course={v}
                         />
                       </li>
