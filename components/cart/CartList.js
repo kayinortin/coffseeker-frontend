@@ -18,22 +18,36 @@ export default function CartList({ step, handleNextStep, setStep }) {
   const { authJWT } = useAuthJWT() //取userId
 
   //優惠卷API
-  const couponsDataFetch = async () => {
+  const couponsDataFetch = async (userId) => {
     try {
-      const id = authJWT.userData.id
-      const couponResponse = await axios.get(
-        `http://localhost:3005/api/coupons/userCoupons/${id}`
-      )
-      // console.log(couponResponse.data.orders)
-      const couponsData = couponResponse.data.orders
-      setSelectedCoupon(Array.isArray(couponsData) ? couponsData : [])
+      const localCoupons = JSON.parse(localStorage.getItem('userCoupons'))
+      if (localCoupons) {
+        setSelectedCoupon(localCoupons)
+      } else {
+        const couponResponse = await axios.get(
+          `http://localhost:3005/api/coupons/userCoupons/${userId}`
+        )
+        const couponsData = couponResponse.data.orders
+        setSelectedCoupon(Array.isArray(couponsData) ? couponsData : [])
+        // 同時將數據保存在本地存儲
+        localStorage.setItem('userCoupons', JSON.stringify(couponsData))
+      }
     } catch (error) {
       console.error('資料獲取失敗:', error)
     }
   }
   // 購物車列表即時渲染
   useEffect(() => {
-    couponsDataFetch()
+    if (authJWT.isAuth) {
+      const userId = authJWT.userData.id
+      const localCoupons = JSON.parse(localStorage.getItem('userCoupons'))
+
+      if (localCoupons && localCoupons.length > 0) {
+        setSelectedCoupon(localCoupons)
+      } else {
+        couponsDataFetch(userId)
+      }
+    }
 
     const initialData = JSON.parse(localStorage.getItem('cartList'))
     const initialCourseData = JSON.parse(
@@ -382,7 +396,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                     <div className="selectTitle">選擇運送方式：</div>
                     <select
                       required
-                      class="form-select"
+                      className="form-select"
                       id="deliveryLabel"
                       name="deliveryLabel"
                       aria-label="select"
@@ -424,7 +438,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                         setSelectedPaymentOption(selectedOption)
                       }}
                     >
-                      <option selected>請選擇</option>
+                      <option value="">請選擇</option>
                       <option value="信用卡">信用卡</option>
                       <option value="ATM轉帳">ATM轉帳</option>
                     </select>
