@@ -179,7 +179,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="imgContainer col-lg-2 col-sm-3 ">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/image/${product.image_main}`}
+              src={`http://localhost:3005/uploads/${product.image_main}`}
               alt={product.image_main}
             />
           </div>
@@ -220,7 +220,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="imgContainer col-lg-2 col-sm-3 ">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/${course.course_image}`}
+              src={`http://localhost:3005/uploads/course-image/${course.course_image}`}
               alt={course.course_image}
             />
           </div>

@@ -300,7 +300,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
       <div className="imgContainer col-lg-3 col-md-5 ">
         <img
           className="img-fluid"
-          src={`http://localhost:3005/uploads/${course.course_image}`}
+          src={`http://localhost:3005/uploads/course-image/${course.course_image}`}
           alt={course.course_image}
         />
       </div>
@@ -338,11 +338,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
       <>
         <div className="cartlist">
           <div className="emptyContainer text-center">
-            <img
-              className="emptyCart"
-              src="/cart-image/emptycart.svg"
-              alt="購物車無商品"
-            />
+            <img className="emptyCart" src="/bg1.png" alt="購物車無商品" />
             <div className="emptyTitle">您的購物車目前無商品</div>
             <button type="button" className="btn goshop">
               <a href="http://localhost:3000/product">前往商城</a>
