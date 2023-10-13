@@ -22,9 +22,9 @@ export default function OrderDetailOpened({ order }) {
     // console.log(order.id)
     const fetchItems = async () => {
       try {
-        const orderId = order.id
+        const ordertrackingNumber = order.tracking_number
         const response = await axios.get(
-          `http://localhost:3005/api/order/orderItems/${orderId}`
+          `http://localhost:3005/api/order/orderItems/${ordertrackingNumber}`
         )
         // 獲得指定使用者的所有訂單
         // console.log('Item資料', response.data.orderItems)
@@ -44,7 +44,8 @@ export default function OrderDetailOpened({ order }) {
     orderItem.map((v) => {
       totalPrice += v.discountPrice * v.amount
       totalAmount += v.amount
-      subTotal = totalPrice + parseInt(order.shipping_fee - order.discount)
+      subTotal =
+        totalPrice + parseInt(order.shipping_fee - order.discount_price)
     })
 
     setTotalPrice(totalPrice)
@@ -78,7 +79,7 @@ export default function OrderDetailOpened({ order }) {
     },
     {
       title: '訂單總額',
-      value: `NT$${order.total_price}`,
+      value: `NT${order.total_price}`,
     },
     {
       title: '訂單狀態',
@@ -171,7 +172,7 @@ export default function OrderDetailOpened({ order }) {
     },
     {
       result: '優惠',
-      sum: order.discount,
+      sum: order.discount_price,
     },
   ]
 
