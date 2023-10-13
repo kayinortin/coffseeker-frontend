@@ -30,7 +30,8 @@ $fw-black:900;
     padding-block: 1rem;
   
     .step{
-        padding: 1.5rem;
+        padding: 1rem;
+        // border: 1px solid red;
 
         .stepTop{
             display: flex;
@@ -593,7 +594,13 @@ $fw-black:900;
     }
     
 }
-    
+
+/* 在屏幕宽度小于290px时的样式 */
+@media (max-width: 768px) {
+    .steps {
+        display: none; 
+    }
+}
 
 
 

@@ -239,10 +239,10 @@ function Checkout({ step, handleNextStep, setStep }) {
               {/* <div className="price d-inline text-decoration-line-through fs-6 pe-2">
             ${course.course_price}
           </div> */}
-              <div className="discountPrice d-inline fs-5">
+              {/* <div className="discountPrice d-inline fs-5">
                 ${course.course_price}
               </div>
-              <div className="discountPrice  d-inline fs-5"> x1</div>
+              <div className="discountPrice  d-inline fs-5"> x1</div> */}
             </div>
             <div className="productQuantityTotal text-end pt-2">
               <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
@@ -261,7 +261,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <hr className="border-1 opacity-100" />
           <div className={`checkoutProducts ${isOpen ? 'open' : 'close'}`}>
             <div className="closeProducts text-center">
-              <h3>合計: ${totalAmount} </h3>
+              <h3 className="mt-5">合計: ${totalAmount} </h3>
               <button
                 className="btn btngroup my-4"
                 onClick={handleToggleProducts}
