@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/Sidebar/MemSideBar'
 import OrderListTable from '@/components/member/OrderListTable/Index'
 export default function OrderList() {
   const [orderBy, setOrderBy] = useState('DESC')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
+  const [pageBar, setPageBar] = useState([])
+
+  useEffect(() => {
+    const pageArr = []
+    for (let i = 1; i <= totalPage; i++) {
+      pageArr.push(i)
+    }
+    setPageBar(pageArr)
+  }, [totalPage])
+
   return (
     <>
-      <div className={'container'}>
+      <div className={'container pr-defualt-height'}>
         {/* 麵包屑 */}
         <div className={'row'}>
           <nav className={'col-lg-3 nav-breadcrumb'}>
@@ -34,7 +46,7 @@ export default function OrderList() {
                 className={'ed-select-control order-select my-2 my-lg-0'}
                 onChange={(e) => {
                   setOrderBy(e.target.value)
-                  console.log(orderBy)
+                  // console.log(orderBy)
                 }}
               >
                 <option value={'DESC'}>時間:新到舊</option>
@@ -50,8 +62,72 @@ export default function OrderList() {
             <MemSideBar />
           </div>
           <div className={'col-12 col-lg-9 mb-5'}>
-            <div className={'container d-flex mb-5'}>
-              <OrderListTable orderBy={orderBy} setOrderBy={setOrderBy} />
+            <div className={'container d-flex'}>
+              <OrderListTable
+                orderBy={orderBy}
+                setOrderBy={setOrderBy}
+                currentPage={currentPage}
+                totalPage={totalPage}
+                setTotalPage={setTotalPage}
+              />
+            </div>
+          </div>
+          {/* 分頁 */}
+          <div className={'col-12'}>
+            <div className={'container d-flex mb-5 justify-content-center'}>
+              <ul className={'pagination'}>
+                <li
+                  className={`ed-page-item ${
+                    currentPage === 1 ? 'disabled' : null
+                  } `}
+                >
+                  <button
+                    className={'ed-page-link'}
+                    aria-label="Previous"
+                    onClick={() => {
+                      const nextPage = currentPage - 1
+                      setCurrentPage(nextPage)
+                      window.scrollTo(0, 0)
+                    }}
+                  >
+                    «
+                  </button>
+                </li>
+                {pageBar.map((page) => {
+                  return (
+                    <li className={'ed-page-item'} key={page}>
+                      <button
+                        className={`ed-page-link ${
+                          currentPage === page ? 'active' : null
+                        }`}
+                        onClick={() => {
+                          setCurrentPage(page)
+                          window.scrollTo(0, 0)
+                        }}
+                      >
+                        {page}
+                      </button>
+                    </li>
+                  )
+                })}
+                <li
+                  className={`ed-page-item ${
+                    currentPage === totalPage ? 'disabled' : null
+                  } `}
+                >
+                  <button
+                    className="ed-page-link "
+                    aria-label="Next"
+                    onClick={() => {
+                      const nextPage = currentPage + 1
+                      setCurrentPage(nextPage)
+                      window.scrollTo(0, 0)
+                    }}
+                  >
+                    »
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

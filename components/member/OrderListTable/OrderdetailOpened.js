@@ -180,7 +180,7 @@ export default function OrderDetailOpened({ order }) {
       {/* 桌機板 */}
       <div className={'p-3 d-none d-lg-block border border-dark'}>
         <div className={'d-none d-lg-flex align-items-center'}>
-          <span className={'col-4 text-center'}>{order.tracking_number}</span>
+          <span className={'col-4'}>{order.tracking_number}</span>
           <div
             className={
               'col-8 d-flex justify-content-between order-nav align-items-center'
@@ -209,7 +209,7 @@ export default function OrderDetailOpened({ order }) {
       <div className={'p-3 border-bottom border-dark d-lg-none'}>
         <div className={'row'}>
           <div className={'d-flex py-2'}>
-            <div className="ps-3">{order.tracking_number}</div>
+            <div className="">{order.tracking_number}</div>
           </div>
           {OrderTbodyRWD.map((v, i) => (
             <div className={'d-flex justify-content-between py-2'} key={i}>

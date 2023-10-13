@@ -15,7 +15,7 @@ export default function OrderItems({ order }) {
       imgUrl = JSON.parse(order.image)
     }
     setImageArr(imgUrl[0])
-    console.log('Images', imgUrl[0])
+    // console.log('Images', imgUrl[0])
   }, [])
 
   return (
@@ -46,7 +46,7 @@ export default function OrderItems({ order }) {
         <div className={'d-flex align-items-center'}>
           <div className={'pe-3'}>
             <Image
-              src={`http://localhost:3005/uploads/images/none-img.png`}
+              src={`http://localhost:3005/uploads/${imageArr}`}
               alt="Image Description"
               width={100} // 设置图像宽度
               height={100} // 设置图像高度

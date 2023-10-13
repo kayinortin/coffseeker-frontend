@@ -188,7 +188,27 @@ export default function InfoChangeForm() {
     },
   ]
 
+  const errorSwal = (error) => {
+    Swal.fire({
+      title: error,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1500,
+    })
+  }
+  const phoneRegex = /^09\d{8}$/
   const handleUserInfoChange = async () => {
+    if (userName === '') {
+      errorSwal('姓名不能為空')
+      return false
+    } else if (userPhone === '') {
+      errorSwal('手機號碼不能為空')
+      return false
+    } else if (!phoneRegex.test(userPhone)) {
+      errorSwal('請輸入09開頭 共10位數字的台灣電話號碼格式')
+      return false
+    }
+
     const formData = {
       id: userId,
       email: userEmail,
@@ -221,7 +241,7 @@ export default function InfoChangeForm() {
         'http://localhost:3005/api/auth-jwt/info-change-jwt',
         { id: userId }
       )
-      console.log('成功取得Token', response)
+      // console.log('成功取得Token', response)
       if (response.data.code === '200' && response.data.accessToken) {
         Cookies.set('accessToken', response.data.accessToken)
       }

@@ -16,110 +16,109 @@ export default function CourseComment({ totalStars = 5, pid }) {
   const [userEmail, setMail] = useState('')
   const [userName, setName] = useState('')
 
-  useEffect(()=>{
-    async function fetchData(){
-        const data =await FetchUserData()
-        if(data){
-            setIsLoggedIn(true)
+  useEffect(() => {
+    async function fetchData() {
+      const data = await FetchUserData()
+      if (data) {
+        setIsLoggedIn(true)
         setUserData(data)
         setId(data.id)
         setMail(data.email)
         setName(data.username)
-        }
+      }
     }
     fetchData()
-  },[])
+  }, [])
 
   const handleStarClick = (index) => {
     setRating(index)
   }
 
-  const handleSubmit=async()=>{
-    if(!isLoggedIn||!userData){
-        Swal.fire({
-            icon:'error',
-            title:'尚未登入',
-            text:'請您登入後再評論'
-        })
-        return
+  const handleSubmit = async () => {
+    if (!isLoggedIn || !userData) {
+      Swal.fire({
+        icon: 'error',
+        title: '尚未登入',
+        text: '請您登入後再評論',
+      })
+      return
     }
 
-    if(rating===0){
-        Swal.fire({
-            icon:'warning',
-            title:'提示',
-            text:'請選擇評分'
-        })
-        return
+    if (rating === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: '提示',
+        text: '請選擇評分',
+      })
+      return
     }
 
-    try{
-const response=await fetch('http://localhost:3005/api/course-comment/add',{
-    method:'POST',
-    headers:{
-        'Content-type':'application/json'
-    },
-    body:JSON.stringify({
-        course_id:pid,
-        user_id:userData.id,
-        user_email: userData.email,
+    try {
+      const response = await fetch(
+        'http://localhost:3005/api/course-comment/add',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            course_id: pid,
+            user_id: userData.id,
+            user_email: userData.email,
+            user_name: userData.username,
+            comment: commentText,
+            date: new Date().toISOString().split('T')[0],
+            rating: rating,
+          }),
+        }
+      )
+
+      const data = await response.json()
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: '成功',
+          text: '評論和評分已送出',
+        })
+        const newComment = {
           user_name: userData.username,
-          comment: commentText,
-          date: new Date().toISOString().split('T')[0],
           rating: rating,
-    })
-
-
-})
-
-    const data=await response.json()
-
-    if(response.status===200){
-        Swal.fire({
-            icon:'success',
-            title:'成功',
-            text:'評論和評分已送出'
-        })
-        const newComment={
-            user_name:userData.username,
-            rating:rating,
-            comment:commentText,
-            creat_at:new Date().toISOString().split('T')[0]
+          comment: commentText,
+          creat_at: new Date().toISOString().split('T')[0],
         }
 
-        setComments((prevComments)=>[...prevComments, newComment])
-    }else if(response.status===401){
+        setComments((prevComments) => [...prevComments, newComment])
+      } else if (response.status === 401) {
         Swal.fire({
-            icon: 'warning',
-            title: '尚未購買商品',
-            text: data.message || '還沒品嘗過嗎？快去購買商品吧！',
-          })
-    }else if (response.status === 400) {
+          icon: 'warning',
+          title: '尚未購買商品',
+          text: data.message || '還沒品嘗過嗎？快去購買商品吧！',
+        })
+      } else if (response.status === 400) {
         Swal.fire({
           icon: 'error',
           title: '今日已評論過',
           text: data.message || '您今天已經評論過了，感謝您的支持！',
         })
-      }else {
+      } else {
         Swal.fire({
           icon: 'error',
           title: '錯誤',
           text: '請您確認評論和評分是否正確',
         })
       }
-
-    }catch(err)
-{
-    Swal.fire({
+    } catch (err) {
+      Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong! Please try again later.',
       })
-}  }
-
+    }
+  }
 
   return (
-<>
+    <>
       <div className="rating-container mt-4">
         評分：
         {Array.from({ length: totalStars }).map((_, index) => (
