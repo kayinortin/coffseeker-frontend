@@ -65,14 +65,18 @@ function Checkout({ step, handleNextStep, setStep }) {
 
   //後端API
   function sendOrder(orderData) {
-    axios
-      .post('http://localhost:3005/api/ordercart/neworder', orderData)
-      .then((response) => {
-        console.log('訂單送入後端成功', response.data)
-      })
-      .catch((error) => {
-        console.error('訂單送入後端錯誤', error)
-      })
+    return new Promise((resolve, reject) => {
+      axios
+        .post('http://localhost:3005/api/ordercart/neworder', orderData)
+        .then((response) => {
+          console.log('訂單送入後端成功', response.data)
+          resolve()
+        })
+        .catch((error) => {
+          console.error('訂單送入後端錯誤', error)
+          reject(error)
+        })
+    })
   }
   //送出訂單
   function handleSendOrder() {
@@ -92,36 +96,52 @@ function Checkout({ step, handleNextStep, setStep }) {
       receiver_address: isInfoVisible ? userData.address : receiverAddress,
     }
 
-    const orderProducts = cartData.map((product) => {
-      return {
-        tracking_number: uniqueOrderNumber,
-        product_id: product.id,
-        amount: product.amount,
-        price: product.discountPrice,
-      }
-    })
-    const orderCourses = courseData.map((course) => {
-      return {
-        tracking_number: uniqueOrderNumber,
-        course_id: course.id,
-      }
-    })
+    const orderProducts = cartData
+      ? cartData.map((product) => {
+          return {
+            product_id: product.id,
+            amount: product.amount, // 注意這裡的屬性名稱應為 "amount"，不是 "Amount"
+          }
+        })
+      : []
+
+    const orderCourses = courseData
+      ? courseData.map((course) => {
+          return {
+            course_id: course.id,
+          }
+        })
+      : []
 
     const orderData = {
       orderList,
       orderProducts,
       orderCourses,
     }
+
     sendOrder(orderData)
+      .then(() => {
+        localStorage.removeItem('cartList')
+        localStorage.removeItem('cartList_course')
+      })
+      .catch((error) => {
+        console.error('發送訂單時出錯', error)
+      })
   }
 
   //訂單編號生成
   function generateOrderNumber() {
     // 獲取當前時間
-    const now = new Date().getTime()
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = (now.getMonth() + 1).toString().padStart(2, '0') // 月份從0開始，所以要加1
+    const day = now.getDate().toString().padStart(2, '0')
+    const hours = now.getHours().toString().padStart(2, '0')
+    const minutes = now.getMinutes().toString().padStart(2, '0')
     const randomDigits = Math.floor(Math.random() * 1000)
 
-    const orderNumber = `${now}${randomDigits}`
+    const orderNumber = `${year}${month}${day}${hours}${minutes}${randomDigits}`
+
     return orderNumber
   }
 
@@ -437,7 +457,7 @@ function Checkout({ step, handleNextStep, setStep }) {
             <button
               className="btn sendOrder w-100 fw-medium lh-base"
               onClick={() => {
-                // setStep(3)
+                setStep(3)
                 handleSendOrder()
               }}
             >
