@@ -16,8 +16,10 @@ import navItems from '../../../data/navitems.json'
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 import { useShow } from '@/context/showProductDetail'
+import FetchFavProductId from '@/components/fav/FetchFavProductId'
 
 export default function ProductList() {
+  FetchFavProductId()
   const { show, setShow, selectedPid } = useShow()
   const router = useRouter()
   const { cid } = router.query
