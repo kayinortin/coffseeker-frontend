@@ -30,7 +30,7 @@ export default function CourseList({ pid }) {
     <>
       {data && data.courses && data.courses.length > 0 ? (
         <div className='container'>
-          {/* <h3 className="text-center mt-5">課程列表</h3> */}
+          
           <div className="mt-4">
             <BreadCrumbs />
           </div>
@@ -49,7 +49,7 @@ export default function CourseList({ pid }) {
                         className="d-flex justify-content-center course-li"
                       >
                         <Card
-                          // key={i}
+                          
                           course={v}
                         />
                       </li>
