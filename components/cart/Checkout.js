@@ -1,25 +1,66 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
+import { useUser } from '@/context/UserInfo'
+import { FetchUserData } from '../member/FetchDatas/FetchUserData'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [checkoutData, setCheckoutData] = useState(null)
+  const [checkoutData, setCheckoutData] = useState([])
   const [receiverName, setReceiverName] = useState('')
   const [receiverPhone, setReceiverPhone] = useState('')
   const [receiverAddress, setReceiverAddress] = useState('')
   const [isInfoVisible, setIsInfoVisible] = useState(false)
 
+  //購物車商品即時渲染
+  const cartData = JSON.parse(localStorage.getItem('cartList'))
+  const courseData = JSON.parse(localStorage.getItem('cartList_course'))
+
+  //checkoutData localStorage Data
+  const discountAmount = checkoutData ? checkoutData.discountAmount : 0 // 默认为0
+  const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0
+  const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
+  const totalAmount = checkoutData ? checkoutData.totalAmount : 0
+  const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0
+  const selectedDeliveryOption = checkoutData
+    ? checkoutData.selectedDeliveryOption
+    : ''
+  const selectedPaymentOption = checkoutData
+    ? checkoutData.selectedPaymentOption
+    : ''
+
   //會員資料
   const { authJWT } = useAuthJWT()
   const userData = authJWT.userData
 
+  //按鈕上一步 //按鈕送出訂單
+  const handleCheckout = () => {
+    if (step === 2) {
+      setStep(1)
+    } else {
+      if (handleNextStep) {
+        handleNextStep() // 否则執行下一步操作
+      }
+    }
+  }
+
   //localStorage checkoutData
   useEffect(() => {
-    const checkoutData = JSON.parse(localStorage.getItem('checkoutData'))
+    const checkoutData = JSON.parse(localStorage.getItem('checkoutData')) || []
     if (checkoutData) {
       setCheckoutData(checkoutData)
     }
+
+    // async function aFetchFata() {
+    //   const UserData = FetchUserData()
+    //   if (UserData) {
+    //     setUserData(UserData)
+    //     console.log(UserData)
+    //   } else {
+    //     console.log('沒有使用者資料')
+    //   }
+    // }
+    // aFetchFata()
   }, [])
 
   //後端API
@@ -33,154 +74,165 @@ function Checkout({ step, handleNextStep, setStep }) {
         console.error('訂單送入後端錯誤', error)
       })
   }
-
   //送出訂單
   function handleSendOrder() {
+    const uniqueOrderNumber = generateOrderNumber()
+
     const orderList = {
       user_id: authJWT.userData.id,
-      total_price: allTotalPrice,
+      tracking_number: uniqueOrderNumber,
+      subtotal: allTotalPrice,
       shipping_fee: deliveryPrice,
       discount_price: discountAmount,
-      All_price: totalAmount,
-      payment_option: selectedPaymentOption,
-      delivery_option: selectedDeliveryOption,
+      total_price: allTotalPrice - discountAmount + deliveryPrice,
+      payment: selectedPaymentOption,
+      delivery: selectedDeliveryOption,
       receiver_name: isInfoVisible ? userData.username : receiverName,
       receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
       receiver_address: isInfoVisible ? userData.address : receiverAddress,
     }
-    // const productDetail={
-    // }
-    // const courseDetail={
-    // }
+
+    const orderProducts = cartData.map((product) => {
+      return {
+        tracking_number: uniqueOrderNumber,
+        product_id: product.id,
+        amount: product.amount,
+        price: product.discountPrice,
+      }
+    })
+    const orderCourses = courseData.map((course) => {
+      return {
+        tracking_number: uniqueOrderNumber,
+        course_id: course.id,
+      }
+    })
+
     const orderData = {
       orderList,
-      // productDetail,
-      // courseDetail,
+      orderProducts,
+      orderCourses,
     }
     sendOrder(orderData)
   }
 
-  //按鈕上一步 //按鈕送出訂單
-  const handleCheckout = () => {
-    if (step === 2) {
-      setStep(1)
-    } else {
-      if (handleNextStep) {
-        handleNextStep() // 否则執行下一步操作
-      }
-    }
-  }
-  //查看/關閉商品
-  const handleToggleProducts = () => {
-    setIsOpen(!isOpen)
-  }
-  //購物車商品即時渲染
-  const cartData = JSON.parse(localStorage.getItem('cartList'))
-  const courseData = JSON.parse(localStorage.getItem('cartList_course'))
+  //訂單編號生成
+  function generateOrderNumber() {
+    // 獲取當前時間
+    const now = new Date().getTime()
+    const randomDigits = Math.floor(Math.random() * 1000)
 
-  //單一商品小計＝特價價格＊數量
-  function productSubtotal(product) {
-    return product.discountPrice * product.amount
+    const orderNumber = `${now}${randomDigits}`
+    return orderNumber
   }
-  //商品共計
-  let totalPrice = 0
-  cartData.forEach((product) => {
-    totalPrice += productSubtotal(product)
-  })
-  let totalCoursePrice = 0
-  courseData.forEach((course) => {
-    totalCoursePrice += course.course_price
-  })
 
   //收件人與會員相符
   const handleCheckboxChange = (e) => {
     setIsInfoVisible(e.target.checked)
   }
 
-  const discountAmount = checkoutData ? checkoutData.discountAmount : 0 // 默认为0
-  const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0
-  const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
-  const totalAmount = checkoutData ? checkoutData.totalAmount : 0
-  const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0
-  const selectedDeliveryOption = checkoutData
-    ? checkoutData.selectedDeliveryOption
-    : ''
-  const selectedPaymentOption = checkoutData
-    ? checkoutData.selectedPaymentOption
-    : ''
-
+  //查看/關閉商品
+  const handleToggleProducts = () => {
+    setIsOpen(!isOpen)
+  }
+  //單一商品小計＝特價價格＊數量
+  function productSubtotal(product) {
+    return product.discountPrice * product.amount
+  }
+  //商品共計
+  let totalPrice = 0
+  if (cartData) {
+    cartData.forEach((product) => {
+      totalPrice += productSubtotal(product)
+    })
+  }
+  //課程共計
+  let totalCoursePrice = 0
+  if (courseData) {
+    courseData.forEach((course) => {
+      totalCoursePrice += course.course_price
+    })
+  }
   //商品列表
-  const productItems = cartData.map((product) => (
-    <div key={product.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-2 col-sm-3 ">
-        <img
-          className="img-fluid"
-          src={`http://localhost:3005/uploads/image/${product.image_main}`}
-          alt={product.image_main}
-        />
-      </div>
-      <div className="productContent col-lg-10 col-sm-9 text-start">
-        <div className="topDetails d-flex justify-content-between ">
-          <div className="details">
-            <div className="productTitle lh-sm pb-1">{product.name}</div>
-            <div className="productDescription lh-base">
-              {product.description}
+  const productItems = cartData
+    ? cartData.map((product) => (
+        <div key={product.id} className="productwrap row py-3">
+          <div className="imgContainer col-lg-2 col-sm-3 ">
+            <img
+              className="img-fluid"
+              src={`http://localhost:3005/uploads/image/${product.image_main}`}
+              alt={product.image_main}
+            />
+          </div>
+          <div className="productContent col-lg-10 col-sm-9 text-start">
+            <div className="topDetails d-flex justify-content-between ">
+              <div className="details">
+                <div className="productTitle lh-sm pb-1">{product.name}</div>
+                <div className="productDescription lh-base">
+                  {product.description}
+                </div>
+              </div>
+            </div>
+            <div className="productPrice text-end pt-2 align-items-center">
+              <div className="price d-inline text-decoration-line-through fs-6 pe-2">
+                ${product.price}
+              </div>
+              <div className="discountPrice d-inline fs-5">
+                ${product.discountPrice}
+              </div>
+              <div className="discountPrice  d-inline fs-5">
+                {' '}
+                x{product.amount}
+              </div>
+            </div>
+            <div className="productQuantityTotal text-end pt-2">
+              <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
+                ${productSubtotal(product)}
+              </div>
             </div>
           </div>
         </div>
-        <div className="productPrice text-end pt-2 align-items-center">
-          <div className="price d-inline text-decoration-line-through fs-6 pe-2">
-            ${product.price}
-          </div>
-          <div className="discountPrice d-inline fs-5">
-            ${product.discountPrice}
-          </div>
-          <div className="discountPrice  d-inline fs-5"> x{product.amount}</div>
-        </div>
-        <div className="productQuantityTotal text-end pt-2">
-          <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
-            ${productSubtotal(product)}
-          </div>
-        </div>
-      </div>
-    </div>
-  ))
+      ))
+    : []
   //課程列表
-  const courseItems = courseData.map((course) => (
-    <div key={course.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-2 col-sm-3 ">
-        <img
-          className="img-fluid"
-          src={`http://localhost:3005/uploads/${course.course_image}`}
-          alt={course.course_image}
-        />
-      </div>
-      <div className="productContent col-lg-10 col-sm-9 text-start">
-        <div className="topDetails d-flex justify-content-between ">
-          <div className="details">
-            <div className="productTitle lh-sm pb-1">{course.course_name}</div>
-            <div className="productDescription lh-base">
-              {course.course_description}
-            </div>
+  const courseItems = courseData
+    ? courseData.map((course) => (
+        <div key={course.id} className="productwrap row py-3">
+          <div className="imgContainer col-lg-2 col-sm-3 ">
+            <img
+              className="img-fluid"
+              src={`http://localhost:3005/uploads/${course.course_image}`}
+              alt={course.course_image}
+            />
           </div>
-        </div>
-        <div className="productPrice text-end align-items-cente pt-2">
-          {/* <div className="price d-inline text-decoration-line-through fs-6 pe-2">
+          <div className="productContent col-lg-10 col-sm-9 text-start">
+            <div className="topDetails d-flex justify-content-between ">
+              <div className="details">
+                <div className="productTitle lh-sm pb-1">
+                  {course.course_name}
+                </div>
+                <div className="productDescription lh-base">
+                  {course.course_description}
+                </div>
+              </div>
+            </div>
+            <div className="productPrice text-end align-items-cente pt-2">
+              {/* <div className="price d-inline text-decoration-line-through fs-6 pe-2">
             ${course.course_price}
           </div> */}
-          <div className="discountPrice d-inline fs-5">
-            ${course.course_price}
+              <div className="discountPrice d-inline fs-5">
+                ${course.course_price}
+              </div>
+              <div className="discountPrice  d-inline fs-5"> x1</div>
+            </div>
+            <div className="productQuantityTotal text-end pt-2">
+              <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
+                ${course.course_price}
+              </div>
+            </div>
           </div>
-          <div className="discountPrice  d-inline fs-5"> x1</div>
         </div>
-        <div className="productQuantityTotal text-end pt-2">
-          <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
-            ${course.course_price}
-          </div>
-        </div>
-      </div>
-    </div>
-  ))
+      ))
+    : []
 
   return (
     <>
@@ -203,7 +255,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                   {/* 商品列表 */}
                   <div className="productscart col-lg-8">
                     {/* 咖啡列表 */}
-                    {cartData.length > 0 && (
+                    {cartData && cartData.length > 0 && (
                       <div className="wrapcart">
                         <div className="labels">
                           商品項目({productItems.length})
@@ -215,7 +267,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       </div>
                     )}
                     {/* 課程列表 */}
-                    {courseData.length > 0 && (
+                    {courseData && courseData.length > 0 && (
                       <div className="wrapcart">
                         <div className="labels">
                           課程項目({courseItems.length})
@@ -291,12 +343,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       aria-describedby="addon-wrapping"
                       value={isInfoVisible ? userData.username : receiverName}
                       onChange={(e) => {
-                        if (isInfoVisible) {
-                          // 如果相符，可以采取其他操作，例如忽略输入
-                        } else {
-                          // 否则，更新收件人名稱的值
-                          setReceiverName(e.target.value)
-                        }
+                        setReceiverName(e.target.value)
                       }}
                     />
                   </div>
@@ -310,12 +357,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       aria-describedby="addon-wrapping"
                       value={isInfoVisible ? userData.phone : receiverPhone}
                       onChange={(e) => {
-                        if (isInfoVisible) {
-                          // 如果相符，可以采取其他操作，例如忽略输入
-                        } else {
-                          // 否则，更新收件人電話號碼的值
-                          setReceiverPhone(e.target.value)
-                        }
+                        setReceiverPhone(e.target.value)
                       }}
                     />
                   </div>
@@ -329,12 +371,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       aria-describedby="addon-wrapping"
                       value={isInfoVisible ? userData.address : receiverAddress}
                       onChange={(e) => {
-                        if (isInfoVisible) {
-                          // 如果相符，可以采取其他操作，例如忽略输入
-                        } else {
-                          // 否则，更新配送地址的值
-                          setReceiverAddress(e.target.value)
-                        }
+                        setReceiverAddress(e.target.value)
                       }}
                     />
                   </div>
@@ -400,7 +437,7 @@ function Checkout({ step, handleNextStep, setStep }) {
             <button
               className="btn sendOrder w-100 fw-medium lh-base"
               onClick={() => {
-                setStep(3)
+                // setStep(3)
                 handleSendOrder()
               }}
             >
