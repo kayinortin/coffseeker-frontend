@@ -8,36 +8,30 @@ import ReactSlider from 'react-slider'
 import axios from 'axios'
 
 function Accordion(props) {
-  const [isArtExpanded, setIsArtExpanded] = useState(true)
-  const [isPourExpanded, setIsPourExpanded] = useState(true)
-  const [isRoastExpanded, setIsRoastExpanded] = useState(true)
+  const [isCourseNameExpanded, setIsCourseNameExpanded] = useState(true)
+  const [isCourseLevelExpanded, setIsCourseLevelExpanded] = useState(true)
   const [filterForm, setFilterForm] = useState({
-    latte_art: [],
-    pour: [],
-    roast: [],
+    course_name: [],
+    course_level_id: [],
   })
+  const course_name = ['拉花', '烘豆', '手沖']
   const levels = ['入門', '進階', '高階', '證照']
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
 
-    let queryString = 'http://localhost:3005/api/course/qs?'
-    if (filterForm.latte_art.length) {
-      queryString += `latte_art=${filterForm.latte_art.join(',')}&`
-      console.log(queryString)
+    let queryString = `http://localhost:3005/api/course/qs?`
+    if (filterForm.course_name) {
+      queryString += `course_name=${filterForm.course_name.join(',')}&`
     }
-    if (filterForm.roast) {
-      queryString += `roast=${filterForm.roast.join(',')}&`
-      console.log(queryString)
+    if (filterForm.course_level_id) {
+      queryString += `course_level_id=${filterForm.course_level_id.join(',')}&`
     }
-    if (filterForm.pour) {
-      queryString += `pour=${filterForm.pour.join(',')}&`
-      console.log(queryString)
-    }
+
     try {
       const response = await axios.get(queryString)
       props.onFilter(response.data.data)
-      console.log(response)
+      // console.log(response)
     } catch (err) {
       console.log(err)
     }
@@ -46,7 +40,7 @@ function Accordion(props) {
   const handleFieldChange = (e) => {
     const { name, value, checked } = e.target
 
-    if (name === 'latte_art' || name === 'pour' || name === 'roast') {
+    if (name === 'course_name' || name === 'course_level_id') {
       setFilterForm((prevState) => ({
         ...prevState,
         [name]: checked
@@ -58,8 +52,14 @@ function Accordion(props) {
     }
   }
 
-  const resetFilter = () => {
-    setFilterForm({ latte_art: [], pour: [], roast: [] })
+  const resetFilter = async () => {
+    setFilterForm({ course_name: [], course_level_id: [] })
+    try {
+      const response = await axios.get('http://localhost:3005/api/course/qs')
+      props.onFilter(response.data.data)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -70,12 +70,12 @@ function Accordion(props) {
           <legend
             className="mt-2 mb-3 ed-filter-title"
             onClick={() => {
-              setIsArtExpanded(!isArtExpanded)
+              setIsCourseNameExpanded(!isCourseNameExpanded)
             }}
           >
-            拉花課程
+            課程種類
             <span className="arrow-icon">
-              {isArtExpanded ? (
+              {isCourseNameExpanded ? (
                 <MdOutlineKeyboardArrowDown />
               ) : (
                 <MdOutlineKeyboardArrowUp />
@@ -83,19 +83,19 @@ function Accordion(props) {
             </span>
           </legend>
           {/* 拉花 */}
-          {isArtExpanded &&
-            levels.map((art, index) => (
+          {isCourseNameExpanded &&
+            course_name.map((course_name, index) => (
               <div key={index} className="mt-2">
                 <label>
                   <input
                     className="me-2 ed-checkbox"
                     type="checkbox"
-                    name="latte_art"
-                    value={art}
-                    checked={filterForm.latte_art.includes(art)}
+                    name="course_name"
+                    value={course_name}
+                    checked={filterForm.course_name.includes(course_name)}
                     onChange={handleFieldChange}
                   />
-                  {art}
+                  {course_name}
                 </label>
               </div>
             ))}
@@ -106,68 +106,39 @@ function Accordion(props) {
           <legend
             className="mt-2 mb-3 ed-filter-title"
             onClick={() => {
-              setIsPourExpanded(!isPourExpanded)
+              setIsCourseLevelExpanded(!isCourseLevelExpanded)
             }}
           >
-            手沖課程
+            課程等級
             <span className="arrow-icon">
-              {isPourExpanded ? (
+              {isCourseLevelExpanded ? (
                 <MdOutlineKeyboardArrowDown />
               ) : (
                 <MdOutlineKeyboardArrowUp />
               )}
             </span>
           </legend>
-          {isPourExpanded &&
-            levels.map((pour, index) => (
+          {isCourseLevelExpanded &&
+            levels.map((course_level_id, index) => (
               <div key={index} className="mt-2">
                 <label>
                   <input
                     className="me-2 ed-checkbox"
                     type="checkbox"
-                    name="pour"
-                    value={pour}
-                    checked={filterForm.pour.includes(pour)}
+                    name="course_level_id"
+                    value={course_level_id}
+                    checked={filterForm.course_level_id.includes(
+                      course_level_id
+                    )}
                     onChange={handleFieldChange}
                   />
-                  {pour}
+                  {course_level_id}
                 </label>
               </div>
             ))}
           <hr />
         </fieldset>
         <fieldset>
-          <legend
-            className="mt-2 mb-3 ed-filter-title"
-            onClick={() => {
-              setIsRoastExpanded(!isRoastExpanded)
-            }}
-          >
-            烘豆課程
-            <span className="arrow-icon">
-              {isRoastExpanded ? (
-                <MdOutlineKeyboardArrowDown />
-              ) : (
-                <MdOutlineKeyboardArrowUp />
-              )}
-            </span>
-          </legend>
-          {isRoastExpanded &&
-            levels.map((roast, index) => (
-              <div key={index} className="mt-2">
-                <label>
-                  <input
-                    className="me-2 ed-checkbox"
-                    type="checkbox"
-                    name="roast"
-                    value={roast}
-                    checked={filterForm.roast.includes(roast)}
-                    onChange={handleFieldChange}
-                  />
-                  {roast}
-                </label>
-              </div>
-            ))}
           <hr />
         </fieldset>
         <button className="ed-btn-filter mt-2" type="submit">

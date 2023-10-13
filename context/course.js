@@ -3,12 +3,12 @@ import { createContext, useContext, useState } from 'react'
 const CoursesContext = createContext()
 
 export function CoursesProvider({ children }) {
-  const [CoursesData, setCoursesData] = useState([])
+  const [coursesData, setCoursesData] = useState([])
   const [sortBy, setSortBy] = useState('default')
 
   return (
     <CoursesContext.Provider
-      value={{ CoursesData, setCoursesData, sortBy, setSortBy }}
+      value={{ coursesData, setCoursesData, sortBy, setSortBy }}
     >
       {children}
     </CoursesContext.Provider>
