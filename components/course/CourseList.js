@@ -5,16 +5,17 @@ import Pagination from './Pagination'
 import { BreadCrumbs } from './BreadCrumbs'
 import CourseFetcher from './course-fetch'
 import { useState } from 'react'
-
+import NewSideBar from './NewSideBar'
+import { useCourses } from '@/context/course'
+import axios from 'axios'
 export default function CourseList({ pid }) {
   const [data, setData] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const {coursesData, setCoursesData}=useCourses()
 
   const onDataFetched = (fetchedData) => {
     setData(fetchedData)
   }
-
-  console.log(data)
 
   //--------------------------------pagination
   const itemsPerPage = 9
@@ -26,11 +27,14 @@ export default function CourseList({ pid }) {
     setCurrentPage(newPage)
   }
 
+  
+
   return (
     <>
       {data && data.courses && data.courses.length > 0 ? (
-        <div className='container'>
-          {/* <h3 className="text-center mt-5">課程列表</h3> */}
+        <div className='container d-flex'>
+          <NewSideBar onFilter={setCoursesData}/>
+          <div>
           <div className="mt-4">
             <BreadCrumbs />
           </div>
@@ -43,13 +47,13 @@ export default function CourseList({ pid }) {
               .map((v, i) => {
                 return (
                   <>
-                    <div className="col-12 col-sm-4">
+                    <div key={i} className="col-12 col-sm-4">
                       <li
-                        key={i}
+                        
                         className="d-flex justify-content-center course-li"
                       >
                         <Card
-                          // key={i}
+                          
                           course={v}
                         />
                       </li>
@@ -65,6 +69,8 @@ export default function CourseList({ pid }) {
               onPageChange={handlePageChange}
             />
           </div>
+          </div>
+          
         </div>
       ) : (
         <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>

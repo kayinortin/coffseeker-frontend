@@ -5,26 +5,61 @@ import {
   MdOutlineKeyboardArrowUp,
 } from 'react-icons/md'
 import ReactSlider from 'react-slider'
+import axios from 'axios'
 
-function Accordion() {
+function Accordion(props) {
   const [isArtExpanded, setIsArtExpanded] = useState(true)
-  const [isPourExpanded, setIsPourExpanded] = useState(false)
-  const [isRoastExpanded, setIsRoastExpanded] = useState(false)
-  const [filterForm, setFilterForm] = useState({latte_art:[],pour:[],roast:[]})
+  const [isPourExpanded, setIsPourExpanded] = useState(true)
+  const [isRoastExpanded, setIsRoastExpanded] = useState(true)
+  const [filterForm, setFilterForm] = useState({
+    latte_art: [],
+    pour: [],
+    roast: [],
+  })
   const levels = ['入門', '進階', '高階', '證照']
 
-  const handleFormSubmit=(e)=>{
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
 
-    
+    let queryString = 'http://localhost:3005/api/course/qs?'
+    if (filterForm.latte_art.length) {
+      queryString += `latte_art=${filterForm.latte_art.join(',')}&`
+      console.log(queryString)
+    }
+    if (filterForm.roast) {
+      queryString += `roast=${filterForm.roast.join(',')}&`
+      console.log(queryString)
+    }
+    if (filterForm.pour) {
+      queryString += `pour=${filterForm.pour.join(',')}&`
+      console.log(queryString)
+    }
+    try {
+      const response = await axios.get(queryString)
+      props.onFilter(response.data.data)
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  const handleFieldChange=()=>{
+  const handleFieldChange = (e) => {
+    const { name, value, checked } = e.target
 
+    if (name === 'latte_art' || name === 'pour' || name === 'roast') {
+      setFilterForm((prevState) => ({
+        ...prevState,
+        [name]: checked
+          ? [...prevState[name], value]
+          : prevState[name].filter((item) => item !== value),
+      }))
+    } else {
+      setFilterForm((prevState) => ({ ...prevState, [name]: value }))
+    }
   }
 
-  const resetFilter=()=>{
-    setFilterForm({latte_art:[],pour:[],roast:[]})
+  const resetFilter = () => {
+    setFilterForm({ latte_art: [], pour: [], roast: [] })
   }
 
   return (
@@ -47,9 +82,9 @@ function Accordion() {
               )}
             </span>
           </legend>
-         {/* 拉花 */}
+          {/* 拉花 */}
           {isArtExpanded &&
-            levels.map((art, index) => {
+            levels.map((art, index) => (
               <div key={index} className="mt-2">
                 <label>
                   <input
@@ -63,12 +98,17 @@ function Accordion() {
                   {art}
                 </label>
               </div>
-            })}
-            <hr/>
+            ))}
+          <hr />
         </fieldset>
 
         <fieldset>
-          <legend className="mt-2 mb-3 ed-filter-title">
+          <legend
+            className="mt-2 mb-3 ed-filter-title"
+            onClick={() => {
+              setIsPourExpanded(!isPourExpanded)
+            }}
+          >
             手沖課程
             <span className="arrow-icon">
               {isPourExpanded ? (
@@ -78,10 +118,31 @@ function Accordion() {
               )}
             </span>
           </legend>
-          <hr/>
+          {isPourExpanded &&
+            levels.map((pour, index) => (
+              <div key={index} className="mt-2">
+                <label>
+                  <input
+                    className="me-2 ed-checkbox"
+                    type="checkbox"
+                    name="pour"
+                    value={pour}
+                    checked={filterForm.pour.includes(pour)}
+                    onChange={handleFieldChange}
+                  />
+                  {pour}
+                </label>
+              </div>
+            ))}
+          <hr />
         </fieldset>
         <fieldset>
-          <legend className="mt-2 mb-3 ed-filter-title">
+          <legend
+            className="mt-2 mb-3 ed-filter-title"
+            onClick={() => {
+              setIsRoastExpanded(!isRoastExpanded)
+            }}
+          >
             烘豆課程
             <span className="arrow-icon">
               {isRoastExpanded ? (
@@ -91,6 +152,23 @@ function Accordion() {
               )}
             </span>
           </legend>
+          {isRoastExpanded &&
+            levels.map((roast, index) => (
+              <div key={index} className="mt-2">
+                <label>
+                  <input
+                    className="me-2 ed-checkbox"
+                    type="checkbox"
+                    name="roast"
+                    value={roast}
+                    checked={filterForm.roast.includes(roast)}
+                    onChange={handleFieldChange}
+                  />
+                  {roast}
+                </label>
+              </div>
+            ))}
+          <hr />
         </fieldset>
         <button className="ed-btn-filter mt-2" type="submit">
           篩選

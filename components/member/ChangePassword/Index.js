@@ -77,34 +77,43 @@ export default function ChangePassword() {
   }
 
   const handleChangePassword = async () => {
-    // if (newPassword === '') {
-    //   errorSwal('密碼不能為空')
-    //   return false
-    // } else if (!passwordRegex.test(newPassword)) {
-    //   errorSwal('密碼格式不符 請輸入8~12位,英數混合的密碼')
-    //   return false
-    // } else if (reNewPassword !== newPassword) {
-    //   errorSwal('密碼不相符')
-    //   return false
-    // }
+    if (newPassword === '') {
+      errorSwal('密碼不能為空')
+      return false
+    } else if (!passwordRegex.test(newPassword)) {
+      errorSwal('密碼格式不符 請輸入8~12位,英數混合的密碼')
+      return false
+    } else if (reNewPassword !== newPassword) {
+      errorSwal('密碼不相符')
+      return false
+    }
 
     const formData = {
       id: userId,
+      oldPassword: oldPassword,
       password: newPassword,
     }
 
     try {
-      const response = await axios.put(
-        `http://localhost:3005/api/users/${userId}`,
+      const response = await axios.post(
+        `http://localhost:3005/api/users/change-password`,
         formData
       )
-      console.log(response)
+      // console.log(response)
+
+      if (response.data.code == 400) {
+        errorSwal('密碼修改失敗 舊密碼不相符')
+        return
+      }
+
       Swal.fire({
-        title: '修改資料成功',
+        title: '密碼修改成功',
         icon: 'success',
         showConfirmButton: false,
         timer: 1500,
       })
+
+      // 重置表單內容
       setOldPassword('')
       setNewPassword('')
       setReNewPassword('')
@@ -134,7 +143,7 @@ export default function ChangePassword() {
                     className={'form-control'}
                     id={input.htmlId}
                     aria-describedby={input.aria}
-                    // value={input.value}
+                    value={input.value}
                     maxLength={input.maxlength}
                     onChange={(e) => {
                       input.onChange(e)

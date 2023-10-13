@@ -1,7 +1,9 @@
 // 10/10:記得有空要整理CSS的程式碼安排
 
 // 大標籤樣式變更
-
+.pr-defualt-height{
+  min-height: 100vh;
+}
 
 // checkBox自製樣式
 .check-input {
@@ -281,4 +283,9 @@
   svg{
     cursor: pointer;
   }
+}
+
+.eyes{
+  top:-56px;
+  right:30px;
 }
