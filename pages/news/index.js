@@ -77,11 +77,11 @@ export default function News() {
           </div>
 
           {/* 標題區 */}
-          <div className="d-flex justify-content-center mb-4 align-items-center mobile-news-title">
-            <div className="ei-line me-3"></div>
-            <h3 className="text-center news-title fs-2">最新消息</h3>
-            <div className="ei-line ms-3"></div>
-          </div>
+          <div className="container d-block ed-index-course mb-4">
+          <div className="line-white"></div>
+          <div className="course-category">最新消息</div>
+          <div className="line-white"></div>
+        </div>
 
           {/* 篩選&排序區 */}
           <div className="d-md-flex align-items-end justify-content-center mb-lg-4">
