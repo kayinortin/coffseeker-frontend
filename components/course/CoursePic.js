@@ -20,58 +20,26 @@ const INITIAL_DATA = {
   teacher_specialty: 0,
 }
 
-export default function CoursePic({ pid, course }) {
+export default function CoursePic({ pid }) {
   const router = useRouter()
   const { show, setShow } = useShow()
   const {selectedCourse}=useCourses()
 
-  console.log(selectedCourse)
+  
 
-  // const [images, setImages] = useState([])
-  const [detailData, setDetailData] = useState(INITIAL_DATA)
-  const {
-    course_name,
-    course_price,
-    course_description,
-    course_image,
-    course_subpics,
-    course_syllabus,
-    teacher_name,
-    teacher_qualification,
-    teacher_specialty,
-  } = detailData
+  
 
-  // console.log(course)
-
-  // const getDetail = async () => {
-  //   try {
-  //     if (pid) {
-  //       let response = await axios.get(
-  //         `http://localhost:3005/api/course/${pid}`
-  //       )
-  //       const details = response.data
-  //       setDetailData({ ...details })
-  //       if (details.course_subpics) {
-  //         setImages(JSON.parse(details.course_subpics))
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching course details:', error)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (pid) {
-  //     setDetailData(INITIAL_DATA)
-  //     getDetail()
-  //     setShow({ ...show, in: true })
-  //   }
-  // }, [pid])
+  
+  
 
 
-  const ArrPic=JSON.parse(selectedCourse.course_subpics)
+  let ArrPic =[]
+  if(selectedCourse.course_subpics){
 
-  console.log(ArrPic)
+     ArrPic = JSON.parse(selectedCourse.course_subpics)
+     
+    }
+
 
   
 
@@ -89,7 +57,7 @@ export default function CoursePic({ pid, course }) {
           <div className="ed-image-gallery ">
             
             <img
-              src={`http://localhost:3000/course-image/${selectedCourse.course_image}`}
+              src={`http://localhost:3000/${selectedCourse.course_image}`}
               // alt={name}
               width={300}
               height={300}
@@ -105,7 +73,7 @@ export default function CoursePic({ pid, course }) {
                   <img
                     key={index}
                     src={`http://localhost:3000/${ArrPic[pic]}`}
-                    alt={name}
+                    alt={selectedCourse.course_name}
                     width={100}
                     height={100}
                     className="ed-image-small"
