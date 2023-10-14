@@ -18,8 +18,6 @@ export default function OrderDetailOpened({ order }) {
   const contentRef = useRef(null)
 
   useEffect(() => {
-    // console.log(order)
-    // console.log(order.id)
     const fetchItems = async () => {
       try {
         const ordertrackingNumber = order.tracking_number
@@ -28,13 +26,10 @@ export default function OrderDetailOpened({ order }) {
         )
         // 獲得指定使用者的所有訂單
         // console.log('Item資料', response.data)
-        console.log('orderCourse', response.data.orderCourse)
+
         console.log('orderItems', response.data.orderItems)
-        const allCourse = response.data.orderCourse
-        const allProduct = response.data.orderItems
-        const allOrders = [...allProduct, ...allCourse]
-        console.log('allOrders', allOrders)
-        setOrderItem(allOrders)
+
+        setOrderItem(response.data.orderItems)
       } catch (error) {
         console.error('錯誤:', error)
       }
@@ -44,19 +39,18 @@ export default function OrderDetailOpened({ order }) {
 
   // 算出數量及價格總和
   useEffect(() => {
-    let totalPrice = 0
+    let subtotal = 0
     let totalAmount = 0
-    let subTotal = 0
+    let Total = 0
     orderItem.map((v) => {
-      totalPrice += v.discountPrice * v.amount
+      subtotal += v.discountPrice * v.amount
       totalAmount += v.amount
-      subTotal =
-        totalPrice + parseInt(order.shipping_fee - order.discount_price)
+      Total = subtotal + parseInt(order.shipping_fee - order.discount_price)
     })
 
-    setTotalPrice(totalPrice)
+    setTotalPrice(subtotal)
     setTotalAmount(totalAmount)
-    setSubTotal(subTotal)
+    setSubTotal(Total)
   }, [orderItem])
 
   useEffect(() => {
