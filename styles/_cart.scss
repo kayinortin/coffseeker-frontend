@@ -30,7 +30,8 @@ $fw-black:900;
     padding-block: 1rem;
   
     .step{
-        padding: 1.5rem;
+        padding: 1rem;
+        // border: 1px solid red;
 
         .stepTop{
             display: flex;
@@ -95,6 +96,7 @@ $fw-black:900;
     // 空購物車
     .emptyContainer{
         margin-block: 2rem;
+
         img{
             width: 20vw;
         }
@@ -561,7 +563,44 @@ $fw-black:900;
     }
 }
 
+.complete{
+    // border: 1px solid red;
+    margin-block: 2rem;
+
+    .completeWrap{
+        
+
+        img{
+            width: 20vw;
+        }
     
+        .emptyTitle{
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+            font-size: $fs-md;
+            color: $color--primary;
+            font-weight: $fw-bold;
+        }
+       
+        button.goshop{
+            background-color: $color--secondary;
+            color: $color--white;
+            width: 30vw;
+            height: 2.5rem;
+            &:hover{
+                background-color: $color--primary;
+            }
+        }
+    }
+    
+}
+
+/* 在屏幕宽度小于290px时的样式 */
+@media (max-width: 768px) {
+    .steps {
+        display: none; 
+    }
+}
 
 
 

@@ -65,14 +65,18 @@ function Checkout({ step, handleNextStep, setStep }) {
 
   //後端API
   function sendOrder(orderData) {
-    axios
-      .post('http://localhost:3005/api/ordercart/neworder', orderData)
-      .then((response) => {
-        console.log('訂單送入後端成功', response.data)
-      })
-      .catch((error) => {
-        console.error('訂單送入後端錯誤', error)
-      })
+    return new Promise((resolve, reject) => {
+      axios
+        .post('http://localhost:3005/api/ordercart/neworder', orderData)
+        .then((response) => {
+          console.log('訂單送入後端成功', response.data)
+          resolve()
+        })
+        .catch((error) => {
+          console.error('訂單送入後端錯誤', error)
+          reject(error)
+        })
+    })
   }
   //送出訂單
   function handleSendOrder() {
@@ -92,36 +96,55 @@ function Checkout({ step, handleNextStep, setStep }) {
       receiver_address: isInfoVisible ? userData.address : receiverAddress,
     }
 
-    const orderProducts = cartData.map((product) => {
-      return {
-        tracking_number: uniqueOrderNumber,
-        product_id: product.id,
-        amount: product.amount,
-        price: product.discountPrice,
-      }
-    })
-    const orderCourses = courseData.map((course) => {
-      return {
-        tracking_number: uniqueOrderNumber,
-        course_id: course.id,
-      }
-    })
+    const orderProducts = cartData
+      ? cartData.map((product) => {
+          return {
+            product_id: product.id,
+            amount: product.amount,
+            price: product.discountPrice,
+          }
+        })
+      : []
+
+    const orderCourses = courseData
+      ? courseData.map((course) => {
+          return {
+            course_id: course.id,
+            amount: 1,
+            price: course.course_price,
+          }
+        })
+      : []
 
     const orderData = {
       orderList,
       orderProducts,
       orderCourses,
     }
+
     sendOrder(orderData)
+      .then(() => {
+        localStorage.removeItem('cartList')
+        localStorage.removeItem('cartList_course')
+      })
+      .catch((error) => {
+        console.error('發送訂單時出錯', error)
+      })
   }
 
   //訂單編號生成
   function generateOrderNumber() {
     // 獲取當前時間
-    const now = new Date().getTime()
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = (now.getMonth() + 1).toString().padStart(2, '0') // 月份從0開始，所以要加1
+    const day = now.getDate().toString().padStart(2, '0')
+    const hours = now.getHours().toString().padStart(2, '0')
+    const minutes = now.getMinutes().toString().padStart(2, '0')
     const randomDigits = Math.floor(Math.random() * 1000)
 
-    const orderNumber = `${now}${randomDigits}`
+    const orderNumber = `${year}${month}${day}${hours}${minutes}${randomDigits}`
+
     return orderNumber
   }
 
@@ -159,7 +182,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="imgContainer col-lg-2 col-sm-3 ">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/image/${product.image_main}`}
+              src={`http://localhost:3005/uploads/${product.image_main}`}
               alt={product.image_main}
             />
           </div>
@@ -200,7 +223,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="imgContainer col-lg-2 col-sm-3 ">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/${course.course_image}`}
+              src={`http://localhost:3005/uploads/course-image/${course.course_image}`}
               alt={course.course_image}
             />
           </div>
@@ -219,10 +242,10 @@ function Checkout({ step, handleNextStep, setStep }) {
               {/* <div className="price d-inline text-decoration-line-through fs-6 pe-2">
             ${course.course_price}
           </div> */}
-              <div className="discountPrice d-inline fs-5">
+              {/* <div className="discountPrice d-inline fs-5">
                 ${course.course_price}
               </div>
-              <div className="discountPrice  d-inline fs-5"> x1</div>
+              <div className="discountPrice  d-inline fs-5"> x1</div> */}
             </div>
             <div className="productQuantityTotal text-end pt-2">
               <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
@@ -241,7 +264,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <hr className="border-1 opacity-100" />
           <div className={`checkoutProducts ${isOpen ? 'open' : 'close'}`}>
             <div className="closeProducts text-center">
-              <h3>合計: ${totalAmount} </h3>
+              <h3 className="mt-5">合計: ${totalAmount} </h3>
               <button
                 className="btn btngroup my-4"
                 onClick={handleToggleProducts}
@@ -437,7 +460,7 @@ function Checkout({ step, handleNextStep, setStep }) {
             <button
               className="btn sendOrder w-100 fw-medium lh-base"
               onClick={() => {
-                // setStep(3)
+                setStep(3)
                 handleSendOrder()
               }}
             >

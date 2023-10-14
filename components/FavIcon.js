@@ -15,20 +15,21 @@ function FavIcon(props) {
   const isEmptyState = favItemsArr.length === 0
 
   const handleSetFav = () => {
-    setFav(!fav)
-    const favArr = [...favItemsArr, id]
     if (fav === false) {
       //未收藏 -> 收藏
       if (favItemsArr.includes(id)) {
         return
       }
+      setFav(!fav)
+      const favArr = [...favItemsArr, id]
       AddFavProduct(id)
       setFavItemsArr(favArr)
       localStorage.setItem('fav', favArr)
     } else {
       //收藏 -> 取消收藏
+      setFav(!fav)
       RemoveFavProduct(id)
-      const remainFavArr = favArr.filter((item) => item !== id)
+      const remainFavArr = favItemsArr.filter((item) => item !== id)
       setFavItemsArr([...remainFavArr])
       localStorage.setItem('fav', remainFavArr)
     }
