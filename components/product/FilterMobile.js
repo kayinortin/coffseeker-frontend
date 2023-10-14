@@ -10,6 +10,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
 export default function FilterMobile(props) {
+  const [currentPage, setCurrentPage] = useState(1)
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -100,6 +101,7 @@ export default function FilterMobile(props) {
     try {
       const response = await axios.get(queryString)
       props.onFilter(response.data.data)
+      setCurrentPage(1)
     } catch (error) {
       console.error(error)
     }

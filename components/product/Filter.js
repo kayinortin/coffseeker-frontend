@@ -8,6 +8,7 @@ import {
 import ReactSlider from 'react-slider'
 
 function Filter(props) {
+  const [currentPage, setCurrentPage] = useState(1)
   const [priceRange, setPriceRange] = useState([100, 5000])
   const [filterForm, setFilterForm] = useState({
     origin: [],
@@ -93,6 +94,7 @@ function Filter(props) {
     try {
       const response = await axios.get(queryString)
       props.onFilter(response.data.data)
+      setCurrentPage(1)
     } catch (error) {
       console.error(error)
     }
