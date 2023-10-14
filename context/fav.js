@@ -5,10 +5,18 @@ const FavContext = createContext()
 export function FavProvider({ children }) {
   const [favData, setFavData] = useState([])
   const [favItemsArr, setFavItemsArr] = useState([])
+  const [favCoursesArr, setFavCoursesArr] = useState([])
 
   return (
     <FavContext.Provider
-      value={{ favData, setFavData, favItemsArr, setFavItemsArr }}
+      value={{
+        favData,
+        setFavData,
+        favItemsArr,
+        setFavItemsArr,
+        favCoursesArr,
+        setFavCoursesArr,
+      }}
     >
       {children}
     </FavContext.Provider>

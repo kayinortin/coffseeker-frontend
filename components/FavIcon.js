@@ -11,7 +11,9 @@ function FavIcon(props) {
   const locationPath = router.asPath
 
   const { favItemsArr, setFavItemsArr } = useFavorite()
-
+  if (favItemsArr.includes(id) && !fav) {
+    setFav(true)
+  }
   const isEmptyState = favItemsArr.length === 0
 
   const handleSetFav = () => {
