@@ -1,4 +1,4 @@
-import React, { useState, createContext, useRef } from 'react'
+import React, { useState, createContext, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FaFacebook, FaGoogle, FaEyeSlash, FaEye } from 'react-icons/fa'
@@ -8,6 +8,8 @@ import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
 import Swal from 'sweetalert2'
 import contenOfContract from '@/data/member/contract.json'
+import useFirebase from '@/hooks/use-firebase'
+import { useAuthJWT } from '@/context/useAuthJWT'
 
 // 10/10 尚未完成
 // 1.記住密碼
@@ -99,6 +101,7 @@ export default function LoginForm() {
           showConfirmButton: false,
           timer: 1500,
         })
+        router.push('/member')
       } else {
         Swal.fire({
           title: '登入失敗，請確認帳號密碼是否正確',
@@ -157,6 +160,111 @@ export default function LoginForm() {
   }
 
   // ===================================
+
+  // // google登入相關
+
+  const { loginGoogleRedirect, initApp, logoutFirebase } = useFirebase()
+  const { authJWT, setAuthJWT } = useAuthJWT()
+
+  // // 這裡要設定initApp，讓這個頁面能監聽firebase的google登入狀態
+  // 在點擊 Google 登入按鈕後，執行 Google 登入流程
+
+  useEffect(() => {
+    initApp(callbackGoogleLoginRedirect)
+  }, [])
+
+  const callbackGoogleLoginRedirect = async (providerData) => {
+    // 如果目前react(next)已經登入中，不需要再作登入動作
+    if (authJWT.isAuth) return
+    console.log('取得的providerData', providerData)
+
+    const res = await axios.post(
+      'http://localhost:3005/api/google-login/jwt',
+      providerData,
+      {
+        withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
+      }
+    )
+
+    if (res.data.message === 'success') {
+      setAuthJWT({
+        isAuth: true,
+        userData: res.data.user,
+      })
+
+      console.log(authJWT)
+      Cookies.set('accessToken', res.data.accessToken)
+      setIsLoggedIn(true)
+      console.log('res.data', res.data)
+      Swal.fire({
+        title: '登入成功，即將跳轉至會員中心',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      router.push('https://localhost:9000/member')
+      router.push('/member')
+    } else {
+      alert('有錯誤')
+    }
+  }
+  // ============
+  // const callbackGoogleLogin = async (providerData) => {
+  //   console.log(providerData)
+
+  //   const res = await axios.post(
+  //     'http://localhost:3005/api/google-login/jwt',
+  //     providerData,
+  //     {
+  //       withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
+  //     }
+  //   )
+
+  //   if (res.data.message === 'success') {
+  //     setAuth({
+  //       isAuth: true,
+  //       userData: res.data.user,
+  //     })
+  //     Cookies.set('accessToken', res.data.accessToken)
+  //     setIsLoggedIn(true)
+  //     console.log('res.data', res.data)
+  //     Swal.fire({
+  //       title: '登入成功，即將跳轉至會員中心',
+  //       icon: 'success',
+  //       showConfirmButton: false,
+  //       timer: 1500,
+  //     })
+  //     router.push('https://localhost:9000/member')
+  //   } else {
+  //     alert('有錯誤')
+  //   }
+  // }
+
+  const logout = async () => {
+    // firebase logout(注意，並不會登出google帳號)
+    logoutFirebase()
+
+    // 伺服器logout
+    const res = await axios.post(
+      'http://localhost:3005/api/auth/logout',
+      {},
+      {
+        withCredentials: true, // save cookie in browser
+      }
+    )
+
+    if (res.data.message === 'success') {
+      setAuthJWT({
+        isAuth: false,
+        userData: {
+          id: 0,
+          name: '',
+          username: '',
+          r_date: '',
+        },
+      })
+    }
+  }
 
   return (
     <>
@@ -245,18 +353,14 @@ export default function LoginForm() {
           <button
             className={'border-0 bg-none third-login'}
             type="button"
-            onClick={() => {
-              console.log('test')
-            }}
+            onClick={loginGoogleRedirect}
           >
             <FaGoogle className={'h2'} />
           </button>
           <button
             className={'border-0 bg-none third-login ms-5'}
             type="button"
-            onClick={() => {
-              console.log('test')
-            }}
+            onClick={logoutFirebase}
           >
             <FaXTwitter className={'h2'} />
           </button>

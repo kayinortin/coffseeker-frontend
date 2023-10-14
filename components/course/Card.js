@@ -33,10 +33,9 @@ export default function Card(props) {
           <img
             src={`http://localhost:3000/course-image/${course.course_image}`}
             alt={course?.name}
-            width={300}
+            width={250}
             height={250}
-            className="card-img-top object-fit-cover
-            "
+            className="card-img-top object-fit-cover"
           />
           <FavIcon size="medium" type="icon" id={course?.id} />
         </Link>

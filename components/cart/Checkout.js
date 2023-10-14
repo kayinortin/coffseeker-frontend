@@ -100,7 +100,8 @@ function Checkout({ step, handleNextStep, setStep }) {
       ? cartData.map((product) => {
           return {
             product_id: product.id,
-            amount: product.amount, // 注意這裡的屬性名稱應為 "amount"，不是 "Amount"
+            amount: product.amount,
+            price: product.discountPrice,
           }
         })
       : []
@@ -109,6 +110,8 @@ function Checkout({ step, handleNextStep, setStep }) {
       ? courseData.map((course) => {
           return {
             course_id: course.id,
+            amount: 1,
+            price: course.course_price,
           }
         })
       : []

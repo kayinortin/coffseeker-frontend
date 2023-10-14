@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import CoursePerFetcher from './CoursePerFetcher'
 import { BreadCrumbs, BreadCrumbsMobile } from './BreadCrumbs'
-import CourseFetcher from './course-fetch'
-import { use } from 'echarts'
-import { useCourses } from '@/context/course'
+import { selectedCourse, useCourses } from '@/context/course'
 import axios from 'axios'
 import { useShow } from '../../context/showProductDetail'
 import CourseDetailFavIcon from '@/components/course/CourseDetailFavIcon'
@@ -23,11 +20,14 @@ const INITIAL_DATA = {
   teacher_specialty: 0,
 }
 
-export default function CoursePic({ pid }) {
+export default function CoursePic({ pid, course }) {
   const router = useRouter()
   const { show, setShow } = useShow()
+  const {selectedCourse}=useCourses()
 
-  const [images, setImages] = useState([])
+  console.log(selectedCourse)
+
+  // const [images, setImages] = useState([])
   const [detailData, setDetailData] = useState(INITIAL_DATA)
   const {
     course_name,
@@ -41,30 +41,39 @@ export default function CoursePic({ pid }) {
     teacher_specialty,
   } = detailData
 
-  const getDetail = async () => {
-    try {
-      if (pid) {
-        let response = await axios.get(
-          `http://localhost:3005/api/course/${pid}`
-        )
-        const details = response.data
-        setDetailData({ ...details })
-        if (details.course_subpics) {
-          setImages(JSON.parse(details.course_subpics))
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching course details:', error)
-    }
-  }
+  // console.log(course)
 
-  useEffect(() => {
-    if (pid) {
-      setDetailData(INITIAL_DATA)
-      getDetail()
-      setShow({ ...show, in: true })
-    }
-  }, [pid])
+  // const getDetail = async () => {
+  //   try {
+  //     if (pid) {
+  //       let response = await axios.get(
+  //         `http://localhost:3005/api/course/${pid}`
+  //       )
+  //       const details = response.data
+  //       setDetailData({ ...details })
+  //       if (details.course_subpics) {
+  //         setImages(JSON.parse(details.course_subpics))
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching course details:', error)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   if (pid) {
+  //     setDetailData(INITIAL_DATA)
+  //     getDetail()
+  //     setShow({ ...show, in: true })
+  //   }
+  // }, [pid])
+
+
+  const ArrPic=JSON.parse(selectedCourse.course_subpics)
+
+  console.log(ArrPic)
+
+  
 
   const imgIndex=[1,2,3]
 
@@ -78,24 +87,24 @@ export default function CoursePic({ pid }) {
             <BreadCrumbsMobile />
           </div>
           <div className="ed-image-gallery ">
-            {/* <div className="position-relative"> */}
+            
             <img
-              src={`/course-image/${course_image}`}
+              src={`http://localhost:3000/course-image/${selectedCourse.course_image}`}
               // alt={name}
               width={300}
               height={300}
               className="m-2 me-1 ed-image-main"
             />
             <CourseDetailFavIcon id={pid} />
-            {/* </div> */}
+            
 
             <div className="ed-image-row">
-              {images &&
-                images.length > 0 &&
+              {selectedCourse &&
+                
                 imgIndex.map((pic, index) => (
                   <img
                     key={index}
-                    src={`/${images[index]}`}
+                    src={`http://localhost:3000/${ArrPic[pic]}`}
                     alt={name}
                     width={100}
                     height={100}
