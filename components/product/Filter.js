@@ -135,12 +135,24 @@ function Filter(props) {
 
     setPriceRange([100, 5000])
 
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+
     try {
       const response = await axios.get('http://localhost:3005/api/products/qs')
       props.onFilter(response.data.data)
     } catch (error) {
       console.error(error)
     }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   return (
@@ -354,7 +366,11 @@ function Filter(props) {
           <hr />
         </fieldset>
 
-        <button className="ed-btn-filter mt-2" type="submit">
+        <button
+          className="ed-btn-filter mt-2"
+          type="submit"
+          onClick={scrollToTop}
+        >
           篩選
         </button>
         <button
