@@ -12,10 +12,13 @@ export default function CourseList() {
   const [currentPage, setCurrentPage] = useState(1)
   const { coursesData, setCoursesData } = useCourses()
 
+  console.log(coursesData)
+
   //--------------------------------pagination
   const itemsPerPage = 9
   const totalItems = coursesData ? coursesData : []
   const totalPages = Math.ceil(totalItems.length / itemsPerPage)
+
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage)
@@ -32,7 +35,7 @@ export default function CourseList() {
               <BreadCrumbs />
             </div>
             <ul className="row list-unstyled">
-              {totalItems
+              {coursesData
                 .slice(
                   (currentPage - 1) * itemsPerPage,
                   currentPage * itemsPerPage

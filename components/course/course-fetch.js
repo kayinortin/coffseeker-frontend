@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useCourses } from '@/context/course'
 
 export default function CourseFetcher() {
-  const { setCoursesData } = useCourses()
+  const { coursesData, setCoursesData } = useCourses()
 
   useEffect(() => {
     const FetchedCourse = async () => {
@@ -11,6 +11,7 @@ export default function CourseFetcher() {
         const response = await axios.get('http://localhost:3005/api/course')
 
         const courses = response.data.courses
+        
         setCoursesData(courses)
         console.log('資料獲取成功：', courses)
       } catch (error) {
