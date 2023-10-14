@@ -27,8 +27,14 @@ export default function OrderDetailOpened({ order }) {
           `http://localhost:3005/api/order/orderItems/${orderId}`
         )
         // 獲得指定使用者的所有訂單
-        // console.log('Item資料', response.data.orderItems)
-        setOrderItem(response.data.orderItems)
+        // console.log('Item資料', response.data)
+        console.log('orderCourse', response.data.orderCourse)
+        console.log('orderItems', response.data.orderItems)
+        const allCourse = response.data.orderCourse
+        const allProduct = response.data.orderItems
+        const allOrders = [...allProduct, ...allCourse]
+        console.log('allOrders', allOrders)
+        setOrderItem(allOrders)
       } catch (error) {
         console.error('錯誤:', error)
       }

@@ -17,7 +17,7 @@ export default function InfoChangeForm() {
   // console.log('userData抽取成功', userData)
 
   const checkToken = Cookies.get('accessToken')
-
+  console.log('checkToken', checkToken)
   const [userId, setId] = useState('')
   const [userEmail, setMail] = useState('')
   const [userName, setName] = useState('')
