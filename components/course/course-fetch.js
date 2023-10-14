@@ -13,7 +13,7 @@ export default function CourseFetcher() {
         const courses = response.data.courses
         
         setCoursesData(courses)
-        console.log('資料獲取成功：', courses)
+        // console.log('資料獲取成功：', courses)
       } catch (error) {
         console.log('資料獲取失敗：', error)
       }

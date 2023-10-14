@@ -5,10 +5,11 @@ const CoursesContext = createContext()
 export function CoursesProvider({ children }) {
   const [coursesData, setCoursesData] = useState([])
   const [sortBy, setSortBy] = useState('default')
+  const [selectedCourse, setSelectedCourse]=useState([])
 
   return (
     <CoursesContext.Provider
-      value={{ coursesData, setCoursesData, sortBy, setSortBy }}
+      value={{ coursesData, setCoursesData, sortBy, setSortBy, selectedCourse,setSelectedCourse }}
     >
       {children}
     </CoursesContext.Provider>
