@@ -24,6 +24,7 @@ import { firebaseConfig } from './firebase-config'
 // 重定向專用，用於在同頁面(firebase的登入頁會與回調頁同一頁)監聽登入情況
 // getRedirectResult回調頁時用(註:重定向後，回調回來時才會呼叫)
 // onAuthStateChanged監聽auth物件變化 <---(用這個就足夠，它會在頁面一啟動偵測目前登入情況)
+
 const initApp = (callback) => {
   const auth = getAuth()
 
@@ -39,6 +40,9 @@ const initApp = (callback) => {
         const user = result.user
         console.log(token)
         console.log(user)
+
+        // Call the callback with user data
+        callback(user.providerData[0])
       }
     })
     .catch((error) => {
