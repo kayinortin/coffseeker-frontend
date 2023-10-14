@@ -83,5 +83,5 @@ export default function useAddCart(product) {
       localStorage.setItem('cartList', JSON.stringify([newItem]))
     }
   }
-  return { addCart }
+  return { addCart, number, setNumber }
 }

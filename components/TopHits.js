@@ -1,4 +1,5 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
@@ -15,17 +16,28 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
 
-import PopularDataFetcher from '@/components/product/PopularDataFetcher'
 import ProductTopHits from '@/components/product/productTopHits'
 
-import { useProducts } from '@/context/product'
-
 const TopHits = () => {
-  const { productsData, setProductsData } = useProducts()
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productResponse = await axios.get(
+          'http://localhost:3005/api/popular-products'
+        )
+        const products = productResponse.data.products
+        setData(products)
+      } catch (error) {
+        console.error('資料獲取失敗:', error)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <>
-      <PopularDataFetcher />
       <h5 className="mt-4">相關商品</h5>
       <div className="my-4">
         <Swiper
@@ -35,7 +47,7 @@ const TopHits = () => {
           navigation
           autoplay={{ delay: 3000 }}
         >
-          {productsData.map((product, i) => {
+          {data.map((product, i) => {
             return (
               <SwiperSlide key={i}>
                 <ProductTopHits key={product.id} product={product} />

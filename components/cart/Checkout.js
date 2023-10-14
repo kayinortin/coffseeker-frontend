@@ -3,6 +3,8 @@ import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
 import { useUser } from '@/context/UserInfo'
 import { FetchUserData } from '../member/FetchDatas/FetchUserData'
+import { useCartList } from '@/context/cart'
+import { useCartListCourse } from '@/context/cart_course'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -78,6 +80,10 @@ function Checkout({ step, handleNextStep, setStep }) {
         })
     })
   }
+
+  const { cartListData, setCartListData } = useCartList()
+  const { cartListData_course, setCartListData_course } = useCartListCourse()
+
   //送出訂單
   function handleSendOrder() {
     const uniqueOrderNumber = generateOrderNumber()
@@ -126,6 +132,9 @@ function Checkout({ step, handleNextStep, setStep }) {
       .then(() => {
         localStorage.removeItem('cartList')
         localStorage.removeItem('cartList_course')
+
+        setCartListData([])
+        setCartListData_course([])
       })
       .catch((error) => {
         console.error('發送訂單時出錯', error)
