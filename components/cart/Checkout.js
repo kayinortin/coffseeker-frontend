@@ -1,102 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
+import { useUser } from '@/context/UserInfo'
+import { FetchUserData } from '../member/FetchDatas/FetchUserData'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [checkoutData, setCheckoutData] = useState(null)
+  const [checkoutData, setCheckoutData] = useState([])
   const [receiverName, setReceiverName] = useState('')
   const [receiverPhone, setReceiverPhone] = useState('')
   const [receiverAddress, setReceiverAddress] = useState('')
   const [isInfoVisible, setIsInfoVisible] = useState(false)
 
-  //會員資料
-  const { authJWT } = useAuthJWT()
-  const userData = authJWT.userData
-
-  //localStorage checkoutData
-  useEffect(() => {
-    const checkoutData = JSON.parse(localStorage.getItem('checkoutData'))
-    if (checkoutData) {
-      setCheckoutData(checkoutData)
-    }
-  }, [])
-
-  //後端API
-  function sendOrder(orderData) {
-    axios
-      .post('http://localhost:3005/api/ordercart/neworder', orderData)
-      .then((response) => {
-        console.log('訂單送入後端成功', response.data)
-      })
-      .catch((error) => {
-        console.error('訂單送入後端錯誤', error)
-      })
-  }
-
-  //送出訂單
-  function handleSendOrder() {
-    const orderList = {
-      user_id: authJWT.userData.id,
-      total_price: allTotalPrice,
-      shipping_fee: deliveryPrice,
-      discount_price: discountAmount,
-      All_price: totalAmount,
-      payment_option: selectedPaymentOption,
-      delivery_option: selectedDeliveryOption,
-      receiver_name: isInfoVisible ? userData.username : receiverName,
-      receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
-      receiver_address: isInfoVisible ? userData.address : receiverAddress,
-    }
-    // const productDetail={
-    // }
-    // const courseDetail={
-    // }
-    const orderData = {
-      orderList,
-      // productDetail,
-      // courseDetail,
-    }
-    sendOrder(orderData)
-  }
-
-  //按鈕上一步 //按鈕送出訂單
-  const handleCheckout = () => {
-    if (step === 2) {
-      setStep(1)
-    } else {
-      if (handleNextStep) {
-        handleNextStep() // 否则執行下一步操作
-      }
-    }
-  }
-  //查看/關閉商品
-  const handleToggleProducts = () => {
-    setIsOpen(!isOpen)
-  }
   //購物車商品即時渲染
   const cartData = JSON.parse(localStorage.getItem('cartList'))
   const courseData = JSON.parse(localStorage.getItem('cartList_course'))
 
-  //單一商品小計＝特價價格＊數量
-  function productSubtotal(product) {
-    return product.discountPrice * product.amount
-  }
-  //商品共計
-  let totalPrice = 0
-  cartData.forEach((product) => {
-    totalPrice += productSubtotal(product)
-  })
-  let totalCoursePrice = 0
-  courseData.forEach((course) => {
-    totalCoursePrice += course.course_price
-  })
-
-  //收件人與會員相符
-  const handleCheckboxChange = (e) => {
-    setIsInfoVisible(e.target.checked)
-  }
-
+  //checkoutData localStorage Data
   const discountAmount = checkoutData ? checkoutData.discountAmount : 0 // 默认为0
   const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0
   const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
@@ -109,78 +29,233 @@ function Checkout({ step, handleNextStep, setStep }) {
     ? checkoutData.selectedPaymentOption
     : ''
 
+  //會員資料
+  const { authJWT } = useAuthJWT()
+  const userData = authJWT.userData
+
+  //按鈕上一步 //按鈕送出訂單
+  const handleCheckout = () => {
+    if (step === 2) {
+      setStep(1)
+    } else {
+      if (handleNextStep) {
+        handleNextStep() // 否则執行下一步操作
+      }
+    }
+  }
+
+  //localStorage checkoutData
+  useEffect(() => {
+    const checkoutData = JSON.parse(localStorage.getItem('checkoutData')) || []
+    if (checkoutData) {
+      setCheckoutData(checkoutData)
+    }
+
+    // async function aFetchFata() {
+    //   const UserData = FetchUserData()
+    //   if (UserData) {
+    //     setUserData(UserData)
+    //     console.log(UserData)
+    //   } else {
+    //     console.log('沒有使用者資料')
+    //   }
+    // }
+    // aFetchFata()
+  }, [])
+
+  //後端API
+  function sendOrder(orderData) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('http://localhost:3005/api/ordercart/neworder', orderData)
+        .then((response) => {
+          console.log('訂單送入後端成功', response.data)
+          resolve()
+        })
+        .catch((error) => {
+          console.error('訂單送入後端錯誤', error)
+          reject(error)
+        })
+    })
+  }
+  //送出訂單
+  function handleSendOrder() {
+    const uniqueOrderNumber = generateOrderNumber()
+
+    const orderList = {
+      user_id: authJWT.userData.id,
+      tracking_number: uniqueOrderNumber,
+      subtotal: allTotalPrice,
+      shipping_fee: deliveryPrice,
+      discount_price: discountAmount,
+      total_price: allTotalPrice - discountAmount + deliveryPrice,
+      payment: selectedPaymentOption,
+      delivery: selectedDeliveryOption,
+      receiver_name: isInfoVisible ? userData.username : receiverName,
+      receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
+      receiver_address: isInfoVisible ? userData.address : receiverAddress,
+    }
+
+    const orderProducts = cartData
+      ? cartData.map((product) => {
+          return {
+            product_id: product.id,
+            amount: product.amount,
+            price: product.discountPrice,
+          }
+        })
+      : []
+
+    const orderCourses = courseData
+      ? courseData.map((course) => {
+          return {
+            course_id: course.id,
+            amount: 1,
+            price: course.course_price,
+          }
+        })
+      : []
+
+    const orderData = {
+      orderList,
+      orderProducts,
+      orderCourses,
+    }
+
+    sendOrder(orderData)
+      .then(() => {
+        localStorage.removeItem('cartList')
+        localStorage.removeItem('cartList_course')
+      })
+      .catch((error) => {
+        console.error('發送訂單時出錯', error)
+      })
+  }
+
+  //訂單編號生成
+  function generateOrderNumber() {
+    // 獲取當前時間
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = (now.getMonth() + 1).toString().padStart(2, '0') // 月份從0開始，所以要加1
+    const day = now.getDate().toString().padStart(2, '0')
+    const hours = now.getHours().toString().padStart(2, '0')
+    const minutes = now.getMinutes().toString().padStart(2, '0')
+    const randomDigits = Math.floor(Math.random() * 1000)
+
+    const orderNumber = `${year}${month}${day}${hours}${minutes}${randomDigits}`
+
+    return orderNumber
+  }
+
+  //收件人與會員相符
+  const handleCheckboxChange = (e) => {
+    setIsInfoVisible(e.target.checked)
+  }
+
+  //查看/關閉商品
+  const handleToggleProducts = () => {
+    setIsOpen(!isOpen)
+  }
+  //單一商品小計＝特價價格＊數量
+  function productSubtotal(product) {
+    return product.discountPrice * product.amount
+  }
+  //商品共計
+  let totalPrice = 0
+  if (cartData) {
+    cartData.forEach((product) => {
+      totalPrice += productSubtotal(product)
+    })
+  }
+  //課程共計
+  let totalCoursePrice = 0
+  if (courseData) {
+    courseData.forEach((course) => {
+      totalCoursePrice += course.course_price
+    })
+  }
   //商品列表
-  const productItems = cartData.map((product) => (
-    <div key={product.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-2 col-sm-3 ">
-        <img
-          className="img-fluid"
-          src={`http://localhost:3005/uploads/image/${product.image_main}`}
-          alt={product.image_main}
-        />
-      </div>
-      <div className="productContent col-lg-10 col-sm-9 text-start">
-        <div className="topDetails d-flex justify-content-between ">
-          <div className="details">
-            <div className="productTitle lh-sm pb-1">{product.name}</div>
-            <div className="productDescription lh-base">
-              {product.description}
+  const productItems = cartData
+    ? cartData.map((product) => (
+        <div key={product.id} className="productwrap row py-3">
+          <div className="imgContainer col-lg-2 col-sm-3 ">
+            <img
+              className="img-fluid"
+              src={`http://localhost:3005/uploads/${product.image_main}`}
+              alt={product.image_main}
+            />
+          </div>
+          <div className="productContent col-lg-10 col-sm-9 text-start">
+            <div className="topDetails d-flex justify-content-between ">
+              <div className="details">
+                <div className="productTitle lh-sm pb-1">{product.name}</div>
+                <div className="productDescription lh-base">
+                  {product.description}
+                </div>
+              </div>
+            </div>
+            <div className="productPrice text-end pt-2 align-items-center">
+              <div className="price d-inline text-decoration-line-through fs-6 pe-2">
+                ${product.price}
+              </div>
+              <div className="discountPrice d-inline fs-5">
+                ${product.discountPrice}
+              </div>
+              <div className="discountPrice  d-inline fs-5">
+                {' '}
+                x{product.amount}
+              </div>
+            </div>
+            <div className="productQuantityTotal text-end pt-2">
+              <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
+                ${productSubtotal(product)}
+              </div>
             </div>
           </div>
         </div>
-        <div className="productPrice text-end pt-2 align-items-center">
-          <div className="price d-inline text-decoration-line-through fs-6 pe-2">
-            ${product.price}
-          </div>
-          <div className="discountPrice d-inline fs-5">
-            ${product.discountPrice}
-          </div>
-          <div className="discountPrice  d-inline fs-5"> x{product.amount}</div>
-        </div>
-        <div className="productQuantityTotal text-end pt-2">
-          <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
-            ${productSubtotal(product)}
-          </div>
-        </div>
-      </div>
-    </div>
-  ))
+      ))
+    : []
   //課程列表
-  const courseItems = courseData.map((course) => (
-    <div key={course.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-2 col-sm-3 ">
-        <img
-          className="img-fluid"
-          src={`http://localhost:3005/uploads/${course.course_image}`}
-          alt={course.course_image}
-        />
-      </div>
-      <div className="productContent col-lg-10 col-sm-9 text-start">
-        <div className="topDetails d-flex justify-content-between ">
-          <div className="details">
-            <div className="productTitle lh-sm pb-1">{course.course_name}</div>
-            <div className="productDescription lh-base">
-              {course.course_description}
-            </div>
+  const courseItems = courseData
+    ? courseData.map((course) => (
+        <div key={course.id} className="productwrap row py-3">
+          <div className="imgContainer col-lg-2 col-sm-3 ">
+            <img
+              className="img-fluid"
+              src={`http://localhost:3005/uploads/course-image/${course.course_image}`}
+              alt={course.course_image}
+            />
           </div>
-        </div>
-        <div className="productPrice text-end align-items-cente pt-2">
-          {/* <div className="price d-inline text-decoration-line-through fs-6 pe-2">
+          <div className="productContent col-lg-10 col-sm-9 text-start">
+            <div className="topDetails d-flex justify-content-between ">
+              <div className="details">
+                <div className="productTitle lh-sm pb-1">
+                  {course.course_name}
+                </div>
+                <div className="productDescription lh-base">
+                  {course.course_description}
+                </div>
+              </div>
+            </div>
+            <div className="productPrice text-end align-items-cente pt-2">
+              {/* <div className="price d-inline text-decoration-line-through fs-6 pe-2">
             ${course.course_price}
           </div> */}
-          <div className="discountPrice d-inline fs-5">
-            ${course.course_price}
+              {/* <div className="discountPrice d-inline fs-5">
+                ${course.course_price}
+              </div>
+              <div className="discountPrice  d-inline fs-5"> x1</div> */}
+            </div>
+            <div className="productQuantityTotal text-end pt-2">
+              <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
+                ${course.course_price}
+              </div>
+            </div>
           </div>
-          <div className="discountPrice  d-inline fs-5"> x1</div>
         </div>
-        <div className="productQuantityTotal text-end pt-2">
-          <div className="productSubtotal d-inline text-end fs-5 fw-bolder">
-            ${course.course_price}
-          </div>
-        </div>
-      </div>
-    </div>
-  ))
+      ))
+    : []
 
   return (
     <>
@@ -189,7 +264,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <hr className="border-1 opacity-100" />
           <div className={`checkoutProducts ${isOpen ? 'open' : 'close'}`}>
             <div className="closeProducts text-center">
-              <h3>合計: ${totalAmount} </h3>
+              <h3 className="mt-5">合計: ${totalAmount} </h3>
               <button
                 className="btn btngroup my-4"
                 onClick={handleToggleProducts}
@@ -203,7 +278,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                   {/* 商品列表 */}
                   <div className="productscart col-lg-8">
                     {/* 咖啡列表 */}
-                    {cartData.length > 0 && (
+                    {cartData && cartData.length > 0 && (
                       <div className="wrapcart">
                         <div className="labels">
                           商品項目({productItems.length})
@@ -215,7 +290,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       </div>
                     )}
                     {/* 課程列表 */}
-                    {courseData.length > 0 && (
+                    {courseData && courseData.length > 0 && (
                       <div className="wrapcart">
                         <div className="labels">
                           課程項目({courseItems.length})
@@ -291,12 +366,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       aria-describedby="addon-wrapping"
                       value={isInfoVisible ? userData.username : receiverName}
                       onChange={(e) => {
-                        if (isInfoVisible) {
-                          // 如果相符，可以采取其他操作，例如忽略输入
-                        } else {
-                          // 否则，更新收件人名稱的值
-                          setReceiverName(e.target.value)
-                        }
+                        setReceiverName(e.target.value)
                       }}
                     />
                   </div>
@@ -310,12 +380,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       aria-describedby="addon-wrapping"
                       value={isInfoVisible ? userData.phone : receiverPhone}
                       onChange={(e) => {
-                        if (isInfoVisible) {
-                          // 如果相符，可以采取其他操作，例如忽略输入
-                        } else {
-                          // 否则，更新收件人電話號碼的值
-                          setReceiverPhone(e.target.value)
-                        }
+                        setReceiverPhone(e.target.value)
                       }}
                     />
                   </div>
@@ -329,12 +394,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                       aria-describedby="addon-wrapping"
                       value={isInfoVisible ? userData.address : receiverAddress}
                       onChange={(e) => {
-                        if (isInfoVisible) {
-                          // 如果相符，可以采取其他操作，例如忽略输入
-                        } else {
-                          // 否则，更新配送地址的值
-                          setReceiverAddress(e.target.value)
-                        }
+                        setReceiverAddress(e.target.value)
                       }}
                     />
                   </div>

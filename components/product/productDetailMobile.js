@@ -16,8 +16,10 @@ import ProductDetailFavIcon from '@/components/product/ProductDetailFavIcon'
 import Comment from '@/components/Comment'
 import FetchComment from '@/components/FetchComment'
 import TopHitsMobile from '@/components/TopHitsMobile'
+import FetchFavProductId from '../fav/FetchFavProductId'
 
 export default function ProductDetailMobile() {
+  FetchFavProductId()
   const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)

@@ -19,53 +19,61 @@ import { useShow } from '../../context/showProductDetail'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
 import TopHitsMobile from './TopHitsMobile'
 
-const INITIAL_DATA = {
-  id: '',
-  course_name: '',
-  course_price: '',
-  course_description: 0,
-  course_image: 0,
-  course_subpics: 0,
-  course_syllabus: 0,
-  teacher_name: '',
-  teacher_qualification: 0,
-  teacher_specialty: 0,
-}
 
-export default function MainContent() {
-  const router = useRouter()
-  const { pid } = router.query
+
+export default function MainContent({pid}) {
+  
   const { CoursesData, setCoursesData } = useCourses()
   const [activeContent, setActiveContent] = useState('introduction')
   const [images, setImages] = useState([])
+  
   const { show, setShow } = useShow()
   const {isLoggedIn, setIsLoggedIn}=useUser()
 
-  const getDetail = async () => {
-    try {
-      if (pid) {
-        const response = await axios.get(
-          `http://localhost:3005/api/course/${pid}`
-        )
-        const details = response.data
-
-        setCoursesData(details)
-        if (details.course_subpics) {
-          setImages(JSON.parse(details.course_subpics))
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching course details:', error)
-    }
+  const INITIAL_DETAIL_DATA = {
+    id: '',
+    course_name: '',
+    course_price: '',
+    course_description: 0,
+    course_image: 0,
+    course_subpics: 0,
+    course_syllabus: 0,
+    teacher_name: '',
+    teacher_qualification: 0,
+    teacher_specialty: 0,
   }
+  const [detailData, setDetailData]=useState(INITIAL_DETAIL_DATA)
+
+  
+
+  
 
   useEffect(() => {
     if (pid) {
-      setCoursesData(INITIAL_DATA)
+      const getDetail = async () => {
+        try {
+          if (pid) {
+            const response = await axios.get(
+              `http://localhost:3005/api/course/${pid}`
+            )
+            const details = response.data
+            console.log(details)
+            setDetailData({...details})
+            if (details.course_subpics) {
+              setImages(JSON.parse(details.course_subpics))
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching course details:', error)
+        }
+      }
+      // setCoursesData(INITIAL_DATA)
       getDetail()
       setShow({ ...show, in: true })
     }
   }, [pid])
+
+  
 
   const handleButtonClick = (contentName) => {
     setActiveContent(contentName)

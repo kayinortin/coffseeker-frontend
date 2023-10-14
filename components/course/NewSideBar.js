@@ -5,26 +5,61 @@ import {
   MdOutlineKeyboardArrowUp,
 } from 'react-icons/md'
 import ReactSlider from 'react-slider'
+import axios from 'axios'
 
-function Accordion() {
-  const [isArtExpanded, setIsArtExpanded] = useState(true)
-  const [isPourExpanded, setIsPourExpanded] = useState(false)
-  const [isRoastExpanded, setIsRoastExpanded] = useState(false)
-  const [filterForm, setFilterForm] = useState({latte_art:[],pour:[],roast:[]})
+function Accordion(props) {
+  const [isCourseNameExpanded, setIsCourseNameExpanded] = useState(true)
+  const [isCourseLevelExpanded, setIsCourseLevelExpanded] = useState(true)
+  const [filterForm, setFilterForm] = useState({
+    course_name: [],
+    course_level_id: [],
+  })
+  const course_name = ['拉花', '烘豆', '手沖']
   const levels = ['入門', '進階', '高階', '證照']
 
-  const handleFormSubmit=(e)=>{
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
 
-    
+    let queryString = `http://localhost:3005/api/course/qs?`
+    if (filterForm.course_name) {
+      queryString += `course_name=${filterForm.course_name.join(',')}&`
+    }
+    if (filterForm.course_level_id) {
+      queryString += `course_level_id=${filterForm.course_level_id.join(',')}&`
+    }
+
+    try {
+      const response = await axios.get(queryString)
+      props.onFilter(response.data.data)
+      // console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  const handleFieldChange=()=>{
+  const handleFieldChange = (e) => {
+    const { name, value, checked } = e.target
 
+    if (name === 'course_name' || name === 'course_level_id') {
+      setFilterForm((prevState) => ({
+        ...prevState,
+        [name]: checked
+          ? [...prevState[name], value]
+          : prevState[name].filter((item) => item !== value),
+      }))
+    } else {
+      setFilterForm((prevState) => ({ ...prevState, [name]: value }))
+    }
   }
 
-  const resetFilter=()=>{
-    setFilterForm({latte_art:[],pour:[],roast:[]})
+  const resetFilter = async () => {
+    setFilterForm({ course_name: [], course_level_id: [] })
+    try {
+      const response = await axios.get('http://localhost:3005/api/course/qs')
+      props.onFilter(response.data.data)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -35,62 +70,76 @@ function Accordion() {
           <legend
             className="mt-2 mb-3 ed-filter-title"
             onClick={() => {
-              setIsArtExpanded(!isArtExpanded)
+              setIsCourseNameExpanded(!isCourseNameExpanded)
             }}
           >
-            拉花課程
+            課程種類
             <span className="arrow-icon">
-              {isArtExpanded ? (
+              {isCourseNameExpanded ? (
                 <MdOutlineKeyboardArrowDown />
               ) : (
                 <MdOutlineKeyboardArrowUp />
               )}
             </span>
           </legend>
-         {/* 拉花 */}
-          {isArtExpanded &&
-            levels.map((art, index) => {
+          {/* 拉花 */}
+          {isCourseNameExpanded &&
+            course_name.map((course_name, index) => (
               <div key={index} className="mt-2">
                 <label>
                   <input
                     className="me-2 ed-checkbox"
                     type="checkbox"
-                    name="latte_art"
-                    value={art}
-                    checked={filterForm.latte_art.includes(art)}
+                    name="course_name"
+                    value={course_name}
+                    checked={filterForm.course_name.includes(course_name)}
                     onChange={handleFieldChange}
                   />
-                  {art}
+                  {course_name}
                 </label>
               </div>
-            })}
-            <hr/>
+            ))}
+          <hr />
         </fieldset>
 
         <fieldset>
-          <legend className="mt-2 mb-3 ed-filter-title">
-            手沖課程
+          <legend
+            className="mt-2 mb-3 ed-filter-title"
+            onClick={() => {
+              setIsCourseLevelExpanded(!isCourseLevelExpanded)
+            }}
+          >
+            課程等級
             <span className="arrow-icon">
-              {isPourExpanded ? (
+              {isCourseLevelExpanded ? (
                 <MdOutlineKeyboardArrowDown />
               ) : (
                 <MdOutlineKeyboardArrowUp />
               )}
             </span>
           </legend>
-          <hr/>
+          {isCourseLevelExpanded &&
+            levels.map((course_level_id, index) => (
+              <div key={index} className="mt-2">
+                <label>
+                  <input
+                    className="me-2 ed-checkbox"
+                    type="checkbox"
+                    name="course_level_id"
+                    value={course_level_id}
+                    checked={filterForm.course_level_id.includes(
+                      course_level_id
+                    )}
+                    onChange={handleFieldChange}
+                  />
+                  {course_level_id}
+                </label>
+              </div>
+            ))}
+          <hr />
         </fieldset>
         <fieldset>
-          <legend className="mt-2 mb-3 ed-filter-title">
-            烘豆課程
-            <span className="arrow-icon">
-              {isRoastExpanded ? (
-                <MdOutlineKeyboardArrowDown />
-              ) : (
-                <MdOutlineKeyboardArrowUp />
-              )}
-            </span>
-          </legend>
+          <hr />
         </fieldset>
         <button className="ed-btn-filter mt-2" type="submit">
           篩選
