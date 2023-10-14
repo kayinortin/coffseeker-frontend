@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 
 function Counter(props) {
-  const { number, setNumber, show } = props
+  const { number, setNumber } = props
   const [isFocused, setIsFocused] = useState(false)
 
   const handleMinusClick = () => {

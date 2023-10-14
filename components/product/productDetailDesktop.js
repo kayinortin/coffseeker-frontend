@@ -17,7 +17,7 @@ import FetchFavProductId from '../fav/FetchFavProductId'
 
 export default function ProductDetailDesktop({ pid }) {
   FetchFavProductId()
-  const [number, setNumber] = useState(1)
+  // const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
   const INITIAL_DETAIL_DATA = {
@@ -82,7 +82,7 @@ export default function ProductDetailDesktop({ pid }) {
       getDetail()
     }
   }, [pid])
-  const { addCart } = useAddCart(detailData)
+  const { addCart, number, setNumber } = useAddCart(detailData)
 
   const { isLoggedIn, setIsLoggedIn } = useUser()
 
