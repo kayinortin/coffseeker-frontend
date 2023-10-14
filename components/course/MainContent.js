@@ -14,7 +14,6 @@ import CourseComment from '@/components/course/CourseComment'
 
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 
-import { useCourses } from '@/context/course'
 import { useShow } from '../../context/showProductDetail'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
 import TopHitsMobile from './TopHitsMobile'
@@ -23,7 +22,6 @@ import TopHitsMobile from './TopHitsMobile'
 
 export default function MainContent({pid}) {
   
-  const { CoursesData, setCoursesData } = useCourses()
   const [activeContent, setActiveContent] = useState('introduction')
   const [images, setImages] = useState([])
   
@@ -57,7 +55,7 @@ export default function MainContent({pid}) {
               `http://localhost:3005/api/course/${pid}`
             )
             const details = response.data
-            console.log(details)
+            // console.log(details)
             setDetailData({...details})
             if (details.course_subpics) {
               setImages(JSON.parse(details.course_subpics))
@@ -83,13 +81,13 @@ export default function MainContent({pid}) {
     <>
       <div className="mt-5 ms-sm-5 container ed-content-size">
         <div className="d-sm-flex">
-          <CoursePic pid={pid} course={CoursesData} />
-          <CourseText pid={pid} course={CoursesData} />
+          <CoursePic pid={pid} course={detailData} />
+          <CourseText pid={pid} course={detailData} />
         </div>
 
         
 
-        {CoursesData && CoursesData.course_syllabus ? (
+        {detailData && detailData.course_syllabus ? (
           <>
             <section>
               <div className="d-flex justify-content-center my-5 btn-course-group">
@@ -134,7 +132,7 @@ export default function MainContent({pid}) {
                 <div className="col-10 mx-auto">
                   <h6>【課程大綱】</h6>
                   <div className={`lh-base ${style['course-intro']}`}>
-                    {CoursesData.course_syllabus
+                    {detailData.course_syllabus
                       .split('\n')
                       .map((line, index) => (
                         <p key={index}>
@@ -157,13 +155,13 @@ export default function MainContent({pid}) {
                       className="ms-4 rounded-circle"
                     />
                     <p className="fw-bold my-3">
-                      教師姓名：{CoursesData.teacher_name}
+                      教師姓名：{detailData.teacher_name}
                     </p>
                     <p className="fw-bold my-3">
-                      教師資歷：{CoursesData.teacher_qualification}
+                      教師資歷：{detailData.teacher_qualification}
                     </p>
                     <p className="fw-bold my-3">教師自介：</p>
-                    <p>{CoursesData.teacher_specialty}</p>
+                    <p>{detailData.teacher_specialty}</p>
                   </div>
                 </>
               )}
@@ -171,7 +169,7 @@ export default function MainContent({pid}) {
 
             <section className="course-sp col-10 mt-4  mx-auto">
               <h6>【課程特色】</h6>
-              <div className="lh-base">{CoursesData.course_description}</div>
+              <div className="lh-base">{detailData.course_description}</div>
             </section>
             <hr/>
           </>
