@@ -10,13 +10,14 @@ import { useProducts } from '@/context/product'
 import { useShow } from '@/context/showProductDetail'
 
 import ProductDetailMobile from '@/components/product/productDetailMobile'
+import FetchFavProductId from '../fav/FetchFavProductId'
 
 // 02 跟 03 的圓圈放在這裡
 
 export default function PopularProducts() {
+  FetchFavProductId()
   const { show, setShow, selectedPid } = useShow()
   const { productsData, setProductsData } = useProducts()
-
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const [aosValue, setAosValue] = useState(isMobile ? 'fade-up' : 'fade-left')

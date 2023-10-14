@@ -13,6 +13,7 @@ export default function OrderItems({ order }) {
     // 判斷照片欄位有無資料 有就抽取資料 無則設定預設值
     if (order.image !== '') {
       imgUrl = JSON.parse(order.image)
+      console.log('Images', imgUrl[0])
     }
     setImageArr(imgUrl[0])
     // console.log('Images', imgUrl[0])
@@ -23,7 +24,7 @@ export default function OrderItems({ order }) {
       {/* 桌機 */}
       <div className={'d-none d-lg-flex border-bottom border-dark p-2'}>
         <span className={'col-3 text-center'}>
-          <Image
+          <img
             src={`http://localhost:3005/uploads/${imageArr}`}
             alt="Image Description"
             width={100} // 设置图像宽度

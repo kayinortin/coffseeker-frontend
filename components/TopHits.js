@@ -15,7 +15,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
 
-import ProductDataFetcher from '@/components/product/ProductDataFetcher'
+import PopularDataFetcher from '@/components/product/PopularDataFetcher'
 import ProductTopHits from '@/components/product/productTopHits'
 
 import { useProducts } from '@/context/product'
@@ -25,7 +25,7 @@ const TopHits = () => {
 
   return (
     <>
-      <ProductDataFetcher />
+      <PopularDataFetcher />
       <h5 className="mt-4">相關商品</h5>
       <div className="my-4">
         <Swiper
