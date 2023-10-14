@@ -288,7 +288,11 @@ export default function ProductDetailDesktop({ pid }) {
                       </div>
                       <div className="d-flex flex-column">
                         <div className="d-flex align-items-center">
-                          <Counter number={number} setNumber={setNumber} />
+                          <Counter
+                            number={number}
+                            setNumber={setNumber}
+                            maxCount={amount}
+                          />
                           <p className="ms-5">
                             <span className="h4 fw-bold">{amount}</span>
                             組庫存量

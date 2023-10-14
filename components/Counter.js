@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
+import Swal from 'sweetalert2'
 
 function Counter(props) {
-  const { number, setNumber } = props
+  const { number, setNumber, maxCount } = props
   const [isFocused, setIsFocused] = useState(false)
 
   const handleMinusClick = () => {
@@ -10,7 +11,16 @@ function Counter(props) {
   }
 
   const handlePlusClick = () => {
-    setNumber(number + 1)
+    if (number >= maxCount) {
+      Swal.fire({
+        icon: 'warning',
+        title: '已達到庫存量',
+        text: '您選擇的數量已超過庫存量',
+        timer: 2000,
+      })
+    } else {
+      setNumber(number + 1)
+    }
   }
 
   const handleFocus = () => {
