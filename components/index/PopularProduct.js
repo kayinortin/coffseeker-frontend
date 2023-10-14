@@ -15,7 +15,6 @@ import FetchFavProductId from '../fav/FetchFavProductId'
 // 02 跟 03 的圓圈放在這裡
 
 export default function PopularProducts() {
-  FetchFavProductId()
   const { show, setShow, selectedPid } = useShow()
   const { productsData, setProductsData } = useProducts()
 
@@ -31,7 +30,7 @@ export default function PopularProducts() {
       duration: 1000,
     })
   }, [])
-
+  FetchFavProductId()
   return (
     <>
       <PopularDataFetcher />
