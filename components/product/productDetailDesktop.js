@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import Image from 'next/image'
+import Head from 'next/head'
 
 import useAddCart from '@/hooks/useAddCart'
 
@@ -17,7 +18,7 @@ import FetchFavProductId from '../fav/FetchFavProductId'
 
 export default function ProductDetailDesktop({ pid }) {
   FetchFavProductId()
-  const [number, setNumber] = useState(1)
+  // const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
   const INITIAL_DETAIL_DATA = {
@@ -82,7 +83,7 @@ export default function ProductDetailDesktop({ pid }) {
       getDetail()
     }
   }, [pid])
-  const { addCart } = useAddCart(detailData)
+  const { addCart, number, setNumber } = useAddCart(detailData)
 
   const { isLoggedIn, setIsLoggedIn } = useUser()
 
@@ -119,6 +120,11 @@ export default function ProductDetailDesktop({ pid }) {
 
   return (
     <>
+      <div>
+        <Head>
+          <title>精選咖啡｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className="container">
         <div className="d-flex justify-content-between">
           <div className="sidebar-left d-none d-md-block">
@@ -129,10 +135,11 @@ export default function ProductDetailDesktop({ pid }) {
               <div className="mt-4 d-flex justify-content-between align-items-center">
                 <Link
                   href="http://localhost:3000/product/10"
-                  className="d-flex justify-content-center align-items-center"
+                  className="d-flex justify-content-center align-items-center ed-cursor-pointer"
                 >
                   <div>
                     <img
+                      className="ed-cursor-pointer"
                       src="http://localhost:3000/cart-image/product_1.png"
                       width={70}
                       height={70}
@@ -140,8 +147,8 @@ export default function ProductDetailDesktop({ pid }) {
                     />
                   </div>
                   <div>
-                    <h6>巴西 皇后莊園</h6>
-                    <p className="text-dark">NT$ 190</p>
+                    <h6 className="ed-cursor-pointer">巴西 皇后莊園</h6>
+                    <p className="text-dark ed-cursor-pointer">NT$ 190</p>
                   </div>
                 </Link>
               </div>
@@ -149,10 +156,11 @@ export default function ProductDetailDesktop({ pid }) {
               <div className="mt-3 d-flex justify-content-between align-items-center">
                 <Link
                   href="http://localhost:3000/product/32"
-                  className="d-flex justify-content-center align-items-center"
+                  className="d-flex justify-content-center align-items-center ed-cursor-pointer"
                 >
                   <div>
                     <img
+                      className="ed-cursor-pointer"
                       src="http://localhost:3000/cart-image/product_2.png"
                       width={70}
                       height={70}
@@ -160,8 +168,8 @@ export default function ProductDetailDesktop({ pid }) {
                     />
                   </div>
                   <div>
-                    <h6>頂級藝伎濾掛</h6>
-                    <p className="text-dark">NT$ 170</p>
+                    <h6 className="ed-cursor-pointer">頂級藝伎濾掛</h6>
+                    <p className="text-dark ed-cursor-pointer">NT$ 170</p>
                   </div>
                 </Link>
               </div>
@@ -288,7 +296,11 @@ export default function ProductDetailDesktop({ pid }) {
                       </div>
                       <div className="d-flex flex-column">
                         <div className="d-flex align-items-center">
-                          <Counter number={number} setNumber={setNumber} />
+                          <Counter
+                            number={number}
+                            setNumber={setNumber}
+                            maxCount={amount}
+                          />
                           <p className="ms-5">
                             <span className="h4 fw-bold">{amount}</span>
                             組庫存量

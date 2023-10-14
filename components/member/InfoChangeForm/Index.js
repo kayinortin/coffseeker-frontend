@@ -16,8 +16,6 @@ export default function InfoChangeForm() {
   const router = useRouter()
   // console.log('userData抽取成功', userData)
 
-  const checkToken = Cookies.get('accessToken')
-  console.log('checkToken', checkToken)
   const [userId, setId] = useState('')
   const [userEmail, setMail] = useState('')
   const [userName, setName] = useState('')
@@ -28,6 +26,8 @@ export default function InfoChangeForm() {
   const [birthdayMonth, setBirthdayMonth] = useState('')
   const [birthdayData, setBirthdayDate] = useState('')
 
+  const checkToken = Cookies.get('accessToken')
+  console.log('checkToken', checkToken)
   useEffect(() => {
     async function fetchData() {
       if (checkToken) {

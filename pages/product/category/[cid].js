@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
 import Skeleton from '@mui/material/Skeleton'
 import { useMediaQuery } from 'react-responsive'
 
@@ -115,7 +116,12 @@ export default function ProductList() {
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
         <div className="d-none d-md-block ed-left-filter container mt-5">
-          <Filter onFilter={setProductsData} />
+          <Filter
+            onFilter={(data) => {
+              setProductsData(data)
+              setCurrentPage(1)
+            }}
+          />
         </div>
 
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
@@ -126,6 +132,11 @@ export default function ProductList() {
                   key={index}
                   style={{ display: 'flex', alignItems: 'center' }}
                 >
+                  <div>
+                    <Head>
+                      <title>{b.label}｜探索咖啡COFFSEEKER</title>
+                    </Head>
+                  </div>
                   <Link href={b.href}>
                     <h6>{b.label}</h6>
                   </Link>
@@ -135,17 +146,40 @@ export default function ProductList() {
                 </div>
               ))}
             </div>
-
+            <div className="d-flex my-2 d-md-none">
+              共有 {filteredProducts.length} 筆商品
+            </div>
             <div className="d-flex justify-content-between align-items-center">
               <div className="mt-2 d-none d-md-block">
                 共有 {filteredProducts.length} 筆商品
               </div>
               <Sort />
               <div className="d-block d-md-none mt-2">
-                <FilterMobile onFilter={setProductsData} />
+                <FilterMobile
+                  onFilter={(data) => {
+                    setProductsData(data)
+                    setCurrentPage(1)
+                  }}
+                />
               </div>
             </div>
-            {!isFetchingProducts ? (
+
+            {filteredProducts.length === 0 ? (
+              <div className="ed-placeholder my-5 container">
+                <div className="ed-placeholder__img ed-placeholder__img--not-found">
+                  <img
+                    src="http://localhost:3000/bg1.png"
+                    alt="not-found"
+                    className="ed-img ed-img--contain"
+                  />
+                </div>
+                <h5 className="text-center lh-lg">
+                  很抱歉，未符合您的需求。
+                  <br />
+                  請您重新調整篩選條件！
+                </h5>
+              </div>
+            ) : !isFetchingProducts ? (
               <>
                 {currentProducts.map((product) => (
                   <ProductItem

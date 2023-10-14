@@ -8,6 +8,7 @@ import {
 import ReactSlider from 'react-slider'
 
 function Filter(props) {
+  const [currentPage, setCurrentPage] = useState(1)
   const [priceRange, setPriceRange] = useState([100, 5000])
   const [filterForm, setFilterForm] = useState({
     origin: [],
@@ -93,6 +94,7 @@ function Filter(props) {
     try {
       const response = await axios.get(queryString)
       props.onFilter(response.data.data)
+      setCurrentPage(1)
     } catch (error) {
       console.error(error)
     }
@@ -133,12 +135,24 @@ function Filter(props) {
 
     setPriceRange([100, 5000])
 
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+
     try {
       const response = await axios.get('http://localhost:3005/api/products/qs')
       props.onFilter(response.data.data)
     } catch (error) {
       console.error(error)
     }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   return (
@@ -352,7 +366,11 @@ function Filter(props) {
           <hr />
         </fieldset>
 
-        <button className="ed-btn-filter mt-2" type="submit">
+        <button
+          className="ed-btn-filter mt-2"
+          type="submit"
+          onClick={scrollToTop}
+        >
           篩選
         </button>
         <button

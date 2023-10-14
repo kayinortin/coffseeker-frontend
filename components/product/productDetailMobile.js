@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import Image from 'next/image'
+import Head from 'next/head'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
@@ -20,7 +21,7 @@ import FetchFavProductId from '../fav/FetchFavProductId'
 
 export default function ProductDetailMobile() {
   FetchFavProductId()
-  const [number, setNumber] = useState(1)
+  // const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
   const INITIAL_DETAIL_DATA = {
@@ -99,7 +100,7 @@ export default function ProductDetailMobile() {
     setShow((prevShow) => ({ ...prevShow, in: false }))
   }
 
-  const { addCart } = useAddCart(detailData)
+  const { addCart, number, setNumber } = useAddCart(detailData)
 
   const { isLoggedIn, setIsLoggedIn } = useUser()
 
@@ -136,6 +137,11 @@ export default function ProductDetailMobile() {
 
   return (
     <>
+      <div>
+        <Head>
+          <title>精選咖啡｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <Modal
         show={showModal}
         onHide={handleCloseModal}
@@ -247,7 +253,11 @@ export default function ProductDetailMobile() {
                       </div>
                       <div className="d-flex flex-column">
                         <div className="d-flex align-items-center justify-content-between">
-                          <Counter number={number} setNumber={setNumber} />
+                          <Counter
+                            number={number}
+                            setNumber={setNumber}
+                            maxCount={amount}
+                          />
                           <p className="ms-5">
                             <span className="h4 fw-bold">{amount}</span>
                             組庫存量

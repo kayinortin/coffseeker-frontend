@@ -77,14 +77,6 @@ export default function LoginForm() {
       password: password,
     }
 
-    // Edison // 10/04 檢查代碼
-    // Edison // 在這邊登入會員成功後，應該要讓isLoggedIn狀態改變
-    // Edison // 這樣才能讓我的Navbar重新渲染
-
-    // Edison // 這邊如果帳號密碼有輸入錯誤時
-    // Edison // Cookies.set('userInfo', JSON.stringify(response.data.user)) 會出錯
-    // Edison // 而且這樣會形成錯誤的cookie 反而會無法使用登出功能
-
     try {
       const response = await axios.post(
         'http://localhost:3005/api/auth-jwt/login',
@@ -114,11 +106,6 @@ export default function LoginForm() {
       console.error('錯誤：請確認後台API功能', error)
       setIsLoggedIn(false)
     }
-
-    // Edison // 10/04 檢查代碼
-    // Edison // 這邊如果帳號密碼有輸入錯誤時
-    // Edison // Cookies.set('userInfo', JSON.stringify(response.data.user)) 會出錯
-    // Edison // 用if else判斷是否登入狀態
 
     // 取得單一使用者資料
     try {
@@ -203,7 +190,7 @@ export default function LoginForm() {
         timer: 1500,
       })
       router.push('https://localhost:9000/member')
-      router.push('/member')
+      // router.push('/member')
     } else {
       alert('有錯誤')
     }
