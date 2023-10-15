@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import OrderDetailOpened from './OrderDetailOpened'
+import OrderDetailOpened from './OrderdetailOpened'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useUser } from '@/context/UserInfo'
@@ -39,7 +39,7 @@ export default function OrderListTable({
             `http://localhost:3005/api/order/userOrders/${userId}/${orderBy}/${currentPage}`
           )
           // 獲得指定使用者的所有訂單
-          // console.log(response)
+          console.log(response)
           setOrderData(response.data.orders)
           setTotalPage(response.data.totalPage)
         } catch (error) {

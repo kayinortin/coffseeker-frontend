@@ -16,33 +16,6 @@ export const AuthProviderJWT = ({ children }) => {
     },
   })
 
-  // 我的最愛清單使用
-  //   const [favorites, setFavorites] = useState([])
-
-  // 得到我的最愛
-  //   const getFavorites = async () => {
-  //     const res = await axios.get(
-  //       'http://localhost:3005/api/favorite/my-favorite',
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     )
-
-  //     if (res.data.favorites) {
-  //       setFavorites(res.data.favorites)
-  //     }
-  //   }
-
-  //   useEffect(() => {
-  //     if (authJWT.isAuth) {
-  //       // 成功登入後要執行一次向伺服器取得我的最愛清單
-  //       getFavorites()
-  //     } else {
-  //       // 登出時要設回空陣列
-  //       setFavorites([])
-  //     }
-  //   }, [authJWT])
-
   const router = useRouter()
 
   // 登入頁路由
@@ -93,6 +66,33 @@ export const AuthProviderJWT = ({ children }) => {
       {children}
     </AuthContextJWT.Provider>
   )
+
+  // 我的最愛清單使用
+  //   const [favorites, setFavorites] = useState([])
+
+  // 得到我的最愛
+  //   const getFavorites = async () => {
+  //     const res = await axios.get(
+  //       'http://localhost:3005/api/favorite/my-favorite',
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     )
+
+  //     if (res.data.favorites) {
+  //       setFavorites(res.data.favorites)
+  //     }
+  //   }
+
+  //   useEffect(() => {
+  //     if (authJWT.isAuth) {
+  //       // 成功登入後要執行一次向伺服器取得我的最愛清單
+  //       getFavorites()
+  //     } else {
+  //       // 登出時要設回空陣列
+  //       setFavorites([])
+  //     }
+  //   }, [authJWT])
 }
 
 export const useAuthJWT = () => useContext(AuthContextJWT)
