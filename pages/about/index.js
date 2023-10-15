@@ -4,7 +4,7 @@ import Image from 'next/image'
 import style from '../../styles/_about.module.scss'
 import ContactUs from '@/components/about/send-message'
 import Swal from 'sweetalert2'
-// import CoffeeMap from '@/components/index-coffee-map/coffee-map'
+import Head from 'next/head'
 
 export default function About() {
   const [message, setMessage] = useState('')
@@ -49,6 +49,11 @@ export default function About() {
                   <Link href="/" className="link">
                     首頁
                   </Link>
+                  <div>
+                    <Head>
+                      <title>關於我們｜探索咖啡COFFSEEKER</title>
+                    </Head>
+                  </div>
                 </li>
                 <li className="breadcrumb-item list-inline-item">
                   <Link
@@ -63,10 +68,10 @@ export default function About() {
           </div>
 
           {/* 標題區 */}
-          <div className="container d-block ed-index-course">
-            <div className="line-white"></div>
-            <div className="course-category">關於我們</div>
-            <div className="line-white"></div>
+          <div className="d-flex justify-content-center mb-4 align-items-center mobile-news-title">
+            <div className="ei-line me-3"></div>
+            <h3 className="text-center news-title fs-2">關於我們</h3>
+            <div className="ei-line ms-3"></div>
           </div>
 
           {/* 品牌故事 */}
