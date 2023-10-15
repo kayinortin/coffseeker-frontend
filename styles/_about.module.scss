@@ -18,7 +18,8 @@ $color--black: #000000;
   background-color: $color--primary;
 }
 .brand-title {
-  color: #ff9b1a;
+  font-weight: 700;
+  color: rgb(181 75 51);
 }
 
 @media (max-width: 391px) {

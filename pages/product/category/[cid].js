@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
 import Skeleton from '@mui/material/Skeleton'
 import { useMediaQuery } from 'react-responsive'
 
@@ -131,6 +132,11 @@ export default function ProductList() {
                   key={index}
                   style={{ display: 'flex', alignItems: 'center' }}
                 >
+                  <div>
+                    <Head>
+                      <title>{b.label}｜探索咖啡COFFSEEKER</title>
+                    </Head>
+                  </div>
                   <Link href={b.href}>
                     <h6>{b.label}</h6>
                   </Link>

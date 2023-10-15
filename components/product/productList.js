@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMediaQuery } from 'react-responsive'
 import Link from 'next/link'
+import Head from 'next/head'
 import Skeleton from '@mui/material/Skeleton'
 
 import ProductItem from './productItem'
@@ -86,6 +87,11 @@ export default function ProductList() {
   return (
     <>
       <ProductDataFetcher />
+      <div>
+        <Head>
+          <title>全站商品｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className="d-flex justify-content-between container">
         <div className="d-none d-md-block ed-left-filter container mt-5">
           <Filter
@@ -109,8 +115,8 @@ export default function ProductList() {
               </div>
             </div>
             <div className="d-flex my-2 d-md-none">
-                共有 {sortedProducts.length} 筆商品
-              </div>
+              共有 {sortedProducts.length} 筆商品
+            </div>
             <div className="d-flex justify-content-between align-items-center">
               <div className="mt-2 d-none d-md-block">
                 共有 {sortedProducts.length} 筆商品

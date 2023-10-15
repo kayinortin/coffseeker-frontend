@@ -192,7 +192,7 @@ $color--black: #000000;
 .ei-page-item {
   &.active {
     font-weight: bold;
-    background-color: $color--primary;
+    background-color: rgb(181 75 51);
     color: white;
     font-weight: bold;
   }
@@ -213,7 +213,7 @@ $color--black: #000000;
   background-color: $color--background;
 
   &:hover {
-    background-color: $color--primary;
+    background-color: rgb(181 75 51);
     color: white;
   }
 }

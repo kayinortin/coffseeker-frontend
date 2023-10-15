@@ -11,22 +11,19 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
 import CourseComment from '@/components/course/CourseComment'
-
+import CoursePerFetcher from './CoursePerFetcher'
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 
 import { useShow } from '../../context/showProductDetail'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
 import TopHitsMobile from './TopHitsMobile'
 
-
-
-export default function MainContent({pid}) {
-  
+export default function MainContent({ pid }) {
   const [activeContent, setActiveContent] = useState('introduction')
   const [images, setImages] = useState([])
-  
+
   const { show, setShow } = useShow()
-  const {isLoggedIn, setIsLoggedIn}=useUser()
+  const { isLoggedIn, setIsLoggedIn } = useUser()
 
   const INITIAL_DETAIL_DATA = {
     id: '',
@@ -40,11 +37,7 @@ export default function MainContent({pid}) {
     teacher_qualification: 0,
     teacher_specialty: 0,
   }
-  const [detailData, setDetailData]=useState(INITIAL_DETAIL_DATA)
-
-  
-
-  
+  const [detailData, setDetailData] = useState(INITIAL_DETAIL_DATA)
 
   useEffect(() => {
     if (pid) {
@@ -56,7 +49,7 @@ export default function MainContent({pid}) {
             )
             const details = response.data
             // console.log(details)
-            setDetailData({...details})
+            setDetailData({ ...details })
             if (details.course_subpics) {
               setImages(JSON.parse(details.course_subpics))
             }
@@ -71,21 +64,18 @@ export default function MainContent({pid}) {
     }
   }, [pid])
 
-  
-
   const handleButtonClick = (contentName) => {
     setActiveContent(contentName)
   }
 
   return (
     <>
+    <CoursePerFetcher pid={pid}/>
       <div className="mt-5 ms-sm-5 container ed-content-size">
         <div className="d-sm-flex">
-          <CoursePic pid={pid} course={detailData} />
-          <CourseText pid={pid} course={detailData} />
+          <CoursePic pid={pid}  />
+          <CourseText pid={pid}  />
         </div>
-
-        
 
         {detailData && detailData.course_syllabus ? (
           <>
@@ -93,11 +83,11 @@ export default function MainContent({pid}) {
               <div className="d-flex justify-content-center my-5 btn-course-group">
                 <div className="row">
                   {/* 網頁版（非手機板）*/}
-                  <hr/>
+                  <hr />
                   <img
-                src="http://localhost:3000/product_detail/banner.png"
-                alt="product-detail-banner"
-              />
+                    src="http://localhost:3000/product_detail/banner.png"
+                    alt="product-detail-banner"
+                  />
                   <div className="col-sm-12 text-start  ">
                     <div className="btn-group mt-3">
                       <button
@@ -147,13 +137,7 @@ export default function MainContent({pid}) {
                 <>
                   <div className="col-10 mt-5  mx-auto">
                     <h6>【教師簡介】</h6>
-                    <Image
-                      alt="header"
-                      src="/course-image/selfie.png"
-                      width={50}
-                      height={50}
-                      className="ms-4 rounded-circle"
-                    />
+                    
                     <p className="fw-bold my-3">
                       教師姓名：{detailData.teacher_name}
                     </p>
@@ -171,31 +155,34 @@ export default function MainContent({pid}) {
               <h6>【課程特色】</h6>
               <div className="lh-base">{detailData.course_description}</div>
             </section>
-            <hr/>
+            <hr />
           </>
         ) : (
           <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
         )}
-        
 
-        <Review pid={pid}/>
+        <Review pid={pid} />
 
-{isLoggedIn?<CourseComment pid={pid}/>:<div className="mx-auto text-center">
-                  <h5 className="my-3">請先登入再進行評論</h5>
-                  <div className="my-4">
-                    <Link href="http://localhost:3000/member/login">
-                      <button className="ed-addCart">登入會員</button>
-                    </Link>
-                  </div>
-                </div>}
-        
-          <div className='d-none d-sm-block'>
-          <TopHits />
+        {isLoggedIn ? (
+          <CourseComment pid={pid} />
+        ) : (
+          <div className="mx-auto text-center">
+            <h5 className="my-3">請先登入再進行評論</h5>
+            <div className="my-4">
+              <Link href="http://localhost:3000/member/login">
+                <button className="ed-addCart">登入會員</button>
+              </Link>
+            </div>
           </div>
-          {/* 手機版 */}
-       <div className='d-sm-none'>
-        <TopHitsMobile/>
-       </div>
+        )}
+
+        <div className="d-none d-sm-block">
+          <TopHits />
+        </div>
+        {/* 手機版 */}
+        <div className="d-sm-none">
+          <TopHitsMobile />
+        </div>
       </div>
     </>
   )

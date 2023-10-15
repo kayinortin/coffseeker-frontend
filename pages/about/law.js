@@ -3,10 +3,14 @@ import React from 'react'
 function law() {
   return (
     <div className="container">
-      <div className="">
-        <h5 className="text-center my-5">條款與細則</h5>
+      <div className="px-5 py-2">
+        <div className="container d-block ed-index-course mb-4">
+          <div className="line-white"></div>
+          <div className="course-category">條款與細則</div>
+          <div className="line-white"></div>
+        </div>
         <div className="lh-lg">
-          一、商店細項與政策
+          <span className="fw-bold">一、商店細項與政策</span>
           <br />
           當您於結帳購物車流程點選『我同意服務條款及退換貨政策』，即表示您已知悉並同意以下約定條款之全部內容。
           <br />
@@ -15,7 +19,7 @@ function law() {
           當您使用本店之金流服務時，即表示您同意以電子文件作為意思表示之方法。
         </div>
         <div className="lh-lg mt-4">
-          二、訂單相關政策
+          <span className="fw-bold"> 二、訂單相關政策</span>
           <br />
           本店保留訂單接受與否之權，若因意外等狀況導致無法接受您的訂單，將使用電話、MAIL或站內訂單留言與您聯繫，可更換訂單內容或辦理退款，如造成您的不便，敬請見諒。
           <br />
@@ -28,7 +32,7 @@ function law() {
           以上配達時間為預估時間，實際配送狀況需依當地配送司機大哥為主，無法承諾配送時間，若有送禮、出國或其他特殊原因者，需自行承擔時效之風險。
         </div>
         <div className="lh-lg mt-4">
-          三、商店隱私權保護政策
+          <span className="fw-bold">三、商店隱私權保護政策</span>
           <br />
           當您購物時，本公司將透過網站所提供之功能，於購物结帳及履行契約之流程中蒐集您的個人資料及消費相關資訊，作為提供商品或服務，以及後續相關之客戶服務、行銷宣傳之利用。
           <br />
@@ -37,7 +41,7 @@ function law() {
           本公司保留随時修訂本随私權保護政策的權利，若有影響您權益之重大變更時，本公司會公告於本網頁。
         </div>
         <div className="lh-lg mt-4 mb-5">
-          四、資料揭露
+          <span className="fw-bold">四、資料揭露</span>
           <br />
           本公司除依法配合司法機關、其他有關機關或檢警單位之查，或於您有違反法令或契約而有主張權利之必要情形外，非依相關律規範不會向任何人揭露或出售你的個人資料。
         </div>
