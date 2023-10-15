@@ -1,7 +1,9 @@
 // 10/10:記得有空要整理CSS的程式碼安排
 
 // 大標籤樣式變更
-
+.pr-defualt-height{
+  min-height: 100vh;
+}
 
 // checkBox自製樣式
 .check-input {
@@ -92,7 +94,7 @@
 
 // 表格類的統規
 .table-box{
-    width: 878px;
+    width: 100%;
     font-family: 'Noto Sans TC', sans-serif;
 }
 
@@ -208,7 +210,12 @@
   font-size: 16px;
   width: 700px;
   height: fit-content;
-  background-color: rgb(240 235 226 / var(--tw-bg-opacity))
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity));
+  @media screen and (max-width: 768px){
+    overflow-y: scroll;
+    height:70vh;
+  }
+  
 }
 
 .contract{
@@ -260,4 +267,25 @@
   div.text-center{
     width: 103px;
   }
+}
+
+.ed-select-control{
+  &.order-select{
+    @media screen and (max-width: 768px){
+      width: 100%;
+    }
+  }
+} 
+
+
+.third-login{
+
+  svg{
+    cursor: pointer;
+  }
+}
+
+.eyes{
+  top:-56px;
+  right:30px;
 }

@@ -1,8 +1,13 @@
 [
   {
-    "id": 1,
+    "id": 99,
     "label": "線上購物",
-    "href": "/product"
+    "children": [
+      { "id": 100, "label": "全站商品", "href": "/product" },
+      { "id": 1, "label": "咖啡豆", "href": "/product/category/1" },
+      { "id": 2, "label": "濾掛包", "href": "/product/category/2" },
+      { "id": 6, "label": "送禮推薦", "href": "/product/category/6" }
+    ]
   },
   {
     "id": 2,

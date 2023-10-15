@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useComment } from '@/context/comment'
 
 export default function FetchComment({ pid }) {
@@ -35,23 +35,34 @@ export default function FetchComment({ pid }) {
               <div>
                 <img
                   src={`https://ui-avatars.com/api/?background=1C262C&color=fff&bold=true&rounded=true&name=${comment.user_name}`}
-                  alt=""
+                  alt="User Name"
                 />
               </div>
               <h5 className="ed-comment-name">{comment.user_name}</h5>
 
               <div className="rating-container my-2">
                 評分：
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <span
-                    key={index}
-                    className={
-                      index < comment.rating ? 'star active-star' : 'star'
-                    }
-                  >
-                    ★
-                  </span>
-                ))}
+                {Array.from({ length: 5 }).map((_, index) => {
+                  const isFullStar = index < Math.floor(comment.rating)
+                  const isHalfStar =
+                    index < comment.rating &&
+                    index >= Math.floor(comment.rating)
+
+                  return (
+                    <span
+                      key={index}
+                      className={
+                        isFullStar
+                          ? 'star active-star'
+                          : isHalfStar
+                          ? 'star half-star'
+                          : 'star'
+                      }
+                    >
+                      ★
+                    </span>
+                  )
+                })}
               </div>
               <p className="ed-comment-content">{comment.comment}</p>
               <p className="ed-comment-time my-4">時間： {comment.create_at}</p>

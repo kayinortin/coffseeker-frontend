@@ -1,20 +1,28 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useMediaQuery } from 'react-responsive'
 import Link from 'next/link'
+import Head from 'next/head'
 import Skeleton from '@mui/material/Skeleton'
+
 import ProductItem from './productItem'
 import ProductDataFetcher from './ProductDataFetcher'
+import FilterMobile from './FilterMobile'
 import Sort from './Sort'
 import Filter from './Filter'
-import navItems from '../../data/navitems.json'
 
+import ProductDetailMobile from '@/components/product/productDetailMobile'
+
+import { useShow } from '@/context/showProductDetail'
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
 
-export default function ProductList(props) {
-  const { setShow } = props
-  const router = useRouter()
-  const currentRoute = router.asPath
+import FetchFavProductId from '../fav/FetchFavProductId'
+
+export default function ProductList() {
+  FetchFavProductId()
+
+  const { show, setShow, selectedPid } = useShow()
   const { productsData, setProductsData, sortBy } = useProducts()
   const isFetchingProducts = productsData.length === 0
 
@@ -62,12 +70,36 @@ export default function ProductList(props) {
     setCurrentPage(newPage)
   }
 
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
+  function ProductSkeleton() {
+    return (
+      <div className="product-skeleton">
+        <Skeleton variant="rectangular" width={250} height={250} />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+      </div>
+    )
+  }
+
   return (
     <>
       <ProductDataFetcher />
+      <div>
+        <Head>
+          <title>全站商品｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className="d-flex justify-content-between container">
         <div className="d-none d-md-block ed-left-filter container mt-5">
-          <Filter onFilter={setProductsData} />
+          <Filter
+            onFilter={(data) => {
+              setProductsData(data)
+              setCurrentPage(1)
+            }}
+          />
         </div>
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">
@@ -82,13 +114,40 @@ export default function ProductList(props) {
                 </Link>
               </div>
             </div>
+            <div className="d-flex my-2 d-md-none">
+              共有 {sortedProducts.length} 筆商品
+            </div>
             <div className="d-flex justify-content-between align-items-center">
               <div className="mt-2 d-none d-md-block">
                 共有 {sortedProducts.length} 筆商品
               </div>
               <Sort />
+              <div className="d-block d-md-none mt-2">
+                <FilterMobile
+                  onFilter={(data) => {
+                    setProductsData(data)
+                    setCurrentPage(1)
+                  }}
+                />
+              </div>
             </div>
-            {!isFetchingProducts ? (
+
+            {sortedProducts.length === 0 ? (
+              <div className="ed-placeholder my-5 container">
+                <div className="ed-placeholder__img ed-placeholder__img--not-found">
+                  <img
+                    src="http://localhost:3000/bg1.png"
+                    alt="not-found"
+                    className="ed-img ed-img--contain"
+                  />
+                </div>
+                <h5 className="text-center lh-lg">
+                  很抱歉，未符合您的需求。
+                  <br />
+                  請您重新調整篩選條件！
+                </h5>
+              </div>
+            ) : !isFetchingProducts ? (
               <>
                 {currentProducts.map((product) => (
                   <ProductItem
@@ -97,6 +156,9 @@ export default function ProductList(props) {
                     product={product}
                   />
                 ))}
+                {show.in && isMobile && (
+                  <ProductDetailMobile pid={selectedPid} />
+                )}
                 <div className="pagination-container d-flex justify-content-center mt-5">
                   <ul className="pagination">
                     <li
@@ -149,9 +211,9 @@ export default function ProductList(props) {
                 </div>
               </>
             ) : (
-              <div className="unavailable">
-                新品即將推出，<br className="d-md-none"></br>持續探索最佳風味 !
-              </div>
+              Array.from({ length: itemsPerPage }).map((_, idx) => (
+                <ProductSkeleton key={idx} />
+              ))
             )}
           </div>
         </div>

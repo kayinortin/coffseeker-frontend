@@ -6,8 +6,14 @@ import { useUser } from '@/context/UserInfo'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
 import Cookies from 'js-cookie'
 
-export default function OrderListTable() {
-  const [orderData, setOrderData] = useState([])
+export default function OrderListTable({
+  orderBy,
+  setOrderBy,
+  currentPage,
+  setTotalPage,
+}) {
+  const [orderData, setOrderData] = useState(null)
+
   const { userData, setUserData } = useUser()
   const checkToken = Cookies.get('accessToken')
 
@@ -30,53 +36,19 @@ export default function OrderListTable() {
         try {
           const userId = userData.id
           const response = await axios.get(
-            `http://localhost:3005/api/order/userOrders/${userId}`
+            `http://localhost:3005/api/order/userOrders/${userId}/${orderBy}/${currentPage}`
           )
           // 獲得指定使用者的所有訂單
+          // console.log(response)
           setOrderData(response.data.orders)
+          setTotalPage(response.data.totalPage)
         } catch (error) {
           console.error('錯誤:', error)
         }
       }
     }
     fetchOrders()
-  }, [userData])
-
-  const fakeOrderData = [
-    {
-      id: 1,
-      user_id: 3,
-      tracking_number: 'NYKD45114514',
-      order_date: '2023-10-07 04:47:45',
-      order_status: '已下訂',
-      total_price: 1000,
-      shipping_fee: 0,
-      discount: 0,
-      payment_method: '貨到付款',
-    },
-    {
-      id: 2,
-      user_id: 3,
-      tracking_number: 'ABCD45114514',
-      order_date: '2023-10-07 04:47:45',
-      order_status: '已完成',
-      total_price: 2000,
-      shipping_fee: 0,
-      discount: 0,
-      payment_method: '貨到付款',
-    },
-    {
-      id: 3,
-      user_id: 3,
-      tracking_number: 'ZAQS45114514',
-      order_date: '2023-10-07 04:47:45',
-      order_status: '已完成',
-      total_price: 3000,
-      shipping_fee: 0,
-      discount: 0,
-      payment_method: '信用卡',
-    },
-  ]
+  }, [userData, orderBy, currentPage])
 
   const thead = ['訂單日期', '訂單總額', '訂單狀態', '付款方式', '訂單明細']
 
@@ -85,24 +57,34 @@ export default function OrderListTable() {
       <div className={'table-box'}>
         <div className={'border border-dark'}>
           <div className={'form-title border-bottom border-dark p-3 d-flex'}>
-            <span className="col-4">訂單管理</span>
+            <span className={'col-4'}>歷史訂單</span>
             {/* 桌機Table Head */}
-            <div className="d-none d-lg-flex col-8 justify-content-between order-nav">
+            <div
+              className={
+                'd-none d-lg-flex col-8 justify-content-between order-nav'
+              }
+            >
               {thead.map((v, i) => (
-                <div className="text-center" key={i}>
+                <div className={'text-center'} key={i}>
                   {v}
                 </div>
               ))}
             </div>
           </div>
-          {orderData.length == 0 ? (
-            <div className={'text-center py-5'}>尚未成立任何訂單</div>
-          ) : (
-            orderData.map((v) => {
-              return <OrderDetailOpened key={v.id} order={v} />
-            })
-          )}
           {/* 訂單列表 */}
+          {orderData ? (
+            orderData.length == 0 ? (
+              <div className={'text-center py-5'}>尚未成立任何訂單</div>
+            ) : (
+              orderData.map((v) => (
+                <div key={v.id}>
+                  <OrderDetailOpened order={v} />
+                </div>
+              ))
+            )
+          ) : (
+            <div className={'text-center py-5'}>資料讀取中</div>
+          )}
         </div>
       </div>
     </>

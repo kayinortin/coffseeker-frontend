@@ -5,60 +5,60 @@ import Review from './Reviews'
 // import CourseDescription from './CourseDescription'
 import TopHits from './TopHits'
 import style from '@/styles/_course.module.scss'
-
+import { useUser } from '@/context/UserInfo'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
 import CourseComment from '@/components/course/CourseComment'
-
+import CoursePerFetcher from './CoursePerFetcher'
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 
-import { useCourses } from '@/context/course'
 import { useShow } from '../../context/showProductDetail'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
+import TopHitsMobile from './TopHitsMobile'
 
-const INITIAL_DATA = {
-  id: '',
-  course_name: '',
-  course_price: '',
-  course_description: 0,
-  course_image: 0,
-  course_subpics: 0,
-  course_syllabus: 0,
-  teacher_name: '',
-  teacher_qualification: 0,
-  teacher_specialty: 0,
-}
-
-export default function MainContent() {
-  const router = useRouter()
-  const { pid } = router.query
-  const { CoursesData, setCoursesData } = useCourses()
+export default function MainContent({ pid }) {
   const [activeContent, setActiveContent] = useState('introduction')
   const [images, setImages] = useState([])
+
   const { show, setShow } = useShow()
+  const { isLoggedIn, setIsLoggedIn } = useUser()
 
-  const getDetail = async () => {
-    try {
-      if (pid) {
-        const response = await axios.get(
-          `http://localhost:3005/api/course/${pid}`
-        )
-        const details = response.data
-
-        setCoursesData(details)
-        if (details.course_subpics) {
-          setImages(JSON.parse(details.course_subpics))
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching course details:', error)
-    }
+  const INITIAL_DETAIL_DATA = {
+    id: '',
+    course_name: '',
+    course_price: '',
+    course_description: 0,
+    course_image: 0,
+    course_subpics: 0,
+    course_syllabus: 0,
+    teacher_name: '',
+    teacher_qualification: 0,
+    teacher_specialty: 0,
   }
+  const [detailData, setDetailData] = useState(INITIAL_DETAIL_DATA)
 
   useEffect(() => {
     if (pid) {
-      setCoursesData(INITIAL_DATA)
+      const getDetail = async () => {
+        try {
+          if (pid) {
+            const response = await axios.get(
+              `http://localhost:3005/api/course/${pid}`
+            )
+            const details = response.data
+            // console.log(details)
+            setDetailData({ ...details })
+            if (details.course_subpics) {
+              setImages(JSON.parse(details.course_subpics))
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching course details:', error)
+        }
+      }
+      // setCoursesData(INITIAL_DATA)
       getDetail()
       setShow({ ...show, in: true })
     }
@@ -70,25 +70,24 @@ export default function MainContent() {
 
   return (
     <>
+    <CoursePerFetcher pid={pid}/>
       <div className="mt-5 ms-sm-5 container ed-content-size">
         <div className="d-sm-flex">
-          <CoursePic pid={pid} course={CoursesData} />
-          <CourseText pid={pid} course={CoursesData} />
+          <CoursePic pid={pid}  />
+          <CourseText pid={pid}  />
         </div>
 
-        {/* <div className="container px-5 mt-3">
-          <div className="d-flex justify-content-between d-sm-none">
-            <AddCartBtn pid={pid} course={CoursesData} />
-            <BuyBtn />
-          </div>
-        </div> */}
-
-        {CoursesData && CoursesData.course_syllabus ? (
+        {detailData && detailData.course_syllabus ? (
           <>
             <section>
               <div className="d-flex justify-content-center my-5 btn-course-group">
                 <div className="row">
                   {/* 網頁版（非手機板）*/}
+                  <hr />
+                  <img
+                    src="http://localhost:3000/product_detail/banner.png"
+                    alt="product-detail-banner"
+                  />
                   <div className="col-sm-12 text-start  ">
                     <div className="btn-group mt-3">
                       <button
@@ -123,7 +122,7 @@ export default function MainContent() {
                 <div className="col-10 mx-auto">
                   <h6>【課程大綱】</h6>
                   <div className={`lh-base ${style['course-intro']}`}>
-                    {CoursesData.course_syllabus
+                    {detailData.course_syllabus
                       .split('\n')
                       .map((line, index) => (
                         <p key={index}>
@@ -138,21 +137,15 @@ export default function MainContent() {
                 <>
                   <div className="col-10 mt-5  mx-auto">
                     <h6>【教師簡介】</h6>
-                    <Image
-                      alt="header"
-                      src="/course-image/selfie.png"
-                      width={50}
-                      height={50}
-                      className="ms-4 rounded-circle"
-                    />
+                    
                     <p className="fw-bold my-3">
-                      教師姓名：{CoursesData.teacher_name}
+                      教師姓名：{detailData.teacher_name}
                     </p>
                     <p className="fw-bold my-3">
-                      教師資歷：{CoursesData.teacher_qualification}
+                      教師資歷：{detailData.teacher_qualification}
                     </p>
                     <p className="fw-bold my-3">教師自介：</p>
-                    <p>{CoursesData.teacher_specialty}</p>
+                    <p>{detailData.teacher_specialty}</p>
                   </div>
                 </>
               )}
@@ -160,18 +153,36 @@ export default function MainContent() {
 
             <section className="course-sp col-10 mt-4  mx-auto">
               <h6>【課程特色】</h6>
-              <div className="lh-base">{CoursesData.course_description}</div>
+              <div className="lh-base">{detailData.course_description}</div>
             </section>
+            <hr />
           </>
         ) : (
           <div className="mt-5 mx-auto fs-3">課程籌備中,請敬請期待</div>
         )}
-        <h3 className={`text-center ${style['hw-review-title']}`}>學員評價</h3>
 
-        <Review />
-        <CourseComment />
+        <Review pid={pid} />
 
-        <TopHits />
+        {isLoggedIn ? (
+          <CourseComment pid={pid} />
+        ) : (
+          <div className="mx-auto text-center">
+            <h5 className="my-3">請先登入再進行評論</h5>
+            <div className="my-4">
+              <Link href="http://localhost:3000/member/login">
+                <button className="ed-addCart">登入會員</button>
+              </Link>
+            </div>
+          </div>
+        )}
+
+        <div className="d-none d-sm-block">
+          <TopHits />
+        </div>
+        {/* 手機版 */}
+        <div className="d-sm-none">
+          <TopHitsMobile />
+        </div>
       </div>
     </>
   )

@@ -23,11 +23,12 @@ export default function DefaultLayout({ title = '', children }) {
   const isHome = router.pathname === '/'
   const isMap = router.pathname === '/map'
   const isDivination = router.pathname === '/infomation/divination'
+  const isLaw = router.pathname === '/about/law'
   const isLogin = router.pathname === '/member/login'
   const isAdmin = router.pathname.startsWith('/admin')
   const isWildcard = router.pathname === '*'
   // 最後再按照需求來設定 isFullScreen
-  const isFullScreen = isLogin || isAdmin || isWildcard || isMap || isDivination
+  const isFullScreen = isLogin || isAdmin || isWildcard || isMap || isDivination || isLaw 
 
   // 滾動特效
   const [scrollPosition, setScrollPosition] = useState(0)
@@ -159,6 +160,18 @@ export default function DefaultLayout({ title = '', children }) {
       iconDesktop: <i className="fas fa-shopping-cart ed-navbar__font"></i>,
       tagDesktop: <div className="ed-tag ed-tag--corner">{cartIconLength}</div>,
       href: '/cart',
+    },
+    {
+      id: 12,
+      label: '歷史訂單',
+      iconMobile: (
+        <i className="fas fa-receipt ed-navbar__font ed-navbar__icon ed-navbar__icon--inline"></i>
+      ),
+      iconDesktop: (
+        <i className="fas  fa-receipt fa-sheet-plastic ed-navbar__font"></i>
+      ),
+      tagDesktop: ``,
+      href: '/member/order-list',
     },
   ]
 

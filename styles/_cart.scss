@@ -30,7 +30,8 @@ $fw-black:900;
     padding-block: 1rem;
   
     .step{
-        padding: 1.5rem;
+        padding: 1rem;
+        // border: 1px solid red;
 
         .stepTop{
             display: flex;
@@ -95,6 +96,7 @@ $fw-black:900;
     // 空購物車
     .emptyContainer{
         margin-block: 2rem;
+
         img{
             width: 20vw;
         }
@@ -115,145 +117,155 @@ $fw-black:900;
         }
     }
     .cartWrap{
-        // border: 1px solid red;
        
         //產品
         .productscart{
-            border: 1px solid $color--primary;
-            padding-inline: 1rem;
-
-            .labels{
-                font-size: $fs-md;
-                font-weight: $fw-bold;
-                border-bottom: 2px solid $color--primary;
-                padding-block: 1rem;
-                // padding-inline: 0.5rem;
-
-            }
-            .products{
-                
-                .productwrap{
-                    border-bottom: 1px dashed $color--primary;
-                    box-sizing: border-box;
-                    align-items: center;
-                    padding: 0px;
+            // border: 1px solid $color--primary;
+        
+            .wrapcart{
+                border: 1px solid $color--primary;
+                padding-inline: 1rem;
+                margin-bottom: 1rem;
+                .labels{
+                    font-size: $fs-md;
+                    font-weight: $fw-bold;
+                    border-bottom: 2px solid $color--primary;
+                    padding-block: 1rem;
+                    // padding-inline: 0.5rem;
+    
+                }
+                .products{
                     
-                    .imgContainer{
-                                
-                        img{
-                            background-color: $color--primary;
-                            border: .4rem solid #CBB48B;
-                        }
-                    }
-
-                    .productContent{
+                    .productwrap{
+                        border-bottom: 1px dashed $color--primary;
+                        box-sizing: border-box;
+                        align-items: center;
+                        padding: 0px;
                         
-                        .topDetails{
-
-                                .details{
-                                    .productTitle{
-                                        color: $color--primary;
-                                        font-size: $fs-md;
-                                        font-weight: $fw-bold;
+                        .imgContainer{
                                     
+                            img{
+                                background-color: $color--primary;
+                                border: .4rem solid #CBB48B;
+                            }
+                        }
+    
+                        .productContent{
+                            
+                            .topDetails{
+    
+                                    .details{
+                                        .productTitle{
+                                            color: $color--primary;
+                                            font-size: $fs-md;
+                                            font-weight: $fw-bold;
+                                        
+                                        }
+                                        .productDescription{
+                                            font-size: $fs-sm;
+                                            color: $color--gray3;
+                                            height: 50px;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            display: -webkit-box;
+                                            -webkit-box-orient: vertical;
+                                            -webkit-line-clamp: 2;
+                                        }
                                     }
-                                    .productDescription{
-                                        font-size: $fs-sm;
-                                        color: $color--gray3;
+    
+                                    .productDelete{
+                                        // border: 3px solid violet;
+                                    
+                                        button.deleteButton{
+                                            width: 2.5rem;
+                                            height: 2.5rem;
+                                            text-align: center;
+                                            align-items: center;
+                                            background-color: $color-background;
+                                            border: 0px solid $color--secondary;
+                                            color: $color--primary;
+                                            // border-radius: 8px;
+                                            &:hover,&:active{
+                                                background-color: $color--secondary;
+                                                color: $color--white;
+                                            }
+                        
+                                            .trash{
+                                                width: 1.65rem;
+                                                height: 1.65rem; 
+                                            }
+                                        }
+                        
                                     }
+    
+                            }
+    
+                            .productPrice{
+    
+                                .price{
+                                    color: $color--primary;
                                 }
-
-                                .productDelete{
-                                    // border: 3px solid violet;
+                                .discountPrice{
+                                    color: $color--secondary;
+                                }
+    
+                            }
+    
+                            .productQuantityTotal{
+                                display: flex;
+                                justify-content: space-between;
+                          
                                 
-                                    button.deleteButton{
+                                .btn-group{
+                                    button {
                                         width: 2.5rem;
                                         height: 2.5rem;
-                                        text-align: center;
-                                        align-items: center;
-                                        background-color: $color-background;
-                                        border: 0px solid $color--secondary;
                                         color: $color--primary;
-                                        // border-radius: 8px;
-                                        &:hover,&:active{
-                                            background-color: $color--secondary;
-                                            color: $color--white;
-                                        }
-                    
-                                        .trash{
-                                            width: 1.65rem;
-                                            height: 1.65rem; 
-                                        }
+                                        background-color: $color-background;
+                                        border: 1px solid $color--primary;
                                     }
-                    
+                                    button.quantityMinus{
+                                        // border-radius: 8px 0 0 8px;
+                                    }
+                                    button.quantityAdd{
+                                        // border-radius: 0 8px 8px 0;
+                                    }
+                                    button.quantityMinus, button.quantityAdd{
+                                        &:hover,&:active {
+                                            color:$color--white;
+                                            background-color: $color--secondary;
+                                            border: px solid $color--primary;
+                                            }
+                                    }
+                                    
+                                    input.forminput{
+                                        width: 3.5rem;
+                                        height: 2.5rem;
+                                        background-color: $color-background;
+                                        border-block: 1px solid $color--primary;
+                                        border-inline: 0px;
+                                    }
                                 }
-
-                        }
-
-                        .productPrice{
-
-                            .price{
-                                color: $color--primary;
-                            }
-                            .discountPrice{
-                                color: $color--secondary;
-                            }
-
-                        }
-
-                        .productQuantityTotal{
-                            display: flex;
-                            justify-content: space-between;
-                      
-                            
-                            .btn-group{
-                                button {
-                                    width: 2.5rem;
-                                    height: 2.5rem;
-                                    color: $color--primary;
-                                    background-color: $color-background;
-                                    border: 1px solid $color--primary;
+                                .productSubtotal{
+                                    // border: 3px solid violet;
                                 }
-                                button.quantityMinus{
-                                    // border-radius: 8px 0 0 8px;
-                                }
-                                button.quantityAdd{
-                                    // border-radius: 0 8px 8px 0;
-                                }
-                                button.quantityMinus, button.quantityAdd{
-                                    &:hover,&:active {
-                                        color:$color--white;
-                                        background-color: $color--secondary;
-                                        border: px solid $color--primary;
-                                        }
-                                }
-                                
-                                input.forminput{
-                                    width: 3.5rem;
-                                    height: 2.5rem;
-                                    background-color: $color-background;
-                                    border-block: 1px solid $color--primary;
-                                    border-inline: 0px;
-                                }
-                            }
-                            .productSubtotal{
-                                // border: 3px solid violet;
                             }
                         }
+                        
+                        
                     }
+    
                     
-                    
+    
                 }
-
-                
-
+                .productsFoot{
+                    // border-bottom: 2px solid $color--primary;
+                    padding-block: 1rem;
+                    padding-inline: .65rem;
+                    // font-size: $fs-md;
+                }
             }
-            .productsFoot{
-                // border-bottom: 2px solid $color--primary;
-                padding-block: 1rem;
-                padding-inline: .65rem;
-                // font-size: $fs-md;
-            }
+            
         }
         //選擇與合計
         .infos{
@@ -271,7 +283,7 @@ $fw-black:900;
                         font-weight: $fw-bold;
                         border-bottom: 2px solid $color--primary;
                         padding-block: 1rem;
-                        // padding-inline: 0.5rem;
+                       
                     }
             
                     .infoItems{
@@ -348,6 +360,7 @@ $fw-black:900;
             .checkoutProducts{
 
                 .closeProducts{
+
                     button.btngroup{
                     background-color: $color--secondary;
                     color: $color--white;
@@ -360,56 +373,74 @@ $fw-black:900;
                     // border: 1px solid red;
 
                     .productscart{
-                        border: 1px solid $color--primary;
-                        padding-inline: 1rem;
 
-                        .products{
-                            // border: 2px solid blue;
+                        .wrapcart{
+                            border: 1px solid $color--primary;
+                            // border: 1px solid red;
+                            padding-inline: 1rem;
+                            margin-bottom: 1rem;
                             
-
-                           .productwrap{
-                            border-bottom: 1px dashed $color--primary;
-
-                            .imgContainer{
-
-                                img{
-                                    background-color: $color--primary;
-                                    border: .4rem solid #CBB48B;
-                                }
+                            .labels{
+                                font-size: $fs-md;
+                                font-weight: $fw-bold;
+                                padding-block: 1rem;
+                                border-bottom: 2px solid $color--primary;
                             }
-
-                            .productContent{
-                              
-                                .topDetails{
-
-                                    .productTitle{
-                                        color: $color--primary;
-                                        font-size: $fs-md;
-                                        font-weight: $fw-bold;
+                            .products{
+                                .productwrap{
+                                    border-bottom: 1px dashed $color--primary;
+        
+                                    .imgContainer{
+        
+                                        img{
+                                            background-color: $color--primary;
+                                            border: .4rem solid #CBB48B;
+                                        }
                                     }
-                                    .productDescription{
-                                        font-size: $fs-sm;
-                                        color: $color--gray3;
+        
+                                    .productContent{
+                                      
+                                        .topDetails{
+        
+                                            .productTitle{
+                                                color: $color--primary;
+                                                font-size: $fs-md;
+                                                font-weight: $fw-bold;
+                                            }
+                                            .productDescription{
+                                                font-size: $fs-sm;
+                                                color: $color--gray3;
+                                                height: 50px;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
+                                                display: -webkit-box;
+                                                -webkit-box-orient: vertical;
+                                                -webkit-line-clamp: 2;
+                                            }
+        
+        
+                                        }
+                                        .productPrice{
+                                            // border: 2px solid red;
+                                            .price{
+                                                color: $color--primary;
+                                            }
+                                            .discountPrice{
+                                                color: $color--secondary;
+                                            }
+                                        }
                                     }
-
-
-                                }
-                                .productPrice{
-                                    // border: 2px solid red;
-                                    .price{
-                                        color: $color--primary;
-                                    }
-                                    .discountPrice{
-                                        color: $color--secondary;
-                                    }
-                                }
+                                   }
                             }
-                           }
+                            .productsFoot{
+                                padding-block: 1rem;
+                                padding-inline: .65rem;
+                            }
+                           
 
                         }
                     }
-                    .infoWrap{      
-
+                    .infoWrap{   
                         .paymentWrap{
                             border: 1px solid $color--primary;
                             padding-inline: 1rem;
@@ -418,10 +449,10 @@ $fw-black:900;
                                 font-size: $fs-md;
                                 font-weight: $fw-bold;
                                 padding-block: 1rem;
-                                border-bottom: 1px solid $color--primary;
+                                border-bottom: 2px solid $color--primary;
                             }
                             .payItems{
-                                padding-block: 1.5rem;
+                                padding-top: 1.5rem;
     
                                 .items{
                                     padding-bottom: 1.5rem;
@@ -429,8 +460,6 @@ $fw-black:900;
                                 }
                             }
                         }
-
-                        
                     }
                 }
             }
@@ -443,66 +472,75 @@ $fw-black:900;
         .detailsWrap{
            
             .memberWrap{
-                border: 1px solid $color--primary;
+                // border: 1px solid $color--primary;
 
-                .labels{
-                    font-size: $fs-md;
-                    font-weight: $fw-bold;
-                    padding-block: 1rem;
-                    border-bottom: 1px solid $color--primary;
-                    
-                }
-                .memberInfo{
-                    padding-block: 1rem;
-        
-                    .deliverInfo{
-                        padding-block: .5rem;
-        
-                        .inputTitle{
-                            font-size: $fs-sm;
-                            padding-bottom: .5rem;
-                            
-                        }
-                        input.form-control{
-                            border: 1px solid $color--primary;
-                            background-color: $color-background;
-                            &:hover{
-                                border: 1px solid $color--secondary;
-                                color: $color--secondary;
+                .wrapcart{
+                    border: 1px solid $color--primary;
+                    padding-inline: 1rem;
+
+                    .labels{
+                        font-size: $fs-md;
+                        font-weight: $fw-bold;
+                        padding-block: 1rem;
+                        border-bottom: 2px solid $color--primary;
+                        
+                    }
+                    .memberInfo{
+                        padding-block: 1rem;
+            
+                        .deliverInfo{
+                            padding-block: .5rem;
+            
+                            .inputTitle{
+                                font-size: $fs-sm;
+                                padding-bottom: .5rem;
+                                
+                            }
+                            input.form-control{
+                                border: 1px solid $color--primary;
+                                background-color: $color-background;
+                                &:hover{
+                                    border: 1px solid $color--secondary;
+                                    color: $color--secondary;
+                                }
                             }
                         }
-                    }
-                    
-                    
-                } 
-
+                        
+                        
+                    } 
+                }
             }
         
             .cardWrap{
-                border: 1px solid $color--primary;
                 
-                .labels{
-                    font-size: $fs-md;
-                    font-weight: $fw-bold;
-                    padding-block: 1rem;
-                    border-bottom: 1px solid $color--primary;
-                }
-                .payInfo{
-                    padding-block: 1rem;
-        
-                    .cardInfo{
-                        padding-block: .5rem;
-        
-                        input.form-control{
-                            border: 1px solid $color--primary;
-                            background-color: $color-background;
-                            &:hover{
-                                border: 1px solid $color--secondary;
-                                color: $color--secondary;
+                .wrapcart{
+                    border: 1px solid $color--primary;
+                    padding-inline: 1rem;
+
+                    .labels{
+                        font-size: $fs-md;
+                        font-weight: $fw-bold;
+                        padding-block: 1rem;
+                        border-bottom: 2px solid $color--primary;
+                    }
+                    .payInfo{
+                        padding-block: 1rem;
+            
+                        .cardInfo{
+                            padding-block: .5rem;
+            
+                            input.form-control{
+                                border: 1px solid $color--primary;
+                                background-color: $color-background;
+                                &:hover{
+                                    border: 1px solid $color--secondary;
+                                    color: $color--secondary;
+                                }
                             }
                         }
                     }
                 }
+                
                
             }
         }
@@ -511,7 +549,7 @@ $fw-black:900;
     }
     
     .btngroup{
-        gap: 2rem;
+       
         button.backStep{
             background-color: $color--gray4;
             color: $color--white;
@@ -525,7 +563,44 @@ $fw-black:900;
     }
 }
 
+.complete{
+    // border: 1px solid red;
+    margin-block: 2rem;
+
+    .completeWrap{
+        
+
+        img{
+            width: 20vw;
+        }
     
+        .emptyTitle{
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+            font-size: $fs-md;
+            color: $color--primary;
+            font-weight: $fw-bold;
+        }
+       
+        button.goshop{
+            background-color: $color--secondary;
+            color: $color--white;
+            width: 30vw;
+            height: 2.5rem;
+            &:hover{
+                background-color: $color--primary;
+            }
+        }
+    }
+    
+}
+
+/* 在屏幕宽度小于290px时的样式 */
+@media (max-width: 768px) {
+    .steps {
+        display: none; 
+    }
+}
 
 
 

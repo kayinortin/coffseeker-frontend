@@ -6,7 +6,7 @@ import axios from 'axios'
 
 // 10/11 尚未完成
 // 1.訂單時間排序
-// 2.商品圖片尚未連接資料庫
+// 2.分頁
 
 export default function OrderDetailOpened({ order }) {
   const [openDetail, setOpenDetail] = useState(false)
@@ -18,16 +18,17 @@ export default function OrderDetailOpened({ order }) {
   const contentRef = useRef(null)
 
   useEffect(() => {
-    // console.log(order)
-    // console.log(order.id)
     const fetchItems = async () => {
       try {
-        const orderId = order.id
+        const ordertrackingNumber = order.tracking_number
         const response = await axios.get(
-          `http://localhost:3005/api/order/orderItems/${orderId}`
+          `http://localhost:3005/api/order/orderItems/${ordertrackingNumber}`
         )
         // 獲得指定使用者的所有訂單
-        console.log('Item資料', response.data.orderItems)
+        // console.log('Item資料', response.data)
+
+        console.log('orderItems', response.data.orderItems)
+
         setOrderItem(response.data.orderItems)
       } catch (error) {
         console.error('錯誤:', error)
@@ -38,18 +39,18 @@ export default function OrderDetailOpened({ order }) {
 
   // 算出數量及價格總和
   useEffect(() => {
-    let totalPrice = 0
+    let subtotal = 0
     let totalAmount = 0
-    let subTotal = 0
+    let Total = 0
     orderItem.map((v) => {
-      totalPrice += v.discountPrice * v.amount
+      subtotal += v.discountPrice * v.amount
       totalAmount += v.amount
-      subTotal = totalPrice + parseInt(order.shipping_fee - order.discount)
+      Total = subtotal + parseInt(order.shipping_fee - order.discount_price)
     })
 
-    setTotalPrice(totalPrice)
+    setTotalPrice(subtotal)
     setTotalAmount(totalAmount)
-    setSubTotal(subTotal)
+    setSubTotal(Total)
   }, [orderItem])
 
   useEffect(() => {
@@ -70,7 +71,7 @@ export default function OrderDetailOpened({ order }) {
     order.order_status,
     order.payment_method,
   ]
-
+  // 未展開訂單的顯示資訊
   const OrderTbodyRWD = [
     {
       title: '訂單日期',
@@ -78,7 +79,7 @@ export default function OrderDetailOpened({ order }) {
     },
     {
       title: '訂單總額',
-      value: `NT$${order.total_price}`,
+      value: `NT${order.total_price}`,
     },
     {
       title: '訂單狀態',
@@ -90,6 +91,7 @@ export default function OrderDetailOpened({ order }) {
     },
   ]
 
+  // 訂單狀態的判斷
   const statusStyles = {
     待付款: {
       state1: ['未付款', 'gray'],
@@ -104,19 +106,19 @@ export default function OrderDetailOpened({ order }) {
       state4: ['未完成', 'gray'],
     },
     理貨中: {
-      state1: ['已下訂', 'orange'],
+      state1: ['已付款', 'orange'],
       state2: ['理貨中', 'orange'],
       state3: ['未發貨', 'gray'],
       state4: ['未完成', 'gray'],
     },
     已發貨: {
-      state1: ['已下訂', 'orange'],
+      state1: ['已付款', 'orange'],
       state2: ['理貨中', 'orange'],
       state3: ['已發貨', 'orange'],
       state4: ['未完成', 'gray'],
     },
     已完成: {
-      state1: ['已下訂', 'orange'],
+      state1: ['已付款', 'orange'],
       state2: ['理貨中', 'orange'],
       state3: ['已發貨', 'orange'],
       state4: ['已完成', 'orange'],
@@ -154,12 +156,32 @@ export default function OrderDetailOpened({ order }) {
     },
   ]
 
+  // 結算欄位
+  const orderResult = [
+    {
+      result: '數量',
+      sum: `${TotalAmount} / 個`,
+    },
+    {
+      result: '小計',
+      sum: `NT$ ${TotalPrice}`,
+    },
+    {
+      result: '運費',
+      sum: order.shipping_fee,
+    },
+    {
+      result: '優惠',
+      sum: order.discount_price,
+    },
+  ]
+
   return (
     <>
       {/* 桌機板 */}
       <div className={'p-3 d-none d-lg-block border border-dark'}>
         <div className={'d-none d-lg-flex align-items-center'}>
-          <span className={'col-4 text-center'}>{order.tracking_number}</span>
+          <span className={'col-4'}>{order.tracking_number}</span>
           <div
             className={
               'col-8 d-flex justify-content-between order-nav align-items-center'
@@ -188,7 +210,7 @@ export default function OrderDetailOpened({ order }) {
       <div className={'p-3 border-bottom border-dark d-lg-none'}>
         <div className={'row'}>
           <div className={'d-flex py-2'}>
-            <div className="ps-3">{order.tracking_number}</div>
+            <div className="">{order.tracking_number}</div>
           </div>
           {OrderTbodyRWD.map((v, i) => (
             <div className={'d-flex justify-content-between py-2'} key={i}>
@@ -243,32 +265,19 @@ export default function OrderDetailOpened({ order }) {
         })}
         <div className={'p-2 border'}>
           <div className={'border border-dark p-2'}>
-            <div className="d-flex justify-content-between p-2">
-              <span>數量</span>
-              <span>{TotalAmount} / 個</span>
-            </div>
-            {/*  */}
-            <div className="d-flex justify-content-between p-2">
-              <span>小計</span>
-              <span>NT$ {TotalPrice}</span>
-            </div>
-            {/*  */}
-            <div className="d-flex justify-content-between p-2">
-              <span>運費</span>
-              <span>{order.shipping_fee}</span>
-            </div>
-            {/*  */}
-            <div className="d-flex justify-content-between p-2">
-              <span>優惠</span>
-              <span className={'text-danger'}>{order.discount}</span>
-            </div>
-            {/*  */}
+            {orderResult.map((v, i) => (
+              <div className="d-flex justify-content-between p-2" key={i}>
+                <span>{v.result}</span>
+                <span className={v.result === '優惠' ? 'text-danger' : ''}>
+                  {v.sum}
+                </span>
+              </div>
+            ))}
             <hr />
             <div className="d-flex justify-content-between p-2">
               <span>合計</span>
-              <span className={'orange-text'}>NT${SubTotal}</span>
+              <span className={'orange-text h5'}>NT${SubTotal}</span>
             </div>
-            {/*  */}
           </div>
         </div>
       </div>

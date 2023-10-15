@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useCourses } from '@/context/course'
 
 export default function CoursePerFetcher({ pid }) {
-  const { setCoursesData } = useCourses()
+  const { setSelectedCourse } = useCourses()
   useEffect(() => {
     const FetchedPerCourse = async () => {
       // console.log(pid)
@@ -12,7 +12,7 @@ export default function CoursePerFetcher({ pid }) {
           'http://localhost:3005/api/course/' + pid
         )
         // console.log(response.data)
-        setCoursesData(response.data)
+        setSelectedCourse(response.data)
       } catch (err) {
         console.log('資料獲取失敗：', err)
       }

@@ -6,13 +6,6 @@
       { "id": 100, "label": "全站商品", "href": "/product" },
       { "id": 1, "label": "咖啡豆", "href": "/product/category/1" },
       { "id": 2, "label": "濾掛包", "href": "/product/category/2" },
-      { "id": 3, "label": "中淺焙 > 偏酸", "href": "/product/category/3" },
-      {
-        "id": 4,
-        "label": "中　焙 > 不酸不苦",
-        "href": "/product/category/4"
-      },
-      { "id": 5, "label": "中深焙 > 偏苦", "href": "/product/category/5" },
       { "id": 6, "label": "送禮推薦", "href": "/product/category/6" }
     ]
   },

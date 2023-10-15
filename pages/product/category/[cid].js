@@ -1,20 +1,29 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
 import Skeleton from '@mui/material/Skeleton'
+import { useMediaQuery } from 'react-responsive'
+
 import ProductItem from '@/components/product/productItem'
 import ProductDataFetcher from '@/components/product/ProductDataFetcher'
 import Sort from '@/components/product/Sort'
+import Filter from '@/components/product/Filter'
+import FilterMobile from '@/components/product/FilterMobile'
+import ProductDetailMobile from '@/components/product/productDetailMobile'
+
 import navItems from '../../../data/navitems.json'
 
 import { useProducts } from '@/context/product'
 import { usePagination } from '@/context/pagination'
+import { useShow } from '@/context/showProductDetail'
+import FetchFavProductId from '@/components/fav/FetchFavProductId'
 
-export default function ProductList(props) {
-  const { setShow } = props
+export default function ProductList() {
+  FetchFavProductId()
+  const { show, setShow, selectedPid } = useShow()
   const router = useRouter()
   const { cid } = router.query
-  const currentRoute = router.asPath
   const { productsData, setProductsData, sortBy } = useProducts()
   const [filteredProducts, setfilteredProducts] = useState([])
   const [sortedProducts, setSortedProducts] = useState([])
@@ -27,8 +36,6 @@ export default function ProductList(props) {
   }, [productsData, cid])
 
   const isFetchingProducts = filteredProducts.length === 0
-
-  console.log(isFetchingProducts)
 
   useEffect(() => {
     let sorted = [...filteredProducts]
@@ -90,75 +97,33 @@ export default function ProductList(props) {
   }
 
   const breadcrumbItems = generateBreadcrumb(navItems, cid)
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
+  function ProductSkeleton() {
+    return (
+      <div className="product-skeleton">
+        <Skeleton variant="rectangular" width={250} height={250} />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+        <Skeleton variant="text" width="25%" />
+      </div>
+    )
+  }
 
   return (
     <>
       <ProductDataFetcher />
       <div className="d-flex justify-content-between container">
         <div className="d-none d-md-block ed-left-filter container mt-5">
-          <ul className="ed-navbar__items">
-            <ul className="ed-navbar__items">
-              {navItems.map((item) => {
-                if (!item.children) {
-                  return (
-                    // 沒有下拉式選單的情況
-                    <li
-                      className="ed-navbar__item ed-navbar__link"
-                      key={item.id}
-                    >
-                      <a
-                        className={`ed-navbar__font ${
-                          navItems.find((item) => item.href === currentRoute)
-                            ? 'active'
-                            : ''
-                        }`}
-                        aria-current="page"
-                        href={item.href}
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  )
-                }
-                // 有下拉式選單 (children) 的情況
-                return (
-                  <li className="nav-item dropdown" key={item.id}>
-                    <a
-                      className={`nav-link dropdown-toggle ed-navbar__font ${
-                        item.children.find(
-                          (child) => child.href === currentRoute
-                        )
-                          ? 'active'
-                          : ''
-                      }`}
-                      id="navbarDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      href="#"
-                    >
-                      {item.label}
-                    </a>
-                    <ul className="dropdown-menu">
-                      {item.children.map((child) => (
-                        <li key={child.id}>
-                          <a
-                            className={`dropdown-item ${
-                              currentRoute === child.href ? 'active' : ''
-                            }`}
-                            href={child.href}
-                          >
-                            {child.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                )
-              })}
-            </ul>
-          </ul>
+          <Filter
+            onFilter={(data) => {
+              setProductsData(data)
+              setCurrentPage(1)
+            }}
+          />
         </div>
+
         <div className="background mt-4 m-md-5 container ed-right-product px-5">
           <div className="row">
             <div className="d-flex">
@@ -167,6 +132,11 @@ export default function ProductList(props) {
                   key={index}
                   style={{ display: 'flex', alignItems: 'center' }}
                 >
+                  <div>
+                    <Head>
+                      <title>{b.label}｜探索咖啡COFFSEEKER</title>
+                    </Head>
+                  </div>
                   <Link href={b.href}>
                     <h6>{b.label}</h6>
                   </Link>
@@ -176,14 +146,40 @@ export default function ProductList(props) {
                 </div>
               ))}
             </div>
-
+            <div className="d-flex my-2 d-md-none">
+              共有 {filteredProducts.length} 筆商品
+            </div>
             <div className="d-flex justify-content-between align-items-center">
               <div className="mt-2 d-none d-md-block">
                 共有 {filteredProducts.length} 筆商品
               </div>
               <Sort />
+              <div className="d-block d-md-none mt-2">
+                <FilterMobile
+                  onFilter={(data) => {
+                    setProductsData(data)
+                    setCurrentPage(1)
+                  }}
+                />
+              </div>
             </div>
-            {!isFetchingProducts ? (
+
+            {filteredProducts.length === 0 ? (
+              <div className="ed-placeholder my-5 container">
+                <div className="ed-placeholder__img ed-placeholder__img--not-found">
+                  <img
+                    src="http://localhost:3000/bg1.png"
+                    alt="not-found"
+                    className="ed-img ed-img--contain"
+                  />
+                </div>
+                <h5 className="text-center lh-lg">
+                  很抱歉，未符合您的需求。
+                  <br />
+                  請您重新調整篩選條件！
+                </h5>
+              </div>
+            ) : !isFetchingProducts ? (
               <>
                 {currentProducts.map((product) => (
                   <ProductItem
@@ -192,6 +188,9 @@ export default function ProductList(props) {
                     product={product}
                   />
                 ))}
+                {show.in && isMobile && (
+                  <ProductDetailMobile pid={selectedPid} />
+                )}
                 <div className="pagination-container d-flex justify-content-center mt-5">
                   <ul className="pagination">
                     <li
@@ -244,9 +243,9 @@ export default function ProductList(props) {
                 </div>
               </>
             ) : (
-              <div className="unavailable">
-                新品即將推出，<br className="d-md-none"></br>持續探索最佳風味 !
-              </div>
+              Array.from({ length: itemsPerPage }).map((_, idx) => (
+                <ProductSkeleton key={idx} />
+              ))
             )}
           </div>
         </div>

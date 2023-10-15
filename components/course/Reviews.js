@@ -1,32 +1,67 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import Image from 'next/image'
 import Score from './Score'
+import { useComment } from '@/context/comment'
 
-export default function Review() {
+export default function Review({pid}) {
+  const {comments, setComments}=useComment()
+
+  useEffect(()=>{
+    const fetchComments=async()=>{
+      try{
+        const response=await fetch(
+          `http://localhost:3005/api/course-comment?course_id=${pid}`
+        )
+
+        const fetchedData=await response.json()
+        if(fetchedData&&response.status===200){
+          setComments(fetchedData)
+        }
+      }catch(err){
+        console.log("發生錯誤："+err)
+      }
+    }
+    fetchComments()
+  },[pid, setComments])
+
+  
   return (
-    <div className="my-3 ">
-      <div className="  ">
-        <div className="mx-auto col-sm-8 col-10 border">
-          <div className="d-flex mt-3">
-            <Image
-              src={'/course-image/selfie.png'}
-              alt="icon"
-              width={50}
-              height={50}
-              className="rounded-circle ms-3 "
-            />
-            <div className="border-bottom ">
-              <span className="ms-3">XXX學員</span>
-              <Score />
+    <>
+      <div className="comments-section">
+        <div className="ed-product-intro-title text-center mt-2">顧客評論</div>
+        {comments.length === 0 ? (
+          <p>尚未評論，歡迎購買此商品與各位分享心得！</p>
+        ) : (
+          comments.map((comment, index) => (
+            <div key={index} className="comment mt-4">
+              <div>
+                <img
+                  src={`https://ui-avatars.com/api/?background=1C262C&color=fff&bold=true&rounded=true&name=${comment.user_name}`}
+                  alt=""
+                />
+              </div>
+              <h5 className="ed-comment-name">{comment.user_name}</h5>
+
+              <div className="rating-container my-2">
+                評分：
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <span
+                    key={index}
+                    className={
+                      index < comment.rating ? 'star active-star' : 'star'
+                    }
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p className="ed-comment-content">{comment.comment}</p>
+              <p className="ed-comment-time my-4">時間： {comment.create_at}</p>
+              <hr />
             </div>
-          </div>
-          <div>
-            <p className="col-10 my-3 mx-auto">
-              當我參加咖啡課時，我學到了製作美味咖啡的技巧，也體驗了咖啡世界的多樣性。老師很專業，課程充實，讓我對咖啡有了更深入的理解。期待下次學習！
-            </p>
-          </div>
-        </div>
+          ))
+        )}
       </div>
-    </div>
+    </>
   )
 }

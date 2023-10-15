@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import '../index.scss'
 import DefaultLayout from '@/components/layout/default-layout/index'
+
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
@@ -30,23 +31,23 @@ export default function MyApp({ Component, pageProps }) {
       <AuthProvider>
         <UserProvider>
           <PaginationProvider>
-            <ProductsProvider>
-              <CoursesProvider>
-                <CartListProvider>
-                  <CartListCourseProvider>
-                    <FavProvider>
-                      <CategoryProvider>
-                        <DetailProvider>
+            <DetailProvider>
+              <ProductsProvider>
+                <CoursesProvider>
+                  <CartListProvider>
+                    <CartListCourseProvider>
+                      <FavProvider>
+                        <CategoryProvider>
                           <CommentProvider>
                             {getLayout(<Component {...pageProps} />)}
                           </CommentProvider>
-                        </DetailProvider>
-                      </CategoryProvider>
-                    </FavProvider>
-                  </CartListCourseProvider>
-                </CartListProvider>
-              </CoursesProvider>
-            </ProductsProvider>
+                        </CategoryProvider>
+                      </FavProvider>
+                    </CartListCourseProvider>
+                  </CartListProvider>
+                </CoursesProvider>
+              </ProductsProvider>
+            </DetailProvider>
           </PaginationProvider>
         </UserProvider>
       </AuthProvider>

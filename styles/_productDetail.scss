@@ -8,10 +8,15 @@
 .ed-detail-left {
   position: relative;
   width: 50%;
+  @media screen and (max-width: $lg) {
+    width: 100%;
+  }
+
   & img {
     object-fit: cover;
   }
 }
+
 // content
 .ed-detail-right {
   width: 100%;
@@ -108,6 +113,7 @@
 .ed-activity {
   margin-top: 25px;
   &-title {
+    background-color: transparent;
     color: $color--secondary;
     width: 126px;
     padding: 8px;
@@ -153,6 +159,9 @@
     font-size: 17px;
     padding: 10px;
     line-height: 1.4rem;
+    @media screen and (max-width: $lg) {
+      width: 100%;
+    }
     & span {
       font-size: 18px;
       font-weight: 500;
@@ -164,4 +173,96 @@
     font-size: 17px;
     line-height: 1.5rem;
   }
+}
+
+.modal-content {
+  top:60px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 235 226 / var(--tw-bg-opacity));
+}
+
+
+.ed-activity-mobile{
+  margin-top: 25px;
+  &-title {
+    color: $color--secondary;
+    width: 126px;
+    padding: 8px;
+    border: 2px solid $color--secondary;
+    font-size: 17px;
+    font-weight: 900;
+  }
+  &-detail {
+    color: $color--primary;
+    font-size: 16px;
+    padding: 10px;
+    line-height: 1.2rem;
+    & span {
+      font-size: 18px;
+      font-weight: 900;
+    }
+  }
+}
+
+.ed-addCart__detail-mobile {
+  border: none;
+  font-size: 16px;
+  width: 154px;
+  height: 40px;
+  color: white;
+  padding-left: 20px;
+  margin-bottom: 16px;
+  background-color: $color--secondary;
+
+  &:hover {
+    background-color: $color--primary;
+  }
+  .fa-shopping-cart {
+    margin-left: 10px;
+  }
+}
+
+.ed-addCart__check {
+  border: none;
+  font-size: 16px;
+  width: 140px;
+  height: 40px;
+  color: white;
+  background-color: $color--secondary;
+  &:hover {
+    background-color: $color--primary;
+  }
+}
+
+.upwardModal .modal-dialog {
+  animation-name: slideUp;
+  animation-duration: 0.3s;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.modal-header .btn-close{
+  margin-top: 10px;
+  margin-left: 0;
+}
+
+.ed-btn-close{
+  border: 1px solid $color--secondary;
+  background-color: transparent;
+  color: $color--secondary;
+}
+
+.ed-cursor-pointer{
+  cursor: pointer;
 }

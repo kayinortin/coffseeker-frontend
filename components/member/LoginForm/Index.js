@@ -1,13 +1,15 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { FaFacebook, FaGoogle } from 'react-icons/fa'
+import { FaFacebook, FaGoogle, FaEyeSlash, FaEye } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
 import Swal from 'sweetalert2'
 import contenOfContract from '@/data/member/contract.json'
+import useFirebase from '@/hooks/use-firebase'
+import { useAuthJWT } from '@/context/useAuthJWT'
 
 // 10/10 尚未完成
 // 1.記住密碼
@@ -19,6 +21,23 @@ export default function LoginForm() {
   // 定義表單的值
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
+  const [checkPassword, setCheckPassword] = useState(false)
+
+  const handleKeyDown = (event, index) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      const nextIndex = index + 1
+      if (nextIndex < inputs.length) {
+        inputs[nextIndex].ref.current.focus()
+      }
+    }
+  }
+
+  const handleFormSubmit = (e) => {
+    if (e.key === 'Enter') {
+      handleLoginFormSubmit()
+    }
+  }
 
   const inputs = [
     {
@@ -30,18 +49,22 @@ export default function LoginForm() {
       htmlId: 'InputEmail',
       aria: null,
       maxlength: 50,
+      ref: useRef(),
       onChange: (e) => setMail(e.target.value),
+      onKeyDown: (e) => handleKeyDown(e, 0),
     },
     {
       id: 2,
       htmlFor: 'InputPassword',
       title: '密碼',
       placeholder: '請輸入密碼',
-      type: 'password',
+      type: checkPassword ? 'text' : 'password',
       htmlId: 'InputPassword',
       aria: null,
       maxlength: 12,
+      ref: useRef(),
       onChange: (e) => setPassword(e.target.value),
+      onKeyDown: handleFormSubmit,
     },
   ]
   const router = useRouter()
@@ -53,14 +76,6 @@ export default function LoginForm() {
       email: mail,
       password: password,
     }
-
-    // Edison // 10/04 檢查代碼
-    // Edison // 在這邊登入會員成功後，應該要讓isLoggedIn狀態改變
-    // Edison // 這樣才能讓我的Navbar重新渲染
-
-    // Edison // 這邊如果帳號密碼有輸入錯誤時
-    // Edison // Cookies.set('userInfo', JSON.stringify(response.data.user)) 會出錯
-    // Edison // 而且這樣會形成錯誤的cookie 反而會無法使用登出功能
 
     try {
       const response = await axios.post(
@@ -78,6 +93,7 @@ export default function LoginForm() {
           showConfirmButton: false,
           timer: 1500,
         })
+        router.push('/member')
       } else {
         Swal.fire({
           title: '登入失敗，請確認帳號密碼是否正確',
@@ -90,11 +106,6 @@ export default function LoginForm() {
       console.error('錯誤：請確認後台API功能', error)
       setIsLoggedIn(false)
     }
-
-    // Edison // 10/04 檢查代碼
-    // Edison // 這邊如果帳號密碼有輸入錯誤時
-    // Edison // Cookies.set('userInfo', JSON.stringify(response.data.user)) 會出錯
-    // Edison // 用if else判斷是否登入狀態
 
     // 取得單一使用者資料
     try {
@@ -137,6 +148,111 @@ export default function LoginForm() {
 
   // ===================================
 
+  // // google登入相關
+
+  const { loginGoogleRedirect, initApp, logoutFirebase } = useFirebase()
+  const { authJWT, setAuthJWT } = useAuthJWT()
+
+  // // 這裡要設定initApp，讓這個頁面能監聽firebase的google登入狀態
+  // 在點擊 Google 登入按鈕後，執行 Google 登入流程
+
+  useEffect(() => {
+    initApp(callbackGoogleLoginRedirect)
+  }, [])
+
+  const callbackGoogleLoginRedirect = async (providerData) => {
+    // 如果目前react(next)已經登入中，不需要再作登入動作
+    if (authJWT.isAuth) return
+    console.log('取得的providerData', providerData)
+
+    const res = await axios.post(
+      'http://localhost:3005/api/google-login/jwt',
+      providerData,
+      {
+        withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
+      }
+    )
+
+    if (res.data.message === 'success') {
+      setAuthJWT({
+        isAuth: true,
+        userData: res.data.user,
+      })
+
+      console.log(authJWT)
+      Cookies.set('accessToken', res.data.accessToken)
+      setIsLoggedIn(true)
+      console.log('res.data', res.data)
+      Swal.fire({
+        title: '登入成功，即將跳轉至會員中心',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      router.push('https://localhost:9000/member')
+      // router.push('/member')
+    } else {
+      alert('有錯誤')
+    }
+  }
+  // ============
+  // const callbackGoogleLogin = async (providerData) => {
+  //   console.log(providerData)
+
+  //   const res = await axios.post(
+  //     'http://localhost:3005/api/google-login/jwt',
+  //     providerData,
+  //     {
+  //       withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
+  //     }
+  //   )
+
+  //   if (res.data.message === 'success') {
+  //     setAuth({
+  //       isAuth: true,
+  //       userData: res.data.user,
+  //     })
+  //     Cookies.set('accessToken', res.data.accessToken)
+  //     setIsLoggedIn(true)
+  //     console.log('res.data', res.data)
+  //     Swal.fire({
+  //       title: '登入成功，即將跳轉至會員中心',
+  //       icon: 'success',
+  //       showConfirmButton: false,
+  //       timer: 1500,
+  //     })
+  //     router.push('https://localhost:9000/member')
+  //   } else {
+  //     alert('有錯誤')
+  //   }
+  // }
+
+  const logout = async () => {
+    // firebase logout(注意，並不會登出google帳號)
+    logoutFirebase()
+
+    // 伺服器logout
+    const res = await axios.post(
+      'http://localhost:3005/api/auth/logout',
+      {},
+      {
+        withCredentials: true, // save cookie in browser
+      }
+    )
+
+    if (res.data.message === 'success') {
+      setAuthJWT({
+        isAuth: false,
+        userData: {
+          id: 0,
+          name: '',
+          username: '',
+          r_date: '',
+        },
+      })
+    }
+  }
+
   return (
     <>
       <form id="loginForm" className={'form-box'}>
@@ -145,7 +261,7 @@ export default function LoginForm() {
             會員登入
           </div>
           <div className="p-5">
-            {inputs.map((input) => {
+            {inputs.map((input, index) => {
               return (
                 <div className="mb-3" key={input.id}>
                   <label htmlFor={input.htmlFor} className={'form-label'}>
@@ -158,8 +274,12 @@ export default function LoginForm() {
                     id={input.htmlId}
                     aria-describedby={input.aria}
                     maxLength={input.maxlength}
+                    ref={input.ref}
                     onChange={(e) => {
                       input.onChange(e)
+                    }}
+                    onKeyDown={(e) => {
+                      input.onKeyDown(e)
                     }}
                   />
                   <div
@@ -169,7 +289,20 @@ export default function LoginForm() {
                 </div>
               )
             })}
-            <div className={'mt-4 form-check ps-0 d-flex align-items-center'}>
+            <div className={'d-flex justify-content-end position-relative'}>
+              <button
+                className={'position-absolute eyes h5'}
+                type="button"
+                onClick={() => {
+                  checkPassword
+                    ? setCheckPassword(false)
+                    : setCheckPassword(true)
+                }}
+              >
+                {checkPassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
+            <div className={'form-check ps-0 d-flex align-items-center'}>
               <input
                 type="checkbox"
                 className={'check-input me-3 rounded-0'}
@@ -195,9 +328,29 @@ export default function LoginForm() {
             'container d-flex justify-content-center mt-4 mb-3 align-items-center'
           }
         >
-          <FaFacebook className={'h2 me-5'} />
-          <FaGoogle className={'h2'} />
-          <FaXTwitter className={'h2 ms-5'} />
+          <button
+            className={'border-0 bg-none third-login me-5'}
+            type="button"
+            onClick={() => {
+              console.log('test')
+            }}
+          >
+            <FaFacebook className={'h2'} />
+          </button>
+          <button
+            className={'border-0 bg-none third-login'}
+            type="button"
+            onClick={loginGoogleRedirect}
+          >
+            <FaGoogle className={'h2'} />
+          </button>
+          <button
+            className={'border-0 bg-none third-login ms-5'}
+            type="button"
+            onClick={logoutFirebase}
+          >
+            <FaXTwitter className={'h2'} />
+          </button>
         </div>
         <div className={'d-flex justify-content-center mb-3'}>
           <div className={'ask-for-register'}>

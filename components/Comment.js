@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
 
 import { useUser } from '@/context/UserInfo'
 import { useComment } from '@/context/comment'
+
 import { FetchUserData } from './member/FetchDatas/FetchUserData'
-import { set } from 'lodash'
 
 export default function Comment({ totalStars = 5, pid }) {
   const { setComments } = useComment()
@@ -77,6 +76,8 @@ export default function Comment({ totalStars = 5, pid }) {
           icon: 'success',
           title: '成功',
           text: '評論和評分已送出',
+        }).then(() => {
+          setCommentText('')
         })
         const newComment = {
           user_name: userData.username,

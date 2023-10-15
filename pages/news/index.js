@@ -4,6 +4,7 @@ import Card from '@/components/news/card'
 import CategoryBtn from '@/components/news/category-btn'
 import OrderBy from '@/components/news/order-by'
 import Pagination from '@/components/news/pagination'
+import Head from 'next/head'
 
 export default function News() {
   const [currentSort, setCurrentSort] = useState('default')
@@ -59,6 +60,12 @@ export default function News() {
           <div className="row">
             <nav className="nav-breadcrumb ms-3 d-none d-sm-block">
               <ol className="ei-breadcrumb m-3 list-inline">
+                <div>
+                  <Head>
+                    <title>最新消息｜探索咖啡COFFSEEKER</title>
+                  </Head>
+                </div>
+
                 <li className="breadcrumb-item list-inline-item">
                   <Link href="/" className="link">
                     首頁
@@ -84,11 +91,11 @@ export default function News() {
           </div>
 
           {/* 篩選&排序區 */}
-          <div className="d-md-flex align-items-end justify-content-center mb-lg-4">
-            <div className="me-lg-4">
-              <CategoryBtn onSelectCategory={handleCategoryChange} />
+          <div className="d-md-flex justify-content-center align-items-end mt-lg-4 mb-lg-4">
+            <div className="d-flex flex-column align-items-center me-lg-4">
+              <CategoryBtn onChange={handleCategoryChange} />
             </div>
-            <div className="mobile-orderby d-flex flex-column align-items-center ms-lg-4 mt-md-1">
+            <div className="mt-lg-4 d-flex justify-content-center ms-lg-4">
               <OrderBy onChange={handleSortChange} />
             </div>
           </div>
@@ -104,6 +111,7 @@ export default function News() {
             totalPages={totalPages}
             currentPage={currentPage}
             onPageChange={handlePageChange}
+            className=""
           />
         </div>
       </div>

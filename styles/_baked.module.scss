@@ -8,11 +8,11 @@ $max-card-width: 200px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // min-height: 100vh;
+  min-height: 100vh;
   // padding: 20px 24px;
   // margin-block: 20px;
   background-color: $color--background;
-  height: 100vh;
+  // height: 100vh;
 }
 
 .card-grid {

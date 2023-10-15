@@ -1,31 +1,40 @@
 import { useState, useEffect } from 'react'
 
 import { useFavorite } from '../../context/fav'
-
+import AddFavCourse from '../fav/AddFavCourse'
+import RemoveFavCourse from '../fav/RemoveFavCourse'
+import FetchFavCourseId from '../fav/FetchFavCourse'
 function CourseDetailFavIcon(props) {
+  FetchFavCourseId()
   const { id } = props
-  const { favItemsArr, setFavItemsArr } = useFavorite()
+  const { favCoursesArr, setFavCoursesArr } = useFavorite()
   const [fav, setFav] = useState(false)
-
+  if (favCoursesArr.includes(parseInt(id)) && !fav) {
+    setFav(true)
+  }
   const handleSetFav = () => {
-    setFav(!fav)
-    const favArr = [...favItemsArr, id]
     if (fav === false) {
       //未收藏 -> 收藏
-      if (favItemsArr.includes(id)) {
+      if (favCoursesArr.includes(parseInt(id))) {
         return
       }
-      setFavItemsArr(favArr)
+      setFav(!fav)
+      const favArr = [...favCoursesArr, parseInt(id)]
+      AddFavCourse(parseInt(id))
+      setFavCoursesArr(favArr)
       localStorage.setItem('fav', favArr)
     } else {
       //收藏 -> 取消收藏
-      const remainFavArr = favArr.filter((item) => item !== id)
-      setFavItemsArr([...remainFavArr])
+      setFav(!fav)
+      RemoveFavCourse(parseInt(id))
+      const remainFavArr = favCoursesArr.filter((item) => item !== parseInt(id))
+      setFavCoursesArr([...remainFavArr])
       localStorage.setItem('fav', remainFavArr)
     }
   }
 
-  const isActive = favItemsArr.findIndex((item) => item === id) !== -1
+  const isActive =
+    favCoursesArr.findIndex((item) => item === parseInt(id)) !== -1
 
   return (
     <>
