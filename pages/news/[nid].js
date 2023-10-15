@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
+import Head from 'next/head'
 import style from '../../styles/_news.module.scss'
 
 const NewsDetail = ({ news, error }) => {
@@ -15,18 +16,23 @@ const NewsDetail = ({ news, error }) => {
   return (
     <>
       {/* 麵包屑 */}
-      <div className="row">
+      <div className="ei-row">
         <nav className="nav-breadcrumb me-4 d-none d-sm-block">
           <ol className="ei-breadcrumb m-3 list-inline">
+            <div>
+              <Head>
+                <title>{news?.news_title}｜探索咖啡COFFSEEKER</title>
+              </Head>
+            </div>
             <li className="breadcrumb-item list-inline-item">
-              <Link href="/" className="link">
+              <Link href="/" className="link ">
                 首頁
               </Link>
             </li>
             <li className="breadcrumb-item list-inline-item">
               <Link
                 href="/news"
-                className="breadcrumb-item text-decoration-none link ms-2"
+                className="breadcrumb-item text-decoration-none link ms-2 "
               >
                 最新消息
               </Link>
@@ -34,7 +40,7 @@ const NewsDetail = ({ news, error }) => {
             <li className="breadcrumb-item list-inline-item">
               <a
                 href={`/news/${router.query.nid}`}
-                className="breadcrumb-item text-decoration-none link ms-2"
+                className="breadcrumb-item text-decoration-none link ms-2 "
               >
                 {news?.news_title}
               </a>
@@ -61,7 +67,7 @@ const NewsDetail = ({ news, error }) => {
         </div>
 
         <p
-          className="ei-letter-spacing lh-base ms-2"
+          className="ei-letter-spacing lh-lg ms-2"
           dangerouslySetInnerHTML={{ __html: contentWithLineBreaks }}
         ></p>
       </div>

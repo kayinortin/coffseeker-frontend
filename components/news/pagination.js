@@ -1,35 +1,36 @@
 import React from 'react'
 
 function Pagination({ totalPages, currentPage, onPageChange }) {
-  const renderPageButtons = () => {
-    const pageButtons = []
-    for (let i = 1; i <= totalPages; i++) {
-      pageButtons.push(
-        <li
-          key={i}
-          className={i === currentPage ? 'ei-page-item active' : 'ei-page-item'}
-        >
-          <button
-            className="ei-page-link"
-            onClick={() => {
-              onPageChange(i)
-              // 滾動到頁面頂部
-              window.scrollTo(0, 0)
-            }}
-          >
-            {i}
-          </button>
-        </li>
-      )
-    }
-    return pageButtons
+  const maxVisiblePages = 5 // 設定最大可見頁數
+  const pageButtons = []
+
+  // 計算起始頁碼和結束頁碼
+  let startPage = Math.max(currentPage - Math.floor(maxVisiblePages / 2), 1)
+  let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages)
+
+  if (endPage - startPage < maxVisiblePages - 1) {
+    startPage = Math.max(endPage - maxVisiblePages + 1, 1)
   }
 
-  const handlePageChange = (page) => {
-    console.log('Page changed to:', page)
-    onPageChange(page)
-    // 滾動到頁面頂部
-    window.scrollTo(0, 0)
+  // 組合頁數按鈕
+  for (let i = startPage; i <= endPage; i++) {
+    pageButtons.push(
+      <li
+        key={i}
+        className={i === currentPage ? 'ei-page-item active' : 'ei-page-item'}
+      >
+        <button
+          className="ei-page-link"
+          onClick={() => {
+            onPageChange(i)
+            // 滾動到頁面頂部
+            window.scrollTo(0, 0)
+          }}
+        >
+          {i}
+        </button>
+      </li>
+    )
   }
 
   return (
@@ -43,13 +44,13 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
           <button
             className="ei-page-link"
             onClick={() => {
-              handlePageChange(currentPage - 1)
+              onPageChange(currentPage - 1)
             }}
           >
             &laquo;
           </button>
         </li>
-        {renderPageButtons()}
+        {pageButtons}
         <li
           className={
             currentPage === totalPages
@@ -60,7 +61,7 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
           <button
             className="ei-page-link"
             onClick={() => {
-              handlePageChange(currentPage + 1)
+              onPageChange(currentPage + 1)
             }}
           >
             &raquo;
