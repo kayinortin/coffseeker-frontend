@@ -159,6 +159,8 @@ $color--black: #000000;
   transform: translateY(0%);
   transition: transform calc(var(--d) * 2) var(--e);
   opacity: 0;
+  min-height: 950px;
+
 }
 
 .ei-hand-card:hover .ei-hand-content {
@@ -183,8 +185,9 @@ $color--black: #000000;
 }
 
 .ei-hand-card:hover .ei-hand-content > *:not(.ei-hand-title) {
+  min-height: 70vh;
   opacity: 1;
-  transform: translateY(0);
+  // transform: translateY(0%);
   transition-delay: calc(var(--d) / 8);
 }
 
@@ -236,6 +239,18 @@ $color--black: #000000;
     margin-bottom: 30px;
     max-width: 300px;
     max-height: 550px;
+  }
+  .ei-hand-card:hover .ei-hand-content {
+    transform: translateY(-50%);
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--d) / 8);
+  }
+  .ei-hand-card:hover .ei-hand-content {
+    transform: translateY(70%);
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--d) / 8);
   }
   .ei-hand-card:hover .ei-hand-content > *:not(.ei-hand-title) {
     opacity: 1;

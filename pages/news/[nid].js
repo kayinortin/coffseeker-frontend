@@ -13,64 +13,59 @@ const NewsDetail = ({ news, error }) => {
   }
 
   return (
-    <div className="container ei-container-nid mb-3">
-      {news ? (
-        <>
-          {/* 麵包屑 */}
-          <div className="row">
-            <nav className="nav-breadcrumb me-4 d-none d-sm-block ">
-              <ol className="ei-breadcrumb m-3 list-inline">
-                <li className="breadcrumb-item list-inline-item">
-                  <Link href="/" className="link">
-                    首頁
-                  </Link>
-                </li>
-                <li className="breadcrumb-item list-inline-item">
-                  <Link
-                    href="/news"
-                    className="breadcrumb-item text-decoration-none link ms-2"
-                  >
-                    最新消息
-                  </Link>
-                </li>
-                <li className="breadcrumb-item list-inline-item">
-                  <a
-                    href={`/news/${router.query.nid}`} //點擊會停在同一頁
-                    className="breadcrumb-item text-decoration-none link ms-2"
-                  >
-                    {news?.news_title}
-                  </a>
-                </li>
-              </ol>
-            </nav>
-          </div>
-          <div className="news-deail mt-3">
-            <h3 className="text-center mb-4 mobile-news-title lh-sm fs-3">
-              {news?.news_title}
-            </h3>
-            <p className="mb-4 text-end me-3 ei-news-date">
-              {news?.created_at}
-            </p>
-            <div className="d-flex justify-content-center">
-              {news?.news_image ? (
-                <img
-                  src={`http://localhost:3005/uploads/${news?.news_image}`}
-                  alt={news?.news_title}
-                  className="img-fluid mb-3"
-                />
-              ) : null}
-            </div>
-          </div>
+    <>
+      {/* 麵包屑 */}
+      <div className="row">
+        <nav className="nav-breadcrumb me-4 d-none d-sm-block">
+          <ol className="ei-breadcrumb m-3 list-inline">
+            <li className="breadcrumb-item list-inline-item">
+              <Link href="/" className="link">
+                首頁
+              </Link>
+            </li>
+            <li className="breadcrumb-item list-inline-item">
+              <Link
+                href="/news"
+                className="breadcrumb-item text-decoration-none link ms-2"
+              >
+                最新消息
+              </Link>
+            </li>
+            <li className="breadcrumb-item list-inline-item">
+              <a
+                href={`/news/${router.query.nid}`}
+                className="breadcrumb-item text-decoration-none link ms-2"
+              >
+                {news?.news_title}
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
 
-          <p
-            className="ei-letter-spacing lh-base ms-2"
-            dangerouslySetInnerHTML={{ __html: contentWithLineBreaks }}
-          ></p>
-        </>
-      ) : (
-        <div>找不到相關內文</div>
-      )}
-    </div>
+      <div className="container ei-container-nid mb-3">
+        <div className="news-deail mt-3">
+          <h3 className="text-center mb-4 mobile-news-title lh-sm fs-3">
+            {news?.news_title}
+          </h3>
+          <p className="mb-4 text-end me-3 ei-news-date">{news?.created_at}</p>
+          <div className="d-flex justify-content-center">
+            {news?.news_image ? (
+              <img
+                src={`http://localhost:3005/uploads/${news?.news_image}`}
+                alt={news?.news_title}
+                className="img-fluid mb-3"
+              />
+            ) : null}
+          </div>
+        </div>
+
+        <p
+          className="ei-letter-spacing lh-base ms-2"
+          dangerouslySetInnerHTML={{ __html: contentWithLineBreaks }}
+        ></p>
+      </div>
+    </>
   )
 }
 
