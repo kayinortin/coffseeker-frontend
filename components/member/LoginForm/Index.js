@@ -195,37 +195,6 @@ export default function LoginForm() {
       alert('有錯誤')
     }
   }
-  // ============
-  // const callbackGoogleLogin = async (providerData) => {
-  //   console.log(providerData)
-
-  //   const res = await axios.post(
-  //     'http://localhost:3005/api/google-login/jwt',
-  //     providerData,
-  //     {
-  //       withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
-  //     }
-  //   )
-
-  //   if (res.data.message === 'success') {
-  //     setAuth({
-  //       isAuth: true,
-  //       userData: res.data.user,
-  //     })
-  //     Cookies.set('accessToken', res.data.accessToken)
-  //     setIsLoggedIn(true)
-  //     console.log('res.data', res.data)
-  //     Swal.fire({
-  //       title: '登入成功，即將跳轉至會員中心',
-  //       icon: 'success',
-  //       showConfirmButton: false,
-  //       timer: 1500,
-  //     })
-  //     router.push('https://localhost:9000/member')
-  //   } else {
-  //     alert('有錯誤')
-  //   }
-  // }
 
   const logout = async () => {
     // firebase logout(注意，並不會登出google帳號)
@@ -233,7 +202,7 @@ export default function LoginForm() {
 
     // 伺服器logout
     const res = await axios.post(
-      'http://localhost:3005/api/auth/logout',
+      'http://localhost:3005/api/auth-jwt/logout',
       {},
       {
         withCredentials: true, // save cookie in browser
@@ -241,6 +210,13 @@ export default function LoginForm() {
     )
 
     if (res.data.message === 'success') {
+      localStorage.removeItem('hasVisitedBefore')
+      Swal.fire({
+        title: '登出成功',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
       setAuthJWT({
         isAuth: false,
         userData: {
@@ -347,7 +323,7 @@ export default function LoginForm() {
           <button
             className={'border-0 bg-none third-login ms-5'}
             type="button"
-            onClick={logoutFirebase}
+            onClick={logout}
           >
             <FaXTwitter className={'h2'} />
           </button>

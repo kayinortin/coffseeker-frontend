@@ -4,7 +4,6 @@ import { useUser } from '@/context/UserInfo'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { checkLoginStatus } from '../FetchDatas/CheckLoginStaus'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
 
 // 10/09
@@ -27,13 +26,12 @@ export default function InfoChangeForm() {
   const [birthdayData, setBirthdayDate] = useState('')
 
   const checkToken = Cookies.get('accessToken')
-  console.log('checkToken', checkToken)
   useEffect(() => {
     async function fetchData() {
       if (checkToken) {
-        const loginState = await checkLoginStatus()
         const fetchUser = await FetchUserData()
-        if (loginState) {
+        console.log(fetchUser)
+        if (fetchUser) {
           setUserData(fetchUser)
           setId(fetchUser.id)
           setMail(fetchUser.email)

@@ -78,7 +78,7 @@ export default function OrderList() {
               <ul className={'pagination'}>
                 <li
                   className={`ed-page-item ${
-                    currentPage === 1 ? 'disabled' : null
+                    currentPage <= 1 ? 'disabled' : null
                   } `}
                 >
                   <button
@@ -98,7 +98,7 @@ export default function OrderList() {
                     <li className={'ed-page-item'} key={page}>
                       <button
                         className={`ed-page-link ${
-                          currentPage === page ? 'active' : null
+                          currentPage === page ? 'active disabled' : null
                         }`}
                         onClick={() => {
                           setCurrentPage(page)
@@ -112,7 +112,9 @@ export default function OrderList() {
                 })}
                 <li
                   className={`ed-page-item ${
-                    currentPage === totalPage ? 'disabled' : null
+                    currentPage === totalPage || totalPage < 1
+                      ? 'disabled'
+                      : null
                   } `}
                 >
                   <button
