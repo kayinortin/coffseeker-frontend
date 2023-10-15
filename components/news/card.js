@@ -27,7 +27,7 @@ export default function Card({ newsData }) {
                         {news.created_at}
                       </p>
                       <h5 className="ei-card-title fw-bold mb-2 lh-base">
-                        <span className="me-2">| {news.news_title} |</span>
+                        <span className="me- fs-5">| {news.news_title} |</span>
                       </h5>
                     </div>
                   </div>

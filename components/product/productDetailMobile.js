@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import Image from 'next/image'
+import Head from 'next/head'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
@@ -136,6 +137,11 @@ export default function ProductDetailMobile() {
 
   return (
     <>
+      <div>
+        <Head>
+          <title>精選咖啡｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <Modal
         show={showModal}
         onHide={handleCloseModal}
