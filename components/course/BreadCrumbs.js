@@ -13,6 +13,7 @@ const BreadCrumbs = ({
   const router = useRouter()
   const { isReady, asPath } = router
   const { pid } = router.query
+  
 
   const [showChild, setShowChild] = useState(false)
   const [pathSegments, setPathSegments] = useState([])
