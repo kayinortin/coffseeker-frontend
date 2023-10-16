@@ -1,10 +1,16 @@
 import React from 'react'
 import LoginForm from '@/components/member/LoginForm/Index'
 import Link from 'next/link'
+import Head from 'next/head'
 
 export default function Login() {
   return (
     <>
+      <div>
+        <Head>
+          <title>會員登入｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className={'container'}>
         {/* 麵包屑 */}
         <div className={'row'}>
