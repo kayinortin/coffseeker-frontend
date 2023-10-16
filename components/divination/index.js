@@ -362,7 +362,7 @@ export default function Divination() {
               <p>↑測試用，請在開始測驗前點擊切換樣式↑</p>
             </div>
             <div className="textArea mb-auto mt-lg-5 mt-2">
-              <h2 className="focus-in-contract">咖啡測驗</h2>
+              <h2 className="focus-in-contract">咖啡占卜</h2>
               <h5 className="focus-in-contract">
                 日安，迷惘的咖啡靈魂。
                 <br />
