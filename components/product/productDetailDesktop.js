@@ -134,13 +134,13 @@ export default function ProductDetailDesktop({ pid }) {
               </div>
               <div className="mt-4 d-flex justify-content-between align-items-center">
                 <Link
-                  href="http://localhost:3000/product/10"
+                  href="/product/10"
                   className="d-flex justify-content-center align-items-center ed-cursor-pointer"
                 >
                   <div>
                     <img
                       className="ed-cursor-pointer"
-                      src="http://localhost:3000/cart-image/product_1.png"
+                      src="/cart-image/product_1.png"
                       width={70}
                       height={70}
                       alt="圖片"
@@ -155,13 +155,13 @@ export default function ProductDetailDesktop({ pid }) {
               <hr />
               <div className="mt-3 d-flex justify-content-between align-items-center">
                 <Link
-                  href="http://localhost:3000/product/32"
+                  href="/product/32"
                   className="d-flex justify-content-center align-items-center ed-cursor-pointer"
                 >
                   <div>
                     <img
                       className="ed-cursor-pointer"
-                      src="http://localhost:3000/cart-image/product_2.png"
+                      src="/cart-image/product_2.png"
                       width={70}
                       height={70}
                       alt="圖片"
@@ -177,16 +177,16 @@ export default function ProductDetailDesktop({ pid }) {
               <div className="mt-2 d-block">
                 <ul className="ed-sidebar-li">
                   <li className="mt-1 fw-bold">線上購物</li>
-                  <Link href="http://localhost:3000/product">
+                  <Link href="/product">
                     <li className="mt-3">全站商品</li>
                   </Link>
-                  <Link href="http://localhost:3000/product/category/1">
+                  <Link href="/product/category/1">
                     <li className="mt-3">咖啡豆</li>
                   </Link>
-                  <Link href="http://localhost:3000/product/category/2">
+                  <Link href="/product/category/2">
                     <li className="mt-3">濾掛包</li>
                   </Link>
-                  <Link href="http://localhost:3000/product/category/6">
+                  <Link href="/product/category/6">
                     <li className="mt-3">送禮推薦</li>
                   </Link>
                 </ul>
@@ -314,11 +314,19 @@ export default function ProductDetailDesktop({ pid }) {
                             加入購物車
                             <i className="fas fa-shopping-cart"></i>
                           </button>
-                          <Link href="http://localhost:3000/cart">
-                            <button className="ms-4 ed-addCart__check">
-                              立即結帳
-                            </button>
-                          </Link>
+                          {isLoggedIn ? (
+                            <Link href="/cart">
+                              <button className="ms-4 ed-addCart__check">
+                                立即結帳
+                              </button>
+                            </Link>
+                          ) : (
+                            <Link href="/member/login">
+                              <button className="ms-4 ed-addCart__check">
+                                立即結帳
+                              </button>
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -329,7 +337,7 @@ export default function ProductDetailDesktop({ pid }) {
             <hr />
             <div className="d-flex flex-column">
               <img
-                src="http://localhost:3000/product_detail/banner.png"
+                src="/product_detail/banner.png"
                 alt="product-detail-banner"
               />
               <div className="d-flex flex-column ed-product-intro">
@@ -374,7 +382,7 @@ export default function ProductDetailDesktop({ pid }) {
                 <div className="mx-auto text-center">
                   <h5 className="my-3">請先登入再進行評論</h5>
                   <div className="my-4">
-                    <Link href="http://localhost:3000/member/login">
+                    <Link href="/member/login">
                       <button className="ed-addCart">登入會員</button>
                     </Link>
                   </div>

@@ -271,11 +271,19 @@ export default function ProductDetailMobile() {
                             加入購物車
                             <i className="fas fa-shopping-cart"></i>
                           </button>
-                          <Link href="http://localhost:3000/cart">
-                            <button className="ms-4 ed-addCart__check">
-                              立即結帳
-                            </button>
-                          </Link>
+                          {isLoggedIn ? (
+                            <Link href="/cart">
+                              <button className="ms-4 ed-addCart__check">
+                                立即結帳
+                              </button>
+                            </Link>
+                          ) : (
+                            <Link href="/member/login">
+                              <button className="ms-4 ed-addCart__check">
+                                立即結帳
+                              </button>
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -286,7 +294,7 @@ export default function ProductDetailMobile() {
             <hr />
             <div className="d-flex flex-column">
               <img
-                src="http://localhost:3000/product_detail/banner.png"
+                src="/product_detail/banner.png"
                 alt="product-detail-banner"
               />
               <div className="d-flex flex-column ed-product-intro">
@@ -331,7 +339,7 @@ export default function ProductDetailMobile() {
                 <div className="mx-auto text-center">
                   <h5 className="my-3">請先登入再進行評論</h5>
                   <div className="my-4">
-                    <Link href="http://localhost:3000/member/login">
+                    <Link href="/member/login">
                       <button className="ed-addCart">登入會員</button>
                     </Link>
                   </div>
