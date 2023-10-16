@@ -66,7 +66,7 @@ export default function FormItems({
       id: 6,
       htmlFor: 'InputPhone',
       title: '手機',
-      placeholder: '09XX-XXX-XXX',
+      placeholder: '請輸入您的手機號碼,09開頭共10位數字',
       type: 'tel',
       aria: null,
       maxlength: 10,

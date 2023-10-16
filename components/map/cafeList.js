@@ -47,7 +47,7 @@ function CafeItem({ cafe, handleCafeClick }) {
       className="cafeItem border-0 border-bottom grid gap-3 d-flex flex-column py-3 border-black"
       onClick={() => handleCafeClick(cafe)}
     >
-      <h4>{cafe.name}</h4>
+      <h4 className="lh-base">{cafe.name}</h4>
       <h6>
         <FaMapMarkerAlt />
         {cafe.address}
@@ -55,7 +55,7 @@ function CafeItem({ cafe, handleCafeClick }) {
           <>
             <br />
             <span className="distanceText">
-              {cafe.distanceInKm.toFixed(3)}公里
+              {cafe.distanceInKm.toFixed(1)}公里
             </span>
           </>
         )}
