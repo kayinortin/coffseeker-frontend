@@ -204,11 +204,11 @@ export default function Map() {
         const data = response.data
         setAllCafeData(data)
         //預設顯示桃園咖啡
-        const defaultCafeData = _.filter(data, { city: 'taoyuan' })
-        setCafes(defaultCafeData)
+        // const defaultCafeData = _.filter(data, { city: 'taoyuan' })
+        // setCafes(defaultCafeData)
         setTimeout(() => {
           setShowLoading(false)
-        }, 500)
+        }, 300)
       } catch (error) {
         console.error(error)
       }
@@ -460,20 +460,22 @@ export default function Map() {
               </div>
               <div>{cafeData.music}★</div>
             </span>
-            <span>
-              <div>
-                <BsPlugin />
-                插座數量
+            <div className="w-100">
+              <div className="d-flex justify-content-between mb-3 px-1 lh-base">
+                <div>
+                  <BsPlugin />
+                  插座數量
+                </div>
+                {checkValueSocket(cafeData.socket)}
               </div>
-              <div>{checkValueText(cafeData.socket)}</div>
-            </span>
-            <span>
-              <div>
-                <BsHourglassSplit />
-                有無限時
+              <div className="d-flex justify-content-between px-1 lh-base">
+                <div>
+                  <BsHourglassSplit />
+                  有無限時
+                </div>
+                {checkValueTime(cafeData.limited_time)}
               </div>
-              <div>{checkValueText(cafeData.limited_time)}</div>
-            </span>
+            </div>
           </div>
           <div className="cafeInfos">
             <h5 className="d-flex justify-content-between">
@@ -582,28 +584,28 @@ export default function Map() {
     setSelectedCity(null)
   }
 
-  function checkValue(value) {
+  function checkValueTime(value) {
     switch (value) {
       case 'yes':
-        return <BsCheckLg />
+        return <div>一律有限時</div>
       case 'no':
-        return <BsXLg />
+        return <div>一律不限時</div>
       case 'maybe':
-        return <BsTriangle />
+        return <div>假日或客滿有限時</div>
       default:
-        return <BsQuestionLg />
+        return <div>目前無資料</div>
     }
   }
-  function checkValueText(value) {
+  function checkValueSocket(value) {
     switch (value) {
       case 'yes':
-        return <span>有</span>
+        return <div>很多</div>
       case 'no':
-        return <span>無</span>
+        return <div>很少</div>
       case 'maybe':
-        return <span>視情況</span>
+        return <div>還好，看座位</div>
       default:
-        return <span>無資料</span>
+        return <div>目前無資料</div>
     }
   }
   //========ref宣告區===========
@@ -631,7 +633,7 @@ export default function Map() {
             </div>
 
             <select
-              defaultValue={'taoyuan'}
+              defaultValue={''}
               onChange={(e) => HandleChangeCity(e)}
               ref={selectCityRef}
             >
@@ -682,7 +684,7 @@ export default function Map() {
           zoomControl={false}
         >
           <TileLayer
-            attribution='Data from <a href="https://cafenomad.tw/developers/docs/v1.2">Cafe Nomad</a> |&copy; <a href="http://cartodb.com/attributions">CartoDB</a> contributors'
+            attribution='Data:<a href="https://cafenomad.tw/developers/docs/v1.2">CafeNomad</a>|&copy;<a href="http://cartodb.com/attributions">CartoDB</a> contributors'
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png"
           />
           <ZoomControl position="topright" />
