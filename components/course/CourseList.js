@@ -7,6 +7,7 @@ import CourseFetcher from './course-fetch'
 import NewSideBar from './NewSideBar'
 
 import { useCourses } from '@/context/course'
+import FetchFavCourseId from '../fav/FetchFavCourse'
 
 export default function CourseList() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -19,11 +20,10 @@ export default function CourseList() {
   const totalItems = coursesData ? coursesData : []
   const totalPages = Math.ceil(totalItems.length / itemsPerPage)
 
-
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage)
   }
-
+  FetchFavCourseId()
   return (
     <>
       <CourseFetcher />
