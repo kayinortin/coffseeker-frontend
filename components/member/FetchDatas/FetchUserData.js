@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 export async function FetchUserData() {
   const accessToken = Cookies.get('accessToken')
-  // console.log('accessToken:', token)
+  console.log('Fetch accessToken:', accessToken)
 
   if (!accessToken) {
     return false

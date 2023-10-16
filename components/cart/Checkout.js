@@ -5,6 +5,7 @@ import { useUser } from '@/context/UserInfo'
 import { FetchUserData } from '../member/FetchDatas/FetchUserData'
 import { useCartList } from '@/context/cart'
 import { useCartListCourse } from '@/context/cart_course'
+import Head from 'next/head'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -52,17 +53,6 @@ function Checkout({ step, handleNextStep, setStep }) {
     if (checkoutData) {
       setCheckoutData(checkoutData)
     }
-
-    // async function aFetchFata() {
-    //   const UserData = FetchUserData()
-    //   if (UserData) {
-    //     setUserData(UserData)
-    //     console.log(UserData)
-    //   } else {
-    //     console.log('沒有使用者資料')
-    //   }
-    // }
-    // aFetchFata()
   }, [])
 
   //後端API
@@ -268,6 +258,11 @@ function Checkout({ step, handleNextStep, setStep }) {
 
   return (
     <>
+      <div>
+        <Head>
+          <title>購物車｜填寫地址與付款</title>
+        </Head>
+      </div>
       <div className="checkout">
         <div className="expandProducts">
           <hr className="border-1 opacity-100" />

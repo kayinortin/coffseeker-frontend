@@ -1,3 +1,14 @@
+.rj_FavBtn {
+  border: none;
+  font-size: 14px;
+  color: $color--secondary;
+  border: 1px solid $color--secondary;
+  background-color: transparent;
+  &:hover {
+    color: white;
+    background-color: $color--secondary;
+  }
+}
 .mapArea {
   height: calc(100vh - 80px);
   background-color: $color--background;
