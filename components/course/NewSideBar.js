@@ -138,9 +138,7 @@ function Accordion(props) {
             ))}
           <hr />
         </fieldset>
-        <fieldset>
-          <hr />
-        </fieldset>
+        
         <button className="ed-btn-filter mt-2" type="submit">
           篩選
         </button>

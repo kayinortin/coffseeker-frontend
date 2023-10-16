@@ -190,16 +190,16 @@ function MobileDetailsBtns(props) {
     }
   }
   return (
-    <div className="d-block d-sm-flex align-items-center">
+    <div className="d-flex align-items-center justify-content-center">
       <button
-        className="ed-addCart__detail d-flex align-items-center mt-3"
+        className="ed-addCart__detail-mobile d-flex align-items-center mt-3"
         onClick={addCart}
       >
         加入購物車
         <i className="fas fa-shopping-cart"></i>
       </button>
       <a href="http://localhost:3000/cart">
-        <button className="ms-4 ed-addCart__check">立即結帳</button>
+        <button className="ms-1 ed-addCart__check">立即結帳</button>
       </a>
     </div>
   )
