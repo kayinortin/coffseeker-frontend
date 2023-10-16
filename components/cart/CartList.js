@@ -5,6 +5,7 @@ import { useCartList } from '@/context/cart'
 import { useCartListCourse } from '@/context/cart_course'
 import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
+import Head from 'next/head'
 
 export default function CartList({ step, handleNextStep, setStep }) {
   const { cartListData, setCartListData } = useCartList([]) //商品資料
@@ -336,6 +337,11 @@ export default function CartList({ step, handleNextStep, setStep }) {
   if (cartListData.length === 0 && cartListData_course.length === 0) {
     return (
       <>
+        <div>
+          <Head>
+            <title>購物車｜目前無商品</title>
+          </Head>
+        </div>
         <div className="cartlist">
           <div className="emptyContainer text-center">
             <img className="emptyCart" src="/bg1.png" alt="購物車無商品" />
@@ -352,6 +358,11 @@ export default function CartList({ step, handleNextStep, setStep }) {
   //購物車有商品
   return (
     <>
+      <div>
+        <Head>
+          <title>購物車｜查看您的商品</title>
+        </Head>
+      </div>
       <div className="cartlist container py-3">
         <div className="cartWrap row">
           {/* 商品表單 */}
