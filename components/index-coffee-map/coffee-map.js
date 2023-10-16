@@ -6,7 +6,7 @@ import AOS from 'aos'
 
 export default function CoffeeMap() {
   const [selectedData, setSelectedData] = useState(null)
-  const [iconColor1, setIconColor1] = useState('#ef8b90')
+  const [iconColor1, setIconColor1] = useState('red')
   const [iconColor2, setIconColor2] = useState('#ef8b90')
   const [iconColor3, setIconColor3] = useState('#ef8b90')
   const [iconColor4, setIconColor4] = useState('#ef8b90')
