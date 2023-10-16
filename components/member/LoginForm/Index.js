@@ -189,7 +189,7 @@ export default function LoginForm() {
         showConfirmButton: false,
         timer: 1500,
       })
-      router.push('https://localhost:9000/member')
+      router.push('/member')
       // router.push('/member')
     } else {
       alert('有錯誤')
