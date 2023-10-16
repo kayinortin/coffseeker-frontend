@@ -24,7 +24,7 @@ export default function CourseText(props) {
   return (
     <>
       {selectedCourse && selectedCourse.course_name ? (
-        <div className="m-2 col-10 col-sm-7 mx-auto ms-sm-5 d-flex flex-column justify-content-around">
+        <div className="m-2 col-11 col-sm-7 mx-auto ms-sm-5 d-flex flex-column justify-content-around">
           <div className="d-none d-sm-block">
             <BreadCrumbs />
           </div>
@@ -34,7 +34,7 @@ export default function CourseText(props) {
           <h5 className={`mb-4 ed-detail-price ${style['price']}`}>
             NT{selectedCourse.course_price}
           </h5>
-          <div className="d-block align-items-center d-sm-none">
+          <div className="d-block  d-sm-none">
             <MobileDetailsBtns course={selectedCourse} />
           </div>
 
