@@ -7,14 +7,14 @@ export default function FavItems({ data, type, handleRemove }) {
 
   if (type === 'product') {
     id = data.id
-    imgUrl = data.image_main
+    imgUrl = `http://localhost:3005/uploads/${data.image_main}`
     name = data.name
     price = data.price
     addedFavDate = data.addedFavDate
     itemLink = `/product/${id}`
   } else {
     id = data.id
-    imgUrl = data.course_image
+    imgUrl = `http://localhost:3000/${data.course_image}`
     name = data.course_name
     price = data.course_price
     addedFavDate = data.addedFavDate
@@ -26,7 +26,7 @@ export default function FavItems({ data, type, handleRemove }) {
         <div className={'col-12 col-lg-7 d-flex'}>
           <div className="col-4 text-center">
             <Image
-              src={`http://localhost:3005/uploads/${imgUrl}`}
+              src={imgUrl}
               alt="Image Description"
               width={100}
               height={100}
