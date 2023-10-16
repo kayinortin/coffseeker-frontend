@@ -9,9 +9,9 @@ export default function Pagination({ totalPages, currentPage, onPageChange }) {
     <div className="d-flex justify-content-center col-sm-12 col-4">
       <nav aria-label="Page navigation example ">
         <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <li className={`ed-page-item ${currentPage === 1 ? 'disabled' : ''}`}>
             <button
-              className="page-link"
+              className="ed-page-link"
               href="#"
               aria-label="Previous"
               onClick={() => {
@@ -25,7 +25,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }) {
             return (
               <li className="page-item" key={i}>
                 <button
-                  className={`page-link ${v === currentPage ? 'active' : ''}`}
+                  className={`ed-page-link ${v === currentPage ? 'active' : ''}`}
                   href="#"
                   onClick={() => {
                     onPageChange(v)
@@ -39,7 +39,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }) {
 
           <li className="page-item">
             <button
-              className={`page-link ${
+              className={`ed-page-link ${
                 currentPage === totalPages ? 'disabled' : ''
               }`}
               href="#"
