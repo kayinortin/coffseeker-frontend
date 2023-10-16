@@ -33,7 +33,7 @@ import {
   BsCheckLg,
   BsQuestionLg,
   BsHourglassSplit,
-  BsDashLg,
+  BsTriangle,
   BsClock,
 } from 'react-icons/bs'
 
@@ -246,12 +246,10 @@ export default function Map() {
   //要生成Mark的資料預設
   const [markData, setMarkData] = useState(cafes)
   //咖啡rating篩選條件預設
-  const [filterValues, setFilterValuesValues] = useState({
+  const [filterValues, setFilterValues] = useState({
     wifi: '0',
     seat: '0',
     quiet: '0',
-    tasty: '0',
-    socket: '',
   })
 
   //監聽filterValues和cafes更改，Rating篩選咖啡店
@@ -265,10 +263,7 @@ export default function Map() {
         (filterValues.seat === '' ||
           cafe.seat >= parseInt(filterValues.seat)) &&
         (filterValues.quiet === '' ||
-          cafe.quiet >= parseInt(filterValues.quiet)) &&
-        (filterValues.tasty === '' ||
-          cafe.tasty >= parseInt(filterValues.tasty)) &&
-        (filterValues.socket === '' || cafe.socket === filterValues.socket)
+          cafe.quiet >= parseInt(filterValues.quiet))
       )
     })
 
@@ -410,7 +405,9 @@ export default function Map() {
         {/* 單間咖啡廳 */}
         <div className={`cafeInfo ${showCafeInfo ? '' : 'd-none'}`}>
           <div className="d-flex justify-content-between">
-            <h4 key={cafeData.id}>{cafeData.name}</h4>
+            <h4 className="lh-base" key={cafeData.id}>
+              {cafeData.name}
+            </h4>
             <button
               type="button"
               className="btn-close"
@@ -468,14 +465,14 @@ export default function Map() {
                 <BsPlugin />
                 插座數量
               </div>
-              <div>{checkValue(cafeData.socket)}</div>
+              <div>{checkValueText(cafeData.socket)}</div>
             </span>
             <span>
               <div>
                 <BsHourglassSplit />
                 有無限時
               </div>
-              <div>{checkValue(cafeData.limited_time)}</div>
+              <div>{checkValueText(cafeData.limited_time)}</div>
             </span>
           </div>
           <div className="cafeInfos">
@@ -483,7 +480,7 @@ export default function Map() {
               店家資訊
               {cafeData.distanceInKm != null && (
                 <span className="distanceText">
-                  {cafeData.distanceInKm.toFixed(3)}公里
+                  {cafeData.distanceInKm.toFixed(1)}公里
                 </span>
               )}
             </h5>
@@ -518,11 +515,6 @@ export default function Map() {
     )
   }
   //====================handle函式系列========================
-  //更改條件選擇時
-  const handleCriteriaChange = (e) => {
-    const { name, value } = e.target
-    setFilterValuesValues({ ...filterValues, [name]: value })
-  }
   //切換單間咖啡廳資料
   function handelChangeCafe(cafe) {
     setShowCafeInfo(true)
@@ -597,9 +589,21 @@ export default function Map() {
       case 'no':
         return <BsXLg />
       case 'maybe':
-        return <BsQuestionLg />
+        return <BsTriangle />
       default:
-        return <BsDashLg />
+        return <BsQuestionLg />
+    }
+  }
+  function checkValueText(value) {
+    switch (value) {
+      case 'yes':
+        return <span>有</span>
+      case 'no':
+        return <span>無</span>
+      case 'maybe':
+        return <span>視情況</span>
+      default:
+        return <span>無資料</span>
     }
   }
   //========ref宣告區===========
@@ -664,8 +668,7 @@ export default function Map() {
         <aside className="mapAsideInfo">
           <AsideInfo />
           <CafeFilter
-            filterValues={filterValues}
-            handleCriteriaChange={handleCriteriaChange}
+            setFilterValues={setFilterValues}
             cafesFiltered={cafesFiltered}
             handleCafeClick={handelChangeCafe}
           />

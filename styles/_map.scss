@@ -1,3 +1,14 @@
+.rj_FavBtn {
+  border: none;
+  font-size: 14px;
+  color: $color--secondary;
+  border: 1px solid $color--secondary;
+  background-color: transparent;
+  &:hover {
+    color: white;
+    background-color: $color--secondary;
+  }
+}
 .mapArea {
   height: calc(100vh - 80px);
   background-color: $color--background;
@@ -199,7 +210,6 @@
       flex-wrap: wrap;
       row-gap: 14px;
       border-bottom: solid 1px black;
-      height: 150px;
       overflow: hidden;
       > div {
         display: flex;
@@ -207,6 +217,17 @@
         width: 100%;
         padding-inline: 7px;
       }
+      button {
+        width: 100%;
+        border: none;
+        color: $color--white;
+        background-color: $color--secondary;
+        padding-block: 10px;
+        &:hover {
+          background-color: $color--primary;
+        }
+      }
+
       input {
         width: 70%;
         &.form-range {

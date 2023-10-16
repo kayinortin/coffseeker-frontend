@@ -3,7 +3,7 @@ import Image from 'next/image'
 import style from '@/styles/_course.module.scss'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
 import Link from 'next/link'
-import FavIcon from '../FavIcon'
+import FavIconC from '../FavIconC'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useShow } from '@/context/showProductDetail'
@@ -25,20 +25,21 @@ export default function Card(props) {
       className={`${style['card']} d-flex py-3 flex-column align-items-center m-3`}
     >
       <div className="card ed-border-none">
-        <Link
-          href={`http://localhost:3000/course/${course?.id}`}
-          className="ed-border-card01"
-          onClick={handleShow}
-        >
-          <img
-            src={`http://localhost:3000/${course.course_image}`}
-            alt={course?.name}
-            width={250}
-            height={250}
-            className="card-img-top object-fit-cover"
-          />
-          <FavIcon size="medium" type="icon" id={course?.id} />
-        </Link>
+        <div className="ed-border-card01">
+          <Link
+            href={`http://localhost:3000/course/${course?.id}`}
+            onClick={handleShow}
+          >
+            <img
+              src={`http://localhost:3000/${course.course_image}`}
+              alt={course?.name}
+              width={250}
+              height={250}
+              className="card-img-top object-fit-cover"
+            />
+          </Link>
+          <FavIconC size="medium" type="icon" id={course?.id} />
+        </div>
       </div>
 
       <div className="d-flex w-100 my-3 justify-content-start">

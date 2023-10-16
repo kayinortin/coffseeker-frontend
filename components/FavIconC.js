@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useFavorite } from '@/context/fav'
 import AddFavCourse from './fav/AddFavCourse'
 import RemoveFavCourse from './fav/RemoveFavCourse'
-import FetchFavCourseId from './fav/FetchFavCourse'
 function FavIconC(props) {
   const { size, type, id } = props
   const [fav, setFav] = useState(false)
