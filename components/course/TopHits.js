@@ -12,20 +12,17 @@ import {
 } from 'swiper/modules'
 import FavIcon from '../FavIcon'
 import Swal from 'sweetalert2'
-import { useCartList } from '@/context/cart'
 import useAddCartCourse from '@/hooks/useCourseAddCart'
 import { useCartListCourse } from '@/context/cart_course'
+import CourseTopHitsCard from './CourseTopHitsCard'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
 
-
-
 const TopHits = (props) => {
-  
-  const [data, setData]=useState([])
+  const [data, setData] = useState([])
   const { addCartCourse } = useAddCartCourse(props.product)
   const { cartListData_course, setCartListData_course } = useCartListCourse()
   const { course } = props
@@ -37,11 +34,9 @@ const TopHits = (props) => {
 
         const courses = response.data.courses
 
-        if(courses.length!==0){
+        if (courses.length !== 0) {
           setData(courses)
         }
-        
-        
       } catch (error) {
         console.log('資料獲取失敗：', error)
       }
@@ -49,13 +44,7 @@ const TopHits = (props) => {
     FetchedCourse()
   }, [])
 
-  
-  
-
-  
-  const slicedData=data.slice(10,19)
-  
-  
+  const slicedData = data.slice(10, 19)
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
 
@@ -65,13 +54,8 @@ const TopHits = (props) => {
     }
   }
 
-  
-  
-  
-
   return (
     <>
-      
       <h5 className="mt-4">相關商品</h5>
       <div className="my-4 container">
         <Swiper
@@ -86,39 +70,12 @@ const TopHits = (props) => {
           {slicedData.map((course, i) => {
             return (
               <SwiperSlide key={course.id}>
-                <div className="card ed-border-none">
-                  <Link
-                    className="ed-border-card01"
-                    href={`/course/${course.id}`}
-                    onClick={handleShow}
-                  >
-                    <img
-                      src={`http://localhost:3000/${course.course_image}`}
-                      alt={course.course_name}
-                      className="card-img-top"
-                    />
-                  </Link>
-                  <FavIcon size="medium" type="icon" id={course.id} />
-                  <div className="card-body ed-card-body">
-                    <h5 className="card-title ed-card-title">{course.course_name}</h5>
-                    <h6 className="card-title ed-card-description">
-                      {course.course_description}
-                    </h6>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <h6 className="ed-card-price">NT${course.course_price}</h6>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <button className="ed-addCart" onClick={addCartCourse}>
-                          加入購物車
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <CourseTopHitsCard key={course.id} course={course} />
               </SwiperSlide>
             )
           })}
         </Swiper>
-      </div> 
+      </div>
     </>
   )
 }
