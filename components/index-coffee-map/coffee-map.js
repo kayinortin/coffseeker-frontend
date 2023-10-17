@@ -112,7 +112,7 @@ export default function CoffeeMap() {
           data-aos-delay="600"
         >
           <div className="d-flex justify-content-center">
-            <Image
+            <img
               className="d-block ed-orgin-img"
               src="/index-image/origin.png"
               alt="COFFSEEKER"
@@ -244,7 +244,7 @@ export default function CoffeeMap() {
             data-aos="fade-down"
             data-aos-delay="300"
           >
-            <Image
+            <img
               className="d-block ed-orgin-img"
               src="/index-image/origin.png"
               alt="COFFSEEKER"

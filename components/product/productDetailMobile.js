@@ -19,7 +19,7 @@ import FetchComment from '@/components/FetchComment'
 import TopHitsMobile from '@/components/TopHitsMobile'
 import FetchFavProductId from '../fav/FetchFavProductId'
 
-export default function ProductDetailMobile() {
+export default function ProductDetailMobile({ pid }) {
   FetchFavProductId()
   // const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
