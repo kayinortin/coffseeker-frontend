@@ -16,7 +16,7 @@ export default function Custom404() {
             </div>
             <h3 className="my-4 text-center">糟糕，找不到這個頁面耶！</h3>
             <Link
-              href="http://localhost:3000/"
+              href="/"
               role="button"
               className="ed-btn ed-btn--primary ed-btn--medium ed-btn--w100 ed-placeholder__action"
             >

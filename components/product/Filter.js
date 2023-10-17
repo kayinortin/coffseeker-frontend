@@ -160,16 +160,16 @@ function Filter(props) {
       <div className="mt-2 mb-4 d-block">
         <ul className="ed-sidebar-li">
           <li className="mt-1 ed-filter-title">線上購物</li>
-          <Link href="http://localhost:3000/product">
+          <Link href="/product">
             <li className="mt-3">全站商品</li>
           </Link>
-          <Link href="http://localhost:3000/product/category/1">
+          <Link href="/product/category/1">
             <li className="mt-3">咖啡豆</li>
           </Link>
-          <Link href="http://localhost:3000/product/category/2">
+          <Link href="/product/category/2">
             <li className="mt-3">濾掛包</li>
           </Link>
-          <Link href="http://localhost:3000/product/category/6">
+          <Link href="/product/category/6">
             <li className="mt-3">送禮推薦</li>
           </Link>
         </ul>

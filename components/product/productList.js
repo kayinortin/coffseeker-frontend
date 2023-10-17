@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { useMediaQuery } from 'react-responsive'
 import Link from 'next/link'
 import Head from 'next/head'

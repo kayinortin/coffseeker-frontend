@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import Image from 'next/image'
+import Link from 'next/link'
 import AOS from 'aos'
 
 import PopularDataFetcher from '../product/PopularDataFetcher'
@@ -65,20 +66,20 @@ export default function PopularProducts() {
                   data-aos={aosValue}
                   data-aos-delay={300}
                 >
-                  <a href="./product/category/1">
+                  <Link href="/product/category/1">
                     <button id="btn1" className="btn my-2 btn-color-1 me-md-3">
                       中淺 <br /> 烘焙
                     </button>
                     <Image
                       className="ed-course-index ed-index-left"
-                      src="http://localhost:3000/index-image/course01.png"
-                      alt=""
+                      src="/index-image/course01.png"
+                      alt="中淺烘焙"
                       width={150}
                       height={150}
                       data-aos={aosValue}
                       data-aos-delay={300}
                     />
-                  </a>
+                  </Link>
 
                   <h6 className="slogan">
                     <span>
@@ -93,20 +94,20 @@ export default function PopularProducts() {
                   data-aos={aosValue}
                   data-aos-delay={600}
                 >
-                  <a href="./product/category/1">
+                  <Link href="./product/category/1">
                     <button id="btn2" className="btn my-2 btn-color-2 me-md-3">
                       中度 <br /> 烘焙
                     </button>
                     <Image
                       className="ed-course-index ed-index-left"
-                      src="http://localhost:3000/index-image/course02.png"
-                      alt=""
+                      src="/index-image/course02.png"
+                      alt="中度烘焙"
                       width={150}
                       height={150}
                       data-aos={aosValue}
                       data-aos-delay={600}
                     />
-                  </a>
+                  </Link>
                   <h6 className="slogan">
                     <span>
                       平衡的香醇，
@@ -120,20 +121,20 @@ export default function PopularProducts() {
                   data-aos={aosValue}
                   data-aos-delay={700}
                 >
-                  <a href="./product/category/2">
+                  <Link href="/product/category/2">
                     <button id="btn3" className="btn my-2 btn-color-3 me-md-3">
                       中深 <br /> 烘焙
                     </button>
                     <Image
                       className="ed-course-index ed-index-left"
-                      src="http://localhost:3000/index-image/course03.png"
-                      alt=""
+                      src="/index-image/course03.png"
+                      alt="中深烘焙"
                       width={150}
                       height={150}
                       data-aos={aosValue}
                       data-aos-delay={700}
                     />
-                  </a>
+                  </Link>
 
                   <h6 className="slogan">
                     <span>
@@ -150,12 +151,12 @@ export default function PopularProducts() {
                 >
                   <img
                     className="arrow me-5 me-md-0"
-                    src="http://localhost:3000/index-image/arrow.gif"
+                    src="/index-image/arrow.gif"
                     alt="arrow"
                   />
-                  <a
+                  <Link
                     className="d-md-inline d-flex justify-content-center align-items-center ms-md-5 m-0"
-                    href="./product"
+                    href="/product"
                   >
                     <br />
                     <button id="btn4" className="btn my-2 btn-color-4 me-md-3">
@@ -166,7 +167,7 @@ export default function PopularProducts() {
                       <br />
                       <span>由淺入深的曼妙滋味！</span>
                     </h6>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -199,7 +200,7 @@ export default function PopularProducts() {
               <div className="container">
                 <img
                   className="ed-no-product-arrow"
-                  src="http://localhost:3000/index-image/arrow.gif"
+                  src="/index-image/arrow.gif"
                   alt="arrow"
                 />
                 <div className="hot-product ed-no-product">

@@ -25,11 +25,6 @@ export default function ProductItem(props) {
     popularity,
   } = product
   const { show, setShow } = useShow()
-  const { categoryData } = useCategory()
-  const { cartListData, setCartListData } = useCartList()
-  const [category, setCategory] = useState({ id: '', name: '' })
-
-  const isFetchingCategory = categoryData.length === 0
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
 

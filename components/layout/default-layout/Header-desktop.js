@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { checkLoginStatus } from '@/components/member/FetchDatas/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
-import { cookies } from 'next/dist/client/components/headers'
 
 export default function HeaderDesktop(props) {
   const { navItems, currentRoute, navActions, isTop, isFullScreen } = props
@@ -37,7 +36,7 @@ export default function HeaderDesktop(props) {
             timer: 1500,
           })
           setTimeout(() => {
-            window.location.href = 'http://localhost:3000/'
+            window.location.href = '/'
           }, 1500)
         } else {
           Swal.fire({
@@ -58,10 +57,7 @@ export default function HeaderDesktop(props) {
       <div className="ed-navbar--desktop d-none d-lg-flex">
         <ul className="ed-navbar__items">
           <li className="ed-navbar__item">
-            <Link
-              className="ed-navbar__font ed-navbar__logo"
-              href="http://localhost:3000/"
-            >
+            <Link className="ed-navbar__font ed-navbar__logo" href="/">
               {!isTop || isFullScreen ? (
                 <img src="/logo-white.png" alt="logo" />
               ) : (

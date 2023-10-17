@@ -21,7 +21,7 @@ const NewsDetail = ({ news, error }) => {
           <ol className="ei-breadcrumb m-3 list-inline">
             <div>
               <Head>
-                <title>{news?.news_title}｜探索咖啡COFFSEEKER</title>
+                <title>{`${news.news_title}｜探索咖啡COFFSEEKER`}</title>
               </Head>
             </div>
             <li className="breadcrumb-item list-inline-item">

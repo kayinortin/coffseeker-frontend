@@ -1,7 +1,12 @@
 import React from 'react'
-
 import Image from 'next/image'
 import Link from 'next/link'
+import { useMediaQuery } from 'react-responsive'
+
+import { useShow } from '@/context/showProductDetail'
+
+import ProductDetailMobile from '@/components/product/productDetailMobile'
+
 export default function FavItems({ data, type, handleRemove }) {
   let id, imgUrl, name, price, addedFavDate, itemLink
 
@@ -14,12 +19,37 @@ export default function FavItems({ data, type, handleRemove }) {
     itemLink = `/product/${id}`
   } else {
     id = data.id
-    imgUrl = `http://localhost:3000/${data.course_image}`
+    imgUrl = `/${data.course_image}`
     name = data.course_name
     price = data.course_price
     addedFavDate = data.addedFavDate
     itemLink = `/course/${id}`
   }
+
+  const { show, setShow } = useShow()
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
+  const handleLinkClick = (e) => {
+    if (isMobile) {
+      e.preventDefault()
+    }
+  }
+
+  const handleViewDetail = () => {
+    setShow((prev) => ({
+      ...prev,
+      in: true,
+      selectedPid: data.id,
+    }))
+  }
+
+  const handleItemClick = (e) => {
+    if (type === 'product') {
+      handleLinkClick(e)
+      handleViewDetail()
+    }
+  }
+
   return (
     <>
       <div className={'d-lg-flex border-bottom border-dark p-2'}>
@@ -54,9 +84,16 @@ export default function FavItems({ data, type, handleRemove }) {
             <Link
               className="rj_FavBtn mb-lg-3 col-5 col-lg-12 py-2"
               href={itemLink}
+              onClick={handleItemClick}
             >
               前往查看
             </Link>
+            {isMobile && show.in && (
+              <ProductDetailMobile
+                pid={show.selectedPid}
+                onClose={() => setShow((prev) => ({ ...prev, in: false }))}
+              />
+            )}
             <button
               className="rj_FavBtn col-5 col-lg-12 py-2"
               onClick={() => {

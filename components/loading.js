@@ -1,8 +1,14 @@
 import React from 'react'
+import Head from 'next/head'
 
 function Loading() {
   return (
     <>
+      <div>
+        <Head>
+          <title>探索咖啡COFFSEEKER｜網羅世界各地極品咖啡</title>
+        </Head>
+      </div>
       <div className="ed-loading animation animation__loading animation__loading--out">
         <svg
           id="eypENqKG5ne1"

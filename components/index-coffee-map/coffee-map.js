@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { IoLocation } from 'react-icons/io5'
-import styles from '../../styles/_about.module.scss'
 import AOS from 'aos'
 
 export default function CoffeeMap() {

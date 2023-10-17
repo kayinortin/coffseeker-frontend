@@ -10,7 +10,6 @@ import { useCartList } from '@/context/cart'
 import FavIcon from '../FavIcon'
 
 export default function ProductTopHits(props) {
-  const { cartListData, setCartListData } = useCartList()
   const { addCart } = useAddCart(props.product)
   const { product } = props
   const {

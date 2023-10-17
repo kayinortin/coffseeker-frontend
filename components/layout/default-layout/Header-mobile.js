@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
@@ -43,7 +43,7 @@ export default function HeaderMobile(props) {
             timer: 1500,
           })
           setTimeout(() => {
-            window.location.href = 'http://localhost:3000/'
+            window.location.href = '/'
           }, 1500)
         } else {
           Swal.fire({
@@ -74,10 +74,7 @@ export default function HeaderMobile(props) {
         <label htmlFor="menuToggle" className="ed-navbar__toggle">
           <i className="fas fa-bars ed-navbar__icon"></i>
         </label>
-        <Link
-          className="ed-navbar__font ed-navbar__logo"
-          href="http://localhost:3000/"
-        >
+        <Link className="ed-navbar__font ed-navbar__logo" href="/">
           {!isTop || isFullScreen ? (
             <img src="/logo-white.png" alt="logo" />
           ) : (
@@ -145,11 +142,7 @@ export default function HeaderMobile(props) {
               <hr className="ed-hr ed-hr--navbar" />
             </li>
             <div className="ed-bg2">
-              <img
-                src="http://localhost:3000/bg2-sm.png"
-                alt="menu-bg"
-                width={240}
-              />
+              <img src="/bg2-sm.png" alt="menu-bg" width={240} />
             </div>
 
             {navActions.map((action) => (
