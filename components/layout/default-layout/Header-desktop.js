@@ -4,10 +4,14 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { checkLoginStatus } from '@/components/member/FetchDatas/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
+import { useAuthJWT } from '@/context/useAuthJWT'
+import useFirebase from '@/hooks/use-firebase'
 
 export default function HeaderDesktop(props) {
   const { navItems, currentRoute, navActions, isTop, isFullScreen } = props
   const { isLoggedIn, setIsLoggedIn } = useUser()
+  const { logoutFirebase } = useFirebase()
+  const { authJWT, setAuthJWT } = useAuthJWT()
 
   useEffect(() => {
     async function fetchLoginStatus() {
@@ -26,9 +30,19 @@ export default function HeaderDesktop(props) {
         { withCredentials: true }
       )
       .then((res) => {
-        // console.log(res.data.message)
         if (res.data.message === 'success') {
+          logoutFirebase()
           localStorage.removeItem('hasVisitedBefore')
+          setAuthJWT({
+            isAuth: false,
+            userData: {
+              id: 0,
+              name: '',
+              username: '',
+              r_date: '',
+            },
+          })
+
           Swal.fire({
             title: '登出成功',
             icon: 'success',

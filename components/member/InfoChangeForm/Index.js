@@ -28,6 +28,8 @@ export default function InfoChangeForm() {
   const checkToken = Cookies.get('accessToken')
   useEffect(() => {
     async function fetchData() {
+      console.log('Fetch accessToken:', checkToken)
+
       if (checkToken) {
         const fetchUser = await FetchUserData()
         console.log(fetchUser)
@@ -36,13 +38,19 @@ export default function InfoChangeForm() {
           setId(fetchUser.id)
           setMail(fetchUser.email)
           setName(fetchUser.username)
-          setPhone(fetchUser.phone)
-          setGender(fetchUser.gender)
-          setAddress(fetchUser.address)
-          const UserBirthday = fetchUser.birthday.split('-')
-          setBirthdayYear(UserBirthday[0])
-          setBirthdayMonth(UserBirthday[1])
-          setBirthdayDate(UserBirthday[2])
+          setPhone(fetchUser.phone ?? '')
+          setGender(fetchUser.gender ?? '')
+          setAddress(fetchUser.address ?? '')
+          if (fetchUser.birthday) {
+            const UserBirthday = fetchUser.birthday.split('-')
+            setBirthdayYear(UserBirthday[0])
+            setBirthdayMonth(UserBirthday[1])
+            setBirthdayDate(UserBirthday[2])
+          } else {
+            setBirthdayYear('')
+            setBirthdayMonth('')
+            setBirthdayDate('')
+          }
         }
       } else {
         console.log('Cookie不存在')

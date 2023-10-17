@@ -110,7 +110,7 @@ export default function LoginForm() {
     // 取得單一使用者資料
     try {
       const response = await axios.post(
-        'http://localhost:3005/api/auth/login',
+        'http://localhost:3005/api/auth-jwt/login',
         formData
       )
       // console.log('伺服器回應:', response.data)
@@ -153,36 +153,31 @@ export default function LoginForm() {
   const { loginGoogleRedirect, initApp, logoutFirebase } = useFirebase()
   const { authJWT, setAuthJWT } = useAuthJWT()
 
-  // // 這裡要設定initApp，讓這個頁面能監聽firebase的google登入狀態
-  // 在點擊 Google 登入按鈕後，執行 Google 登入流程
-
   useEffect(() => {
     initApp(callbackGoogleLoginRedirect)
-  }, [])
+    console.log(authJWT)
+  }, [authJWT])
 
   const callbackGoogleLoginRedirect = async (providerData) => {
-    // 如果目前react(next)已經登入中，不需要再作登入動作
     if (authJWT.isAuth) return
-    console.log('取得的providerData', providerData)
 
     const res = await axios.post(
       'http://localhost:3005/api/google-login/jwt',
       providerData,
       {
-        withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
+        withCredentials: true,
       }
     )
-
+    console.log(res.data)
     if (res.data.message === 'success') {
       setAuthJWT({
         isAuth: true,
         userData: res.data.user,
       })
 
-      console.log(authJWT)
       Cookies.set('accessToken', res.data.accessToken)
       setIsLoggedIn(true)
-      console.log('res.data', res.data)
+
       Swal.fire({
         title: '登入成功，即將跳轉至會員中心',
         icon: 'success',
@@ -190,14 +185,12 @@ export default function LoginForm() {
         timer: 1500,
       })
       router.push('/member')
-      // router.push('/member')
     } else {
       alert('有錯誤')
     }
   }
 
   const logout = async () => {
-    // firebase logout(注意，並不會登出google帳號)
     logoutFirebase()
 
     // 伺服器logout

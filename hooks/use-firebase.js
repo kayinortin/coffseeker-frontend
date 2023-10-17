@@ -13,6 +13,7 @@ import {
 import { useEffect } from 'react'
 
 import { firebaseConfig } from './firebase-config'
+import { useUser } from '@/context/UserInfo'
 
 const initApp = (callback) => {
   const auth = getAuth()
@@ -21,16 +22,9 @@ const initApp = (callback) => {
   getRedirectResult(auth)
     .then((result) => {
       if (result) {
-        // This gives you a Google Access Token. You can use it to access Google APIs.
         const user = result.user
-        // const credential = GoogleAuthProvider.credentialFromResult(result)
         const token = result.credential.accessToken
 
-        // The signed-in user info.
-        console.log(token)
-        console.log(user)
-
-        // Call the callback with user data
         callback({
           ...user.providerData[0],
           token: token,
@@ -41,29 +35,22 @@ const initApp = (callback) => {
       console.error(error)
     })
 
-  // Listening for auth state changes.
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log('user', user)
-      console.log('user.providerData[0]', user.providerData[0])
-      // callback the user data
       callback(user.providerData[0])
     }
   })
 }
 
-// TODO: 目前不需要從firebase登出，firebase登出並不會登出google
 const logoutFirebase = () => {
   const auth = getAuth()
 
   signOut(auth)
     .then(function () {
-      // Sign-out successful.
       console.log('Sign-out successful.')
       // window.location.assign('https://accounts.google.com/logout')
     })
     .catch(function (error) {
-      // An error happened.
       console.log(error)
     })
 }
@@ -72,21 +59,18 @@ const loginGoogle = async (callback) => {
   const provider = new GoogleAuthProvider()
   const auth = getAuth()
 
-  signInWithPopup(auth, provider)
-    .then(async (result) => {
-      const user = result.user
-      console.log(user)
+  try {
+    const result = await signInWithPopup(auth, provider)
+    const user = result.user
+    const token = await user.getIdToken()
 
-      const token = await user.getIdToken()
-
-      callback({
-        ...user.providerData[0],
-        token: token,
-      })
+    callback({
+      ...user.providerData[0],
+      token,
     })
-    .catch((error) => {
-      console.log(error)
-    })
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const loginGoogleRedirect = async (callback) => {
@@ -104,9 +88,22 @@ const loginFBRedirect = () => {
 }
 
 export default function useFirebase() {
+  const { userData, setUserData } = useUser()
+
   useEffect(() => {
-    // 初始化
     initializeApp(firebaseConfig)
+
+    const auth = getAuth()
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserData(user.providerData[0])
+      } else {
+        setUserData(null)
+      }
+    })
+
+    return () => unsubscribe()
   }, [])
 
   return {
