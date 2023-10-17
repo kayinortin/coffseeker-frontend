@@ -47,9 +47,9 @@ export default function InfoChangeForm() {
             setBirthdayMonth(UserBirthday[1])
             setBirthdayDate(UserBirthday[2])
           } else {
-            setBirthdayYear('')
-            setBirthdayMonth('')
-            setBirthdayDate('')
+            setBirthdayYear('1990')
+            setBirthdayMonth('01')
+            setBirthdayDate('01')
           }
         }
       } else {

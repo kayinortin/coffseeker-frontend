@@ -150,13 +150,13 @@ export default function LoginForm() {
 
   // // google登入相關
 
-  const { loginGoogleRedirect, initApp, logoutFirebase } = useFirebase()
+  const { loginFBRedirect, loginGoogleRedirect, initApp, logoutFirebase } =
+    useFirebase()
   const { authJWT, setAuthJWT } = useAuthJWT()
 
   useEffect(() => {
     initApp(callbackGoogleLoginRedirect)
-    console.log(authJWT)
-  }, [authJWT])
+  }, [])
 
   const callbackGoogleLoginRedirect = async (providerData) => {
     if (authJWT.isAuth) return
@@ -168,7 +168,7 @@ export default function LoginForm() {
         withCredentials: true,
       }
     )
-    console.log(res.data)
+
     if (res.data.message === 'success') {
       setAuthJWT({
         isAuth: true,
@@ -190,6 +190,35 @@ export default function LoginForm() {
     }
   }
 
+  // ===================================
+
+  // // Facebook登入相關
+
+  useEffect(() => {
+    initApp(callbackFBLoginRedirect)
+  }, [])
+
+  const callbackFBLoginRedirect = async (providerData) => {
+    if (authJWT.isAuth) return
+
+    const res = await axios.post(
+      'http://localhost:3005/api/facebook-login/jwt',
+      providerData,
+      {
+        withCredentials: true,
+      }
+    )
+
+    if (res.data.message === 'success') {
+      setAuthJWT({
+        isAuth: true,
+        userData: res.data.user,
+      })
+    } else {
+      alert('有錯誤')
+    }
+  }
+
   const logout = async () => {
     logoutFirebase()
 
@@ -198,7 +227,7 @@ export default function LoginForm() {
       'http://localhost:3005/api/auth-jwt/logout',
       {},
       {
-        withCredentials: true, // save cookie in browser
+        withCredentials: true,
       }
     )
 
@@ -300,9 +329,7 @@ export default function LoginForm() {
           <button
             className={'border-0 bg-none third-login me-5'}
             type="button"
-            onClick={() => {
-              console.log('test')
-            }}
+            onClick={loginFBRedirect}
           >
             <FaFacebook className={'h2'} />
           </button>
