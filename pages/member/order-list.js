@@ -55,8 +55,8 @@ export default function OrderList() {
                   // console.log(orderBy)
                 }}
               >
-                <option value={'DESC'}>時間:新到舊</option>
-                <option value={'ASC'}>時間:舊到新</option>
+                <option value={'DESC'}>時間：新到舊</option>
+                <option value={'ASC'}>時間：舊到新</option>
               </select>
             </div>
           </div>
