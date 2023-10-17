@@ -55,7 +55,7 @@ export default function CoursePic({ pid }) {
     }
   },[pid])
 
-  console.log(typeof images)
+  
 
   return (
     <>
