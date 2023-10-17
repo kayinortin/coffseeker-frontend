@@ -111,7 +111,6 @@ export default function News() {
             totalPages={totalPages}
             currentPage={currentPage}
             onPageChange={handlePageChange}
-            className=""
           />
         </div>
       </div>

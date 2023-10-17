@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { IoLocation } from 'react-icons/io5'
-import styles from '../../styles/_about.module.scss'
 import AOS from 'aos'
 
 export default function CoffeeMap() {
@@ -113,7 +112,7 @@ export default function CoffeeMap() {
           data-aos-delay="600"
         >
           <div className="d-flex justify-content-center">
-            <img
+            <Image
               className="d-block ed-orgin-img"
               src="/index-image/origin.png"
               alt="COFFSEEKER"
@@ -245,7 +244,7 @@ export default function CoffeeMap() {
             data-aos="fade-down"
             data-aos-delay="300"
           >
-            <img
+            <Image
               className="d-block ed-orgin-img"
               src="/index-image/origin.png"
               alt="COFFSEEKER"

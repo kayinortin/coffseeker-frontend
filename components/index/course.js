@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import Link from 'next/link'
 import Image from 'next/image'
 import AOS from 'aos'
 
@@ -22,7 +23,7 @@ export default function Course() {
   return (
     <>
       <div className="ed-course-intro container d-lg-flex mb-4 justify-content-between">
-        <a className="ed-zindex" href="./course">
+        <Link className="ed-zindex" href="/course">
           <div
             className="gallery flex-column"
             data-active-group={activeGroup}
@@ -60,42 +61,42 @@ export default function Course() {
             />
             <Image
               className="gallery_img-2x2 group-2"
-              src="http://localhost:3000/course-gallery/10.jpg"
+              src="/course-gallery/10.jpg"
               alt="course-gallery"
               width={400}
               height={400}
             />
             <Image
               className="gallery_img-2x2 group-1"
-              src="http://localhost:3000/course-gallery/9.jpg"
+              src="/course-gallery/9.jpg"
               alt="course-gallery"
               width={400}
               height={400}
             />
             <Image
               className="gallery_img-1x1 group-3"
-              src="http://localhost:3000/course-gallery/15.jpg"
+              src="/course-gallery/15.jpg"
               alt="course-gallery"
               width={200}
               height={200}
             />
             <Image
               className="gallery_img-2x2 group-3"
-              src="http://localhost:3000/course-gallery/8.jpg"
+              src="/course-gallery/8.jpg"
               alt="course-gallery"
               width={400}
               height={400}
             />
             <Image
               className="gallery_img-2x2 group-2"
-              src="http://localhost:3000/course-gallery/12.jpg"
+              src="/course-gallery/12.jpg"
               alt="course-gallery"
               width={400}
               height={400}
             />
             <Image
               className="gallery_img-2x2 group-1"
-              src="http://localhost:3000/course-gallery/13.jpg"
+              src="/course-gallery/13.jpg"
               alt="course-gallery"
               width={400}
               height={400}
@@ -103,20 +104,20 @@ export default function Course() {
 
             <Image
               className="gallery_img-2x2 group-2"
-              src="http://localhost:3000/course-gallery/7.jpg"
+              src="/course-gallery/7.jpg"
               alt="course-gallery"
               width={400}
               height={400}
             />
             <Image
               className="gallery_img-2x1 group-3"
-              src="http://localhost:3000/course-gallery/14.jpg"
+              src="/course-gallery/14.jpg"
               alt="course-gallery"
               width={400}
               height={200}
             />
           </div>
-        </a>
+        </Link>
 
         <div className="ed-course-title">
           <div className="ed-bg-circle"></div>
@@ -146,7 +147,7 @@ export default function Course() {
                 data-aos={aosValue}
                 data-aos-delay={300}
               >
-                <a href="./course/category/1">
+                <Link href="/course">
                   <button
                     id="btn1"
                     className="btn my-2 btn-color-1 me-md-3"
@@ -157,14 +158,14 @@ export default function Course() {
                   </button>
                   <Image
                     className="ed-course-index"
-                    src="http://localhost:3000/index-image/course01.png"
-                    alt=""
+                    src="/index-image/course01.png"
+                    alt="拉花課程"
                     width={150}
                     height={150}
                     data-aos={aosValue}
                     data-aos-delay={300}
                   />
-                </a>
+                </Link>
                 <h6 className="slogan">
                   <span>
                     跨越拉花的界線，
@@ -178,7 +179,7 @@ export default function Course() {
                 data-aos={aosValue}
                 data-aos-delay={600}
               >
-                <a href="./course/category/1">
+                <Link href="/course">
                   <button
                     id="btn2"
                     className="btn my-2 btn-color-2 me-md-3"
@@ -189,14 +190,14 @@ export default function Course() {
                   </button>
                   <Image
                     className="ed-course-index"
-                    src="http://localhost:3000/index-image/course02.png"
-                    alt=""
+                    src="/index-image/course02.png"
+                    alt="烘豆課程"
                     width={150}
                     height={150}
                     data-aos={aosValue}
                     data-aos-delay={600}
                   />
-                </a>
+                </Link>
                 <h6 className="slogan">
                   <span>
                     感受烘豆的溫度，
@@ -210,7 +211,7 @@ export default function Course() {
                 data-aos={aosValue}
                 data-aos-delay={700}
               >
-                <a href="./course/category/1">
+                <Link href="/course">
                   <button
                     id="btn3"
                     className="btn my-2 btn-color-3 me-md-3"
@@ -221,14 +222,14 @@ export default function Course() {
                   </button>
                   <Image
                     className="ed-course-index"
-                    src="http://localhost:3000/index-image/course03.png"
-                    alt=""
+                    src="/index-image/course03.png"
+                    alt="手沖課程"
                     width={150}
                     height={150}
                     data-aos={aosValue}
                     data-aos-delay={700}
                   />
-                </a>
+                </Link>
 
                 <h6 className="slogan">
                   <span>
@@ -245,12 +246,12 @@ export default function Course() {
               >
                 <img
                   className="arrow me-5 me-md-0"
-                  src="http://localhost:3000/index-image/arrow.gif"
+                  src="/index-image/arrow.gif"
                   alt="arrow"
                 />
-                <a
+                <Link
                   className="d-md-inline d-flex justify-content-center align-items-center ms-md-5 ms-0"
-                  href="./course"
+                  href="/course"
                 >
                   <br />
                   <button className="btn my-2 btn-color-4 me-md-3">
@@ -261,7 +262,7 @@ export default function Course() {
                     <br />
                     <span>決定自己的咖啡風味！</span>
                   </h6>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

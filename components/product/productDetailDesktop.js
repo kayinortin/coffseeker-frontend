@@ -18,7 +18,6 @@ import FetchFavProductId from '../fav/FetchFavProductId'
 
 export default function ProductDetailDesktop({ pid }) {
   FetchFavProductId()
-  // const [number, setNumber] = useState(1)
   const [images, setImage] = useState([])
   const [mainImageIndex, setMainImageIndex] = useState(0)
   const INITIAL_DETAIL_DATA = {
@@ -138,7 +137,7 @@ export default function ProductDetailDesktop({ pid }) {
                   className="d-flex justify-content-center align-items-center ed-cursor-pointer"
                 >
                   <div>
-                    <img
+                    <Image
                       className="ed-cursor-pointer"
                       src="/cart-image/product_1.png"
                       width={70}
@@ -159,7 +158,7 @@ export default function ProductDetailDesktop({ pid }) {
                   className="d-flex justify-content-center align-items-center ed-cursor-pointer"
                 >
                   <div>
-                    <img
+                    <Image
                       className="ed-cursor-pointer"
                       src="/cart-image/product_2.png"
                       width={70}

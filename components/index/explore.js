@@ -137,9 +137,7 @@ export default function Explore() {
   const [currentContent, setCurrentContent] = useState(
     '尼加拉瓜的日照，猶如金色的秋葉，漫舞在十月的微風中，充滿詩意。'
   )
-  const [currentImage, setCurrentImage] = useState(
-    'http://localhost:3000/season/10.jpg'
-  )
+  const [currentImage, setCurrentImage] = useState('/season/10.jpg')
   const [monthIndex, setMonthIndex] = useState(9)
 
   const handleMonthClick = (data) => {
@@ -383,7 +381,7 @@ export default function Explore() {
                 <img
                   className="bg-opacity"
                   data-aos="fade-left"
-                  src="http://localhost:3000/bg-3-ro.png"
+                  src="/bg-3-ro.png"
                   alt="coffseeker"
                 />
               </div>
@@ -393,7 +391,7 @@ export default function Explore() {
                 <img
                   className="ed-position"
                   data-aos="fade-down"
-                  src="http://localhost:3000/season/border.png"
+                  src="/season/border.png"
                   alt=""
                 />
                 <div className="arched-image">
