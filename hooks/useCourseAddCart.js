@@ -8,7 +8,7 @@ export default function useAddCartCourse(course) {
   const { cartListData_course, setCartListData_course } = useCartListCourse()
   //========================cartListData_course是否被污染以及傳入購物車後的變數資料型別是否為正確
 
-  const addCartCourse = (course) => {
+  const addCartCourse = () => {
     const itemInCart = cartListData_course.some((item) => item.id === course.id)
 
     const Toast = Swal.mixin({
@@ -45,15 +45,18 @@ export default function useAddCartCourse(course) {
 
     const newItem = {
       id: course.id,
-      name: course.course_name,
-      image_main: course.course_image,
-      price: course.course_price,
-      discountPrice: course.discountPrice,
-      description: course.course_description,
+      course_name: course.course_name,
+      course_image: course.course_image,
+      course_price: course.course_price,
+      course_description: course.course_description,
       amount:1
     }
 
+    
+
     const newItemData = [...cartListData_course, newItem]
+
+    console.log(newItemData)
 
     for (let i = 0; i < cartListData_course.length; i++) {
       if (cartListData_course[i].id === newItem.id) {
