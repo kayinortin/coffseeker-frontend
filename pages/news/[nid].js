@@ -49,7 +49,7 @@ const NewsDetail = ({ news, error }) => {
         </nav>
       </div>
 
-      <div className="container ei-container-nid mb-3">
+      <div className="container ei-container-nid mb-4">
         <div className="news-deail mt-3">
           <h3 className="text-center mb-4 mobile-news-title lh-sm fs-3">
             {news?.news_title}
@@ -60,14 +60,14 @@ const NewsDetail = ({ news, error }) => {
               <img
                 src={`http://localhost:3005/uploads/${news?.news_image}`}
                 alt={news?.news_title}
-                className="img-fluid mb-3"
+                className="img-fluid mb-4"
               />
             ) : null}
           </div>
         </div>
 
         <p
-          className="ei-letter-spacing lh-lg ms-2"
+          className="ei-letter-spacing lh-lg ms-2 mb-4"
           dangerouslySetInnerHTML={{ __html: contentWithLineBreaks }}
         ></p>
       </div>
