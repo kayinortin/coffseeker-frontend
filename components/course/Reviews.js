@@ -1,6 +1,4 @@
 import {React, useEffect} from 'react'
-import Image from 'next/image'
-import Score from './Score'
 import { useComment } from '@/context/comment'
 
 export default function Review({pid}) {

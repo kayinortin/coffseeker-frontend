@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { BreadCrumbs, BreadCrumbsMobile } from './BreadCrumbs'
-import { selectedCourse, useCourses } from '@/context/course'
+import {  useCourses } from '@/context/course'
 import axios from 'axios'
 import { useShow } from '../../context/showProductDetail'
 import CourseDetailFavIcon from '@/components/course/CourseDetailFavIcon'
@@ -65,7 +65,7 @@ export default function CoursePic({ pid }) {
             <BreadCrumbsMobile />
           </div>
           <div className="ed-image-gallery ">
-            <img
+            <Image
               src={`http://localhost:3000/${images[mainImageIndex]}`}
               // alt={name}
               width={300}
@@ -73,13 +73,12 @@ export default function CoursePic({ pid }) {
               className="m-2 me-1 ed-image-main"
             />
             <CourseDetailFavIcon id={pid} />
-
             <div className="ed-image-row">
               {
                 images.map((pic, index) => {
                   if (index === mainImageIndex) return null
                   return (
-                    <img
+                    <Image
                       key={index}
                       src={`http://localhost:3000/${pic}`}
                       alt={selectedCourse.course_name}

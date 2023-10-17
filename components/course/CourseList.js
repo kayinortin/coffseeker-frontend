@@ -13,7 +13,6 @@ export default function CourseList() {
   const [currentPage, setCurrentPage] = useState(1)
   const { coursesData, setCoursesData } = useCourses()
 
-  console.log(coursesData)
 
   //--------------------------------pagination
   const itemsPerPage = 9

@@ -1,24 +1,18 @@
-import { useState, useEffect } from 'react'
-import { BreadCrumbs, BreadCrumbsMobile } from './BreadCrumbs'
-import { AddCartBtn, BuyBtn, MobileDetailsBtns, DetailsAddCart } from './BuyBtn'
+import { BreadCrumbs } from './BreadCrumbs'
+import {  MobileDetailsBtns, DetailsAddCart } from './BuyBtn'
 import style from '@/styles/_course.module.scss'
 import Score from './Score'
 import CoursePerFetcher from './CoursePerFetcher'
-import { selectedCourse, useCourses } from '@/context/course'
-import { useShow } from '../../context/showProductDetail'
-import { useCategory } from '@/context/category'
-import { useCartList } from '@/context/cart'
+import {  useCourses } from '@/context/course'
+import Link from 'next/link'
 
 
 
 export default function CourseText(props) {
-  const { course, pid } = props
-  const {selectedCourse, setSelectedCourse}=useCourses()
+  const { pid } = props
+  const {selectedCourse}=useCourses()
 
-  const { show, setShow } = useShow()
-  const { cartListData, setCartListData } = useCartList()
-  const { categoryData } = useCategory()
-  const [category, setCategory] = useState({ id: '', name: '' })
+  
   
 
   return (
@@ -38,7 +32,7 @@ export default function CourseText(props) {
             <MobileDetailsBtns course={selectedCourse} />
           </div>
 
-          <div className="  ">
+          <div>
             <p className="my-4 ed-detail__item">
               【教師姓名】：{selectedCourse.teacher_name}
             </p>
@@ -49,9 +43,9 @@ export default function CourseText(props) {
           </div>
           <div className="d-none d-sm-flex justify-content-between align-items-center">
             <DetailsAddCart course={selectedCourse} />
-            <a href="http://localhost:3000/cart">
+            <Link href="http://localhost:3000/cart">
               <button className="ms-4 ed-addCart__check">立即結帳</button>
-            </a>
+            </Link>
           </div>
         </div>
       ) : (
