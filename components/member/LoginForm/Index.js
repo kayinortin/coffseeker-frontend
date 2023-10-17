@@ -278,7 +278,7 @@ export default function LoginForm() {
                 {checkPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
-            <div className={'form-check ps-0 d-flex align-items-center'}>
+            {/* <div className={'form-check ps-0 d-flex align-items-center'}>
               <input
                 type="checkbox"
                 className={'check-input me-3 rounded-0'}
@@ -287,7 +287,7 @@ export default function LoginForm() {
               <label className={'form-check-label'} htmlFor="exampleCheck1">
                 記住密碼
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={'d-flex justify-content-center mt-4'}>

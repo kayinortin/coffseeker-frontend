@@ -68,14 +68,14 @@
       align-items: flex-start;
   
       #{$_}__icon {
-        top: 0px;
-        right: -6px;
+        top: -9px;
+        right: -2px;
         font-size: 2rem;
       }
     }
     @media screen and (max-width: $md) {
-      width: 3rem;
-      height: 3rem;
+      width: 4rem;
+      height: 4rem;
   
       align-items: center;
       #{$_}__icon {
@@ -107,4 +107,11 @@
         }
       }
     }
+  }
+
+  .hw-description-text{
+    white-space: nowrap;
+    overflow: hidden; 
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3; 
   }

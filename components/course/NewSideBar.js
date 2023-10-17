@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from 'react-icons/md'
-import ReactSlider from 'react-slider'
 import axios from 'axios'
 
 function Accordion(props) {
@@ -64,13 +62,17 @@ function Accordion(props) {
 
   return (
     <div className="col-sm-2 d-none d-sm-block text-center my-5 me-5">
-      {/* <h6 className='ed-filter-title'>課程列表</h6> */}
       <form onSubmit={handleFormSubmit}>
         <fieldset>
           <legend
             className="mt-2 mb-3 ed-filter-title"
             onClick={() => {
               setIsCourseNameExpanded(!isCourseNameExpanded)
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                setIsCourseNameExpanded(!isCourseNameExpanded)
+              }
             }}
           >
             課程種類
@@ -108,6 +110,11 @@ function Accordion(props) {
             onClick={() => {
               setIsCourseLevelExpanded(!isCourseLevelExpanded)
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                setIsCourseNameExpanded(!isCourseNameExpanded)
+              }
+            }}
           >
             課程等級
             <span className="arrow-icon">
@@ -138,7 +145,7 @@ function Accordion(props) {
             ))}
           <hr />
         </fieldset>
-        
+
         <button className="ed-btn-filter mt-2" type="submit">
           篩選
         </button>

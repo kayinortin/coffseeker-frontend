@@ -54,8 +54,8 @@ export default function Coupon() {
                   // console.log(orderBy)
                 }}
               >
-                <option value={'DESC'}>有效期限:近到遠</option>
-                <option value={'ASC'}>有效期限:遠到近</option>
+                <option value={'DESC'}>有效期限：近到遠</option>
+                <option value={'ASC'}>有效期限：遠到近</option>
               </select>
             </div>
           </div>
