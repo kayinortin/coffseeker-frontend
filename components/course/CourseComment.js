@@ -61,7 +61,7 @@ export default function CourseComment({ totalStars = 5, pid }) {
           headers: {
             'Content-type': 'application/json',
           },
-          body: JSON.stringify({
+          body:JSON.stringify({
             course_id: pid,
             user_id: userData.id,
             user_email: userData.email,

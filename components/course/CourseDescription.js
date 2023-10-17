@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import axios from 'axios'
 import style from '@/styles/_course.module.scss'
-
+import { useCourses } from '@/context/course'
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 import CourseFetcher from './course-fetch'
-import { selectedCourse, setSelectedCourse } from '@/context/course'
 
 export default function CourseDescription() {
   const router = useRouter()
@@ -29,8 +27,6 @@ export default function CourseDescription() {
           <section>
             <div className="">
               <CourseInfoBtn
-              // activeContent={activeContent}
-              // onButtonClick={handleButtonClick}
               />
             </div>
 
