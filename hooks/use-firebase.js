@@ -14,17 +14,6 @@ import { useEffect } from 'react'
 
 import { firebaseConfig } from './firebase-config'
 
-/**
- * initApp handles setting up UI event listeners and registering Firebase auth listeners:
- *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
- *    out, and that is where we update the UI.
- *  - firebase.auth().getRedirectResult(): This promise completes when the user gets back from
- *    the auth redirect flow. It is where you can get the OAuth access token from the IDP.
- */
-// 重定向專用，用於在同頁面(firebase的登入頁會與回調頁同一頁)監聽登入情況
-// getRedirectResult回調頁時用(註:重定向後，回調回來時才會呼叫)
-// onAuthStateChanged監聽auth物件變化 <---(用這個就足夠，它會在頁面一啟動偵測目前登入情況)
-
 const initApp = (callback) => {
   const auth = getAuth()
 
@@ -33,16 +22,19 @@ const initApp = (callback) => {
     .then((result) => {
       if (result) {
         // This gives you a Google Access Token. You can use it to access Google APIs.
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const token = credential.accessToken
+        const user = result.user
+        // const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = result.credential.accessToken
 
         // The signed-in user info.
-        const user = result.user
         console.log(token)
         console.log(user)
 
         // Call the callback with user data
-        callback(user.providerData[0])
+        callback({
+          ...user.providerData[0],
+          token: token,
+        })
       }
     })
     .catch((error) => {
@@ -53,6 +45,7 @@ const initApp = (callback) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log('user', user)
+      console.log('user.providerData[0]', user.providerData[0])
       // callback the user data
       callback(user.providerData[0])
     }
@@ -84,8 +77,12 @@ const loginGoogle = async (callback) => {
       const user = result.user
       console.log(user)
 
-      // user後端寫入資料庫等等的操作
-      callback(user.providerData[0])
+      const token = await user.getIdToken()
+
+      callback({
+        ...user.providerData[0],
+        token: token,
+      })
     })
     .catch((error) => {
       console.log(error)
@@ -96,11 +93,9 @@ const loginGoogleRedirect = async (callback) => {
   const provider = new GoogleAuthProvider()
   const auth = getAuth()
 
-  // redirect to google auth
   signInWithRedirect(auth, provider)
 }
 
-// TODO: fb有許多前置設定需求，有需要使用請連絡Eddy
 const loginFBRedirect = () => {
   const provider = new FacebookAuthProvider()
   const auth = getAuth()

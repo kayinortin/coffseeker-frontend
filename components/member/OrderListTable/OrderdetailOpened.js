@@ -287,8 +287,8 @@ export default function OrderDetailOpened({ order }) {
           >
             {receiver.map((v, i) => (
               <div className={'d-flex p-2'} key={i}>
-                <span className={'col-3'}>{v.info}</span>
-                <span className={'col-9 text-end'}>{v.data}</span>
+                <span className={'col-4'}>{v.info}</span>
+                <span className={'col-8 text-end'}>{v.data}</span>
               </div>
             ))}
           </div>

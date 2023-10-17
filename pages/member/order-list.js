@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/Sidebar/MemSideBar'
 import OrderListTable from '@/components/member/OrderListTable/Index'
+import Head from 'next/head'
 export default function OrderList() {
   const [orderBy, setOrderBy] = useState('DESC')
   const [currentPage, setCurrentPage] = useState(1)
@@ -18,6 +19,11 @@ export default function OrderList() {
 
   return (
     <>
+      <div>
+        <Head>
+          <title>歷史訂單｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className={'container pr-defualt-height'}>
         {/* 麵包屑 */}
         <div className={'row'}>

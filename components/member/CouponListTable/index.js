@@ -60,7 +60,9 @@ export default function CouponListTable({
             <div className={'d-flex flex-wrap jusify-content-between'}>
               {couponData ? (
                 couponData.length == 0 ? (
-                  <div className={'text-center py-5'}>尚未成立任何訂單</div>
+                  <div className={'text-center py-5'}>
+                    您還沒有優惠券！請關注最新消息領取優惠券喔！
+                  </div>
                 ) : (
                   couponData.map((v, i) => <CouponItems key={i} coupon={v} />)
                 )

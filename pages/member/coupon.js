@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/Sidebar/MemSideBar'
 import CouponListTable from '@/components/member/CouponListTable'
+import Head from 'next/head'
 export default function Coupon() {
   const [orderBy, setOrderBy] = useState('ASC')
   const [currentPage, setCurrentPage] = useState(1)
@@ -17,6 +18,11 @@ export default function Coupon() {
   }, [totalPage])
   return (
     <>
+      <div>
+        <Head>
+          <title>優惠券｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className={'container pr-defualt-height'}>
         {/* 麵包屑 */}
         <div className={'row'}>
