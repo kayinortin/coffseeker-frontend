@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Link from 'next/link'
 import { useMediaQuery } from 'react-responsive'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
@@ -18,11 +17,10 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
-
-
+import CourseTopHitsCard from './CourseTopHitsCard'
 
 const TopHitsMobile = (props) => {
-  const [data, setData]=useState([])
+  const [data, setData] = useState([])
   const { addCart } = useAddCart(props.product)
   useEffect(() => {
     const FetchedCourse = async () => {
@@ -31,11 +29,9 @@ const TopHitsMobile = (props) => {
 
         const courses = response.data.courses
 
-        if(courses.length!==0){
+        if (courses.length !== 0) {
           setData(courses)
         }
-        
-        
       } catch (error) {
         console.log('資料獲取失敗：', error)
       }
@@ -43,13 +39,7 @@ const TopHitsMobile = (props) => {
     FetchedCourse()
   }, [])
 
-  
-  
-
-  
-  const slicedData=data.slice(10,19)
-  
-  
+  const slicedData = data.slice(10, 19)
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
 
@@ -59,11 +49,8 @@ const TopHitsMobile = (props) => {
     }
   }
 
-
-  
   return (
     <>
-      
       <h5 className="mt-4">相關商品</h5>
       <div className="my-4">
         <Swiper
@@ -77,35 +64,8 @@ const TopHitsMobile = (props) => {
         >
           {slicedData.map((course, i) => {
             return (
-              <SwiperSlide key={i}><div className="card ed-border-none">
-                  <Link
-                    className="ed-border-card01"
-                    href={`/course/${course.id}`}
-                    onClick={handleShow}
-                  >
-                    <img
-                      src={`http://localhost:3000/${course.course_image}`}
-                      alt={course.course_name}
-                      className="card-img-top"
-                    />
-                  </Link>
-                  <FavIcon size="medium" type="icon" id={course.id} />
-                  <div className="card-body ed-card-body">
-                    {/* <p className="ed-card-brand">精選品牌 &gt; {brand}</p> */}
-                    <h5 className="card-title ed-card-title">{course.course_name}</h5>
-                    <h6 className="card-title ed-card-description">
-                      {course.course_description}
-                    </h6>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <h6 className="ed-card-price">NT${course.course_price}</h6>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <button className="ed-addCart" onClick={addCart}>
-                          加入購物車
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <SwiperSlide key={i}>
+                <CourseTopHitsCard key={course.id} course={course} />
               </SwiperSlide>
             )
           })}

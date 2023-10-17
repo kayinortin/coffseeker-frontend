@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from '@/styles/_course.module.scss'
 
 export default function CourseInfoBtn() {
   const [activeContent, setActiveContent] = useState('introduction')

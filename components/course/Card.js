@@ -4,13 +4,9 @@ import style from '@/styles/_course.module.scss'
 import { AddCartBtn, BuyBtn } from './BuyBtn'
 import Link from 'next/link'
 import FavIconC from '../FavIconC'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
 import { useShow } from '@/context/showProductDetail'
 
-import { useFavorite } from '@/context/fav'
 
-import { useCourses } from '@/context/course'
 
 export default function Card(props) {
   const { course } = props
@@ -30,7 +26,7 @@ export default function Card(props) {
             href={`http://localhost:3000/course/${course?.id}`}
             onClick={handleShow}
           >
-            <img
+            <Image
               src={`http://localhost:3000/${course.course_image}`}
               alt={course?.name}
               width={250}

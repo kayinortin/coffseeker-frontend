@@ -1,8 +1,6 @@
 import React from 'react'
 import Swal from 'sweetalert2'
-import styles from '@/styles/_course.module.scss'
 import Link from 'next/link'
-import { useSwiper } from 'swiper/react'
 
 import { useCartListCourse } from '@/context/cart_course'
 
@@ -198,9 +196,9 @@ function MobileDetailsBtns(props) {
         加入購物車
         <i className="fas fa-shopping-cart"></i>
       </button>
-      <a href="http://localhost:3000/cart">
+      <Link href="http://localhost:3000/cart">
         <button className="ms-1 ed-addCart__check">立即結帳</button>
-      </a>
+      </Link>
     </div>
   )
 }

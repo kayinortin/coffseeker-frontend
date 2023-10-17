@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import CoursePic from '@/components/course/CoursePic'
 import CourseText from '@/components/course/CourseText'
 import Review from './Reviews'
-// import CourseDescription from './CourseDescription'
 import TopHits from './TopHits'
 import style from '@/styles/_course.module.scss'
 import { useUser } from '@/context/UserInfo'
@@ -12,10 +11,8 @@ import Image from 'next/image'
 import axios from 'axios'
 import CourseComment from '@/components/course/CourseComment'
 import CoursePerFetcher from './CoursePerFetcher'
-import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 
 import { useShow } from '../../context/showProductDetail'
-import { AddCartBtn, BuyBtn } from './BuyBtn'
 import TopHitsMobile from './TopHitsMobile'
 
 export default function MainContent({ pid }) {
