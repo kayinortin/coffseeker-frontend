@@ -21,8 +21,8 @@ export default function Coupons() {
         setCoupons(response.data)
 
         // 存優惠券在localStorage中
-        localStorage.setItem('coupons', JSON.stringify(response.data))
-        console.log(localStorage)
+        // localStorage.setItem('coupons', JSON.stringify(response.data))
+        // console.log(localStorage)
       })
       .catch((error) => {
         console.error('獲取優惠券資料失敗:', error)
@@ -69,10 +69,7 @@ export default function Coupons() {
               title: '優惠券已成功領取',
               icon: 'success',
               confirmButtonText: '確定',
-            }).then((result) => {
-              // 在這裡添加跳轉邏輯
-              // router.push('/path-to-redirect')
-            })
+            }).then((result) => {})
           })
           .catch((error) => {
             console.error('領取優惠券失敗:', error)
@@ -97,17 +94,23 @@ export default function Coupons() {
 
   return (
     <>
+      {/* 標題區 */}
+      <div className="d-flex justify-content-center my-4 align-items-center mobile-news-title">
+        <div className="ei-line me-3"></div>
+        <h3 className="text-center news-title fs-2">優惠券</h3>
+        <div className="ei-line ms-3"></div>
+      </div>
       <div className="col-12 col-lg-6 d-flex mb-3 flex-wrap align-items-center justify-content-center mt-4 mb-4 container">
         <div className="row">
-          <nav className="nav-breadcrumb ms-3 d-none d-sm-block">
-            <ol className="ei-breadcrumb m-3 list-inline">
-              <div>
-                <Head>
-                  <title>優惠券｜探索咖啡COFFSEEKER</title>
-                </Head>
-              </div>
+          {/* <nav className="nav-breadcrumb ms-3 d-none d-sm-block">
+            <ol className="ei-breadcrumb m-3 list-inline"> */}
+          <div>
+            <Head>
+              <title>優惠券｜探索咖啡COFFSEEKER</title>
+            </Head>
+          </div>
 
-              <li className="breadcrumb-item list-inline-item">
+          {/* <li className="breadcrumb-item list-inline-item">
                 <Link href="/" className="link">
                   首頁
                 </Link>
@@ -121,10 +124,10 @@ export default function Coupons() {
                 </Link>
               </li>
             </ol>
-          </nav>
+          </nav> */}
         </div>
         {coupons.map((coupon) => (
-          <div key={coupon.id} className="col-12 col-lg-6 d-flex mb-3">
+          <div key={coupon.id} className="col-12 col-lg-6 d-flex mb-3 mt-4">
             <div
               className={
                 'coupon-image d-flex justify-content-center align-items-center border border-dark'

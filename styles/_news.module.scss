@@ -146,6 +146,7 @@ $color--black: #000000;
 // [nid].js頁面
 .ei-container-nid {
   max-width: 50%;
+  margin-bottom: 20px;
 }
 .ei-row {
   margin-left: 160px;
@@ -155,6 +156,7 @@ $color--black: #000000;
   // width: 90%;
   margin: 0 auto;
   padding-inline: 200px;
+  // margin-bottom: 20px;
   img {
     width: 100%;
   }
@@ -163,6 +165,7 @@ $color--black: #000000;
   }
   .ei-letter-spacing {
     line-height: 1.2rem;
+    margin-bottom: 40px !important;
   }
 }
 
