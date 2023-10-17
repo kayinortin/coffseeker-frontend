@@ -6,6 +6,7 @@ import { useCartListCourse } from '@/context/cart_course'
 import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
 import Head from 'next/head'
+import Swal from 'sweetalert2'
 
 export default function CartList({ step, handleNextStep, setStep }) {
   const { cartListData, setCartListData } = useCartList([]) //商品資料
@@ -19,24 +20,50 @@ export default function CartList({ step, handleNextStep, setStep }) {
   const { authJWT } = useAuthJWT() //取userId
 
   //優惠卷API
+  // const couponsDataFetch = async (userId) => {
+  //   try {
+  //     const localCoupons = JSON.parse(localStorage.getItem('userCoupons'))
+  //     if (localCoupons) {
+  //       setSelectedCoupon(localCoupons)
+  //     } else {
+  //       const couponResponse = await axios.get(
+  //         `http://localhost:3005/api/coupons/userCoupons/${userId}`
+  //       )
+  //       const couponsData = couponResponse.data.orders
+  //       setSelectedCoupon(Array.isArray(couponsData) ? couponsData : [])
+  //       // 同時將數據保存在本地存儲
+  //       localStorage.setItem('userCoupons', JSON.stringify(couponsData))
+  //     }
+  //   } catch (error) {
+  //     console.error('資料獲取失敗:', error)
+  //   }
+  // }
   const couponsDataFetch = async (userId) => {
     try {
       const localCoupons = JSON.parse(localStorage.getItem('userCoupons'))
       if (localCoupons) {
-        setSelectedCoupon(localCoupons)
+        const validCoupons = localCoupons.filter(
+          (coupon) => coupon.coupon_valid === 1
+        )
+        setSelectedCoupon(validCoupons)
       } else {
         const couponResponse = await axios.get(
           `http://localhost:3005/api/coupons/userCoupons/${userId}`
         )
         const couponsData = couponResponse.data.orders
-        setSelectedCoupon(Array.isArray(couponsData) ? couponsData : [])
-        // 同時將數據保存在本地存儲
-        localStorage.setItem('userCoupons', JSON.stringify(couponsData))
+        const validCoupons = couponsData.filter(
+          (coupon) => coupon.coupon_valid === 1
+        )
+        setSelectedCoupon(Array.isArray(validCoupons) ? validCoupons : [])
+
+        const validCouponsString = JSON.stringify(validCoupons)
+        localStorage.setItem('userCoupons', validCouponsString)
       }
     } catch (error) {
-      console.error('資料獲取失敗:', error)
+      console.error('数据获取失败:', error)
     }
   }
+
   // 購物車列表即時渲染
   useEffect(() => {
     if (authJWT.isAuth) {
@@ -81,6 +108,33 @@ export default function CartList({ step, handleNextStep, setStep }) {
   }, [])
   //前往結帳
   const handleCheckout = () => {
+    if (!selectedDeliveryOption && !selectedPaymentOption) {
+      Swal.fire({
+        icon: 'warning',
+        title: '請選擇運送與付款方式',
+        text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
+      })
+      return
+    }
+
+    if (!selectedDeliveryOption) {
+      Swal.fire({
+        icon: 'warning',
+        title: '請選擇運送方式',
+        text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
+      })
+      return
+    }
+
+    if (!selectedPaymentOption) {
+      Swal.fire({
+        icon: 'warning',
+        title: '請選擇付款方式',
+        text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
+      })
+      return
+    }
+
     //創建訂單資料
     const checkoutData = {
       selectedDeliveryOption,
@@ -197,6 +251,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     // 更新localStorage數據
     localStorage.setItem('cartList_course', JSON.stringify(updatedCart))
   }
+
   //商品小計
   const [totalPrice, setTotalPrice] = useState(0)
   useEffect(() => {
@@ -206,6 +261,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     }, 0)
     setTotalPrice(total)
   }, [cartListData])
+
   //課程小計
   const [courseTotalPrice, setCourseTotalPrice] = useState(0)
   useEffect(() => {
@@ -226,11 +282,13 @@ export default function CartList({ step, handleNextStep, setStep }) {
   const productItems = cartListData.map((product) => (
     <div key={product.id} className="productwrap row py-3">
       <div className="imgContainer col-lg-3 col-md-5 ">
-        <img
-          className="img-fluid"
-          src={`http://localhost:3005/uploads/${product.image_main}`}
-          alt={product.image_main}
-        />
+        <div className="ratio ratio-1x1">
+          <img
+            className="img-fluid"
+            src={`http://localhost:3005/uploads/${product.image_main}`}
+            alt={product.image_main}
+          />
+        </div>
       </div>
       <div className="productContent col-lg-9 col-md-7 text-start">
         <div className="topDetails d-flex pb-5 justify-content-between ">
@@ -295,15 +353,18 @@ export default function CartList({ step, handleNextStep, setStep }) {
       </div>
     </div>
   ))
+
   //課程列表
   const courseItems = cartListData_course.map((course) => (
     <div key={course.id} className="productwrap row py-3">
       <div className="imgContainer col-lg-3 col-md-5 ">
-        <img
-          className="img-fluid"
-          src={`http://localhost:3005/uploads/course-image/${course.course_image}`}
-          alt={course.course_image}
-        />
+        <div className="ratio ratio-1x1">
+          <img
+            className=" img-thumbnail"
+            src={`http://localhost:3005/uploads/${course.course_image}`}
+            alt={course.course_image}
+          />
+        </div>
       </div>
       <div className="productContent col-lg-9 col-md-7 text-start">
         <div className="topDetails d-flex pb-5 justify-content-between ">

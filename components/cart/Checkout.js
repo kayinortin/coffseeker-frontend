@@ -202,7 +202,6 @@ function Checkout({ step, handleNextStep, setStep }) {
                 ${product.discountPrice}
               </div>
               <div className="discountPrice  d-inline fs-5">
-                {' '}
                 x{product.amount}
               </div>
             </div>
@@ -222,7 +221,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="imgContainer col-lg-2 col-sm-3 ">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/course-image/${course.course_image}`}
+              src={`http://localhost:3005/uploads/${course.course_image}`}
               alt={course.course_image}
             />
           </div>
