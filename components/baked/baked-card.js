@@ -104,6 +104,13 @@ function BakedCard() {
                 selectedCard === index ? 'active' : ''
               } col-lg-6 col-md-6 col-12 mb-3 me-lg-4`}
               onClick={() => handleCardClick(index)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleCardClick(index)
+                }
+              }}
+              role="button"
+              tabIndex={0}
             >
               <div
                 className="baked-background"
