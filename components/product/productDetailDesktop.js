@@ -147,7 +147,9 @@ export default function ProductDetailDesktop({ pid }) {
                   </div>
                   <div>
                     <h6 className="ed-cursor-pointer">巴西 皇后莊園</h6>
-                    <p className="text-dark ed-cursor-pointer">NT$ 190</p>
+                    <p className="ed-cursor-pointer ed-price-color fw-bold">
+                      NT$190 / 入
+                    </p>
                   </div>
                 </Link>
               </div>
@@ -167,8 +169,10 @@ export default function ProductDetailDesktop({ pid }) {
                     />
                   </div>
                   <div>
-                    <h6 className="ed-cursor-pointer">頂級藝伎濾掛</h6>
-                    <p className="text-dark ed-cursor-pointer">NT$ 170</p>
+                    <h6 className="ed-cursor-pointer">頂級 藝伎濾掛</h6>
+                    <p className="ed-cursor-pointer ed-price-color fw-bold">
+                      NT$170 / 入
+                    </p>
                   </div>
                 </Link>
               </div>
