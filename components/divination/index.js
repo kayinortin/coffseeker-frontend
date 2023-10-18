@@ -415,7 +415,7 @@ export default function Divination() {
                             <div className="text-end">
                               <a
                                 className="me-0 "
-                                href={`http://localhost:3000/product/${product.id}`}
+                                href={`/product/${product.id}`}
                                 target="_blank"
                               >
                                 <button className="">前往商品</button>

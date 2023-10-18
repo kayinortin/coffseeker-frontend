@@ -20,42 +20,42 @@ export default function Movein() {
           <div>
             <img
               id="s1"
-              src="http://localhost:3000/index-image/s1.jpg"
+              src="/index-image/s1.jpg"
               alt="Slide 1"
             />
           </div>
           <div>
             <img
               id="s2"
-              src="http://localhost:3000/index-image/s2.png"
+              src="/index-image/s2.png"
               alt="Slide 2"
             />
           </div>
           <div>
             <img
               id="s3"
-              src="http://localhost:3000/index-image/s3.png"
+              src="/index-image/s3.png"
               alt="Slide 3"
             />
           </div>
           <div>
             <img
               id="s4"
-              src="http://localhost:3000/index-image/s4.png"
+              src="/index-image/s4.png"
               alt="Slide 4"
             />
           </div>
           <div>
             <img
               id="s5"
-              src="http://localhost:3000/index-image/s5.png"
+              src="/index-image/s5.png"
               alt="Slide 5"
             />
           </div>
           <div>
             <img
               id="s6"
-              src="http://localhost:3000/index-image/s6.png"
+              src="/index-image/s6.png"
               alt="Slide 6"
             />
           </div>
