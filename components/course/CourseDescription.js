@@ -17,21 +17,18 @@ export default function CourseDescription() {
     setActiveContent(contentName)
   }
 
-  
-
   return (
     <>
       <CourseFetcher />
-      {selectedCourse  ? (
+      {selectedCourse ? (
         <>
           <section>
             <div className="">
-              <CourseInfoBtn
-              />
+              <CourseInfoBtn />
             </div>
 
             {activeContent === 'introduction' && (
-              <div className="col-10 mx-auto">
+              <div className="col-12 mx-auto ">
                 <div className="border border-3 col-sm-2 col-4 mb-3 text-center">
                   課程介紹
                 </div>
@@ -74,7 +71,7 @@ export default function CourseDescription() {
 
           <section className="course-sp col-10 mt-4  mx-auto">
             <h6>【課程特色】</h6>
-            <div className="lh-base">{selectedCourse.course_description}</div>
+            <div className="lh-lg">{selectedCourse.course_description}</div>
 
             {/* {breakedSyllabus} */}
           </section>

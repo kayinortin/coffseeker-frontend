@@ -188,7 +188,7 @@ function MobileDetailsBtns(props) {
     }
   }
   return (
-    <div className="d-flex align-items-center justify-content-center">
+    <div className="d-flex align-items-center justify-content-between">
       <button
         className="ed-addCart__detail-mobile d-flex align-items-center mt-3"
         onClick={addCart}
