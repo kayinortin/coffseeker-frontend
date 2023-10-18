@@ -15,7 +15,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   const [deliveryPrice, setDeliveryPrice] = useState(0) // 運費金額
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('') // 付款方式
   const [selectedCoupon, setSelectedCoupon] = useState([]) //選取優惠卷
-  const [selectedCouponCode, setSelectedCouponCode] = useState('') //選取優惠卷代碼
+  const [selectedCouponId, setSelectedCouponId] = useState('') //選取優惠卷Id
   const [discountAmount, setDiscountAmount] = useState(0) //優惠卷金額
   const { authJWT } = useAuthJWT() //取userId
 
@@ -60,7 +60,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
         localStorage.setItem('userCoupons', validCouponsString)
       }
     } catch (error) {
-      console.error('数据获取失败:', error)
+      console.error('數據獲取失敗:', error)
     }
   }
 
@@ -140,7 +140,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
       selectedDeliveryOption,
       deliveryPrice,
       selectedPaymentOption,
-      selectedCouponCode,
+      selectedCouponId,
       discountAmount,
       totalProductCount,
       allTotalPrice,
@@ -155,13 +155,15 @@ export default function CartList({ step, handleNextStep, setStep }) {
     setStep(2) // 切換到第三步
   }
   //處理折扣優惠卷
-  const handleCouponChange = (couponCode) => {
-    //找到選取的優惠卷
-    setSelectedCouponCode(couponCode)
+  const handleCouponChange = (couponId) => {
+    const numCouponId = Number(couponId, 10)
+    // 找到選取的優惠卷
+    setSelectedCouponId(numCouponId)
     // 查找所選優惠券數據
     const selectedCouponData = selectedCoupon.find(
-      (coupon) => coupon.coupon_code === couponCode
+      (coupon) => coupon.coupon_id === numCouponId
     )
+    console.log(selectedCoupon)
     if (selectedCouponData) {
       if (selectedCouponData.discount_type === '百分比') {
         // 百分比折扣
@@ -178,6 +180,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
       setDiscountAmount(0)
     }
   }
+
   //根據user_id條件來呈現優惠卷選項
   // const renderCouponOptions = () => {
   //   const userId = getUserId() // 請使用實際的函數來獲取使用者的 ID
@@ -187,7 +190,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   //       id="coupon"
   //       name="coupon"
   //       aria-label="selectCoupon"
-  //       value={selectedCouponCode}
+  //       value={selectedCouponId}
   //       onChange={(e) => handleCouponChange(e.target.value)}
   //     >
   //       <option value="">請選擇</option>
@@ -532,15 +535,12 @@ export default function CartList({ step, handleNextStep, setStep }) {
                       id="coupon"
                       name="coupon"
                       aria-label="selectCoupon"
-                      value={selectedCouponCode}
+                      value={selectedCouponId}
                       onChange={(e) => handleCouponChange(e.target.value)}
                     >
                       <option value="">請選擇</option>
                       {selectedCoupon.map((coupon) => (
-                        <option
-                          key={coupon.coupon_id}
-                          value={coupon.coupon_code}
-                        >
+                        <option key={coupon.coupon_id} value={coupon.coupon_id}>
                           {coupon.coupon_name}
                         </option>
                       ))}

@@ -20,17 +20,18 @@ function Checkout({ step, handleNextStep, setStep }) {
   const courseData = JSON.parse(localStorage.getItem('cartList_course'))
 
   //checkoutData localStorage Data
-  const discountAmount = checkoutData ? checkoutData.discountAmount : 0 // 默认为0
-  const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0
-  const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
-  const totalAmount = checkoutData ? checkoutData.totalAmount : 0
-  const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0
+  const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0 //數量
+  const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0 //商品總價格
+  const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0 //運費價格
+  const selectedCouponId = checkoutData ? checkoutData.selectedCouponId : 0 //折價卷id
+  const discountAmount = checkoutData ? checkoutData.discountAmount : 0 //折扣價格
   const selectedDeliveryOption = checkoutData
     ? checkoutData.selectedDeliveryOption
     : ''
   const selectedPaymentOption = checkoutData
     ? checkoutData.selectedPaymentOption
     : ''
+  const totalAmount = checkoutData ? checkoutData.totalAmount : 0 //最後合計金額
 
   //會員資料
   const { authJWT } = useAuthJWT()
@@ -120,11 +121,28 @@ function Checkout({ step, handleNextStep, setStep }) {
 
     sendOrder(orderData)
       .then(() => {
+        //移除購物車數據
         localStorage.removeItem('cartList')
         localStorage.removeItem('cartList_course')
-
+        //清空購物車數據
         setCartListData([])
         setCartListData_course([])
+
+        const usedCouponId = selectedCouponId
+        // console.log(usedCouponId)
+        axios
+          .put(
+            `http://localhost:3005/api/coupons/updatecoupon/${usedCouponId}`,
+            {
+              coupon_valid: 0,
+            }
+          )
+          .then((response) => {
+            console.log('優惠券已更新為不可用', response.data)
+          })
+          .catch((error) => {
+            console.error('更新優惠券時出錯', error)
+          })
       })
       .catch((error) => {
         console.error('發送訂單時出錯', error)
