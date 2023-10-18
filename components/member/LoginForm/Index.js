@@ -82,16 +82,16 @@ export default function LoginForm() {
         'http://localhost:3005/api/auth-jwt/login',
         formData
       )
-      // console.log('伺服器回應:', response.data)
+      console.log('伺服器回應:', response.data)
 
       if (response.data.code === '200' && response.data.accessToken) {
         Cookies.set('accessToken', response.data.accessToken)
         setIsLoggedIn(true)
         Swal.fire({
-          title: '登入成功，即將跳轉至會員中心',
+          title: '登入成功，即將跳轉至會員資訊',
           icon: 'success',
           showConfirmButton: false,
-          timer: 1500,
+          timer: 3000,
         })
         router.push('/member')
       } else {
@@ -105,33 +105,6 @@ export default function LoginForm() {
     } catch (error) {
       console.error('錯誤：請確認後台API功能', error)
       setIsLoggedIn(false)
-    }
-
-    // 取得單一使用者資料
-    try {
-      const response = await axios.post(
-        'http://localhost:3005/api/auth-jwt/login',
-        formData
-      )
-      // console.log('伺服器回應:', response.data)
-      // setUserData(response.data.user)
-      if (response.data.code === '200' && response.data.user) {
-        // Cookies.set('userInfo', JSON.stringify(response.data.user))
-        setUserData(response.data.user)
-        router.push('/member')
-      } else {
-        Swal.fire({
-          title: '登入失敗，請確認帳號密碼是否正確',
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-      }
-
-      // const storedUserData = JSON.parse(Cookies.get('userInfo'))
-      // console.log('測試抓cookie資料', storedUserData)
-    } catch (error) {
-      console.error('錯誤：請確認後台API功能', error)
     }
   }
 
@@ -182,11 +155,16 @@ export default function LoginForm() {
         title: '登入成功，即將跳轉至會員中心',
         icon: 'success',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 3000,
       })
       router.push('/member')
     } else {
-      alert('有錯誤')
+      Swal.fire({
+        title: '登入失敗，請確認帳號密碼是否正確',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
   }
 
@@ -215,7 +193,12 @@ export default function LoginForm() {
         userData: res.data.user,
       })
     } else {
-      alert('有錯誤')
+      Swal.fire({
+        title: '登入失敗，請確認帳號密碼是否正確',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 3000,
+      })
     }
   }
 
@@ -350,7 +333,7 @@ export default function LoginForm() {
         </div>
         <div className={'d-flex justify-content-center mb-3'}>
           <div className={'ask-for-register'}>
-            <span className="me-3">還不是會員嗎?</span>
+            <span className="me-3">還不是會員嗎？</span>
             <Link href="./register" className={'ms-3'}>
               加入會員
             </Link>

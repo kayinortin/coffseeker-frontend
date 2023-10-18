@@ -68,7 +68,7 @@
       align-items: flex-start;
   
       #{$_}__icon {
-        top: -9px;
+        top: 4px;
         right: -2px;
         font-size: 2rem;
       }
@@ -84,6 +84,12 @@
       &--large {
         top: 50px;
         right:10px
+      }
+
+      #{$_}__icon {
+        top: -7px;
+        right: -2px;
+        font-size: 1.5rem;
       }
     }
     &--icon-text {
