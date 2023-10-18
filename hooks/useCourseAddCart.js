@@ -26,6 +26,7 @@ export default function useAddCartCourse(course) {
       Toast.fire({
         icon: 'info',
         title: '此商品已加入購物車',
+        iconColor: '#b54b33',
         customClass: {
           popup: 'ed-alert__toast',
           title: 'ed-alert__subtitle',
@@ -37,6 +38,7 @@ export default function useAddCartCourse(course) {
     Toast.fire({
       icon: 'success',
       title: '商品已加入購物車',
+      iconColor: '#1C262C',
       customClass: {
         popup: 'ed-alert__toast',
         title: 'ed-alert__subtitle',
@@ -49,10 +51,8 @@ export default function useAddCartCourse(course) {
       course_image: course.course_image,
       course_price: course.course_price,
       course_description: course.course_description,
-      amount:1
+      amount: 1,
     }
-
-    
 
     const newItemData = [...cartListData_course, newItem]
 
@@ -67,24 +67,27 @@ export default function useAddCartCourse(course) {
           price: cartListData_course[i].price,
           discountPrice: cartListData_course[i].discountPrice,
           description: cartListData_course[i].description,
-          amount:1
+          amount: 1,
         }
         console.log(newAmountItem)
-        const oldCartListData = cartListData.filter(
+        const oldCartListData = cartListData_course.filter(
           (item, i) => item.id !== newItem.id
         )
         const newCartListData = [...oldCartListData, newAmountItem]
 
         setCartListData_course(newCartListData)
-        return localStorage.setItem('cartList_course', JSON.stringify(newCartListData))
+        return localStorage.setItem(
+          'cartList_course',
+          JSON.stringify(newCartListData)
+        )
       }
     }
 
     if (cartListData_course.length !== 0) {
-        setCartListData_course(newItemData)
+      setCartListData_course(newItemData)
       localStorage.setItem('cartList_course', JSON.stringify(newItemData))
     } else {
-        setCartListData_course([newItem])
+      setCartListData_course([newItem])
       localStorage.setItem('cartList_course', JSON.stringify([newItem]))
     }
   }

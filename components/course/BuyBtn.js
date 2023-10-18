@@ -67,7 +67,7 @@ function BuyBtn() {
   return (
     <div className="">
       <Link
-        href="http://localhost:3000/cart"
+        href="/cart"
         className="text-white ed-addCart__detail  text-center"
       >
         立即結帳
@@ -196,7 +196,7 @@ function MobileDetailsBtns(props) {
         加入購物車
         <i className="fas fa-shopping-cart"></i>
       </button>
-      <Link href="http://localhost:3000/cart">
+      <Link href="/cart">
         <button className="ms-1 ed-addCart__check">立即結帳</button>
       </Link>
     </div>

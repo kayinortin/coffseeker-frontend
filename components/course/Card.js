@@ -6,8 +6,6 @@ import Link from 'next/link'
 import FavIconC from '../FavIconC'
 import { useShow } from '@/context/showProductDetail'
 
-
-
 export default function Card(props) {
   const { course } = props
 
@@ -22,12 +20,9 @@ export default function Card(props) {
     >
       <div className="card ed-border-none">
         <div className="ed-border-card01">
-          <Link
-            href={`http://localhost:3000/course/${course?.id}`}
-            onClick={handleShow}
-          >
+          <Link href={`/course/${course?.id}`} onClick={handleShow}>
             <Image
-              src={`http://localhost:3000/${course.course_image}`}
+              src={`/${course.course_image}`}
               alt={course?.name}
               width={250}
               height={250}

@@ -70,7 +70,7 @@ export default function CourseText(props) {
           </div>
           <div className="d-none d-sm-flex justify-content-between align-items-center">
             <DetailsAddCart course={selectedCourse} />
-            <Link href="http://localhost:3000/cart">
+            <Link href="/cart">
               <button className="ms-4 ed-addCart__check">立即結帳</button>
             </Link>
           </div>

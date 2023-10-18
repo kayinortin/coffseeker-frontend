@@ -66,7 +66,7 @@ export default function CoursePic({ pid }) {
           </div>
           <div className="ed-image-gallery ">
             <Image
-              src={`http://localhost:3000/${images[mainImageIndex]}`}
+              src={`/${images[mainImageIndex]}`}
               // alt={name}
               width={300}
               height={300}
@@ -80,7 +80,7 @@ export default function CoursePic({ pid }) {
                   return (
                     <Image
                       key={index}
-                      src={`http://localhost:3000/${pic}`}
+                      src={`/${pic}`}
                       alt={selectedCourse.course_name}
                       width={100}
                       height={100}

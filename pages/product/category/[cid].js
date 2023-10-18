@@ -168,7 +168,7 @@ export default function ProductList() {
               <div className="ed-placeholder my-5 container">
                 <div className="ed-placeholder__img ed-placeholder__img--not-found">
                   <img
-                    src="http://localhost:3000/bg1.png"
+                    src="/bg1.png"
                     alt="not-found"
                     className="ed-img ed-img--contain"
                   />

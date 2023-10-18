@@ -25,6 +25,7 @@ export default function useAddCart(product) {
       Toast.fire({
         icon: 'info',
         title: '此商品已加入購物車',
+        iconColor:'#b54b33',
         customClass: {
           popup: 'ed-alert__toast',
           title: 'ed-alert__subtitle',
@@ -36,6 +37,7 @@ export default function useAddCart(product) {
     Toast.fire({
       icon: 'success',
       title: '商品已加入購物車',
+      iconColor:'#1C262C',
       customClass: {
         popup: 'ed-alert__toast',
         title: 'ed-alert__subtitle',
