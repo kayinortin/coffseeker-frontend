@@ -28,7 +28,7 @@ export default function Card(props) {
           >
             <Image
               src={`http://localhost:3000/${course.course_image}`}
-              alt={course?.name}
+              alt={course.name}
               width={250}
               height={250}
               className="card-img-top object-fit-cover"

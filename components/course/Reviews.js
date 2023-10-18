@@ -35,7 +35,7 @@ export default function Review({pid}) {
               <div>
                 <img
                   src={`https://ui-avatars.com/api/?background=1C262C&color=fff&bold=true&rounded=true&name=${comment.user_name}`}
-                  alt=""
+                  alt={comment.user_name}
                 />
               </div>
               <h5 className="ed-comment-name">{comment.user_name}</h5>
