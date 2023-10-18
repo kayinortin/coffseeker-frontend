@@ -20,9 +20,9 @@ export default function Coupons() {
       .then((response) => {
         setCoupons(response.data)
 
-        // 存優惠券在localStorage中
-        // localStorage.setItem('coupons', JSON.stringify(response.data))
-        // console.log(localStorage)
+        // 存優惠券在localStorage中 -- 給購物車用的
+        localStorage.setItem('userCoupons', JSON.stringify(response.data))
+        console.log(localStorage)
       })
       .catch((error) => {
         console.error('獲取優惠券資料失敗:', error)
