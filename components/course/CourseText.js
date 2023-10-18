@@ -1,19 +1,44 @@
 import { BreadCrumbs } from './BreadCrumbs'
-import {  MobileDetailsBtns, DetailsAddCart } from './BuyBtn'
+import { MobileDetailsBtns, DetailsAddCart } from './BuyBtn'
 import style from '@/styles/_course.module.scss'
 import Score from './Score'
 import CoursePerFetcher from './CoursePerFetcher'
-import {  useCourses } from '@/context/course'
+import { useCourses } from '@/context/course'
 import Link from 'next/link'
-
-
+import { useComment } from '@/context/comment'
 
 export default function CourseText(props) {
   const { pid } = props
-  const {selectedCourse}=useCourses()
+  const { selectedCourse } = useCourses()
 
-  
-  
+  // 取得評論資訊
+  const { comments } = useComment()
+  // 計算平均評分
+  let ratingSum = 0
+  for (let i = 0; i < comments.length; i++) {
+    ratingSum += comments[i].rating
+  }
+  let ratingAvg = ratingSum && comments.length ? ratingSum / comments.length : 3
+  let roundedRating = Math.floor(ratingAvg)
+  let hasHalfStar = ratingAvg - roundedRating >= 0.5 ? true : false
+
+  const AerageStars = () => {
+    return Array.from({ length: 5 }).map((_, index) => {
+      let starClass = 'star'
+
+      if (index < roundedRating) {
+        starClass += ' active-star'
+      } else if (index === roundedRating && hasHalfStar) {
+        starClass += ' half-star'
+      }
+
+      return (
+        <div key={index} className={starClass}>
+          ★
+        </div>
+      )
+    })
+  }
 
   return (
     <>
@@ -24,7 +49,7 @@ export default function CourseText(props) {
           </div>
 
           <h5 className="ed-detail-title">{selectedCourse.course_name}</h5>
-          <Score />
+          <div className="rating-container my-3">{AerageStars()}</div>
           <h5 className={`mb-4 ed-detail-price ${style['price']}`}>
             NT{selectedCourse.course_price}
           </h5>
