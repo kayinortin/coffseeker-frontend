@@ -201,7 +201,7 @@ export default function ProductDetailMobile({ pid }) {
                       </div>
                       <div className="my-2">
                         <span className="ed-detail-price">
-                          NT{discountPrice}
+                          NT${discountPrice}
                         </span>
                       </div>
                       <div className="d-flex mt-4">
