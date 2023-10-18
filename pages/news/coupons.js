@@ -45,7 +45,7 @@ export default function Coupons() {
 
   const handleRedeemClick = async (couponId) => {
     if (!authJWT.isAuth) {
-      router.push('/member/login')
+      router.push(`/member/login?from=${router.pathname}`)
     } else {
       const userId = authJWT.userData.id
 
@@ -164,7 +164,9 @@ export default function Coupons() {
                       )
                     ) : (
                       <button
-                        onClick={() => router.push('/member/login')}
+                        onClick={() =>
+                          router.push(`/member/login?from=${router.pathname}`)
+                        }
                         className="border-0 p-2 link"
                       >
                         領取

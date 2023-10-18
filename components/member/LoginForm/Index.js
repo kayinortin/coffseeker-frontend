@@ -88,7 +88,7 @@ export default function LoginForm() {
         Cookies.set('accessToken', response.data.accessToken)
         setIsLoggedIn(true)
         Swal.fire({
-          title: '登入成功，即將跳轉至會員資訊',
+          title: '登入成功',
           icon: 'success',
           iconColor: '#1c262c',
           showConfirmButton: false,
@@ -96,11 +96,9 @@ export default function LoginForm() {
         })
         // router.push('/member')
         let nextUrl = '/member'
-        // if (router.query.from != '/') {
-        //   nextUrl = router.query.from
-        // }
-        console.log('router.query.from幹你娘', router.pathname)
-        // router.query.from != '/' ? router.query.from :
+        if (router.query.from == '/news/coupons') {
+          nextUrl = router.query.from
+        }
         router.push(nextUrl)
       } else {
         Swal.fire({
@@ -138,6 +136,7 @@ export default function LoginForm() {
   const [loadingGoogle, setLoadingGoogle] = useState(false)
 
   useEffect(() => {
+    console.log('router.query.from幹你娘', router.query.from)
     initApp(callbackGoogleLoginRedirect)
   }, [])
 
