@@ -1,13 +1,24 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { register } from 'swiper/element/bundle'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from 'swiper/modules'
+
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+import 'swiper/css/autoplay'
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import drinkCoffeeImg from '@/public/divination-image/Animation - 1695799375022.json'
 let cayPlay = false
-register()
 export default function Divination() {
-  const [iconStyle, setIconStyle] = useState('')
   const [gameFinish, setGameFinish] = useState(false)
   const sections = [
     {
@@ -16,7 +27,7 @@ export default function Divination() {
          <br />
          歡迎進入探索咖啡心靈的奇妙世界。
          <br />
-         這裡將揭示你對咖啡的深層喜好和心靈秘密。
+         這裡將揭示你對咖啡的深層喜好。
          <br />
          準備好了嗎？讓我們開始你的咖啡之旅吧！`,
       svg: [],
@@ -46,7 +57,7 @@ export default function Divination() {
     },
     {
       h2: 'Q3',
-      h6: `旅程即將結束，伴手禮是咖啡心靈的種子，你更傾向於哪種形式？`,
+      h6: `伴手禮是咖啡心靈的種子，你更傾向於哪種形式？`,
       svg: ['beans1', 'beans2', 'beans3', 'beans4'],
       p: ['原形豆體', '研磨豆粉', '輕鬆濾掛', '便利即溶'],
     },
@@ -92,7 +103,7 @@ export default function Divination() {
         .querySelector(`.tarotCard${picks[i]} .back .cardImage img`)
         .setAttribute(
           'src',
-          `/divination-image/${iconStyle}` + section.svg[i] + '.svg'
+          `/divination-image/lineal-color/` + section.svg[i] + '.svg'
         )
 
       await waittings(300)
@@ -174,6 +185,8 @@ export default function Divination() {
     canSelect = false
     ans[nowSection - 1] = e.target.innerText
     console.log(ans)
+    e.target.parentElement.classList.remove(`active`)
+    await waittings(300)
     //動畫：文字淡出
     document
       .querySelector(`.desk .game .textArea h2`)
@@ -244,8 +257,8 @@ export default function Divination() {
   }
 
   //塔羅結果生成篩選條件
-  const [ansArr, setAnsArr] = useState(null)
-  const [keyWordArr, setKeyWordArr] = useState(null)
+  const [ansArr, setAnsArr] = useState(['花香'])
+  const [keyWordArr, setKeyWordArr] = useState(['花香'])
 
   function ansToKeyWord(ansArr) {
     const keyWordArr = []
@@ -261,8 +274,7 @@ export default function Divination() {
     return keyWordArr
   }
   //推薦商品取得
-  const [productData, setProductData] = useState(null)
-  const [fetchProductDataEnd, setFetchProductDataEnd] = useState(false)
+  const [productData, setProductData] = useState([])
   useEffect(() => {
     if (gameFinish) {
       const word = ansToKeyWord(ansArr)
@@ -276,7 +288,6 @@ export default function Divination() {
           )
           const products = res.data.data
           setProductData(products)
-          setFetchProductDataEnd(true)
         } catch (error) {
           console.error('資料獲取失敗:', error)
         }
@@ -285,51 +296,6 @@ export default function Divination() {
     }
   }, [gameFinish])
 
-  //生成推薦商品swiper分頁
-
-  function SwiperPages(productData) {
-    if (fetchProductDataEnd) {
-      return (
-        <>
-          {productData.productData.map((product, i) => (
-            <swiper-slide key={i}>
-              <div className="box">
-                <div className="ratio ratio-1x1">
-                  <picture>
-                    <img
-                      className="ed-image-main"
-                      src={`http://localhost:3005/uploads/${product.image_main}`}
-                      alt={`${product.name}`}
-                    />
-                  </picture>
-                </div>
-
-                <div className="productText ms-lg-5">
-                  <div className="">
-                    <h5>精選品牌 &gt; {product.brand}</h5>
-                    <h4 className="ed-detail-title mb-3">{product.name}</h4>
-                    <h5>{product.description}</h5>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <span className="ed-detail-price">
-                      NT{product.discountPrice}
-                    </span>
-                    <a
-                      className="me-0"
-                      href={`http://localhost:3000/product/${product.id}`}
-                      target="_blank"
-                    >
-                      <button className="">前往商品</button>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </swiper-slide>
-          ))}
-        </>
-      )
-    }
-  }
   //本體return
   if (gameFinish === false) {
     return (
@@ -337,42 +303,23 @@ export default function Divination() {
         <div className="desk">
           <div className="mask"></div>
           <div className="game">
-            <div className="position-absolute top-0 text-center">
-              <button
-                onClick={() => {
-                  setIconStyle('')
-                }}
-              >
-                style1
-              </button>
-              <button
-                onClick={() => {
-                  setIconStyle('lineal-color/')
-                }}
-              >
-                style2
-              </button>
-              <button
-                onClick={() => {
-                  setIconStyle('lineal/')
-                }}
-              >
-                style3
-              </button>
-              <p>↑測試用，請在開始測驗前點擊切換樣式↑</p>
-            </div>
-            <div className="textArea mb-auto mt-lg-5 mt-2">
+            <div className="textArea mb-auto mt-lg-5 mt-2 position-relative">
               <h2 className="focus-in-contract">咖啡占卜</h2>
               <h5 className="focus-in-contract">
                 日安，迷惘的咖啡靈魂。
                 <br />
                 歡迎進入探索咖啡心靈的奇妙世界。
                 <br />
-                這裡將揭示你對咖啡的深層喜好和心靈秘密。
+                這裡將揭示你對咖啡的深層喜好。
                 <br />
-                準備好了嗎？讓我們開始你的咖啡之旅吧！
+                準備好了嗎？
+                <br className="d-lg-none" />
+                讓我們開始你的咖啡之旅吧！
               </h5>
-              <button className="" onClick={handleStart}>
+              <button
+                className="position-absolute top-100 start-50 translate-middle flip-in-hor-bottom"
+                onClick={handleStart}
+              >
                 開始
               </button>
             </div>
@@ -408,11 +355,14 @@ export default function Divination() {
                   <p>
                     當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
                     <br />
-                    而在咖啡的星空下，您像是一位星座探險家。
-                    <br />
-                    您偏好的咖啡口味是{keyWordArr}
-                    <br />
-                    無論形式如何，您對於咖啡的熱情總是源源不斷。祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
+                    <div className="my-3">
+                      <div className="">今日為您推薦的咖啡關鍵字是：</div>
+
+                      {keyWordArr.map((v, i) => {
+                        return <span key={i}>#{v}</span>
+                      })}
+                    </div>
+                    祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
                   </p>
                 </div>
               </div>
@@ -423,21 +373,61 @@ export default function Divination() {
               <div className="swiperTitle mb-5 d-flex justify-content-center ">
                 <h2>推薦商品</h2>
               </div>
-              <swiper-container
-                //左右控制
-                navigation="true"
-                //分頁點點
-                pagination="false"
-                //進度條
-                scrollbar="false"
-                //每頁幾張
-                slides-per-view="1"
-                speed="500"
-                loop="false"
-                css-mode="true"
+              <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+                slidesPerView={1}
+                navigation
+                spaceBetween={10}
+                autoplay={{ delay: 3000 }}
               >
-                <SwiperPages productData={productData} />
-              </swiper-container>
+                {productData.map((product, i) => {
+                  return (
+                    <SwiperSlide key={i}>
+                      <div className="box">
+                        <div className="ratio ratio-1x1">
+                          <picture>
+                            <img
+                              className="ed-image-main"
+                              src={`http://localhost:3005/uploads/${product.image_main}`}
+                              alt={`${product.name}`}
+                            />
+                          </picture>
+                        </div>
+
+                        <div className="productText ms-lg-5 mt-3">
+                          <div className="">
+                            <h5>精選品牌 &gt; {product.brand}</h5>
+                            <h4 className="ed-detail-title mb-3">
+                              {product.name}
+                            </h4>
+                            <div className="mb-2">商品特色</div>
+                            <h6 className="h5">{product.description}</h6>
+                          </div>
+                          <div className="">
+                            <div className="mb-3 mb-lg-5 text-end">
+                              <div className="mb-2 text-decoration-line-through">
+                                NT${product.price}
+                              </div>
+                              <div className="ed-detail-price">
+                                NT${product.discountPrice}
+                              </div>
+                            </div>
+                            <div className="text-end">
+                              <a
+                                className="me-0 "
+                                href={`http://localhost:3000/product/${product.id}`}
+                                target="_blank"
+                              >
+                                <button className="">前往商品</button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  )
+                })}
+              </Swiper>
             </div>
           </div>
         </div>

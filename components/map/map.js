@@ -41,6 +41,7 @@ import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
 
 import CafeFilter from './cafeFilter'
+import Swal from 'sweetalert2'
 
 //所在地的mark樣式
 const locationMarker = new L.Icon({
@@ -186,6 +187,10 @@ export default function Map() {
       longitude: '119.56531305026361',
     },
   ]
+  const inputOptions = {}
+  cityData.forEach((city) => {
+    inputOptions[city.city] = city.title
+  })
   const [selectedCity, setSelectedCity] = useState(null)
   //定位位置
   const [position, setPosition] = useState(null)
@@ -194,7 +199,7 @@ export default function Map() {
   //咖啡廳清單資料
   const [cafes, setCafes] = useState([])
   //所有咖啡廳
-  const [allCafeData, setAllCafeData] = useState([])
+  const [allCafeData, setAllCafeData] = useState(null)
   //取得咖啡廳資料
   useEffect(() => {
     const fetchData = async () => {
@@ -202,7 +207,7 @@ export default function Map() {
         const response = await axios.get('/api/fetchCafeData')
         //這邊之後可以新增如果api沒拿到資料的話要怎麼做
         const data = response.data
-        setAllCafeData(data)
+        await setAllCafeData(data)
         //預設顯示桃園咖啡
         // const defaultCafeData = _.filter(data, { city: 'taoyuan' })
         // setCafes(defaultCafeData)
@@ -533,6 +538,13 @@ export default function Map() {
     let targetCity = _.find(cityData, { city: e.target.value })
     setSelectedCity(targetCity)
   }
+  //Swal城市選擇
+  function SwalCitySelect(city) {
+    let newData = _.filter(allCafeData, { city: city })
+    setCafes(newData)
+    let targetCity = _.find(cityData, { city: city })
+    setSelectedCity(targetCity)
+  }
 
   //切換顯示距離事件
   function HandleChangeDistance(e) {
@@ -610,6 +622,23 @@ export default function Map() {
   }
   //========ref宣告區===========
   const selectCityRef = useRef(null)
+  //============Swal===========
+  useEffect(() => {
+    if (allCafeData !== null)
+      Swal.fire({
+        title:
+          '<h6 class="lh-base">歡迎來到咖啡地圖，尋找最適合的咖啡角落！<br/>請選擇城市，或是使用定位顯示店家。</h6>',
+        input: 'select',
+        inputOptions: inputOptions,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const selectedCity = result.value
+          console.log('你選擇的城市是：', selectedCity)
+          SwalCitySelect(selectedCity)
+        }
+      })
+  }, [allCafeData])
+
   //========================本體return====================
   return (
     <>

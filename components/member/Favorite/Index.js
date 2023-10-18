@@ -10,7 +10,9 @@ import _ from 'lodash'
 import Head from 'next/head'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
 import Cookies from 'js-cookie'
-
+import { useFavorite } from '@/context/fav'
+import FetchFavCourseId from '@/components/fav/FetchFavCourse'
+import FetchFavProductId from '@/components/fav/FetchFavProductId'
 export default function Favorite() {
   //檢查登入狀態，未登入跳轉登入頁
   const { userData, setUserData } = useUser()
@@ -24,6 +26,8 @@ export default function Favorite() {
   const [birthdayYear, setBirthdayYear] = useState('')
   const [birthdayMonth, setBirthdayMonth] = useState('')
   const [birthdayData, setBirthdayDate] = useState('')
+  const { favItemsArr, setFavItemsArr } = useFavorite()
+  const { favCoursesArr, setFavCoursesArr } = useFavorite()
 
   const checkToken = Cookies.get('accessToken')
   useEffect(() => {
@@ -112,6 +116,8 @@ export default function Favorite() {
     _.remove(updatedFavProductData, (product) => product.id === id)
     RemoveFavProduct(id)
     setFavProductData(updatedFavProductData)
+    const remainFavArr = favItemsArr.filter((item) => item !== id)
+    setFavItemsArr([...remainFavArr])
   }
 
   //移除收藏課程
@@ -120,7 +126,11 @@ export default function Favorite() {
     _.remove(updatedFavCourseData, (course) => course.id === id)
     RemoveFavCourse(id)
     setFavCourseData(updatedFavCourseData)
+    const remainFavArr = favCoursesArr.filter((item) => item !== parseInt(id))
+    setFavCoursesArr([...remainFavArr])
   }
+  FetchFavCourseId()
+  FetchFavProductId()
   return (
     <>
       <div>
