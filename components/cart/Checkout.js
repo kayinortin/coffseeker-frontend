@@ -79,6 +79,7 @@ function Checkout({ step, handleNextStep, setStep }) {
     if (!isInfoVisible) {
       Swal.fire({
         icon: 'warning',
+        iconColor: '#b54b33',
         title: '請填寫收件人資訊',
         text: '很抱歉，如果您未填寫我們將無法為您送出訂單',
       })
@@ -206,7 +207,7 @@ function Checkout({ step, handleNextStep, setStep }) {
   const productItems = cartData
     ? cartData.map((product) => (
         <div key={product.id} className="productwrap row py-3">
-          <div className="imgContainer col-lg-2 col-sm-3 ">
+          <div className="imgContainer col-lg-2 col-sm-3 p-2">
             <img
               className="img-fluid"
               src={`http://localhost:3005/uploads/${product.image_main}`}
@@ -214,7 +215,7 @@ function Checkout({ step, handleNextStep, setStep }) {
             />
           </div>
           <div className="productContent col-lg-10 col-sm-9 text-start">
-            <div className="topDetails d-flex justify-content-between ">
+            <div className="topDetails d-flex justify-content-between">
               <div className="details">
                 <div className="productTitle lh-sm pb-1">{product.name}</div>
                 <div className="productDescription lh-base">
@@ -246,7 +247,7 @@ function Checkout({ step, handleNextStep, setStep }) {
   const courseItems = courseData
     ? courseData.map((course) => (
         <div key={course.id} className="productwrap row py-3">
-          <div className="imgContainer col-lg-2 col-sm-3 ">
+          <div className="imgContainer col-lg-2 col-sm-3 p-2">
             <img
               className="img-fluid"
               src={`http://localhost:3005/uploads/${course.course_image}`}
@@ -254,12 +255,12 @@ function Checkout({ step, handleNextStep, setStep }) {
             />
           </div>
           <div className="productContent col-lg-10 col-sm-9 text-start">
-            <div className="topDetails d-flex justify-content-between ">
+            <div className="topDetails d-flex justify-content-between">
               <div className="details">
                 <div className="productTitle lh-sm pb-1">
                   {course.course_name}
                 </div>
-                <div className="productDescription lh-base">
+                <div className="productDescription lh-base py-1">
                   {course.course_description}
                 </div>
               </div>
@@ -478,8 +479,8 @@ function Checkout({ step, handleNextStep, setStep }) {
             </div>
           </div>
         </div>
-        <div className="btngroup my-5 row">
-          <div className="col-lg-6 mb-3">
+        <div className="btngroup my-3 row px-3">
+          <div className="col-6 col-lg-6 mb-3">
             <button
               className="btn backStep w-100 fw-medium lh-base"
               onClick={handleCheckout}
@@ -487,7 +488,7 @@ function Checkout({ step, handleNextStep, setStep }) {
               上一步
             </button>
           </div>
-          <div className="col-lg-6 mb-3">
+          <div className="col-6 col-lg-6 mb-3">
             <button
               className="btn sendOrder w-100 fw-medium lh-base"
               onClick={() => {
