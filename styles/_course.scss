@@ -15,3 +15,13 @@
 
 
 }
+
+.hw-course-detail{
+  text-align: left;
+  @media screen and (max-width: $sm) {
+    text-align: center;
+  }
+   
+  }
+  
+ 

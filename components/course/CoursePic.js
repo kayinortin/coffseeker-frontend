@@ -93,10 +93,10 @@ export default function CoursePic({ pid }) {
           </div>
         </div>
 
-        <div className="d-flex ed-activity align-items-center ">
+        <div className="d-flex ed-activity align-items-center ps-2">
           <div className="ed-activity-title text-center">新會員優惠</div>
           <div className="ed-activity-detail">
-            領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
+            領取專屬優惠卷 <br /> 折抵課程<span>100元</span>
           </div>
         </div>
       </div>
