@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
-import { useUser } from '@/context/UserInfo'
-import { FetchUserData } from '../member/FetchDatas/FetchUserData'
 import { useCartList } from '@/context/cart'
 import { useCartListCourse } from '@/context/cart_course'
 import Head from 'next/head'
+import Swal from 'sweetalert2'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -77,76 +76,87 @@ function Checkout({ step, handleNextStep, setStep }) {
 
   //送出訂單
   function handleSendOrder() {
-    const uniqueOrderNumber = generateOrderNumber()
+    if (!isInfoVisible) {
+      Swal.fire({
+        icon: 'warning',
+        title: '請填寫收件人資訊',
+        text: '很抱歉，如果您未填寫我們將無法為您送出訂單',
+      })
+    } else {
+      const uniqueOrderNumber = generateOrderNumber()
 
-    const orderList = {
-      user_id: authJWT.userData.id,
-      tracking_number: uniqueOrderNumber,
-      subtotal: allTotalPrice,
-      shipping_fee: deliveryPrice,
-      discount_price: discountAmount,
-      total_price: allTotalPrice - discountAmount + deliveryPrice,
-      payment: selectedPaymentOption,
-      delivery: selectedDeliveryOption,
-      receiver_name: isInfoVisible ? userData.username : receiverName,
-      receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
-      receiver_address: isInfoVisible ? userData.address : receiverAddress,
-    }
+      const orderList = {
+        user_id: authJWT.userData.id,
+        tracking_number: uniqueOrderNumber,
+        subtotal: allTotalPrice,
+        shipping_fee: deliveryPrice,
+        discount_price: discountAmount,
+        total_price: allTotalPrice - discountAmount + deliveryPrice,
+        payment: selectedPaymentOption,
+        delivery: selectedDeliveryOption,
+        receiver_name: isInfoVisible ? userData.username : receiverName,
+        receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
+        receiver_address: isInfoVisible ? userData.address : receiverAddress,
+      }
 
-    const orderProducts = cartData
-      ? cartData.map((product) => {
-          return {
-            product_id: product.id,
-            amount: product.amount,
-            price: product.discountPrice,
-          }
-        })
-      : []
-
-    const orderCourses = courseData
-      ? courseData.map((course) => {
-          return {
-            course_id: course.id,
-            amount: 1,
-            price: course.course_price,
-          }
-        })
-      : []
-
-    const orderData = {
-      orderList,
-      orderProducts,
-      orderCourses,
-    }
-
-    sendOrder(orderData)
-      .then(() => {
-        //移除購物車數據
-        localStorage.removeItem('cartList')
-        localStorage.removeItem('cartList_course')
-        //清空購物車數據
-        setCartListData([])
-        setCartListData_course([])
-
-        const usedCouponId = selectedCouponId
-        // console.log(usedCouponId)
-        axios
-          .put(
-            `http://localhost:3005/api/coupons/updatecoupon/${usedCouponId}`,
-            {
-              coupon_valid: 0,
+      const orderProducts = cartData
+        ? cartData.map((product) => {
+            return {
+              product_id: product.id,
+              amount: product.amount,
+              price: product.discountPrice,
             }
-          )
-          .then((response) => {
-            console.log('優惠券已更新為不可用', response.data)
           })
-          .catch((error) => {
-            console.error('更新優惠券時出錯', error)
+        : []
+
+      const orderCourses = courseData
+        ? courseData.map((course) => {
+            return {
+              course_id: course.id,
+              amount: 1,
+              price: course.course_price,
+            }
           })
-      })
-      .catch((error) => {
-        console.error('發送訂單時出錯', error)
-      })
+        : []
+
+      const orderData = {
+        orderList,
+        orderProducts,
+        orderCourses,
+      }
+
+      sendOrder(orderData)
+        .then(() => {
+          //移除購物車數據
+          localStorage.removeItem('cartList')
+          localStorage.removeItem('cartList_course')
+          //清空購物車數據
+          setCartListData([])
+          setCartListData_course([])
+
+          //優惠卷狀態更新
+          const usedCouponId = selectedCouponId
+          // console.log(usedCouponId)
+          axios
+            .put(
+              `http://localhost:3005/api/coupons/updatecoupon/${usedCouponId}`,
+              {
+                coupon_valid: 0,
+              }
+            )
+            .then((response) => {
+              console.log('優惠券已更新為不可用', response.data)
+            })
+            .catch((error) => {
+              console.error('更新優惠券時出錯', error)
+            })
+
+          setStep(3)
+        })
+        .catch((error) => {
+          console.error('發送訂單時出錯', error)
+        })
+    }
   }
 
   //訂單編號生成
@@ -481,7 +491,6 @@ function Checkout({ step, handleNextStep, setStep }) {
             <button
               className="btn sendOrder w-100 fw-medium lh-base"
               onClick={() => {
-                setStep(3)
                 handleSendOrder()
               }}
             >

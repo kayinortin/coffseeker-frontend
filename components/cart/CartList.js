@@ -156,7 +156,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   }
   //處理折扣優惠卷
   const handleCouponChange = (couponId) => {
-    const numCouponId = Number(couponId, 10)
+    const numCouponId = Number(couponId)
     // 找到選取的優惠卷
     setSelectedCouponId(numCouponId)
     // 查找所選優惠券數據
@@ -363,7 +363,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
       <div className="imgContainer col-lg-3 col-md-5 ">
         <div className="ratio ratio-1x1">
           <img
-            className=" img-thumbnail"
+            className="img-fluid"
             src={`http://localhost:3005/uploads/${course.course_image}`}
             alt={course.course_image}
           />
