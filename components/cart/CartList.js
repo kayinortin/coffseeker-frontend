@@ -112,6 +112,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     if (!selectedDeliveryOption && !selectedPaymentOption) {
       Swal.fire({
         icon: 'warning',
+        iconColor: '#b54b33',
         title: '請選擇運送與付款方式',
         text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
       })
@@ -121,6 +122,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     if (!selectedDeliveryOption) {
       Swal.fire({
         icon: 'warning',
+        iconColor: '#b54b33',
         title: '請選擇運送方式',
         text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
       })
@@ -130,6 +132,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     if (!selectedPaymentOption) {
       Swal.fire({
         icon: 'warning',
+        iconColor: '#b54b33',
         title: '請選擇付款方式',
         text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
       })
@@ -285,7 +288,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   //商品列表
   const productItems = cartListData.map((product) => (
     <div key={product.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-3 col-md-5 ">
+      <div className="imgContainer col-lg-3 col-md-5 p-2">
         <div className="ratio ratio-1x1">
           <img
             className="img-fluid"
@@ -295,7 +298,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
         </div>
       </div>
       <div className="productContent col-lg-9 col-md-7 text-start">
-        <div className="topDetails d-flex pb-5 justify-content-between ">
+        <div className="topDetails d-flex pb-5 justify-content-between">
           <div className="details d-inline pe-3">
             <div className="productTitle py-1 lh-sm">{product.name}</div>
             <div className="productDescription py-1 fw-medium lh-base">
@@ -361,7 +364,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   //課程列表
   const courseItems = cartListData_course.map((course) => (
     <div key={course.id} className="productwrap row py-3">
-      <div className="imgContainer col-lg-3 col-md-5 ">
+      <div className="imgContainer col-lg-3 col-md-5 p-2">
         <div className="ratio ratio-1x1">
           <img
             className="img-fluid"
@@ -371,7 +374,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
         </div>
       </div>
       <div className="productContent col-lg-9 col-md-7 text-start">
-        <div className="topDetails d-flex pb-5 justify-content-between ">
+        <div className="topDetails d-flex pb-5 justify-content-between">
           <div className="details d-inline pe-3">
             <div className="productTitle py-1 lh-sm">{course.course_name}</div>
             <div className="productDescription py-1 fw-medium lh-base">
@@ -443,7 +446,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                   {productItems}
                 </div>
                 <div className="productsFoot text-end fw-bolder fs-4">
-                  商品共計 ${totalPrice}
+                  商品小計 ${totalPrice}
                 </div>
               </div>
             )}
@@ -455,7 +458,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                   {courseItems}
                 </div>
                 <div className="productsFoot text-end fw-bolder fs-4">
-                  課程共計 ${courseTotalPrice}
+                  課程小計 ${courseTotalPrice}
                 </div>
               </div>
             )}
