@@ -64,16 +64,16 @@ function Accordion(props) {
     <div className="col-sm-2 d-none d-sm-block text-center my-5 me-5">
       <form onSubmit={handleFormSubmit}>
         <fieldset>
-          <legend
+          <div
             className="mt-2 mb-3 ed-filter-title"
-            onClick={() => {
-              setIsCourseNameExpanded(!isCourseNameExpanded)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+            onClick={() => setIsCourseNameExpanded(!isCourseNameExpanded)}
+            role="button"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
                 setIsCourseNameExpanded(!isCourseNameExpanded)
               }
             }}
+            tabIndex={0}
           >
             課程種類
             <span className="arrow-icon">
@@ -83,7 +83,7 @@ function Accordion(props) {
                 <MdOutlineKeyboardArrowUp />
               )}
             </span>
-          </legend>
+          </div>
           {/* 拉花 */}
           {isCourseNameExpanded &&
             course_name.map((course_name, index) => (
@@ -105,16 +105,16 @@ function Accordion(props) {
         </fieldset>
 
         <fieldset>
-          <legend
+          <div
             className="mt-2 mb-3 ed-filter-title"
-            onClick={() => {
-              setIsCourseLevelExpanded(!isCourseLevelExpanded)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                setIsCourseNameExpanded(!isCourseNameExpanded)
+            onClick={() => setIsCourseLevelExpanded(!isCourseLevelExpanded)}
+            role="button"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                setIsCourseLevelExpanded(!isCourseLevelExpanded)
               }
             }}
+            tabIndex={0}
           >
             課程等級
             <span className="arrow-icon">
@@ -124,7 +124,7 @@ function Accordion(props) {
                 <MdOutlineKeyboardArrowUp />
               )}
             </span>
-          </legend>
+          </div>
           {isCourseLevelExpanded &&
             levels.map((course_level_id, index) => (
               <div key={index} className="mt-2">

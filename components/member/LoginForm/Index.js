@@ -82,16 +82,16 @@ export default function LoginForm() {
         'http://localhost:3005/api/auth-jwt/login',
         formData
       )
-      // console.log('伺服器回應:', response.data)
+      console.log('伺服器回應:', response.data)
 
       if (response.data.code === '200' && response.data.accessToken) {
         Cookies.set('accessToken', response.data.accessToken)
         setIsLoggedIn(true)
         Swal.fire({
-          title: '登入成功，即將跳轉至會員中心',
+          title: '登入成功，即將跳轉至會員資訊',
           icon: 'success',
           showConfirmButton: false,
-          timer: 1500,
+          timer: 3000,
         })
         router.push('/member')
       } else {
@@ -105,33 +105,6 @@ export default function LoginForm() {
     } catch (error) {
       console.error('錯誤：請確認後台API功能', error)
       setIsLoggedIn(false)
-    }
-
-    // 取得單一使用者資料
-    try {
-      const response = await axios.post(
-        'http://localhost:3005/api/auth/login',
-        formData
-      )
-      // console.log('伺服器回應:', response.data)
-      // setUserData(response.data.user)
-      if (response.data.code === '200' && response.data.user) {
-        // Cookies.set('userInfo', JSON.stringify(response.data.user))
-        setUserData(response.data.user)
-        router.push('/member')
-      } else {
-        Swal.fire({
-          title: '登入失敗，請確認帳號密碼是否正確',
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-      }
-
-      // const storedUserData = JSON.parse(Cookies.get('userInfo'))
-      // console.log('測試抓cookie資料', storedUserData)
-    } catch (error) {
-      console.error('錯誤：請確認後台API功能', error)
     }
   }
 
@@ -150,26 +123,22 @@ export default function LoginForm() {
 
   // // google登入相關
 
-  const { loginGoogleRedirect, initApp, logoutFirebase } = useFirebase()
+  const { loginFBRedirect, loginGoogleRedirect, initApp, logoutFirebase } =
+    useFirebase()
   const { authJWT, setAuthJWT } = useAuthJWT()
-
-  // // 這裡要設定initApp，讓這個頁面能監聽firebase的google登入狀態
-  // 在點擊 Google 登入按鈕後，執行 Google 登入流程
 
   useEffect(() => {
     initApp(callbackGoogleLoginRedirect)
   }, [])
 
   const callbackGoogleLoginRedirect = async (providerData) => {
-    // 如果目前react(next)已經登入中，不需要再作登入動作
     if (authJWT.isAuth) return
-    console.log('取得的providerData', providerData)
 
     const res = await axios.post(
       'http://localhost:3005/api/google-login/jwt',
       providerData,
       {
-        withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
+        withCredentials: true,
       }
     )
 
@@ -179,25 +148,61 @@ export default function LoginForm() {
         userData: res.data.user,
       })
 
-      console.log(authJWT)
       Cookies.set('accessToken', res.data.accessToken)
       setIsLoggedIn(true)
-      console.log('res.data', res.data)
+
       Swal.fire({
         title: '登入成功，即將跳轉至會員中心',
         icon: 'success',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 3000,
       })
       router.push('/member')
-      // router.push('/member')
     } else {
-      alert('有錯誤')
+      Swal.fire({
+        title: '登入失敗，請確認帳號密碼是否正確',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+  }
+
+  // ===================================
+
+  // // Facebook登入相關
+
+  useEffect(() => {
+    initApp(callbackFBLoginRedirect)
+  }, [])
+
+  const callbackFBLoginRedirect = async (providerData) => {
+    if (authJWT.isAuth) return
+
+    const res = await axios.post(
+      'http://localhost:3005/api/facebook-login/jwt',
+      providerData,
+      {
+        withCredentials: true,
+      }
+    )
+
+    if (res.data.message === 'success') {
+      setAuthJWT({
+        isAuth: true,
+        userData: res.data.user,
+      })
+    } else {
+      Swal.fire({
+        title: '登入失敗，請確認帳號密碼是否正確',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 3000,
+      })
     }
   }
 
   const logout = async () => {
-    // firebase logout(注意，並不會登出google帳號)
     logoutFirebase()
 
     // 伺服器logout
@@ -205,7 +210,7 @@ export default function LoginForm() {
       'http://localhost:3005/api/auth-jwt/logout',
       {},
       {
-        withCredentials: true, // save cookie in browser
+        withCredentials: true,
       }
     )
 
@@ -278,7 +283,7 @@ export default function LoginForm() {
                 {checkPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
-            <div className={'form-check ps-0 d-flex align-items-center'}>
+            {/* <div className={'form-check ps-0 d-flex align-items-center'}>
               <input
                 type="checkbox"
                 className={'check-input me-3 rounded-0'}
@@ -287,7 +292,7 @@ export default function LoginForm() {
               <label className={'form-check-label'} htmlFor="exampleCheck1">
                 記住密碼
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={'d-flex justify-content-center mt-4'}>
@@ -307,9 +312,7 @@ export default function LoginForm() {
           <button
             className={'border-0 bg-none third-login me-5'}
             type="button"
-            onClick={() => {
-              console.log('test')
-            }}
+            onClick={loginFBRedirect}
           >
             <FaFacebook className={'h2'} />
           </button>
@@ -330,7 +333,7 @@ export default function LoginForm() {
         </div>
         <div className={'d-flex justify-content-center mb-3'}>
           <div className={'ask-for-register'}>
-            <span className="me-3">還不是會員嗎?</span>
+            <span className="me-3">還不是會員嗎？</span>
             <Link href="./register" className={'ms-3'}>
               加入會員
             </Link>

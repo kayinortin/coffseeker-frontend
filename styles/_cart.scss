@@ -145,6 +145,7 @@ $fw-black:900;
                         .imgContainer{
                                     
                             img{
+                                object-fit: cover;
                                 background-color: $color--primary;
                                 border: .4rem solid #CBB48B;
                             }
@@ -393,6 +394,7 @@ $fw-black:900;
                                     .imgContainer{
         
                                         img{
+                                            object-fit: cover;
                                             background-color: $color--primary;
                                             border: .4rem solid #CBB48B;
                                         }
