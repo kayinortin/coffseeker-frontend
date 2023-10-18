@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Complete({ step, handleNextStep, setStep }) {
   useEffect(() => {
@@ -23,13 +24,16 @@ export default function Complete({ step, handleNextStep, setStep }) {
         <div className="completeWrap">
           <img className="completeImg" src="/bg1.png" alt="購物車已送出訂單" />
           <div className="emptyTitle">已送出訂單</div>
-          <button
-            type="button"
-            className="btn goshop"
-            onClick={handleCompleteOrder}
-          >
-            <a href="http://localhost:3000/member/order-list">查看訂單</a>
-          </button>
+
+          <Link href="/member/order-list">
+            <button
+              type="button"
+              className="btn goshop"
+              onClick={handleCompleteOrder}
+            >
+              查看訂單
+            </button>
+          </Link>
         </div>
       </div>
     </>

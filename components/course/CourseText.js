@@ -57,18 +57,20 @@ export default function CourseText(props) {
             <MobileDetailsBtns course={selectedCourse} />
           </div>
 
-          <div>
-            <p className="my-4 ed-detail__item">
-              【教師姓名】：{selectedCourse.teacher_name}
+          <div className="hw-course-detail">
+            <p className="my-4 ed-detail__item hw-course-detail">
+              【教師姓名】
+              <br />
+              <br /> {selectedCourse.teacher_name}
             </p>
-            <p className="lh-base ed-detail__item">
-              【課程介紹】：
+            <p className="lh-lg ed-detail__item hw-course-detail">
+              <p className="hw-course-detail">【課程介紹】</p>
               {selectedCourse.course_description}
             </p>
           </div>
           <div className="d-none d-sm-flex justify-content-between align-items-center">
             <DetailsAddCart course={selectedCourse} />
-            <Link href="http://localhost:3000/cart">
+            <Link href="/cart">
               <button className="ms-4 ed-addCart__check">立即結帳</button>
             </Link>
           </div>

@@ -9,7 +9,7 @@ export default function Custom404() {
           <div className="ed-placeholder">
             <div className="ed-placeholder__img ed-placeholder__img--not-found">
               <img
-                src="http://localhost:3000/bg1.png"
+                src="/bg1.png"
                 alt="not-found"
                 className="ed-img ed-img--contain"
               />

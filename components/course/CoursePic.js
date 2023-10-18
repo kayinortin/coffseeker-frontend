@@ -66,7 +66,7 @@ export default function CoursePic({ pid }) {
           </div>
           <div className="ed-image-gallery ">
             <Image
-              src={`http://localhost:3000/${images[mainImageIndex]}`}
+              src={`/${images[mainImageIndex]}`}
               // alt={name}
               width={300}
               height={300}
@@ -80,7 +80,7 @@ export default function CoursePic({ pid }) {
                   return (
                     <Image
                       key={index}
-                      src={`http://localhost:3000/${pic}`}
+                      src={`/${pic}`}
                       alt={selectedCourse.course_name}
                       width={100}
                       height={100}
@@ -93,10 +93,10 @@ export default function CoursePic({ pid }) {
           </div>
         </div>
 
-        <div className="d-flex ed-activity align-items-center ">
+        <div className="d-flex ed-activity align-items-center ps-2">
           <div className="ed-activity-title text-center">新會員優惠</div>
           <div className="ed-activity-detail">
-            領取專屬優惠卷 <br /> 折抵商品<span>100元</span>
+            領取專屬優惠卷 <br /> 折抵課程<span>100元</span>
           </div>
         </div>
       </div>
