@@ -8,6 +8,7 @@ import NewSideBar from './NewSideBar'
 
 import { useCourses } from '@/context/course'
 import FetchFavCourseId from '../fav/FetchFavCourse'
+import { indexOf } from 'lodash'
 
 export default function CourseList() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -41,13 +42,13 @@ export default function CourseList() {
                 )
                 .map((v, i) => {
                   return (
-                    <>
+                    
                       <div key={i} className="col-12 col-sm-4">
                         <li className="d-flex justify-content-center course-li">
                           <Card course={v} />
                         </li>
                       </div>
-                    </>
+                    
                   )
                 })}
             </ul>
