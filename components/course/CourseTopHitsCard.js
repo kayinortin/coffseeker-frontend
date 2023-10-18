@@ -30,7 +30,7 @@ export default function CourseTopHitsCard(props) {
           onClick={handleShow}
         >
           <img
-            src={`http://localhost:3000/${course_image}`}
+            src={`/${course_image}`}
             alt={course_name}
             className="card-img-top"
           />

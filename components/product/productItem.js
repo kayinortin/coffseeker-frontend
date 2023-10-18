@@ -1,29 +1,15 @@
-import { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useMediaQuery } from 'react-responsive'
 
-import useAddCart from '@/hooks/useAddCart'
-
 import { useShow } from '@/context/showProductDetail'
-import { useCategory } from '@/context/category'
-import { useCartList } from '@/context/cart'
 
 import FavIcon from '../FavIcon'
 
 export default function ProductItem(props) {
   const { product } = props
-  const {
-    id,
-    image_main,
-    name,
-    brand,
-    amount,
-    price,
-    discountPrice,
-    views,
-    popularity,
-  } = product
+  const { id, image_main, name, brand, price, discountPrice } = product
   const { show, setShow } = useShow()
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })

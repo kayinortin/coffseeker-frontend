@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import { useCartList } from '@/context/cart'
@@ -156,7 +157,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
   }
   //處理折扣優惠卷
   const handleCouponChange = (couponId) => {
-    const numCouponId = Number(couponId, 10)
+    const numCouponId = Number(couponId)
     // 找到選取的優惠卷
     setSelectedCouponId(numCouponId)
     // 查找所選優惠券數據
@@ -363,7 +364,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
       <div className="imgContainer col-lg-3 col-md-5 ">
         <div className="ratio ratio-1x1">
           <img
-            className=" img-thumbnail"
+            className="img-fluid"
             src={`http://localhost:3005/uploads/${course.course_image}`}
             alt={course.course_image}
           />
@@ -410,9 +411,12 @@ export default function CartList({ step, handleNextStep, setStep }) {
           <div className="emptyContainer text-center">
             <img className="emptyCart" src="/bg1.png" alt="購物車無商品" />
             <div className="emptyTitle">您的購物車目前無商品</div>
-            <button type="button" className="btn goshop">
-              <a href="http://localhost:3000/product">前往商城</a>
-            </button>
+
+            <Link href="/product">
+              <button type="button" className="btn goshop">
+                前往商城
+              </button>
+            </Link>
           </div>
         </div>
       </>
@@ -563,7 +567,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
                   </div>
                   <div className="items p-0">
                     <button className="btn goCheckout" onClick={handleCheckout}>
-                      前往結賬
+                      前往結帳
                     </button>
                   </div>
                 </div>

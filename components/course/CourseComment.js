@@ -61,7 +61,7 @@ export default function CourseComment({ totalStars = 5, pid }) {
           headers: {
             'Content-type': 'application/json',
           },
-          body:JSON.stringify({
+          body: JSON.stringify({
             course_id: pid,
             user_id: userData.id,
             user_email: userData.email,
@@ -92,8 +92,8 @@ export default function CourseComment({ totalStars = 5, pid }) {
       } else if (response.status === 401) {
         Swal.fire({
           icon: 'warning',
-          title: '尚未購買商品',
-          text: data.message || '還沒品嘗過嗎？快去購買商品吧！',
+          title: '尚未報名此課程',
+          text: data.message || '趕緊預約報名，成為咖啡大師！',
         })
       } else if (response.status === 400) {
         Swal.fire({

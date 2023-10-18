@@ -1,29 +1,15 @@
-import { useState, useEffect } from 'react'
+import React from 'react'
 import { useMediaQuery } from 'react-responsive'
-import Swal from 'sweetalert2'
 import Link from 'next/link'
 
 import useAddCart from '@/hooks/useAddCart'
-
-import { useCartList } from '@/context/cart'
 
 import FavIcon from '../FavIcon'
 
 export default function ProductTopHits(props) {
   const { addCart } = useAddCart(props.product)
   const { product } = props
-  const {
-    id,
-    image_main,
-    name,
-    brand,
-    amount,
-    price,
-    discountPrice,
-    views,
-    popularity,
-    description,
-  } = product
+  const { id, image_main, name, brand, discountPrice, description } = product
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
 
