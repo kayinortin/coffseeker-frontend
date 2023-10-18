@@ -45,7 +45,6 @@ export default function Coupons() {
 
   const handleRedeemClick = async (couponId) => {
     if (!authJWT.isAuth) {
-      localStorage.setItem('returnTo', '/news/coupons')
       router.push('/member/login')
     } else {
       const userId = authJWT.userData.id
@@ -68,6 +67,7 @@ export default function Coupons() {
             Swal.fire({
               title: '優惠券已成功領取',
               icon: 'success',
+              iconColor: '#1c262c',
               confirmButtonText: '確定',
             }).then((result) => {})
           })
@@ -76,8 +76,9 @@ export default function Coupons() {
             // 使用SweetAlert來顯示錯誤訊息
             Swal.fire({
               title: '領取優惠券失敗',
-              text: '請稍後再試',
+              text: '您已領取過此優惠券',
               icon: 'error',
+              iconColor: '#b54b33',
               confirmButtonText: '確定',
             })
           })
