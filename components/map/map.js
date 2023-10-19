@@ -352,7 +352,7 @@ export default function Map() {
 
     return position === null ? null : (
       <Marker position={position} icon={locationMarker}>
-        <Popup>You are here</Popup>
+        <Popup>您在這裡</Popup>
       </Marker>
     )
   }
@@ -366,7 +366,7 @@ export default function Map() {
           [selectedCity.latitude, selectedCity.longitude],
           map.getZoom()
         )
-      }, 200)
+      }, 100)
       return (
         <Marker
           key={'selectedCity'}
@@ -493,7 +493,7 @@ export default function Map() {
             </h5>
             <div className="d-flex ">
               <FaMapMarkerAlt />
-              <h6>{cafeData.address}</h6>
+              <h6>{cafeData.address.replace(/^\d+/, '')}</h6>
             </div>
 
             <div className={`d-flex  ${cafeData.open_time ? '' : 'd-none'}`}>

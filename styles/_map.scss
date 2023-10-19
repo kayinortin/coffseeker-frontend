@@ -10,14 +10,14 @@
   }
 }
 .mapSwalCityBtn {
-  top:-70px;
-  right:10px;
+  top: -70px;
+  right: 10px;
   padding-block: 12px;
 }
-.mapSwalAction{
+.mapSwalAction {
   width: 90%;
 }
-.mapSwalPopup{
+.mapSwalPopup {
   width: 370px;
 }
 .mapArea {
@@ -230,7 +230,7 @@
         padding-inline: 7px;
       }
       .map-slider {
-        width: 50%;
+        width: 45%;
         height: 25px;
       }
 
@@ -243,6 +243,10 @@
         color: #fff;
         border-radius: 50%;
         cursor: grab;
+        &:hover,&:active,&:focus-visible {
+          outline: 0px solid transparent;
+          box-shadow: 0 0 0 4px rgba(244, 123, 96, 0.504);
+        }
       }
 
       .mapTrack {

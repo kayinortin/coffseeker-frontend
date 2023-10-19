@@ -50,7 +50,7 @@ function CafeItem({ cafe, handleCafeClick }) {
       <h4 className="">{cafe.name}</h4>
       <h6>
         <FaMapMarkerAlt />
-        {cafe.address}
+        {cafe.address.replace(/^\d+/, '')}
         {cafe.distanceInKm != null && (
           <>
             <br />

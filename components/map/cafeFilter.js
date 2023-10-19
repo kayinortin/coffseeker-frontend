@@ -47,7 +47,7 @@ export default function CafeFilter({
         <div className="mb-3 d-flex align-items-center">
           <div className="d-flex align-items-center">
             <IoIosWifi />
-            <p className="">網路</p>
+            <p className="">網路穩定</p>
           </div>
           <div>
             <p className="lh-lg">
@@ -70,7 +70,7 @@ export default function CafeFilter({
         <div className="mb-3 d-flex align-items-center">
           <div className="d-flex align-items-center">
             <LiaChairSolid />
-            <p className="">座位</p>
+            <p className="">座位充足</p>
           </div>
           <div>
             <p className="lh-lg">
@@ -88,12 +88,15 @@ export default function CafeFilter({
             pearling
             step={1}
             minDistance={1}
+            // renderThumb={(props, state) => (
+            //   <div {...props}>{state.valueNow}</div>
+            // )}
           />
         </div>
         <div className="mb-3 d-flex align-items-center">
           <div className="d-flex align-items-center">
             <IoEarOutline />
-            <p className="">安靜</p>
+            <p className="">安靜程度</p>
           </div>
           <div>
             <p className="lh-lg">
