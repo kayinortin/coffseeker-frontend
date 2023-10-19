@@ -9,6 +9,17 @@
     background-color: $color--secondary;
   }
 }
+.mapSwalCityBtn {
+  top:-70px;
+  right:10px;
+  padding-block: 12px;
+}
+.mapSwalAction{
+  width: 90%;
+}
+.mapSwalPopup{
+  width: 370px;
+}
 .mapArea {
   height: calc(100vh - 80px);
   background-color: $color--background;
@@ -128,7 +139,7 @@
         margin-right: 3px;
       }
     }
-    h4{
+    h4 {
       line-height: 150%;
     }
   }
@@ -222,7 +233,7 @@
         width: 50%;
         height: 25px;
       }
-      
+
       .mapThumb {
         height: 25px;
         line-height: 25px;
@@ -233,7 +244,7 @@
         border-radius: 50%;
         cursor: grab;
       }
-      
+
       .mapTrack {
         top: 10px;
         bottom: 0;
@@ -246,8 +257,7 @@
       .mapTrack-2 {
         background: #ddd;
       }
-      
-      
+
       button {
         width: 100%;
         border: none;
