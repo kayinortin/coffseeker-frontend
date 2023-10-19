@@ -14,6 +14,7 @@ export default function Card(props) {
     setShow({ ...setShow, in: true })
   }
 
+  console.log('course', course.course_image)
   return (
     <div
       className={`${style['card']} d-flex py-3 flex-column align-items-center m-3`}
@@ -26,7 +27,7 @@ export default function Card(props) {
               alt={course?.name}
               width={250}
               height={250}
-              className="card-img-top object-fit-cover"
+              className="object-fit-cover"
             />
           </Link>
           <FavIconC size="medium" type="icon" id={course?.id} />

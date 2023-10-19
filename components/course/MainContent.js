@@ -11,7 +11,7 @@ import Image from 'next/image'
 import axios from 'axios'
 import CourseComment from '@/components/course/CourseComment'
 import CoursePerFetcher from './CoursePerFetcher'
-
+import Head from 'next/head'
 import { useShow } from '../../context/showProductDetail'
 import TopHitsMobile from './TopHitsMobile'
 
@@ -69,6 +69,11 @@ export default function MainContent({ pid }) {
   return (
     <>
       <CoursePerFetcher pid={pid} />
+      <div>
+        <Head>
+          <title>全站商品｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className="mt-5 ms-sm-5 container ed-content-size">
         <div className="d-sm-flex">
           <CoursePic pid={pid} />
