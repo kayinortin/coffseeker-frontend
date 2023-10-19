@@ -67,7 +67,7 @@ export default function Coupons() {
             Swal.fire({
               title: '優惠券已成功領取',
               icon: 'success',
-              iconColor: '#1c262c',
+              iconColor: '#b54b33',
               confirmButtonText: '確定',
             }).then((result) => {})
           })
@@ -78,15 +78,16 @@ export default function Coupons() {
               title: '領取優惠券失敗',
               text: '您已領取過此優惠券',
               icon: 'error',
-              iconColor: '#b54b33',
+              iconColor: '#1C262C',
               confirmButtonText: '確定',
             })
           })
       } else {
         // 已領取過，顯示提示訊息
         Swal.fire({
-          title: '優惠券已經領取過',
+          title: '此優惠券已經領取過',
           icon: 'warning',
+          iconColor: '#1C262C',
           confirmButtonText: '確定',
         })
       }
