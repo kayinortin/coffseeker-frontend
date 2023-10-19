@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-
+import Head from 'next/head'
 import Card from './Card'
 import Pagination from './Pagination'
 import { BreadCrumbs } from './BreadCrumbs'
@@ -27,6 +27,11 @@ export default function CourseList() {
   return (
     <>
       <CourseFetcher />
+      <div>
+        <Head>
+          <title>全站商品｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       {coursesData ? (
         <div className="container d-flex">
           <NewSideBar onFilter={setCoursesData} />
