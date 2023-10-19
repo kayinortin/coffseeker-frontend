@@ -29,6 +29,7 @@ export default function OrderItems({ order }) {
           <Image
             src={`http://localhost:3005/uploads/${imgUrl}`}
             alt="Image Description"
+            className={'imgborder'}
             width={100} // 设置图像宽度
             height={100} // 设置图像高度
           />
@@ -51,6 +52,7 @@ export default function OrderItems({ order }) {
             <Image
               src={`http://localhost:3005/uploads/${imgUrl}`}
               alt="Image Description"
+              className={'imgborder'}
               width={100} // 设置图像宽度
               height={100} // 设置图像高度
             />

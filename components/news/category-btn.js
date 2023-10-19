@@ -118,13 +118,13 @@ export default function CategoryBtn() {
               }`}
               onClick={() => handleButtonClick('coupons')}
             >
-              優惠券
+              優惠券區
             </button>
           </div>
         </div>
         {/* 手機板 */}
         <div className="container ei-mobile-category-btn d-lg-none">
-          <div className="btn-group col-11 ms-3 p-1">
+          <div className="btn-group col-12  ">
             <button
               className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'allnews'
@@ -173,7 +173,7 @@ export default function CategoryBtn() {
               }`}
               onClick={() => handleButtonClick('coupons')}
             >
-              優惠券
+              優惠券區
             </button>
           </div>
         </div>

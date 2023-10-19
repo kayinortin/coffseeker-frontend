@@ -253,7 +253,7 @@
 .order-state{
   font-size: 16px;
   .data{
-      font-size: 12px;
+      font-size: 11px;
   }
   .gray{
       background: $color--gray3;
@@ -278,6 +278,9 @@
   }
 } 
 
+.imgborder{
+  border: 5px solid #dfd0af;
+}
 
 .third-login{
 

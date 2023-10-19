@@ -20,9 +20,9 @@ export default function Coupons() {
       .then((response) => {
         setCoupons(response.data)
 
-        // 存優惠券在localStorage中
-        // localStorage.setItem('coupons', JSON.stringify(response.data))
-        // console.log(localStorage)
+        // 存優惠券在localStorage中 -- 給購物車用的
+        localStorage.setItem('userCoupons', JSON.stringify(response.data))
+        console.log(localStorage)
       })
       .catch((error) => {
         console.error('獲取優惠券資料失敗:', error)
@@ -45,7 +45,7 @@ export default function Coupons() {
 
   const handleRedeemClick = async (couponId) => {
     if (!authJWT.isAuth) {
-      router.push('/member/login')
+      router.push(`/member/login?from=${router.pathname}`)
     } else {
       const userId = authJWT.userData.id
 
@@ -98,7 +98,7 @@ export default function Coupons() {
       {/* 標題區 */}
       <div className="d-flex justify-content-center my-4 align-items-center mobile-news-title">
         <div className="ei-line me-3"></div>
-        <h3 className="text-center news-title fs-2">優惠券</h3>
+        <h3 className="text-center news-title fs-2">優惠券區</h3>
         <div className="ei-line ms-3"></div>
       </div>
       <div className="col-12 col-lg-6 d-flex mb-3 flex-wrap align-items-center justify-content-center mt-4 mb-4 container">
@@ -107,7 +107,7 @@ export default function Coupons() {
             <ol className="ei-breadcrumb m-3 list-inline"> */}
           <div>
             <Head>
-              <title>優惠券｜探索咖啡COFFSEEKER</title>
+              <title>優惠券區｜探索咖啡COFFSEEKER</title>
             </Head>
           </div>
 
@@ -164,7 +164,9 @@ export default function Coupons() {
                       )
                     ) : (
                       <button
-                        onClick={() => router.push('/member/login')}
+                        onClick={() =>
+                          router.push(`/member/login?from=${router.pathname}`)
+                        }
                         className="border-0 p-2 link"
                       >
                         領取

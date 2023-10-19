@@ -198,6 +198,7 @@ export default function InfoChangeForm() {
     Swal.fire({
       title: error,
       icon: 'error',
+      iconColor: '#b54b33',
       showConfirmButton: false,
       timer: 1500,
     })
@@ -235,6 +236,7 @@ export default function InfoChangeForm() {
       Swal.fire({
         title: '修改資料成功',
         icon: 'success',
+        iconColor: '#1c262c', //成功
         showConfirmButton: false,
         timer: 1500,
       })

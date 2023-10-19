@@ -57,6 +57,7 @@ export default function RegisterForm() {
           Swal.fire({
             title: '註冊成功',
             icon: 'success',
+            iconColor: '#1c262c', //success
             showConfirmButton: false,
             timer: 1500,
           })
@@ -65,6 +66,7 @@ export default function RegisterForm() {
           Swal.fire({
             title: '此信箱已被註冊',
             icon: 'error',
+            iconColor: '#b54b33', //error
             showConfirmButton: false,
             timer: 1500,
           })

@@ -107,6 +107,7 @@ export default function Coupon() {
                         }`}
                         onClick={() => {
                           setCurrentPage(page)
+                          console.log(page)
                           window.scrollTo(0, 0)
                         }}
                       >
