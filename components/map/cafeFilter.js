@@ -13,6 +13,7 @@ export default function CafeFilter({
   cafesFiltered,
   handleCafeClick,
   setFilterValues,
+  setShowCafeInfo,
 }) {
   const criteria = [
     { icon: <IoIosWifi />, label: '網路', name: 'wifi' },
@@ -34,6 +35,7 @@ export default function CafeFilter({
   }
   //點擊送出篩選時
   const handleFilterSubmit = () => {
+    setShowCafeInfo(false)
     setFilterValues({ wifi: wifiValue, seat: seatValue, quiet: setQuietValue })
   }
   return (
