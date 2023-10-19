@@ -90,7 +90,7 @@ export default function LoginForm() {
         Swal.fire({
           title: '登入成功',
           icon: 'success',
-          iconColor: '#1c262c',
+          iconColor: '#b54b33',
           showConfirmButton: false,
           timer: 3000,
         })
@@ -104,7 +104,7 @@ export default function LoginForm() {
         Swal.fire({
           title: '登入失敗，請確認帳號密碼是否正確',
           icon: 'error',
-          iconColor: '#b54b33',
+          iconColor: '#1C262C',
           showConfirmButton: false,
           timer: 1500,
         })
@@ -133,20 +133,19 @@ export default function LoginForm() {
   const { loginFBRedirect, loginGoogleRedirect, initApp, logoutFirebase } =
     useFirebase()
   const { authJWT, setAuthJWT } = useAuthJWT()
-  const [loadingGoogle, setLoadingGoogle] = useState(false)
 
   useEffect(() => {
-    console.log('router.query.from幹你娘', router.query.from)
+    // 跳轉回頁面後執行 如果沒有執行google登入則不執行
+    // Swal.fire({
+    //   title: '登入中請稍候',
+    //   showConfirmButton: false,
+    //   timer: 3000,
+    // })
     initApp(callbackGoogleLoginRedirect)
   }, [])
 
   const callbackGoogleLoginRedirect = async (providerData) => {
-    Swal.isLoading({
-      title: '登入中請稍候',
-      icon: 'success',
-      showConfirmButton: false,
-      timer: 3000,
-    })
+    
 
     if (authJWT.isAuth) return
 
@@ -170,7 +169,7 @@ export default function LoginForm() {
       Swal.fire({
         title: '登入成功，即將跳轉至會員中心',
         icon: 'success',
-        iconColor: '#1c262c', //成功
+        iconColor: '#b54b33', //成功
         showConfirmButton: false,
         timer: 3000,
       })
@@ -179,7 +178,7 @@ export default function LoginForm() {
       Swal.fire({
         title: '登入失敗，請確認帳號密碼是否正確',
         icon: 'error',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         showConfirmButton: false,
         timer: 1500,
       })
@@ -214,7 +213,7 @@ export default function LoginForm() {
       Swal.fire({
         title: '登入失敗，請確認帳號密碼是否正確',
         icon: 'error',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         showConfirmButton: false,
         timer: 3000,
       })
@@ -238,7 +237,7 @@ export default function LoginForm() {
       Swal.fire({
         title: '登出成功',
         icon: 'success',
-        iconColor: '#1c262c', //成功
+        iconColor: '#b54b33', //成功
         showConfirmButton: false,
         timer: 1500,
       })

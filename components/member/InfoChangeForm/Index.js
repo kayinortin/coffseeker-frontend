@@ -6,10 +6,6 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
 
-// 10/09
-// 已知問題 使用者資料編輯更新後
-// 刷新頁面 Token回傳的資料不會取新的 而是編輯前的資料
-
 export default function InfoChangeForm() {
   const { userData, setUserData } = useUser()
   const router = useRouter()
@@ -83,7 +79,7 @@ export default function InfoChangeForm() {
       value: userName,
       type: 'text',
       aria: null,
-      maxlength: 10,
+      maxlength: 30,
       disabled: false,
       onChange: (e) => setName(e.target.value),
     },
@@ -198,7 +194,7 @@ export default function InfoChangeForm() {
     Swal.fire({
       title: error,
       icon: 'error',
-      iconColor: '#b54b33',
+      iconColor: '#1C262C',
       showConfirmButton: false,
       timer: 1500,
     })
@@ -236,7 +232,7 @@ export default function InfoChangeForm() {
       Swal.fire({
         title: '修改資料成功',
         icon: 'success',
-        iconColor: '#1c262c', //成功
+        iconColor: '#b54b33', //成功
         showConfirmButton: false,
         timer: 1500,
       })

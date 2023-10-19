@@ -21,7 +21,7 @@ export default function ForgetPassword() {
     Swal.fire({
       title: successMsg,
       icon: 'success',
-      iconColor: '#1c262c', //success
+      iconColor: '#b54b33', //success
       showConfirmButton: false,
       timer: 1500,
     })
@@ -30,7 +30,7 @@ export default function ForgetPassword() {
     Swal.fire({
       title: errorMsg,
       icon: 'error',
-      iconColor: '#b54b33', //error
+      iconColor: '#1c262c', //error
       showConfirmButton: false,
       timer: 1500,
     })
@@ -57,7 +57,7 @@ export default function ForgetPassword() {
       Swal.fire({
         title: '60s　內無法重新獲得驗證碼',
         icon: 'error',
-        iconColor: '#b54b33', //error
+        iconColor: '#1c262c', //error
         showConfirmButton: false,
         timer: 1500,
       })
@@ -77,7 +77,7 @@ export default function ForgetPassword() {
       Swal.fire({
         title: '驗證碼取得失敗，請確認Email是否已經註冊',
         icon: 'error',
-        iconColor: '#b54b33', //error
+        iconColor: '#1c262c', //error
         showConfirmButton: false,
         timer: 1500,
       })
@@ -88,7 +88,7 @@ export default function ForgetPassword() {
       Swal.fire({
         title: '驗證碼已寄送到你填寫的Email信箱中',
         icon: 'success',
-        iconColor: '#1c262c', //success
+        iconColor: '#b54b33', //success
         showConfirmButton: false,
         timer: 1500,
       })
