@@ -257,22 +257,26 @@ export default function Divination() {
   }
 
   //塔羅結果生成篩選條件
-  const [ansArr, setAnsArr] = useState(['花香'])
-  const [keyWordArr, setKeyWordArr] = useState(['花香'])
+  const [ansArr, setAnsArr] = useState([''])
+  const [keyWordArr, setKeyWordArr] = useState([''])
 
   function ansToKeyWord(ansArr) {
-    const keyWordArr = []
-    console.log('ansArr:' + ansArr)
+    const keyWordSet = new Set()
     const filterKeyWord = ['獨特', '酸', '蜜', '花香', '香氣', '厚', '焦糖']
+
     for (const word of filterKeyWord) {
       for (const description of ansArr) {
         if (description.includes(word)) {
-          keyWordArr.push(word)
+          keyWordSet.add(word)
         }
       }
     }
+
+    // 將Set轉換為陣列
+    const keyWordArr = Array.from(keyWordSet)
     return keyWordArr
   }
+
   //推薦商品取得
   const [productData, setProductData] = useState([])
   useEffect(() => {
