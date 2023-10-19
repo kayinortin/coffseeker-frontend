@@ -112,7 +112,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     if (!selectedDeliveryOption && !selectedPaymentOption) {
       Swal.fire({
         icon: 'warning',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         title: '請選擇運送與付款方式',
         text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
       })
@@ -122,7 +122,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     if (!selectedDeliveryOption) {
       Swal.fire({
         icon: 'warning',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         title: '請選擇運送方式',
         text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
       })
@@ -132,7 +132,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
     if (!selectedPaymentOption) {
       Swal.fire({
         icon: 'warning',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         title: '請選擇付款方式',
         text: '很抱歉，如果您未選擇我們將無法為您成立訂單',
       })

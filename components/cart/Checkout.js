@@ -79,7 +79,7 @@ function Checkout({ step, handleNextStep, setStep }) {
     if (!isInfoVisible) {
       Swal.fire({
         icon: 'warning',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         title: '請填寫收件人資訊',
         text: '很抱歉，如果您未填寫我們將無法為您送出訂單',
       })
