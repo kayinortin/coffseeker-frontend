@@ -38,7 +38,8 @@ import {
 } from 'react-icons/bs'
 
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
-import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+// import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 import CafeFilter from './cafeFilter'
 import Swal from 'sweetalert2'
@@ -671,7 +672,7 @@ export default function Map() {
         <Lottie
           play
           loop
-          style={{ width: 600, height: 600 }}
+          style={{ width: 200, height: 200 }}
           animationData={lottieJson}
         />
       </div>
