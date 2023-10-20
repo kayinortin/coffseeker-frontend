@@ -48,7 +48,7 @@ export default function Comment({ totalStars = 5, pid }) {
       Swal.fire({
         icon: 'warning',
         title: '提示',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         text: '請選擇評分',
       })
       return
@@ -94,21 +94,21 @@ export default function Comment({ totalStars = 5, pid }) {
         Swal.fire({
           icon: 'warning',
           title: '尚未購買商品',
-          iconColor: '#b54b33',
+          iconColor: '#1C262C',
           text: data.message || '還沒品嘗過嗎？快去購買商品吧！',
         })
       } else if (response.status === 400) {
         Swal.fire({
           icon: 'error',
           title: '今日已評論過',
-          iconColor: '#b54b33',
+          iconColor: '#1C262C',
           text: data.message || '您今天已經評論過了，感謝您的支持！',
         })
       } else {
         Swal.fire({
           icon: 'error',
           title: '錯誤',
-          iconColor: '#b54b33',
+          iconColor: '#1C262C',
           text: '請您確認評論和評分是否正確',
         })
       }
@@ -116,7 +116,7 @@ export default function Comment({ totalStars = 5, pid }) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        iconColor: '#b54b33',
+        iconColor: '#1C262C',
         text: 'Something went wrong! Please try again later.',
       })
     }
