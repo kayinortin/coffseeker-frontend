@@ -67,9 +67,9 @@ export default function OrderDetailOpened({ order }) {
 
   const OrderTbody = [
     order.order_date.match(/\d{4}-\d{2}-\d{2}/)[0],
-    `${order.total_price}`,
+    `NT$${order.total_price}`,
     order.order_status,
-    order.payment_method,
+    order.payment,
   ]
   // 未展開訂單的顯示資訊
   const OrderTbodyRWD = [
@@ -87,14 +87,14 @@ export default function OrderDetailOpened({ order }) {
     },
     {
       title: '付款方式',
-      value: order.payment_method,
+      value: order.payment,
     },
   ]
 
   // 訂單狀態的判斷
   const statusStyles = {
     待付款: {
-      state1: ['未付款', 'gray'],
+      state1: ['待付款', 'gray'],
       state2: ['未理貨', 'gray'],
       state3: ['未發貨', 'gray'],
       state4: ['未完成', 'gray'],
@@ -168,11 +168,26 @@ export default function OrderDetailOpened({ order }) {
     },
     {
       result: '運費',
-      sum: order.shipping_fee,
+      sum: `NT$ ${order.shipping_fee}`,
     },
     {
       result: '優惠',
-      sum: order.discount_price,
+      sum: `NT$ ${order.discount_price}`,
+    },
+  ]
+  // 結算欄位
+  const receiver = [
+    {
+      info: '收件人 :',
+      data: order.receiver_name,
+    },
+    {
+      info: '連絡電話 :',
+      data: order.receiver_phone,
+    },
+    {
+      info: '收件地址 :',
+      data: order.receiver_address,
     },
   ]
 
@@ -263,8 +278,22 @@ export default function OrderDetailOpened({ order }) {
         {orderItem.map((v, i) => {
           return <OrderItems key={i} order={v} />
         })}
-        <div className={'p-2 border'}>
-          <div className={'border border-dark p-2'}>
+        {/* 收件資料 */}
+        <div className={'p-2 border-bottom border-dark d-flex flex-wrap'}>
+          <div
+            className={
+              'col-12 col-lg-6 border border-dark p-2 d-flex flex-column justify-content-around'
+            }
+          >
+            {receiver.map((v, i) => (
+              <div className={'d-flex p-2'} key={i}>
+                <span className={'col-4'}>{v.info}</span>
+                <span className={'col-8 text-end'}>{v.data}</span>
+              </div>
+            ))}
+          </div>
+          {/* 結算 */}
+          <div className={'col-12 col-lg-6 border border-dark p-2'}>
             {orderResult.map((v, i) => (
               <div className="d-flex justify-content-between p-2" key={i}>
                 <span>{v.result}</span>

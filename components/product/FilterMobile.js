@@ -186,9 +186,16 @@ export default function FilterMobile(props) {
               </div>
               {/* 產區 */}
               <fieldset>
-                <legend
+                <div
                   className="mt-2 mb-3 ed-filter-title"
+                  role="button"
                   onClick={() => setOriginExpanded(!isOriginExpanded)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      setOriginExpanded(!isOriginExpanded)
+                    }
+                  }}
+                  tabIndex={0}
                 >
                   產地
                   <span className="arrow-icon">
@@ -198,7 +205,7 @@ export default function FilterMobile(props) {
                       <MdOutlineKeyboardArrowUp />
                     )}
                   </span>
-                </legend>
+                </div>
 
                 {isOriginExpanded &&
                   origins.map((origin, index) => (
@@ -221,9 +228,16 @@ export default function FilterMobile(props) {
 
               {/* 烘焙程度 */}
               <fieldset>
-                <legend
+                <div
                   className="mt-2 mb-3 ed-filter-title"
                   onClick={() => setDegreeExpanded(!isDegreeExpanded)}
+                  role="button"
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      setOriginExpanded(!isOriginExpanded)
+                    }
+                  }}
+                  tabIndex={0}
                 >
                   烘焙程度
                   <span className="arrow-icon">
@@ -233,7 +247,7 @@ export default function FilterMobile(props) {
                       <MdOutlineKeyboardArrowUp />
                     )}
                   </span>
-                </legend>
+                </div>
                 {isDegreeExpanded &&
                   roastDegrees.map((degree, index) => (
                     <div key={index} className="mt-2">
@@ -255,9 +269,16 @@ export default function FilterMobile(props) {
 
               {/* 處理方法 */}
               <fieldset>
-                <legend
+                <div
                   className="mt-2 mb-3 ed-filter-title"
                   onClick={() => setProcessingExpanded(!isProcessingExpanded)}
+                  role="button"
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      setOriginExpanded(!isOriginExpanded)
+                    }
+                  }}
+                  tabIndex={0}
                 >
                   處理方法
                   <span className="arrow-icon">
@@ -267,7 +288,7 @@ export default function FilterMobile(props) {
                       <MdOutlineKeyboardArrowUp />
                     )}
                   </span>
-                </legend>
+                </div>
                 {isProcessingExpanded &&
                   Processing.map((Processing, index) => (
                     <div key={index} className="mt-2">
@@ -289,9 +310,16 @@ export default function FilterMobile(props) {
 
               {/* 咖啡品種 */}
               <fieldset>
-                <legend
+                <div
                   className="mt-2 mb-3 ed-filter-title"
                   onClick={() => setVarietyExpanded(!isVarietyExpanded)}
+                  role="button"
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      setOriginExpanded(!isOriginExpanded)
+                    }
+                  }}
+                  tabIndex={0}
                 >
                   品種
                   <span className="arrow-icon">
@@ -301,7 +329,7 @@ export default function FilterMobile(props) {
                       <MdOutlineKeyboardArrowUp />
                     )}
                   </span>
-                </legend>
+                </div>
                 {isVarietyExpanded &&
                   Varieties.map((variety, index) => (
                     <div key={index} className="mt-2">
@@ -323,9 +351,16 @@ export default function FilterMobile(props) {
 
               {/* 咖啡風味 */}
               <fieldset>
-                <legend
+                <div
                   className="mt-2 mb-3 ed-filter-title"
                   onClick={() => setDescriptExpanded(!isDescriptExpanded)}
+                  role="button"
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      setOriginExpanded(!isOriginExpanded)
+                    }
+                  }}
+                  tabIndex={0}
                 >
                   風味
                   <span className="arrow-icon">
@@ -335,7 +370,7 @@ export default function FilterMobile(props) {
                       <MdOutlineKeyboardArrowUp />
                     )}
                   </span>
-                </legend>
+                </div>
                 {isDescriptExpanded &&
                   Descriptions.map((description, index) => (
                     <div key={index} className="mt-2">

@@ -1,3 +1,25 @@
+.rj_FavBtn {
+  border: none;
+  font-size: 14px;
+  color: $color--secondary;
+  border: 1px solid $color--secondary;
+  background-color: transparent;
+  &:hover {
+    color: white;
+    background-color: $color--secondary;
+  }
+}
+.mapSwalCityBtn {
+  top: -70px;
+  right: 10px;
+  padding-block: 12px;
+}
+.mapSwalAction {
+  width: 90%;
+}
+.mapSwalPopup {
+  width: 370px;
+}
 .mapArea {
   height: calc(100vh - 80px);
   background-color: $color--background;
@@ -117,6 +139,9 @@
         margin-right: 3px;
       }
     }
+    h4 {
+      line-height: 150%;
+    }
   }
   .distanceText {
     background: #ccc;
@@ -127,7 +152,7 @@
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
     background-color: $color--background;
     overflow-y: auto;
-    scrollbar-gutter: stable;
+    // scrollbar-gutter: stable;
     height: calc(100% - 40px);
     position: absolute;
     padding: 20px 24px;
@@ -144,6 +169,7 @@
     }
     h4 {
       padding-block: 10px;
+      line-height: 150%;
     }
     .cafeRating {
       border-top: solid 1px black;
@@ -159,7 +185,7 @@
         flex-direction: row;
         width: 50%;
         justify-content: space-between;
-        padding: 0px 5px;
+        padding: 0px 4px;
         align-items: center;
         flex-wrap: nowrap;
         > div {
@@ -195,11 +221,7 @@
     transition: 0.3s;
 
     .cafeFilterForm {
-      display: flex;
-      flex-wrap: wrap;
-      row-gap: 14px;
       border-bottom: solid 1px black;
-      height: 150px;
       overflow: hidden;
       > div {
         display: flex;
@@ -207,6 +229,50 @@
         width: 100%;
         padding-inline: 7px;
       }
+      .map-slider {
+        width: 45%;
+        height: 25px;
+      }
+
+      .mapThumb {
+        height: 25px;
+        line-height: 25px;
+        width: 25px;
+        text-align: center;
+        background-color: $color--secondary;
+        color: #fff;
+        border-radius: 50%;
+        cursor: grab;
+        &:hover,&:active,&:focus-visible {
+          outline: 0px solid transparent;
+          box-shadow: 0 0 0 4px rgba(244, 123, 96, 0.504);
+        }
+      }
+
+      .mapTrack {
+        top: 10px;
+        bottom: 0;
+        background: #ddd;
+        height: 5px;
+      }
+      .mapTrack-1 {
+        background: $color--secondary;
+      }
+      .mapTrack-2 {
+        background: #ddd;
+      }
+
+      button {
+        width: 100%;
+        border: none;
+        color: $color--white;
+        background-color: $color--secondary;
+        padding-block: 10px;
+        &:hover {
+          background-color: $color--primary;
+        }
+      }
+
       input {
         width: 70%;
         &.form-range {
@@ -231,7 +297,7 @@
 }
 @media (max-width: 720px) {
   .mapArea {
-    height: calc(100vh - 60px);
+    height: calc(100vh - 100px);
     position: relative;
     flex-direction: column-reverse;
 

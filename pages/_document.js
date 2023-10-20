@@ -24,7 +24,7 @@ export default function Document() {
         name="description"
         content="咖啡，不僅是一種飲品，更是一種品味，一種尋找美好的旅程。"
       />
-      <link rel="apple-touch-icon" href="http://localhost:3000/logo192.png" />
+      <link rel="apple-touch-icon" href="/logo192.png" />
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -32,7 +32,7 @@ export default function Document() {
         crossOrigin="anonymous"
         referrerPolicy="no-referrer"
       />
-      <link rel="manifest" href="http://localhost:3000/manifest.json" />
+      <link rel="manifest" href="/manifest.json" />
       <Head />
       <body>
         {/* Messenger Chat Plugin Code */}

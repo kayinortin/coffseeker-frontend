@@ -1,9 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import ForgetPassword from '@/components/member/ForgetPassword/Index'
+import Head from 'next/head'
 export default function Forget() {
   return (
     <>
+      <div>
+        <Head>
+          <title>忘記密碼｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className={'background'}>
         <div className={'container'}>
           {/* 麵包屑 */}

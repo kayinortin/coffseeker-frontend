@@ -10,6 +10,8 @@ import Swal from 'sweetalert2'
 import contenOfContract from '@/data/member/contract.json'
 import useFirebase from '@/hooks/use-firebase'
 import { useAuthJWT } from '@/context/useAuthJWT'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 // 10/10 尚未完成
 // 1.記住密碼
@@ -82,22 +84,29 @@ export default function LoginForm() {
         'http://localhost:3005/api/auth-jwt/login',
         formData
       )
-      // console.log('伺服器回應:', response.data)
+      console.log('伺服器回應:', response.data)
 
       if (response.data.code === '200' && response.data.accessToken) {
         Cookies.set('accessToken', response.data.accessToken)
         setIsLoggedIn(true)
         Swal.fire({
-          title: '登入成功，即將跳轉至會員中心',
+          title: '登入成功',
           icon: 'success',
+          iconColor: '#b54b33',
           showConfirmButton: false,
-          timer: 1500,
+          timer: 3000,
         })
-        router.push('/member')
+        // router.push('/member')
+        let nextUrl = '/member'
+        if (router.query.from == '/news/coupons') {
+          nextUrl = router.query.from
+        }
+        router.push(nextUrl)
       } else {
         Swal.fire({
           title: '登入失敗，請確認帳號密碼是否正確',
           icon: 'error',
+          iconColor: '#1C262C',
           showConfirmButton: false,
           timer: 1500,
         })
@@ -105,33 +114,6 @@ export default function LoginForm() {
     } catch (error) {
       console.error('錯誤：請確認後台API功能', error)
       setIsLoggedIn(false)
-    }
-
-    // 取得單一使用者資料
-    try {
-      const response = await axios.post(
-        'http://localhost:3005/api/auth/login',
-        formData
-      )
-      // console.log('伺服器回應:', response.data)
-      // setUserData(response.data.user)
-      if (response.data.code === '200' && response.data.user) {
-        // Cookies.set('userInfo', JSON.stringify(response.data.user))
-        setUserData(response.data.user)
-        router.push('/member')
-      } else {
-        Swal.fire({
-          title: '登入失敗，請確認帳號密碼是否正確',
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-      }
-
-      // const storedUserData = JSON.parse(Cookies.get('userInfo'))
-      // console.log('測試抓cookie資料', storedUserData)
-    } catch (error) {
-      console.error('錯誤：請確認後台API功能', error)
     }
   }
 
@@ -149,27 +131,48 @@ export default function LoginForm() {
   // ===================================
 
   // // google登入相關
+  const [loading, setLoading] = useState(false)
 
-  const { loginGoogleRedirect, initApp, logoutFirebase } = useFirebase()
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      setLoading(true)
+    }
+
+    router.events.on('routeChangeStart', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handlePageShow = () => {
+      setLoading(true)
+    }
+
+    window.addEventListener('pageshow', handlePageShow)
+
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow)
+    }
+  }, [])
+
+  const { loginFBRedirect, loginGoogleRedirect, initApp, logoutFirebase } =
+    useFirebase()
   const { authJWT, setAuthJWT } = useAuthJWT()
-
-  // // 這裡要設定initApp，讓這個頁面能監聽firebase的google登入狀態
-  // 在點擊 Google 登入按鈕後，執行 Google 登入流程
 
   useEffect(() => {
     initApp(callbackGoogleLoginRedirect)
   }, [])
 
   const callbackGoogleLoginRedirect = async (providerData) => {
-    // 如果目前react(next)已經登入中，不需要再作登入動作
     if (authJWT.isAuth) return
-    console.log('取得的providerData', providerData)
 
     const res = await axios.post(
       'http://localhost:3005/api/google-login/jwt',
       providerData,
       {
-        withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
+        withCredentials: true,
       }
     )
 
@@ -179,68 +182,84 @@ export default function LoginForm() {
         userData: res.data.user,
       })
 
-      console.log(authJWT)
       Cookies.set('accessToken', res.data.accessToken)
       setIsLoggedIn(true)
-      console.log('res.data', res.data)
+
       Swal.fire({
         title: '登入成功，即將跳轉至會員中心',
         icon: 'success',
+        iconColor: '#b54b33', //成功
+        showConfirmButton: false,
+        timer: 3000,
+      })
+      router.push('/member')
+    } else {
+      Swal.fire({
+        title: '登入失敗，請確認帳號密碼是否正確',
+        icon: 'error',
+        iconColor: '#1C262C',
         showConfirmButton: false,
         timer: 1500,
       })
-      router.push('https://localhost:9000/member')
-      // router.push('/member')
-    } else {
-      alert('有錯誤')
     }
   }
-  // ============
-  // const callbackGoogleLogin = async (providerData) => {
-  //   console.log(providerData)
 
-  //   const res = await axios.post(
-  //     'http://localhost:3005/api/google-login/jwt',
-  //     providerData,
-  //     {
-  //       withCredentials: true, // 注意: 必要的，儲存 cookie 在瀏覽器中
-  //     }
-  //   )
+  // ===================================
 
-  //   if (res.data.message === 'success') {
-  //     setAuth({
-  //       isAuth: true,
-  //       userData: res.data.user,
-  //     })
-  //     Cookies.set('accessToken', res.data.accessToken)
-  //     setIsLoggedIn(true)
-  //     console.log('res.data', res.data)
-  //     Swal.fire({
-  //       title: '登入成功，即將跳轉至會員中心',
-  //       icon: 'success',
-  //       showConfirmButton: false,
-  //       timer: 1500,
-  //     })
-  //     router.push('https://localhost:9000/member')
-  //   } else {
-  //     alert('有錯誤')
-  //   }
-  // }
+  // // Facebook登入相關
 
-  const logout = async () => {
-    // firebase logout(注意，並不會登出google帳號)
-    logoutFirebase()
+  useEffect(() => {
+    initApp(callbackFBLoginRedirect)
+  }, [])
 
-    // 伺服器logout
+  const callbackFBLoginRedirect = async (providerData) => {
+    if (authJWT.isAuth) return
+
     const res = await axios.post(
-      'http://localhost:3005/api/auth/logout',
-      {},
+      'http://localhost:3005/api/facebook-login/jwt',
+      providerData,
       {
-        withCredentials: true, // save cookie in browser
+        withCredentials: true,
       }
     )
 
     if (res.data.message === 'success') {
+      setAuthJWT({
+        isAuth: true,
+        userData: res.data.user,
+      })
+    } else {
+      Swal.fire({
+        title: '登入失敗，請確認帳號密碼是否正確',
+        icon: 'error',
+        iconColor: '#1C262C',
+        showConfirmButton: false,
+        timer: 3000,
+      })
+    }
+  }
+
+  const logout = async () => {
+    logoutFirebase()
+
+    // 伺服器logout
+    const res = await axios.post(
+      'http://localhost:3005/api/auth-jwt/logout',
+      {},
+      {
+        withCredentials: true,
+      }
+    )
+
+    if (res.data.message === 'success') {
+      localStorage.removeItem('hasVisitedBefore')
+      Swal.fire({
+        title: '登出成功',
+        icon: 'success',
+        iconColor: '#b54b33', //成功
+        showConfirmButton: false,
+        timer: 1500,
+      })
       setAuthJWT({
         isAuth: false,
         userData: {
@@ -252,7 +271,12 @@ export default function LoginForm() {
       })
     }
   }
-
+  //監聽離開該頁面時關閉Swal
+  useEffect(() => {
+    return () => {
+      Swal.close()
+    }
+  }, [])
   return (
     <>
       <form id="loginForm" className={'form-box'}>
@@ -302,7 +326,7 @@ export default function LoginForm() {
                 {checkPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
-            <div className={'form-check ps-0 d-flex align-items-center'}>
+            {/* <div className={'form-check ps-0 d-flex align-items-center'}>
               <input
                 type="checkbox"
                 className={'check-input me-3 rounded-0'}
@@ -311,7 +335,7 @@ export default function LoginForm() {
               <label className={'form-check-label'} htmlFor="exampleCheck1">
                 記住密碼
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={'d-flex justify-content-center mt-4'}>
@@ -323,44 +347,47 @@ export default function LoginForm() {
             登入
           </button>
         </div>
-        <div
-          className={
-            'container d-flex justify-content-center mt-4 mb-3 align-items-center'
-          }
-        >
-          <button
-            className={'border-0 bg-none third-login me-5'}
-            type="button"
-            onClick={() => {
-              console.log('test')
-            }}
-          >
-            <FaFacebook className={'h2'} />
-          </button>
-          <button
-            className={'border-0 bg-none third-login'}
-            type="button"
-            onClick={loginGoogleRedirect}
-          >
-            <FaGoogle className={'h2'} />
-          </button>
-          <button
-            className={'border-0 bg-none third-login ms-5'}
-            type="button"
-            onClick={logoutFirebase}
-          >
-            <FaXTwitter className={'h2'} />
-          </button>
+        <div>
+          {loading ? (
+            <div className="mapArea justify-content-center align-items-center ed-absloute">
+              <Lottie
+                play
+                loop
+                style={{ width: 140, height: 140 }}
+                animationData={lottieJson}
+              />
+            </div>
+          ) : (
+            <div
+              className={
+                'container d-flex justify-content-center mt-4 mb-3 align-items-center'
+              }
+            >
+              <button
+                className={'border-0 bg-none third-login me-5'}
+                type="button"
+                onClick={loginFBRedirect}
+              >
+                <FaFacebook className={'h2'} />
+              </button>
+              <button
+                className={'border-0 bg-none third-login'}
+                type="button"
+                onClick={loginGoogleRedirect}
+              >
+                <FaGoogle className={'h2'} />
+              </button>
+            </div>
+          )}
         </div>
         <div className={'d-flex justify-content-center mb-3'}>
           <div className={'ask-for-register'}>
-            <span className="me-3">還不是會員嗎?</span>
+            <span className="me-3">還不是會員嗎？</span>
             <Link href="./register" className={'ms-3'}>
               加入會員
             </Link>
           </div>
         </div>
-
         <div className={'d-flex justify-content-between'}>
           <button
             className={'forget-password border-0 bg-none'}

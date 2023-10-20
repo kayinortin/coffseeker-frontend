@@ -4,7 +4,7 @@ import Link from 'next/link'
 import useInterval from '@/hooks/useInterval'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default function ForgetPassword() {
   const [email, setEmail] = useState('')
   const [token, setToken] = useState('')
@@ -21,6 +21,7 @@ export default function ForgetPassword() {
     Swal.fire({
       title: successMsg,
       icon: 'success',
+      iconColor: '#b54b33', //success
       showConfirmButton: false,
       timer: 1500,
     })
@@ -29,6 +30,7 @@ export default function ForgetPassword() {
     Swal.fire({
       title: errorMsg,
       icon: 'error',
+      iconColor: '#1c262c', //error
       showConfirmButton: false,
       timer: 1500,
     })
@@ -55,6 +57,7 @@ export default function ForgetPassword() {
       Swal.fire({
         title: '60s　內無法重新獲得驗證碼',
         icon: 'error',
+        iconColor: '#1c262c', //error
         showConfirmButton: false,
         timer: 1500,
       })
@@ -74,6 +77,7 @@ export default function ForgetPassword() {
       Swal.fire({
         title: '驗證碼取得失敗，請確認Email是否已經註冊',
         icon: 'error',
+        iconColor: '#1c262c', //error
         showConfirmButton: false,
         timer: 1500,
       })
@@ -84,6 +88,7 @@ export default function ForgetPassword() {
       Swal.fire({
         title: '驗證碼已寄送到你填寫的Email信箱中',
         icon: 'success',
+        iconColor: '#b54b33', //success
         showConfirmButton: false,
         timer: 1500,
       })
@@ -148,7 +153,13 @@ export default function ForgetPassword() {
               />
               <div id="emailHelp" className="form-text"></div>
             </div>
-            <h5>{message}</h5>
+            <h5>
+              <FontAwesomeIcon
+                icon="fa-solid fa-spinner"
+                spin
+                style={{ color: '#7d3131' }}
+              />
+            </h5>
           </form>
         </div>
         <div className={'mt-4'}>

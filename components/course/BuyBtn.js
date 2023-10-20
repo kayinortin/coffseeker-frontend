@@ -1,8 +1,6 @@
 import React from 'react'
 import Swal from 'sweetalert2'
-import styles from '@/styles/_course.module.scss'
 import Link from 'next/link'
-import { useSwiper } from 'swiper/react'
 
 import { useCartListCourse } from '@/context/cart_course'
 
@@ -69,7 +67,7 @@ function BuyBtn() {
   return (
     <div className="">
       <Link
-        href="http://localhost:3000/cart"
+        href="/cart"
         className="text-white ed-addCart__detail  text-center"
       >
         立即結帳
@@ -190,17 +188,17 @@ function MobileDetailsBtns(props) {
     }
   }
   return (
-    <div className="d-block d-sm-flex align-items-center">
+    <div className="d-flex align-items-center justify-content-between">
       <button
-        className="ed-addCart__detail d-flex align-items-center mt-3"
+        className="ed-addCart__detail-mobile d-flex align-items-center mt-3"
         onClick={addCart}
       >
         加入購物車
         <i className="fas fa-shopping-cart"></i>
       </button>
-      <a href="http://localhost:3000/cart">
-        <button className="ms-4 ed-addCart__check">立即結帳</button>
-      </a>
+      <Link href="/cart">
+        <button className="ms-1 ed-addCart__check">立即結帳</button>
+      </Link>
     </div>
   )
 }

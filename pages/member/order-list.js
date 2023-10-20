@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/Sidebar/MemSideBar'
 import OrderListTable from '@/components/member/OrderListTable/Index'
+import Head from 'next/head'
 export default function OrderList() {
   const [orderBy, setOrderBy] = useState('DESC')
   const [currentPage, setCurrentPage] = useState(1)
@@ -18,6 +19,11 @@ export default function OrderList() {
 
   return (
     <>
+      <div>
+        <Head>
+          <title>歷史訂單｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className={'container pr-defualt-height'}>
         {/* 麵包屑 */}
         <div className={'row'}>
@@ -49,8 +55,8 @@ export default function OrderList() {
                   // console.log(orderBy)
                 }}
               >
-                <option value={'DESC'}>時間:新到舊</option>
-                <option value={'ASC'}>時間:舊到新</option>
+                <option value={'DESC'}>時間：新到舊</option>
+                <option value={'ASC'}>時間：舊到新</option>
               </select>
             </div>
           </div>
@@ -78,7 +84,7 @@ export default function OrderList() {
               <ul className={'pagination'}>
                 <li
                   className={`ed-page-item ${
-                    currentPage === 1 ? 'disabled' : null
+                    currentPage <= 1 ? 'disabled' : null
                   } `}
                 >
                   <button
@@ -98,7 +104,7 @@ export default function OrderList() {
                     <li className={'ed-page-item'} key={page}>
                       <button
                         className={`ed-page-link ${
-                          currentPage === page ? 'active' : null
+                          currentPage === page ? 'active disabled' : null
                         }`}
                         onClick={() => {
                           setCurrentPage(page)
@@ -112,7 +118,9 @@ export default function OrderList() {
                 })}
                 <li
                   className={`ed-page-item ${
-                    currentPage === totalPage ? 'disabled' : null
+                    currentPage === totalPage || totalPage < 1
+                      ? 'disabled'
+                      : null
                   } `}
                 >
                   <button

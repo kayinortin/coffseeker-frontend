@@ -16,6 +16,7 @@ function Counter(props) {
         icon: 'warning',
         title: '已達到庫存量',
         text: '您選擇的數量已超過庫存量',
+        iconColor: '#1C262C',
         timer: 2000,
       })
     } else {

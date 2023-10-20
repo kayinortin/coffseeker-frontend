@@ -36,24 +36,24 @@ export default function Footer() {
             <div className="col-lg-3 col-md-2 mb-4 mb-md-0 text-center">
               <div className="d-flex flex-column align-items-center">
                 {/* footer大圖 */}
-                <a
-                  href="http://localhost:3000"
+                <Link
+                  href="/"
                   className="d-flex flex-column justify-content-center align-items-center"
                 >
                   <Image
-                    src="http://localhost:3000/coffseeker-logo-footer.png"
+                    src="/coffseeker-logo-footer.png"
                     alt="COFFSEEKER"
                     width={144}
                     height={144}
                     priority
                   />
                   <Image
-                    src="http://localhost:3000/coffseeker-logo-inline.png"
+                    src="/coffseeker-logo-inline.png"
                     alt="COFFSEEKER"
                     width={210}
                     height={42}
                   />
-                </a>
+                </Link>
                 {/* 三個外部連結 */}
                 <div className="d-flex mt-3">
                   <Link
@@ -71,7 +71,7 @@ export default function Footer() {
                   </a>
                   <a href="" className="mx-3">
                     <Image
-                      src="http://localhost:3000/line-icon.svg"
+                      src="/line-icon.svg"
                       alt="line_icon"
                       width={40}
                       height={40}
@@ -90,7 +90,7 @@ export default function Footer() {
                   <h6>
                     <Link
                       className="text-white"
-                      href={`http://localhost:3000/news/${newsItem.news_id}`}
+                      href={`/news/${newsItem.news_id}`}
                     >
                       {newsItem.news_title} &gt;&gt;
                     </Link>
@@ -105,10 +105,7 @@ export default function Footer() {
               <hr />
               <div className="mt-4">
                 <h6>
-                  <Link
-                    className="text-white"
-                    href="http://localhost:3000/infomation/divination"
-                  >
+                  <Link className="text-white" href="/infomation/divination">
                     尋訪內心渴望的咖啡 &gt;&gt;
                   </Link>
                 </h6>
@@ -116,10 +113,7 @@ export default function Footer() {
               </div>
               <div className="mt-4">
                 <h6>
-                  <Link
-                    className="text-white"
-                    href="http://localhost:3000/infomation/baked"
-                  >
+                  <Link className="text-white" href="/infomation/baked">
                     咖啡烘焙耐人尋味之處 &gt;&gt;
                   </Link>
                 </h6>
@@ -127,10 +121,7 @@ export default function Footer() {
               </div>
               <div className="mt-4">
                 <h6>
-                  <Link
-                    className="text-white"
-                    href="http://localhost:3000/infomation/handbrewed"
-                  >
+                  <Link className="text-white" href="/infomation/handbrewed">
                     創造符合自己咖啡味蕾的風味 &gt;&gt;
                   </Link>
                 </h6>
@@ -145,7 +136,7 @@ export default function Footer() {
                   coffseeker@gmail.com
                 </a>
               </p>
-              <Link href="http://localhost:3000/about/law">
+              <Link href="/about/law">
                 <p className="my-3 fw-light">條款及細則</p>
               </Link>
             </div>

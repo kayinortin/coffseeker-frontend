@@ -1,35 +1,16 @@
-import { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useMediaQuery } from 'react-responsive'
 
-import useAddCart from '@/hooks/useAddCart'
-
 import { useShow } from '@/context/showProductDetail'
-import { useCategory } from '@/context/category'
-import { useCartList } from '@/context/cart'
 
 import FavIcon from '../FavIcon'
 
 export default function ProductItem(props) {
   const { product } = props
-  const {
-    id,
-    image_main,
-    name,
-    brand,
-    amount,
-    price,
-    discountPrice,
-    views,
-    popularity,
-  } = product
+  const { id, image_main, name, brand, price, discountPrice } = product
   const { show, setShow } = useShow()
-  const { categoryData } = useCategory()
-  const { cartListData, setCartListData } = useCartList()
-  const [category, setCategory] = useState({ id: '', name: '' })
-
-  const isFetchingCategory = categoryData.length === 0
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
 
@@ -54,7 +35,7 @@ export default function ProductItem(props) {
             href={`/product/${id}`}
             onClick={handleShow}
           >
-            <img
+            <Image
               src={`http://localhost:3005/uploads/${image_main}`}
               alt={name}
               className="card-img-top"

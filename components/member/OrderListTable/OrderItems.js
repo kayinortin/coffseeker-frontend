@@ -6,17 +6,18 @@ import Image from 'next/image'
 // 圖片的src
 // http://localhost:3005/uploads/${image_main}
 export default function OrderItems({ order }) {
-  const [imageArr, setImageArr] = useState([])
+  const [imgUrl, setImgUrl] = useState([])
 
   useEffect(() => {
-    let imgUrl = ['images/none-img.png']
+    let imgUrl = 'images/none-img.png'
     console.log('order.image', order.image)
     // 判斷照片欄位有無資料 有就抽取資料 無則設定預設值
-    if (order.image !== '' && order.image !== 0) {
-      imgUrl = JSON.parse(order.image)
-      console.log('Images', imgUrl[0])
+    if (order.image !== '' && order.image != 0) {
+      const imageArr = JSON.parse(order.image)
+      console.log('Images', imageArr[0])
+      imgUrl = imageArr[0]
     }
-    setImageArr(imgUrl[0])
+    setImgUrl(imgUrl)
     // console.log('Images', imgUrl[0])
   }, [])
 
@@ -26,8 +27,9 @@ export default function OrderItems({ order }) {
       <div className={'d-none d-lg-flex border-bottom border-dark p-2'}>
         <span className={'col-3 text-center'}>
           <Image
-            src={`http://localhost:3005/uploads/${imageArr}`}
+            src={`http://localhost:3005/uploads/${imgUrl}`}
             alt="Image Description"
+            className={'imgborder'}
             width={100} // 设置图像宽度
             height={100} // 设置图像高度
           />
@@ -48,8 +50,9 @@ export default function OrderItems({ order }) {
         <div className={'d-flex align-items-center'}>
           <div className={'pe-3'}>
             <Image
-              src={`http://localhost:3005/uploads/${imageArr}`}
+              src={`http://localhost:3005/uploads/${imgUrl}`}
               alt="Image Description"
+              className={'imgborder'}
               width={100} // 设置图像宽度
               height={100} // 设置图像高度
             />

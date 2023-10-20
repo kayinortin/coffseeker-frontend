@@ -230,6 +230,7 @@
 }
 
 .order-open{
+  height: 36px;
   background: none;
   &:hover,
   &.active{
@@ -238,7 +239,7 @@
   }
   @media screen and (max-width: 768px) {
     &:hover{
-      color: #000000;
+      color: #1C262C;
       background: none;
     }
     &.active{
@@ -253,7 +254,7 @@
 .order-state{
   font-size: 16px;
   .data{
-      font-size: 12px;
+      font-size: 11px;
   }
   .gray{
       background: $color--gray3;
@@ -271,12 +272,16 @@
 
 .ed-select-control{
   &.order-select{
+    width: 20%;
     @media screen and (max-width: 768px){
       width: 100%;
     }
   }
 } 
 
+.imgborder{
+  border: 5px solid #dfd0af;
+}
 
 .third-login{
 
@@ -288,4 +293,60 @@
 .eyes{
   top:-56px;
   right:30px;
+}
+
+// 優惠券
+.coupon-image{
+ width: 120px;
+ height: 120px;
+ background: $color--secondary;
+ @media screen and (max-width: 768px){
+  width: 100px;
+  height: 100px;
+}
+ .ticket{
+  color: #fff;
+  font-size: 75px;
+  @media screen and (max-width: 768px){
+    font-size: 50px;
+  }
+ }
+}
+.coupon-border{
+  width: calc(100% - 130px);
+  height: 120px;
+  @media screen and (max-width: 768px){
+    width: calc(100% - 110px);
+    height: 100px;
+  }
+  img{
+    z-index: -1;
+    width: 100%;
+    height: 120px;
+    @media screen and (max-width: 768px){
+      height: 100px;
+    }
+  }
+  .coupon-content{
+    height: 120px;
+    @media screen and (max-width: 768px){
+      height: 100px;
+    }
+    .link{
+      background: $color--secondary;
+      color: #fff;
+      cursor: pointer;
+    }
+    .expire{
+      font-size: 11.8px;
+    }
+    .title{
+      font-weight: 700;
+      color: $color--primary;
+    }
+    .discount{
+      color: $color--primary;
+
+    }
+  }
 }

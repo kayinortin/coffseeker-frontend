@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { IoLocation } from 'react-icons/io5'
-import styles from '../../styles/_about.module.scss'
 import AOS from 'aos'
 
 export default function CoffeeMap() {
   const [selectedData, setSelectedData] = useState(null)
-  const [iconColor1, setIconColor1] = useState('#ef8b90')
+  const [iconColor1, setIconColor1] = useState('red')
   const [iconColor2, setIconColor2] = useState('#ef8b90')
   const [iconColor3, setIconColor3] = useState('#ef8b90')
   const [iconColor4, setIconColor4] = useState('#ef8b90')

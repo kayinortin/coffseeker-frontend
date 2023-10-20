@@ -102,6 +102,8 @@ $color--black: #000000;
   }
   .ei-mobile-category-btn {
     width: 100%;
+    margin-top: 20px;
+    // height: 60%;
   }
   .mobile-news-title {
     margin-top: 2rem !important;
@@ -146,6 +148,7 @@ $color--black: #000000;
 // [nid].js頁面
 .ei-container-nid {
   max-width: 50%;
+  margin-bottom: 20px;
 }
 .ei-row {
   margin-left: 160px;
@@ -155,6 +158,7 @@ $color--black: #000000;
   // width: 90%;
   margin: 0 auto;
   padding-inline: 200px;
+  // margin-bottom: 20px;
   img {
     width: 100%;
   }
@@ -163,6 +167,7 @@ $color--black: #000000;
   }
   .ei-letter-spacing {
     line-height: 1.2rem;
+    margin-bottom: 40px !important;
   }
 }
 
@@ -228,3 +233,31 @@ $color--black: #000000;
   font-weight: bold;
   color: $color--primary;
 }
+
+//優惠券
+// .coupon-border {
+//   position: relative;
+//   padding: 0; /* 去除默认的内边距 */
+// }
+
+// .coupon-border .coupon-image {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .coupon-border .ticket {
+//   font-size: 48px; /* 调整图标大小 */
+//   color: #fff; /* 设置图标颜色 */
+// }
+
+// .coupon-border img {
+//   width: 100%; /* 图片宽度占满父容器 */
+//   height: auto;
+// }
+

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import CoursePic from '@/components/course/CoursePic'
 import CourseText from '@/components/course/CourseText'
 import Review from './Reviews'
-// import CourseDescription from './CourseDescription'
 import TopHits from './TopHits'
 import style from '@/styles/_course.module.scss'
 import { useUser } from '@/context/UserInfo'
@@ -12,10 +11,8 @@ import Image from 'next/image'
 import axios from 'axios'
 import CourseComment from '@/components/course/CourseComment'
 import CoursePerFetcher from './CoursePerFetcher'
-import CourseInfoBtn from '@/components/course/CourseInfoBtn'
-
+import Head from 'next/head'
 import { useShow } from '../../context/showProductDetail'
-import { AddCartBtn, BuyBtn } from './BuyBtn'
 import TopHitsMobile from './TopHitsMobile'
 
 export default function MainContent({ pid }) {
@@ -29,7 +26,7 @@ export default function MainContent({ pid }) {
     id: '',
     course_name: '',
     course_price: '',
-    course_description: 0,
+    course_description: '',
     course_image: 0,
     course_subpics: 0,
     course_syllabus: 0,
@@ -48,7 +45,6 @@ export default function MainContent({ pid }) {
               `http://localhost:3005/api/course/${pid}`
             )
             const details = response.data
-            // console.log(details)
             setDetailData({ ...details })
             if (details.course_subpics) {
               setImages(JSON.parse(details.course_subpics))
@@ -68,13 +64,20 @@ export default function MainContent({ pid }) {
     setActiveContent(contentName)
   }
 
+  const [firstText, SecondText] = detailData.course_description.split('T')
+
   return (
     <>
-    <CoursePerFetcher pid={pid}/>
+      <CoursePerFetcher pid={pid} />
+      <div>
+        <Head>
+          <title>全站商品｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className="mt-5 ms-sm-5 container ed-content-size">
         <div className="d-sm-flex">
-          <CoursePic pid={pid}  />
-          <CourseText pid={pid}  />
+          <CoursePic pid={pid} />
+          <CourseText pid={pid} />
         </div>
 
         {detailData && detailData.course_syllabus ? (
@@ -88,13 +91,13 @@ export default function MainContent({ pid }) {
                     src="http://localhost:3000/product_detail/banner.png"
                     alt="product-detail-banner"
                   />
-                  <div className="col-sm-12 text-start  ">
-                    <div className="btn-group mt-3">
+                  <div className="col-sm-12 text-start">
+                    <div className="d-flex btn-group mt-3">
                       <button
                         onClick={() => {
                           handleButtonClick('introduction')
                         }}
-                        className={`btn hw-bold-text rounded-0 ${
+                        className={`btn hw-bold-text me-2 rounded-0 ${
                           activeContent === 'introduction'
                             ? 'btn-secondary active'
                             : 'btn-outline-secondary'
@@ -106,7 +109,7 @@ export default function MainContent({ pid }) {
                         onClick={() => {
                           handleButtonClick('teacher-info')
                         }}
-                        className={`hw-bold-text btn rounded-0 ${
+                        className={`hw-bold-text ms-2 btn rounded-0 ${
                           activeContent === 'teacher-info'
                             ? 'btn-secondary active'
                             : 'btn-outline-secondary'
@@ -119,9 +122,11 @@ export default function MainContent({ pid }) {
                 </div>
               </div>
               {activeContent === 'introduction' && (
-                <div className="col-10 mx-auto">
-                  <h6>【課程大綱】</h6>
-                  <div className={`lh-base ${style['course-intro']}`}>
+                <div className="col-12">
+                  <h6 className="hw-course-detail">【課程大綱】</h6>
+                  <div
+                    className={`lh-lg p-sm-1 text-center text-sm-start mt-2 ${style['course-intro']}`}
+                  >
                     {detailData.course_syllabus
                       .split('\n')
                       .map((line, index) => (
@@ -135,25 +140,27 @@ export default function MainContent({ pid }) {
               )}
               {activeContent === 'teacher-info' && (
                 <>
-                  <div className="col-10 mt-5  mx-auto">
-                    <h6>【教師簡介】</h6>
-                    
+                  <div className="col-12 mt-5 ">
+                    <h6 className="text-center">【教師簡介】</h6>
+
                     <p className="fw-bold my-3">
                       教師姓名：{detailData.teacher_name}
                     </p>
                     <p className="fw-bold my-3">
                       教師資歷：{detailData.teacher_qualification}
                     </p>
-                    <p className="fw-bold my-3">教師自介：</p>
-                    <p>{detailData.teacher_specialty}</p>
+                    <p className="fw-bold my-3">教師介紹：</p>
+                    <p className="lh-lg">{detailData.teacher_specialty}</p>
                   </div>
                 </>
               )}
             </section>
 
-            <section className="course-sp col-10 mt-4  mx-auto">
-              <h6>【課程特色】</h6>
-              <div className="lh-base">{detailData.course_description}</div>
+            <section className="course-sp col-12 mt-4 mb-4">
+              <h6 className="hw-course-detail">【課程特色】</h6>
+              <div className="lh-lg">
+                {firstText} <br /> <br /> {SecondText}
+              </div>
             </section>
             <hr />
           </>

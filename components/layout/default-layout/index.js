@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -28,7 +28,8 @@ export default function DefaultLayout({ title = '', children }) {
   const isAdmin = router.pathname.startsWith('/admin')
   const isWildcard = router.pathname === '*'
   // 最後再按照需求來設定 isFullScreen
-  const isFullScreen = isLogin || isAdmin || isWildcard || isMap || isDivination || isLaw 
+  const isFullScreen =
+    isLogin || isAdmin || isWildcard || isMap || isDivination || isLaw
 
   // 滾動特效
   const [scrollPosition, setScrollPosition] = useState(0)
@@ -97,7 +98,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas user-circle ed-navbar__font"></i>,
       tagDesktop: ``,
-      href: '/member/login',
+      href: '/member',
     },
     {
       id: 10,
@@ -107,7 +108,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas fa-heart ed-navbar__font"></i>,
       tagDesktop: ``,
-      href: '/fav',
+      href: '/member',
     },
     {
       id: 11,
@@ -117,7 +118,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas fa-shopping-cart ed-navbar__font"></i>,
       tagDesktop: <div className="ed-tag ed-tag--corner">{cartIconLength}</div>,
-      href: '/member/login',
+      href: '/member',
     },
   ]
   const navActionsLogin = [
@@ -149,7 +150,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas fa-heart ed-navbar__font"></i>,
       tagDesktop: ``,
-      href: '/fav',
+      href: '/member/likes',
     },
     {
       id: 11,

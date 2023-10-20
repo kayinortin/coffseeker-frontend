@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import axios from 'axios'
 import style from '@/styles/_course.module.scss'
-
+import { useCourses } from '@/context/course'
 import CourseInfoBtn from '@/components/course/CourseInfoBtn'
 import CourseFetcher from './course-fetch'
-import { selectedCourse, setSelectedCourse } from '@/context/course'
 
 export default function CourseDescription() {
   const router = useRouter()
@@ -19,23 +17,18 @@ export default function CourseDescription() {
     setActiveContent(contentName)
   }
 
-  
-
   return (
     <>
       <CourseFetcher />
-      {selectedCourse  ? (
+      {selectedCourse ? (
         <>
           <section>
             <div className="">
-              <CourseInfoBtn
-              // activeContent={activeContent}
-              // onButtonClick={handleButtonClick}
-              />
+              <CourseInfoBtn />
             </div>
 
             {activeContent === 'introduction' && (
-              <div className="col-10 mx-auto">
+              <div className="col-12 mx-auto ">
                 <div className="border border-3 col-sm-2 col-4 mb-3 text-center">
                   課程介紹
                 </div>
@@ -78,7 +71,7 @@ export default function CourseDescription() {
 
           <section className="course-sp col-10 mt-4  mx-auto">
             <h6>【課程特色】</h6>
-            <div className="lh-base">{selectedCourse.course_description}</div>
+            <div className="lh-lg">{selectedCourse.course_description}</div>
 
             {/* {breakedSyllabus} */}
           </section>

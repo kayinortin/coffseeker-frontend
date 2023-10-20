@@ -2,9 +2,15 @@ import React from 'react'
 import Link from 'next/link'
 import MemSideBar from '@/components/member/Sidebar/MemSideBar'
 import ChangePassword from '@/components/member/ChangePassword/Index'
+import Head from 'next/head'
 export default function info() {
   return (
     <>
+      <div>
+        <Head>
+          <title>會員中心｜探索咖啡COFFSEEKER</title>
+        </Head>
+      </div>
       <div className={'container'}>
         {/* 麵包屑 */}
         <div className={'row'}>

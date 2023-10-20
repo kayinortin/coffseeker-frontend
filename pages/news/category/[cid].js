@@ -7,6 +7,7 @@ import NewsLayout from '@/components/news/news-layout'
 import CategoryBtn from '@/components/news/category-btn'
 import OrderBy from '@/components/news/order-by'
 import Pagination from '@/components/news/pagination'
+import Head from 'next/head'
 
 const CategoryNews = () => {
   const router = useRouter()
@@ -78,6 +79,11 @@ const CategoryNews = () => {
           <div className="mt-lg-4 d-flex justify-content-center ms-lg-4">
             <OrderBy onChange={handleSortChange} />
           </div>
+        </div>
+        <div>
+          <Head>
+            <title>最新消息｜探索咖啡COFFSEEKER</title>
+          </Head>
         </div>
 
         <div className="row row-cols-1 row-cols-md-2 background">

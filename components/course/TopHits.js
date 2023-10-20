@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Link from 'next/link'
+import { useMediaQuery } from 'react-responsive'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
   Navigation,
@@ -8,24 +10,52 @@ import {
   A11y,
   Autoplay,
 } from 'swiper/modules'
-// import Swiper and modules styles
+import FavIcon from '../FavIcon'
+import Swal from 'sweetalert2'
+import useAddCartCourse from '@/hooks/useCourseAddCart'
+import { useCartListCourse } from '@/context/cart_course'
+import CourseTopHitsCard from './CourseTopHitsCard'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
 
-import ProductDataFetcher from '@/components/product/ProductDataFetcher'
-import ProductTopHits from '@/components/product/productTopHits'
+const TopHits = (props) => {
+  const [data, setData] = useState([])
+  const { addCartCourse } = useAddCartCourse(props.product)
+  const { cartListData_course, setCartListData_course } = useCartListCourse()
+  const { course } = props
 
-import { useProducts } from '@/context/product'
+  useEffect(() => {
+    const FetchedCourse = async () => {
+      try {
+        const response = await axios.get('http://localhost:3005/api/course')
 
-const TopHits = () => {
-  const { productsData, setProductsData } = useProducts()
+        const courses = response.data.courses
+
+        if (courses.length !== 0) {
+          setData(courses)
+        }
+      } catch (error) {
+        console.log('資料獲取失敗：', error)
+      }
+    }
+    FetchedCourse()
+  }, [])
+
+  const slicedData = data.slice(10, 19)
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
+
+  const handleShow = (e) => {
+    if (!isDesktop) {
+      e.preventDefault()
+    }
+  }
 
   return (
     <>
-      <ProductDataFetcher />
       <h5 className="mt-4">相關商品</h5>
       <div className="my-4 container">
         <Swiper
@@ -37,10 +67,10 @@ const TopHits = () => {
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log('slide change')}
         >
-          {productsData.map((product, i) => {
+          {slicedData.map((course, i) => {
             return (
-              <SwiperSlide key={i}>
-                <ProductTopHits key={product.id} product={product} />
+              <SwiperSlide key={course.id}>
+                <CourseTopHitsCard key={course.id} course={course} />
               </SwiperSlide>
             )
           })}

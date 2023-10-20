@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useMediaQuery } from 'react-responsive'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
   Navigation,
@@ -8,26 +9,48 @@ import {
   A11y,
   Autoplay,
 } from 'swiper/modules'
-// import Swiper and modules styles
+import FavIcon from '../FavIcon'
+import { useCartList } from '@/context/cart'
+import useAddCart from '@/hooks/useAddCart'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
+import CourseTopHitsCard from './CourseTopHitsCard'
 
-import ProductDataFetcher from '@/components/product/ProductDataFetcher'
-import ProductTopHits from '@/components/product/productTopHits'
+const TopHitsMobile = (props) => {
+  const [data, setData] = useState([])
+  const { addCart } = useAddCart(props.product)
+  useEffect(() => {
+    const FetchedCourse = async () => {
+      try {
+        const response = await axios.get('http://localhost:3005/api/course')
 
-import { useProducts } from '@/context/product'
+        const courses = response.data.courses
 
-const TopHitsMobile = () => {
-  const { productsData, setProductsData } = useProducts()
+        if (courses.length !== 0) {
+          setData(courses)
+        }
+      } catch (error) {
+        console.log('資料獲取失敗：', error)
+      }
+    }
+    FetchedCourse()
+  }, [])
 
+  const slicedData = data.slice(10, 19)
 
-  
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
+
+  const handleShow = (e) => {
+    if (!isDesktop) {
+      e.preventDefault()
+    }
+  }
+
   return (
     <>
-      <ProductDataFetcher />
       <h5 className="mt-4">相關商品</h5>
       <div className="my-4">
         <Swiper
@@ -39,10 +62,10 @@ const TopHitsMobile = () => {
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log('slide change')}
         >
-          {productsData.map((product, i) => {
+          {slicedData.map((course, i) => {
             return (
               <SwiperSlide key={i}>
-                <ProductTopHits key={product.id} product={product} />
+                <CourseTopHitsCard key={course.id} course={course} />
               </SwiperSlide>
             )
           })}

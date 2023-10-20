@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { useFavorite } from '../../context/fav'
 import AddFavProduct from '../fav/AddFavProduct'

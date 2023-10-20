@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { checkLoginStatus } from '@/components/member/FetchDatas/CheckLoginStaus'
 import { useUser } from '@/context/UserInfo'
+import { useAuthJWT } from '@/context/useAuthJWT'
+import useFirebase from '@/hooks/use-firebase'
 
 export default function HeaderMobile(props) {
   const { navItems, currentRoute, navActions, isTop, isFullScreen } = props
   const { isLoggedIn, setIsLoggedIn } = useUser()
+  const { logoutFirebase } = useFirebase()
+  const { authJWT, setAuthJWT } = useAuthJWT()
 
   const router = useRouter()
   const { pathname } = router
@@ -36,19 +40,32 @@ export default function HeaderMobile(props) {
       )
       .then((res) => {
         if (res.data.message === 'success') {
+          logoutFirebase()
+          localStorage.removeItem('hasVisitedBefore')
+          setAuthJWT({
+            isAuth: false,
+            userData: {
+              id: 0,
+              name: '',
+              username: '',
+              r_date: '',
+            },
+          })
           Swal.fire({
             title: '登出成功',
             icon: 'success',
+            iconColor: '#b54b33',
             showConfirmButton: false,
             timer: 1500,
           })
           setTimeout(() => {
-            window.location.href = 'http://localhost:3000/'
+            window.location.href = '/'
           }, 1500)
         } else {
           Swal.fire({
             title: '登出失敗',
             icon: 'error',
+            iconColor: '#1C262C',
             showConfirmButton: false,
             timer: 1500,
           })
@@ -74,10 +91,7 @@ export default function HeaderMobile(props) {
         <label htmlFor="menuToggle" className="ed-navbar__toggle">
           <i className="fas fa-bars ed-navbar__icon"></i>
         </label>
-        <Link
-          className="ed-navbar__font ed-navbar__logo"
-          href="http://localhost:3000/"
-        >
+        <Link className="ed-navbar__font ed-navbar__logo" href="/">
           {!isTop || isFullScreen ? (
             <img src="/logo-white.png" alt="logo" />
           ) : (
@@ -145,11 +159,7 @@ export default function HeaderMobile(props) {
               <hr className="ed-hr ed-hr--navbar" />
             </li>
             <div className="ed-bg2">
-              <img
-                src="http://localhost:3000/bg2-sm.png"
-                alt="menu-bg"
-                width={240}
-              />
+              <img src="/bg2-sm.png" alt="menu-bg" width={240} />
             </div>
 
             {navActions.map((action) => (

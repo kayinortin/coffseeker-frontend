@@ -101,8 +101,9 @@ $fw-black:900;
             width: 20vw;
         }
         div.emptyTitle{
-            padding-block: 1rem;
-            font-size: $fs-lg;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            font-size: $fs-md;
             color: $color--primary;
             font-weight: $fw-bold;
         }
@@ -143,8 +144,9 @@ $fw-black:900;
                         padding: 0px;
                         
                         .imgContainer{
-                                    
+                            
                             img{
+                                object-fit: cover;
                                 background-color: $color--primary;
                                 border: .4rem solid #CBB48B;
                             }
@@ -234,7 +236,7 @@ $fw-black:900;
                                         &:hover,&:active {
                                             color:$color--white;
                                             background-color: $color--secondary;
-                                            border: px solid $color--primary;
+                                           
                                             }
                                     }
                                     
@@ -366,6 +368,9 @@ $fw-black:900;
                     color: $color--white;
                     padding-inline: 2rem;
                     padding-block: .5rem;
+                        &:hover{
+                            background-color: $color--primary;
+                        }
                     }
                 }
 
@@ -376,7 +381,6 @@ $fw-black:900;
 
                         .wrapcart{
                             border: 1px solid $color--primary;
-                            // border: 1px solid red;
                             padding-inline: 1rem;
                             margin-bottom: 1rem;
                             
@@ -393,6 +397,7 @@ $fw-black:900;
                                     .imgContainer{
         
                                         img{
+                                            object-fit: cover;
                                             background-color: $color--primary;
                                             border: .4rem solid #CBB48B;
                                         }
@@ -477,6 +482,8 @@ $fw-black:900;
                 .wrapcart{
                     border: 1px solid $color--primary;
                     padding-inline: 1rem;
+                    margin-bottom: 1rem;
+                    // border: 1px solid red;
 
                     .labels{
                         font-size: $fs-md;
@@ -499,7 +506,7 @@ $fw-black:900;
                             input.form-control{
                                 border: 1px solid $color--primary;
                                 background-color: $color-background;
-                                &:hover{
+                                &:hover,&:focus,&:active{
                                     border: 1px solid $color--secondary;
                                     color: $color--secondary;
                                 }
@@ -516,6 +523,7 @@ $fw-black:900;
                 .wrapcart{
                     border: 1px solid $color--primary;
                     padding-inline: 1rem;
+                    margin-bottom: 1rem;
 
                     .labels{
                         font-size: $fs-md;
@@ -532,10 +540,11 @@ $fw-black:900;
                             input.form-control{
                                 border: 1px solid $color--primary;
                                 background-color: $color-background;
-                                &:hover{
+                                &:hover,&:focus,&:active{
                                     border: 1px solid $color--secondary;
                                     color: $color--secondary;
                                 }
+                                
                             }
                         }
                     }
@@ -549,15 +558,23 @@ $fw-black:900;
     }
     
     .btngroup{
-       
+        
         button.backStep{
             background-color: $color--gray4;
             color: $color--white;
+            padding-block: .5rem;
+            &:hover{
+                background-color: $color--gray3;
+            }
     
         }
         button.sendOrder{
             background-color: $color--secondary;
             color: $color--white;
+            padding-block: .5rem;
+            &:hover{
+                background-color: $color--primary;
+            }
         }
     
     }
@@ -575,8 +592,8 @@ $fw-black:900;
         }
     
         .emptyTitle{
-            padding-top: 1rem;
-            padding-bottom: 2rem;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
             font-size: $fs-md;
             color: $color--primary;
             font-weight: $fw-bold;

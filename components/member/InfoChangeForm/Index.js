@@ -4,12 +4,7 @@ import { useUser } from '@/context/UserInfo'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { checkLoginStatus } from '../FetchDatas/CheckLoginStaus'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
-
-// 10/09
-// 已知問題 使用者資料編輯更新後
-// 刷新頁面 Token回傳的資料不會取新的 而是編輯前的資料
 
 export default function InfoChangeForm() {
   const { userData, setUserData } = useUser()
@@ -27,24 +22,31 @@ export default function InfoChangeForm() {
   const [birthdayData, setBirthdayDate] = useState('')
 
   const checkToken = Cookies.get('accessToken')
-  console.log('checkToken', checkToken)
   useEffect(() => {
     async function fetchData() {
+      console.log('Fetch accessToken:', checkToken)
+
       if (checkToken) {
-        const loginState = await checkLoginStatus()
         const fetchUser = await FetchUserData()
-        if (loginState) {
+        console.log(fetchUser)
+        if (fetchUser) {
           setUserData(fetchUser)
           setId(fetchUser.id)
           setMail(fetchUser.email)
           setName(fetchUser.username)
-          setPhone(fetchUser.phone)
-          setGender(fetchUser.gender)
-          setAddress(fetchUser.address)
-          const UserBirthday = fetchUser.birthday.split('-')
-          setBirthdayYear(UserBirthday[0])
-          setBirthdayMonth(UserBirthday[1])
-          setBirthdayDate(UserBirthday[2])
+          setPhone(fetchUser.phone ?? '')
+          setGender(fetchUser.gender ?? '')
+          setAddress(fetchUser.address ?? '')
+          if (fetchUser.birthday) {
+            const UserBirthday = fetchUser.birthday.split('-')
+            setBirthdayYear(UserBirthday[0])
+            setBirthdayMonth(UserBirthday[1])
+            setBirthdayDate(UserBirthday[2])
+          } else {
+            setBirthdayYear('1990')
+            setBirthdayMonth('01')
+            setBirthdayDate('01')
+          }
         }
       } else {
         console.log('Cookie不存在')
@@ -77,7 +79,7 @@ export default function InfoChangeForm() {
       value: userName,
       type: 'text',
       aria: null,
-      maxlength: 10,
+      maxlength: 30,
       disabled: false,
       onChange: (e) => setName(e.target.value),
     },
@@ -192,6 +194,7 @@ export default function InfoChangeForm() {
     Swal.fire({
       title: error,
       icon: 'error',
+      iconColor: '#1C262C',
       showConfirmButton: false,
       timer: 1500,
     })
@@ -229,6 +232,7 @@ export default function InfoChangeForm() {
       Swal.fire({
         title: '修改資料成功',
         icon: 'success',
+        iconColor: '#b54b33', //成功
         showConfirmButton: false,
         timer: 1500,
       })

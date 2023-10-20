@@ -71,6 +71,7 @@ export default function ChangePassword() {
     Swal.fire({
       title: error,
       icon: 'error',
+      iconColor: '#1c262c', //error
       showConfirmButton: false,
       timer: 1500,
     })
@@ -109,6 +110,7 @@ export default function ChangePassword() {
       Swal.fire({
         title: '密碼修改成功',
         icon: 'success',
+        iconColor: '#b54b33', //success
         showConfirmButton: false,
         timer: 1500,
       })

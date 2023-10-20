@@ -2,6 +2,8 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
+
+//leaflet import
 import {
   TileLayer,
   MapContainer,
@@ -27,27 +29,20 @@ import {
   PiCurrencyDollarSimpleBold,
   PiMusicNotesFill,
 } from 'react-icons/pi'
-import {
-  BsPlugin,
-  BsXLg,
-  BsCheckLg,
-  BsQuestionLg,
-  BsHourglassSplit,
-  BsDashLg,
-  BsClock,
-} from 'react-icons/bs'
+import { BsPlugin, BsHourglassSplit, BsClock } from 'react-icons/bs'
 
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
-import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+// import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 import CafeFilter from './cafeFilter'
 
+import Swal from 'sweetalert2'
+
 //所在地的mark樣式
 const locationMarker = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-gold.png',
+  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -55,10 +50,8 @@ const locationMarker = new L.Icon({
 })
 //咖啡廳們的mark樣式
 const cafesMarker = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-grey.png',
+  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -66,10 +59,8 @@ const cafesMarker = new L.Icon({
 })
 //active咖啡廳的mark樣式
 const activeCafeMarker = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-blue.png',
+  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -186,6 +177,11 @@ export default function Map() {
       longitude: '119.56531305026361',
     },
   ]
+  //縣市select用
+  const inputOptions = {}
+  cityData.forEach((city) => {
+    inputOptions[city.city] = city.title
+  })
   const [selectedCity, setSelectedCity] = useState(null)
   //定位位置
   const [position, setPosition] = useState(null)
@@ -194,7 +190,7 @@ export default function Map() {
   //咖啡廳清單資料
   const [cafes, setCafes] = useState([])
   //所有咖啡廳
-  const [allCafeData, setAllCafeData] = useState([])
+  const [allCafeData, setAllCafeData] = useState(null)
   //取得咖啡廳資料
   useEffect(() => {
     const fetchData = async () => {
@@ -202,13 +198,13 @@ export default function Map() {
         const response = await axios.get('/api/fetchCafeData')
         //這邊之後可以新增如果api沒拿到資料的話要怎麼做
         const data = response.data
-        setAllCafeData(data)
+        await setAllCafeData(data)
         //預設顯示桃園咖啡
-        const defaultCafeData = _.filter(data, { city: 'taoyuan' })
-        setCafes(defaultCafeData)
+        // const defaultCafeData = _.filter(data, { city: 'taoyuan' })
+        // setCafes(defaultCafeData)
         setTimeout(() => {
           setShowLoading(false)
-        }, 500)
+        }, 300)
       } catch (error) {
         console.error(error)
       }
@@ -246,15 +242,13 @@ export default function Map() {
   //要生成Mark的資料預設
   const [markData, setMarkData] = useState(cafes)
   //咖啡rating篩選條件預設
-  const [filterValues, setFilterValuesValues] = useState({
+  const [filterValues, setFilterValues] = useState({
     wifi: '0',
     seat: '0',
     quiet: '0',
-    tasty: '0',
-    socket: '',
   })
 
-  //監聽filterValues和cafes更改，Rating篩選咖啡店
+  //監聽filterValues或cafes更改時，Rating篩選咖啡店，重新渲染list和mark
   useEffect(() => {
     // 使用lodash的_.filter函數篩選咖啡店
     const filteredCafes = _.filter(cafes, (cafe) => {
@@ -265,10 +259,7 @@ export default function Map() {
         (filterValues.seat === '' ||
           cafe.seat >= parseInt(filterValues.seat)) &&
         (filterValues.quiet === '' ||
-          cafe.quiet >= parseInt(filterValues.quiet)) &&
-        (filterValues.tasty === '' ||
-          cafe.tasty >= parseInt(filterValues.tasty)) &&
-        (filterValues.socket === '' || cafe.socket === filterValues.socket)
+          cafe.quiet >= parseInt(filterValues.quiet))
       )
     })
 
@@ -277,6 +268,7 @@ export default function Map() {
     //然後更新Marks渲染
     setMarkData(filteredCafes)
   }, [filterValues, cafes])
+
   //顯示距離預設
   const [distanceRangeKm, setDistanceRangeKm] = useState(3)
 
@@ -352,7 +344,7 @@ export default function Map() {
 
     return position === null ? null : (
       <Marker position={position} icon={locationMarker}>
-        <Popup>You are here</Popup>
+        <Popup>您在這裡</Popup>
       </Marker>
     )
   }
@@ -366,7 +358,7 @@ export default function Map() {
           [selectedCity.latitude, selectedCity.longitude],
           map.getZoom()
         )
-      }, 200)
+      }, 100)
       return (
         <Marker
           key={'selectedCity'}
@@ -381,6 +373,7 @@ export default function Map() {
       )
     }
   }
+
   //生成active咖啡Mark
   function ActiveCafeMarker({ cafeData }) {
     const map = useMap()
@@ -410,7 +403,9 @@ export default function Map() {
         {/* 單間咖啡廳 */}
         <div className={`cafeInfo ${showCafeInfo ? '' : 'd-none'}`}>
           <div className="d-flex justify-content-between">
-            <h4 key={cafeData.id}>{cafeData.name}</h4>
+            <h4 className="lh-base" key={cafeData.id}>
+              {cafeData.name}
+            </h4>
             <button
               type="button"
               className="btn-close"
@@ -463,33 +458,35 @@ export default function Map() {
               </div>
               <div>{cafeData.music}★</div>
             </span>
-            <span>
-              <div>
-                <BsPlugin />
-                插座數量
+            <div className="w-100">
+              <div className="d-flex justify-content-between mb-3 px-1 lh-base">
+                <div>
+                  <BsPlugin />
+                  插座數量
+                </div>
+                {checkValueSocket(cafeData.socket)}
               </div>
-              <div>{checkValue(cafeData.socket)}</div>
-            </span>
-            <span>
-              <div>
-                <BsHourglassSplit />
-                有無限時
+              <div className="d-flex justify-content-between px-1 lh-base">
+                <div>
+                  <BsHourglassSplit />
+                  有無限時
+                </div>
+                {checkValueTime(cafeData.limited_time)}
               </div>
-              <div>{checkValue(cafeData.limited_time)}</div>
-            </span>
+            </div>
           </div>
           <div className="cafeInfos">
             <h5 className="d-flex justify-content-between">
               店家資訊
               {cafeData.distanceInKm != null && (
                 <span className="distanceText">
-                  {cafeData.distanceInKm.toFixed(3)}公里
+                  {cafeData.distanceInKm.toFixed(1)}公里
                 </span>
               )}
             </h5>
             <div className="d-flex ">
               <FaMapMarkerAlt />
-              <h6>{cafeData.address}</h6>
+              <h6>{cafeData.address.replace(/^\d+/, '')}</h6>
             </div>
 
             <div className={`d-flex  ${cafeData.open_time ? '' : 'd-none'}`}>
@@ -518,11 +515,6 @@ export default function Map() {
     )
   }
   //====================handle函式系列========================
-  //更改條件選擇時
-  const handleCriteriaChange = (e) => {
-    const { name, value } = e.target
-    setFilterValuesValues({ ...filterValues, [name]: value })
-  }
   //切換單間咖啡廳資料
   function handelChangeCafe(cafe) {
     setShowCafeInfo(true)
@@ -538,6 +530,17 @@ export default function Map() {
     setCafes(newData)
     let targetCity = _.find(cityData, { city: e.target.value })
     setSelectedCity(targetCity)
+  }
+  //Swal城市選擇
+  function SwalCitySelect(city) {
+    let newData = _.filter(allCafeData, { city: city })
+    setCafes(newData)
+    let targetCity = _.find(cityData, { city: city })
+    setSelectedCity(targetCity)
+    const selectElement = selectCityRef.current
+    if (selectElement) {
+      selectElement.value = city
+    }
   }
 
   //切換顯示距離事件
@@ -590,20 +593,71 @@ export default function Map() {
     setSelectedCity(null)
   }
 
-  function checkValue(value) {
+  //咖啡廳資料轉換成文字
+  function checkValueTime(value) {
     switch (value) {
       case 'yes':
-        return <BsCheckLg />
+        return <div>一律有限時</div>
       case 'no':
-        return <BsXLg />
+        return <div>一律不限時</div>
       case 'maybe':
-        return <BsQuestionLg />
+        return <div>假日或客滿有限時</div>
       default:
-        return <BsDashLg />
+        return <div>目前無資料</div>
+    }
+  }
+  function checkValueSocket(value) {
+    switch (value) {
+      case 'yes':
+        return <div>很多</div>
+      case 'no':
+        return <div>很少</div>
+      case 'maybe':
+        return <div>還好，看座位</div>
+      default:
+        return <div>目前無資料</div>
     }
   }
   //========ref宣告區===========
   const selectCityRef = useRef(null)
+  //============Swal===========
+  useEffect(() => {
+    if (allCafeData !== null)
+      Swal.fire({
+        title:
+          '<h5 class="lh-base">歡迎來到咖啡地圖<br/>尋找最適合的咖啡角落！</h5><hr/><h6 class="lh-base">請選擇想要前往的城市<br/>或是點擊開始定位顯示附近的咖啡廳。</h6>',
+        input: 'select',
+        inputOptions: inputOptions,
+        inputValue: 'taoyuan', // 設定桃園為默認選項
+        showDenyButton: true,
+        denyButtonColor: '#1c262c',
+        inputAttributes: {
+          style: 'width:55%',
+        },
+        confirmButtonText: '前往',
+        denyButtonText: '開始定位',
+        customClass: {
+          actions: 'd-flex position-relative mapSwalAction ',
+          confirmButton: 'mapSwalCityBtn position-absolute',
+          denyButton: '',
+          popup: 'mapSwalPopup',
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const selectedCity = result.value
+          console.log('你選擇的城市是：', selectedCity)
+          SwalCitySelect(selectedCity)
+        }
+        if (result.isDenied) {
+          document.getElementById('location').click()
+        }
+      })
+    return () => {
+      //離開元件時關閉Swal
+      Swal.close()
+    }
+  }, [allCafeData])
+
   //========================本體return====================
   return (
     <>
@@ -615,7 +669,7 @@ export default function Map() {
         <Lottie
           play
           loop
-          style={{ width: 600, height: 600 }}
+          style={{ width: 200, height: 200 }}
           animationData={lottieJson}
         />
       </div>
@@ -627,7 +681,7 @@ export default function Map() {
             </div>
 
             <select
-              defaultValue={'taoyuan'}
+              defaultValue={''}
               onChange={(e) => HandleChangeCity(e)}
               ref={selectCityRef}
             >
@@ -654,20 +708,22 @@ export default function Map() {
               <option value={1}>附近 1公里</option>
             </select>
           </div>
-          <button className="locateBtn" type="button" onClick={LocateBtn}>
+          <button
+            className="locateBtn"
+            id="location"
+            type="button"
+            onClick={LocateBtn}
+          >
             <TbCurrentLocation />
           </button>
         </div>
-        {/* <div className="mapAsideBar">
-          <button>篩選</button>
-        </div> */}
         <aside className="mapAsideInfo">
           <AsideInfo />
           <CafeFilter
-            filterValues={filterValues}
-            handleCriteriaChange={handleCriteriaChange}
+            setFilterValues={setFilterValues}
             cafesFiltered={cafesFiltered}
             handleCafeClick={handelChangeCafe}
+            setShowCafeInfo={setShowCafeInfo}
           />
         </aside>
 
@@ -679,7 +735,7 @@ export default function Map() {
           zoomControl={false}
         >
           <TileLayer
-            attribution='Data from <a href="https://cafenomad.tw/developers/docs/v1.2">Cafe Nomad</a> |&copy; <a href="http://cartodb.com/attributions">CartoDB</a> contributors'
+            attribution='Data:<a href="https://cafenomad.tw/developers/docs/v1.2">CafeNomad</a>|&copy;<a href="http://cartodb.com/attributions">CartoDB</a> contributors'
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png"
           />
           <ZoomControl position="topright" />

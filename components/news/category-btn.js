@@ -19,6 +19,9 @@ export default function CategoryBtn() {
         case '3':
           setActiveButton('coffeeKnowlege')
           break
+        case '4':
+          setActiveButton('coupons')
+          break
         default:
           setActiveButton('allnews')
       }
@@ -44,6 +47,10 @@ export default function CategoryBtn() {
         break
       case 'coffeeKnowlege':
         cid = 3 // category_id = 3
+        break
+      case 'coupons':
+        // 在這裡設定不同的路由行為，例如導向到特定頁面
+        router.push('/news/coupons')
         break
       default:
         break
@@ -103,11 +110,21 @@ export default function CategoryBtn() {
             >
               咖啡知識
             </button>
+            <button
+              className={`btn ei-bold-text rounded-0 ${
+                activeButton === 'coupons'
+                  ? 'btn-secondary active'
+                  : 'btn-outline-secondary'
+              }`}
+              onClick={() => handleButtonClick('coupons')}
+            >
+              優惠券區
+            </button>
           </div>
         </div>
         {/* 手機板 */}
         <div className="container ei-mobile-category-btn d-lg-none">
-          <div className="btn-group col-11 ms-3 p-1">
+          <div className="btn-group col-12  ">
             <button
               className={`btn ei-bold-text rounded-0 ${
                 activeButton === 'allnews'
@@ -147,6 +164,16 @@ export default function CategoryBtn() {
               onClick={() => handleButtonClick('coffeeKnowlege')}
             >
               咖啡知識
+            </button>
+            <button
+              className={`btn ei-bold-text rounded-0 ${
+                activeButton === 'coupons'
+                  ? 'btn-secondary active'
+                  : 'btn-outline-secondary'
+              }`}
+              onClick={() => handleButtonClick('coupons')}
+            >
+              優惠券區
             </button>
           </div>
         </div>

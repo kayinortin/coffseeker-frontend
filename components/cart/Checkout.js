@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthJWT } from '@/context/useAuthJWT'
 import axios from 'axios'
-import { useUser } from '@/context/UserInfo'
-import { FetchUserData } from '../member/FetchDatas/FetchUserData'
 import { useCartList } from '@/context/cart'
 import { useCartListCourse } from '@/context/cart_course'
+import Head from 'next/head'
+import Swal from 'sweetalert2'
 
 function Checkout({ step, handleNextStep, setStep }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,17 +19,18 @@ function Checkout({ step, handleNextStep, setStep }) {
   const courseData = JSON.parse(localStorage.getItem('cartList_course'))
 
   //checkoutData localStorage Data
-  const discountAmount = checkoutData ? checkoutData.discountAmount : 0 // 默认为0
-  const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0
-  const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0
-  const totalAmount = checkoutData ? checkoutData.totalAmount : 0
-  const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0
+  const totalProductCount = checkoutData ? checkoutData.totalProductCount : 0 //數量
+  const allTotalPrice = checkoutData ? checkoutData.allTotalPrice : 0 //商品總價格
+  const deliveryPrice = checkoutData ? checkoutData.deliveryPrice : 0 //運費價格
+  const selectedCouponId = checkoutData ? checkoutData.selectedCouponId : 0 //折價卷id
+  const discountAmount = checkoutData ? checkoutData.discountAmount : 0 //折扣價格
   const selectedDeliveryOption = checkoutData
     ? checkoutData.selectedDeliveryOption
     : ''
   const selectedPaymentOption = checkoutData
     ? checkoutData.selectedPaymentOption
     : ''
+  const totalAmount = checkoutData ? checkoutData.totalAmount : 0 //最後合計金額
 
   //會員資料
   const { authJWT } = useAuthJWT()
@@ -52,17 +53,6 @@ function Checkout({ step, handleNextStep, setStep }) {
     if (checkoutData) {
       setCheckoutData(checkoutData)
     }
-
-    // async function aFetchFata() {
-    //   const UserData = FetchUserData()
-    //   if (UserData) {
-    //     setUserData(UserData)
-    //     console.log(UserData)
-    //   } else {
-    //     console.log('沒有使用者資料')
-    //   }
-    // }
-    // aFetchFata()
   }, [])
 
   //後端API
@@ -86,59 +76,88 @@ function Checkout({ step, handleNextStep, setStep }) {
 
   //送出訂單
   function handleSendOrder() {
-    const uniqueOrderNumber = generateOrderNumber()
-
-    const orderList = {
-      user_id: authJWT.userData.id,
-      tracking_number: uniqueOrderNumber,
-      subtotal: allTotalPrice,
-      shipping_fee: deliveryPrice,
-      discount_price: discountAmount,
-      total_price: allTotalPrice - discountAmount + deliveryPrice,
-      payment: selectedPaymentOption,
-      delivery: selectedDeliveryOption,
-      receiver_name: isInfoVisible ? userData.username : receiverName,
-      receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
-      receiver_address: isInfoVisible ? userData.address : receiverAddress,
-    }
-
-    const orderProducts = cartData
-      ? cartData.map((product) => {
-          return {
-            product_id: product.id,
-            amount: product.amount,
-            price: product.discountPrice,
-          }
-        })
-      : []
-
-    const orderCourses = courseData
-      ? courseData.map((course) => {
-          return {
-            course_id: course.id,
-            amount: 1,
-            price: course.course_price,
-          }
-        })
-      : []
-
-    const orderData = {
-      orderList,
-      orderProducts,
-      orderCourses,
-    }
-
-    sendOrder(orderData)
-      .then(() => {
-        localStorage.removeItem('cartList')
-        localStorage.removeItem('cartList_course')
-
-        setCartListData([])
-        setCartListData_course([])
+    if (!isInfoVisible) {
+      Swal.fire({
+        icon: 'warning',
+        iconColor: '#1C262C',
+        title: '請填寫收件人資訊',
+        text: '很抱歉，如果您未填寫我們將無法為您送出訂單',
       })
-      .catch((error) => {
-        console.error('發送訂單時出錯', error)
-      })
+    } else {
+      const uniqueOrderNumber = generateOrderNumber()
+
+      const orderList = {
+        user_id: authJWT.userData.id,
+        tracking_number: uniqueOrderNumber,
+        subtotal: allTotalPrice,
+        shipping_fee: deliveryPrice,
+        discount_price: discountAmount,
+        total_price: allTotalPrice - discountAmount + deliveryPrice,
+        payment: selectedPaymentOption,
+        delivery: selectedDeliveryOption,
+        receiver_name: isInfoVisible ? userData.username : receiverName,
+        receiver_phone: isInfoVisible ? userData.phone : receiverPhone,
+        receiver_address: isInfoVisible ? userData.address : receiverAddress,
+      }
+
+      const orderProducts = cartData
+        ? cartData.map((product) => {
+            return {
+              product_id: product.id,
+              amount: product.amount,
+              price: product.discountPrice,
+            }
+          })
+        : []
+
+      const orderCourses = courseData
+        ? courseData.map((course) => {
+            return {
+              course_id: course.id,
+              amount: 1,
+              price: course.course_price,
+            }
+          })
+        : []
+
+      const orderData = {
+        orderList,
+        orderProducts,
+        orderCourses,
+      }
+
+      sendOrder(orderData)
+        .then(() => {
+          //移除購物車數據
+          localStorage.removeItem('cartList')
+          localStorage.removeItem('cartList_course')
+          //清空購物車數據
+          setCartListData([])
+          setCartListData_course([])
+
+          //優惠卷狀態更新
+          const usedCouponId = selectedCouponId
+          // console.log(usedCouponId)
+          axios
+            .put(
+              `http://localhost:3005/api/coupons/updatecoupon/${usedCouponId}`,
+              {
+                coupon_valid: 0,
+              }
+            )
+            .then((response) => {
+              console.log('優惠券已更新為不可用', response.data)
+            })
+            .catch((error) => {
+              console.error('更新優惠券時出錯', error)
+            })
+
+          setStep(3)
+        })
+        .catch((error) => {
+          console.error('發送訂單時出錯', error)
+        })
+    }
   }
 
   //訂單編號生成
@@ -188,7 +207,7 @@ function Checkout({ step, handleNextStep, setStep }) {
   const productItems = cartData
     ? cartData.map((product) => (
         <div key={product.id} className="productwrap row py-3">
-          <div className="imgContainer col-lg-2 col-sm-3 ">
+          <div className="imgContainer col-lg-2 col-sm-3 p-2">
             <img
               className="img-fluid"
               src={`http://localhost:3005/uploads/${product.image_main}`}
@@ -196,7 +215,7 @@ function Checkout({ step, handleNextStep, setStep }) {
             />
           </div>
           <div className="productContent col-lg-10 col-sm-9 text-start">
-            <div className="topDetails d-flex justify-content-between ">
+            <div className="topDetails d-flex justify-content-between">
               <div className="details">
                 <div className="productTitle lh-sm pb-1">{product.name}</div>
                 <div className="productDescription lh-base">
@@ -212,7 +231,6 @@ function Checkout({ step, handleNextStep, setStep }) {
                 ${product.discountPrice}
               </div>
               <div className="discountPrice  d-inline fs-5">
-                {' '}
                 x{product.amount}
               </div>
             </div>
@@ -229,20 +247,20 @@ function Checkout({ step, handleNextStep, setStep }) {
   const courseItems = courseData
     ? courseData.map((course) => (
         <div key={course.id} className="productwrap row py-3">
-          <div className="imgContainer col-lg-2 col-sm-3 ">
+          <div className="imgContainer col-lg-2 col-sm-3 p-2">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/course-image/${course.course_image}`}
+              src={`http://localhost:3005/uploads/${course.course_image}`}
               alt={course.course_image}
             />
           </div>
           <div className="productContent col-lg-10 col-sm-9 text-start">
-            <div className="topDetails d-flex justify-content-between ">
+            <div className="topDetails d-flex justify-content-between">
               <div className="details">
                 <div className="productTitle lh-sm pb-1">
                   {course.course_name}
                 </div>
-                <div className="productDescription lh-base">
+                <div className="productDescription lh-base py-1">
                   {course.course_description}
                 </div>
               </div>
@@ -268,6 +286,11 @@ function Checkout({ step, handleNextStep, setStep }) {
 
   return (
     <>
+      <div>
+        <Head>
+          <title>購物車｜填寫地址與付款</title>
+        </Head>
+      </div>
       <div className="checkout">
         <div className="expandProducts">
           <hr className="border-1 opacity-100" />
@@ -456,8 +479,8 @@ function Checkout({ step, handleNextStep, setStep }) {
             </div>
           </div>
         </div>
-        <div className="btngroup my-5 row">
-          <div className="col-lg-6 mb-3">
+        <div className="btngroup my-3 row px-3">
+          <div className="col-6 col-lg-6 mb-3">
             <button
               className="btn backStep w-100 fw-medium lh-base"
               onClick={handleCheckout}
@@ -465,11 +488,10 @@ function Checkout({ step, handleNextStep, setStep }) {
               上一步
             </button>
           </div>
-          <div className="col-lg-6 mb-3">
+          <div className="col-6 col-lg-6 mb-3">
             <button
               className="btn sendOrder w-100 fw-medium lh-base"
               onClick={() => {
-                setStep(3)
                 handleSendOrder()
               }}
             >
