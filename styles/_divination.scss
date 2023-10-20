@@ -251,13 +251,8 @@
             background-size: 100% 100%;
           }
 
-          25% {
-            background-position: 0% 0%;
-            background-size: 200% 200%;
-          }
-
           50% {
-            background-position: 0% 50%;
+            background-position: 0% 0%;
             background-size: 200% 200%;
           }
 
@@ -508,7 +503,7 @@
     background-image: none;
     .game {
       .tarotCard .content .back .cardBackIndex .cardBackText {
-        font-size: 14px;
+        font-size: 13px;
       }
       .textArea {
         text-align: center;
