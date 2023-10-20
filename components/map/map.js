@@ -2,6 +2,8 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
+
+//leaflet import
 import {
   TileLayer,
   MapContainer,
@@ -27,29 +29,20 @@ import {
   PiCurrencyDollarSimpleBold,
   PiMusicNotesFill,
 } from 'react-icons/pi'
-import {
-  BsPlugin,
-  BsXLg,
-  BsCheckLg,
-  BsQuestionLg,
-  BsHourglassSplit,
-  BsTriangle,
-  BsClock,
-} from 'react-icons/bs'
+import { BsPlugin, BsHourglassSplit, BsClock } from 'react-icons/bs'
 
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 // import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
 import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 import CafeFilter from './cafeFilter'
+
 import Swal from 'sweetalert2'
 
 //所在地的mark樣式
 const locationMarker = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-gold.png',
+  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -57,10 +50,8 @@ const locationMarker = new L.Icon({
 })
 //咖啡廳們的mark樣式
 const cafesMarker = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-grey.png',
+  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -68,10 +59,8 @@ const cafesMarker = new L.Icon({
 })
 //active咖啡廳的mark樣式
 const activeCafeMarker = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-blue.png',
+  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -188,6 +177,7 @@ export default function Map() {
       longitude: '119.56531305026361',
     },
   ]
+  //縣市select用
   const inputOptions = {}
   cityData.forEach((city) => {
     inputOptions[city.city] = city.title
@@ -258,7 +248,7 @@ export default function Map() {
     quiet: '0',
   })
 
-  //監聽filterValues和cafes更改，Rating篩選咖啡店
+  //監聽filterValues或cafes更改時，Rating篩選咖啡店，重新渲染list和mark
   useEffect(() => {
     // 使用lodash的_.filter函數篩選咖啡店
     const filteredCafes = _.filter(cafes, (cafe) => {
@@ -278,6 +268,7 @@ export default function Map() {
     //然後更新Marks渲染
     setMarkData(filteredCafes)
   }, [filterValues, cafes])
+
   //顯示距離預設
   const [distanceRangeKm, setDistanceRangeKm] = useState(3)
 
@@ -382,6 +373,7 @@ export default function Map() {
       )
     }
   }
+
   //生成active咖啡Mark
   function ActiveCafeMarker({ cafeData }) {
     const map = useMap()
@@ -601,6 +593,7 @@ export default function Map() {
     setSelectedCity(null)
   }
 
+  //咖啡廳資料轉換成文字
   function checkValueTime(value) {
     switch (value) {
       case 'yes':
@@ -659,6 +652,10 @@ export default function Map() {
           document.getElementById('location').click()
         }
       })
+    return () => {
+      //離開元件時關閉Swal
+      Swal.close()
+    }
   }, [allCafeData])
 
   //========================本體return====================
