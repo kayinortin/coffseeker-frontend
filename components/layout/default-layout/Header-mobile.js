@@ -54,6 +54,7 @@ export default function HeaderMobile(props) {
           Swal.fire({
             title: '登出成功',
             icon: 'success',
+            iconColor: '#b54b33',
             showConfirmButton: false,
             timer: 1500,
           })
@@ -64,6 +65,7 @@ export default function HeaderMobile(props) {
           Swal.fire({
             title: '登出失敗',
             icon: 'error',
+            iconColor: '#1C262C',
             showConfirmButton: false,
             timer: 1500,
           })

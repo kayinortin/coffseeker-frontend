@@ -10,6 +10,8 @@ import Swal from 'sweetalert2'
 import contenOfContract from '@/data/member/contract.json'
 import useFirebase from '@/hooks/use-firebase'
 import { useAuthJWT } from '@/context/useAuthJWT'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 // 10/10 尚未完成
 // 1.記住密碼
@@ -129,24 +131,41 @@ export default function LoginForm() {
   // ===================================
 
   // // google登入相關
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      setLoading(true)
+    }
+
+    router.events.on('routeChangeStart', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handlePageShow = () => {
+      setLoading(true)
+    }
+
+    window.addEventListener('pageshow', handlePageShow)
+
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow)
+    }
+  }, [])
 
   const { loginFBRedirect, loginGoogleRedirect, initApp, logoutFirebase } =
     useFirebase()
   const { authJWT, setAuthJWT } = useAuthJWT()
 
   useEffect(() => {
-    // 跳轉回頁面後執行 如果沒有執行google登入則不執行
-    // Swal.fire({
-    //   title: '登入中請稍候',
-    //   showConfirmButton: false,
-    //   timer: 3000,
-    // })
     initApp(callbackGoogleLoginRedirect)
   }, [])
 
   const callbackGoogleLoginRedirect = async (providerData) => {
-    
-
     if (authJWT.isAuth) return
 
     const res = await axios.post(
@@ -323,32 +342,38 @@ export default function LoginForm() {
             登入
           </button>
         </div>
-        <div
-          className={
-            'container d-flex justify-content-center mt-4 mb-3 align-items-center'
-          }
-        >
-          <button
-            className={'border-0 bg-none third-login me-5'}
-            type="button"
-            onClick={loginFBRedirect}
-          >
-            <FaFacebook className={'h2'} />
-          </button>
-          <button
-            className={'border-0 bg-none third-login'}
-            type="button"
-            onClick={loginGoogleRedirect}
-          >
-            <FaGoogle className={'h2'} />
-          </button>
-          {/* <button
-            className={'border-0 bg-none third-login ms-5'}
-            type="button"
-            onClick={logout}
-          >
-            <FaXTwitter className={'h2'} />
-          </button> */}
+        <div>
+          {loading ? (
+            <div className="mapArea justify-content-center align-items-center ed-absloute">
+              <Lottie
+                play
+                loop
+                style={{ width: 140, height: 140 }}
+                animationData={lottieJson}
+              />
+            </div>
+          ) : (
+            <div
+              className={
+                'container d-flex justify-content-center mt-4 mb-3 align-items-center'
+              }
+            >
+              <button
+                className={'border-0 bg-none third-login me-5'}
+                type="button"
+                onClick={loginFBRedirect}
+              >
+                <FaFacebook className={'h2'} />
+              </button>
+              <button
+                className={'border-0 bg-none third-login'}
+                type="button"
+                onClick={loginGoogleRedirect}
+              >
+                <FaGoogle className={'h2'} />
+              </button>
+            </div>
+          )}
         </div>
         <div className={'d-flex justify-content-center mb-3'}>
           <div className={'ask-for-register'}>
@@ -358,7 +383,6 @@ export default function LoginForm() {
             </Link>
           </div>
         </div>
-
         <div className={'d-flex justify-content-between'}>
           <button
             className={'forget-password border-0 bg-none'}
