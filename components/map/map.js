@@ -38,7 +38,8 @@ import {
 } from 'react-icons/bs'
 
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
-import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+// import lottieJson from '@/public/map-image/LottieFiles-cafeLoading.json'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 import CafeFilter from './cafeFilter'
 import Swal from 'sweetalert2'
@@ -352,7 +353,7 @@ export default function Map() {
 
     return position === null ? null : (
       <Marker position={position} icon={locationMarker}>
-        <Popup>You are here</Popup>
+        <Popup>您在這裡</Popup>
       </Marker>
     )
   }
@@ -366,7 +367,7 @@ export default function Map() {
           [selectedCity.latitude, selectedCity.longitude],
           map.getZoom()
         )
-      }, 200)
+      }, 100)
       return (
         <Marker
           key={'selectedCity'}
@@ -493,7 +494,7 @@ export default function Map() {
             </h5>
             <div className="d-flex ">
               <FaMapMarkerAlt />
-              <h6>{cafeData.address}</h6>
+              <h6>{cafeData.address.replace(/^\d+/, '')}</h6>
             </div>
 
             <div className={`d-flex  ${cafeData.open_time ? '' : 'd-none'}`}>
@@ -671,7 +672,7 @@ export default function Map() {
         <Lottie
           play
           loop
-          style={{ width: 600, height: 600 }}
+          style={{ width: 200, height: 200 }}
           animationData={lottieJson}
         />
       </div>
