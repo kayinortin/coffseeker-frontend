@@ -168,11 +168,11 @@ export default function OrderDetailOpened({ order }) {
     },
     {
       result: '運費',
-      sum: order.shipping_fee,
+      sum: `NT$ ${order.shipping_fee}`,
     },
     {
       result: '優惠',
-      sum: order.discount_price,
+      sum: `NT$ ${order.discount_price}`,
     },
   ]
   // 結算欄位

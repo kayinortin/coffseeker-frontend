@@ -230,6 +230,7 @@
 }
 
 .order-open{
+  height: 36px;
   background: none;
   &:hover,
   &.active{
@@ -238,7 +239,7 @@
   }
   @media screen and (max-width: 768px) {
     &:hover{
-      color: #000000;
+      color: #1C262C;
       background: none;
     }
     &.active{
