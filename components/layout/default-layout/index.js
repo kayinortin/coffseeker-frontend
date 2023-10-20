@@ -98,7 +98,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas user-circle ed-navbar__font"></i>,
       tagDesktop: ``,
-      href: '/member/login',
+      href: '/member',
     },
     {
       id: 10,
@@ -108,7 +108,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas fa-heart ed-navbar__font"></i>,
       tagDesktop: ``,
-      href: '/member/likes',
+      href: '/member',
     },
     {
       id: 11,
@@ -118,7 +118,7 @@ export default function DefaultLayout({ title = '', children }) {
       ),
       iconDesktop: <i className="fas fa-shopping-cart ed-navbar__font"></i>,
       tagDesktop: <div className="ed-tag ed-tag--corner">{cartIconLength}</div>,
-      href: '/member/login',
+      href: '/member',
     },
   ]
   const navActionsLogin = [
