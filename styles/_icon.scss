@@ -92,3 +92,13 @@
     background-color: $color--primary !important;
   }
 }
+.swal2-cancel {
+  border-radius: 0 !important;
+}
+.swal2-deny {
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  border: 1px solid $color--secondary !important;
+  color: $color--secondary !important;
+
+}

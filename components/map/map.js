@@ -352,7 +352,7 @@ export default function Map() {
 
     return position === null ? null : (
       <Marker position={position} icon={locationMarker}>
-        <Popup>You are here</Popup>
+        <Popup>您在這裡</Popup>
       </Marker>
     )
   }
@@ -366,7 +366,7 @@ export default function Map() {
           [selectedCity.latitude, selectedCity.longitude],
           map.getZoom()
         )
-      }, 200)
+      }, 100)
       return (
         <Marker
           key={'selectedCity'}
@@ -493,7 +493,7 @@ export default function Map() {
             </h5>
             <div className="d-flex ">
               <FaMapMarkerAlt />
-              <h6>{cafeData.address}</h6>
+              <h6>{cafeData.address.replace(/^\d+/, '')}</h6>
             </div>
 
             <div className={`d-flex  ${cafeData.open_time ? '' : 'd-none'}`}>
@@ -544,6 +544,10 @@ export default function Map() {
     setCafes(newData)
     let targetCity = _.find(cityData, { city: city })
     setSelectedCity(targetCity)
+    const selectElement = selectCityRef.current
+    if (selectElement) {
+      selectElement.value = city
+    }
   }
 
   //切換顯示距離事件
@@ -627,14 +631,31 @@ export default function Map() {
     if (allCafeData !== null)
       Swal.fire({
         title:
-          '<h6 class="lh-base">歡迎來到咖啡地圖，尋找最適合的咖啡角落！<br/>請選擇城市，或是使用定位顯示店家。</h6>',
+          '<h5 class="lh-base">歡迎來到咖啡地圖<br/>尋找最適合的咖啡角落！</h5><hr/><h6 class="lh-base">請選擇想要前往的城市<br/>或是點擊開始定位顯示附近的咖啡廳。</h6>',
         input: 'select',
         inputOptions: inputOptions,
+        inputValue: 'taoyuan', // 設定桃園為默認選項
+        showDenyButton: true,
+        denyButtonColor: '#1c262c',
+        inputAttributes: {
+          style: 'width:55%',
+        },
+        confirmButtonText: '前往',
+        denyButtonText: '開始定位',
+        customClass: {
+          actions: 'd-flex position-relative mapSwalAction ',
+          confirmButton: 'mapSwalCityBtn position-absolute',
+          denyButton: '',
+          popup: 'mapSwalPopup',
+        },
       }).then((result) => {
         if (result.isConfirmed) {
           const selectedCity = result.value
           console.log('你選擇的城市是：', selectedCity)
           SwalCitySelect(selectedCity)
+        }
+        if (result.isDenied) {
+          document.getElementById('location').click()
         }
       })
   }, [allCafeData])
@@ -689,19 +710,22 @@ export default function Map() {
               <option value={1}>附近 1公里</option>
             </select>
           </div>
-          <button className="locateBtn" type="button" onClick={LocateBtn}>
+          <button
+            className="locateBtn"
+            id="location"
+            type="button"
+            onClick={LocateBtn}
+          >
             <TbCurrentLocation />
           </button>
         </div>
-        {/* <div className="mapAsideBar">
-          <button>篩選</button>
-        </div> */}
         <aside className="mapAsideInfo">
           <AsideInfo />
           <CafeFilter
             setFilterValues={setFilterValues}
             cafesFiltered={cafesFiltered}
             handleCafeClick={handelChangeCafe}
+            setShowCafeInfo={setShowCafeInfo}
           />
         </aside>
 

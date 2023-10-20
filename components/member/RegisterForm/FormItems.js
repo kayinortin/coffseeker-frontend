@@ -39,7 +39,7 @@ export default function FormItems({
       placeholder: '請輸入您的姓名',
       type: 'text',
       aria: null,
-      maxlength: 10,
+      maxlength: 30,
       onChange: (e) => setName(e.target.value),
     },
     {
