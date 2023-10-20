@@ -184,7 +184,6 @@ export default function Divination() {
     }
     canSelect = false
     ans[nowSection - 1] = e.target.innerText
-    console.log(ans)
     e.target.parentElement.classList.remove(`active`)
     await waittings(300)
     //動畫：文字淡出
@@ -284,7 +283,6 @@ export default function Divination() {
       const word = ansToKeyWord(ansArr)
       setKeyWordArr(word)
       const keyWord = word.join()
-      console.log('keyWord:' + keyWord)
       const fetchData = async () => {
         try {
           const res = await axios.get(

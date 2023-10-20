@@ -161,6 +161,7 @@
     transition: 0.3s;
     left: 380px;
     border-radius: 20px;
+    z-index: 2;
     svg {
       width: 27px;
       height: 27px;
@@ -243,7 +244,9 @@
         color: #fff;
         border-radius: 50%;
         cursor: grab;
-        &:hover,&:active,&:focus-visible {
+        &:hover,
+        &:active,
+        &:focus-visible {
           outline: 0px solid transparent;
           box-shadow: 0 0 0 4px rgba(244, 123, 96, 0.504);
         }
@@ -332,8 +335,13 @@
       .cafeInfo {
         left: 0px;
         width: 100%;
-        height: calc(100% - 40px);
+        height: 100%;
+        margin-block: 0px;
+        border-radius: 20px 20px 0px 0px;
       }
     }
+  }
+  .leaflet-control-attribution {
+    font-size: 12px;
   }
 }
