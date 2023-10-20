@@ -101,8 +101,9 @@ $fw-black:900;
             width: 20vw;
         }
         div.emptyTitle{
-            padding-block: 1rem;
-            font-size: $fs-lg;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            font-size: $fs-md;
             color: $color--primary;
             font-weight: $fw-bold;
         }
@@ -591,8 +592,8 @@ $fw-black:900;
         }
     
         .emptyTitle{
-            padding-top: 1rem;
-            padding-bottom: 2rem;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
             font-size: $fs-md;
             color: $color--primary;
             font-weight: $fw-bold;
