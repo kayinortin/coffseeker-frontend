@@ -71,19 +71,21 @@ export default function Divination() {
     if (cayPlay === true) {
       return false
     }
-    document
-      .querySelector(`.desk .game .textArea h2`)
-      .classList.remove('blur-out-expand')
-    document
-      .querySelector(`.desk .game .textArea h5`)
-      .classList.remove('blur-out-expand')
+
     //textArea替換
     document.querySelector(`.desk .game .textArea h2`).innerText = section.h2
     document.querySelector(`.desk .game .textArea h5`).innerText = section.h6
 
+    document
+      .querySelector(`.desk .game .textArea h2`)
+      .classList.remove('scale-out-top')
+    document
+      .querySelector(`.desk .game .textArea h5`)
+      .classList.remove('scale-out-top')
+
     picks = getRandomNumbers(1, 10, 4)
     cayPlay = true
-    await waittings(1000)
+    await waittings(1500)
     //動畫：展開卡片
     for (let i = 1; i <= 10; i++) {
       document
@@ -169,10 +171,10 @@ export default function Divination() {
       .classList.add('d-none')
     document
       .querySelector(`.desk .game .textArea h2`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     document
       .querySelector(`.desk .game .textArea h5`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     await waittings(500)
     start(sections[nowSection])
   }
@@ -187,10 +189,10 @@ export default function Divination() {
     //動畫：文字淡出
     document
       .querySelector(`.desk .game .textArea h2`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     document
       .querySelector(`.desk .game .textArea h5`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     //動畫：取消可選取樣式
     for (let i = 0; i < picks.length; i++) {
       document
@@ -231,7 +233,6 @@ export default function Divination() {
       picks = []
       cayPlay = false
       start(sections[nowSection])
-      await waittings(500)
     } else {
       setAnsArr(ans)
       setGameFinish(true)
@@ -308,8 +309,8 @@ export default function Divination() {
           <div className="mask"></div>
           <div className="game">
             <div className="textArea mb-auto mt-lg-5 mt-2 position-relative">
-              <h2 className="focus-in-contract">咖啡占卜</h2>
-              <h5 className="focus-in-contract">
+              <h2 className="scale-in-top">咖啡占卜</h2>
+              <h5 className="scale-in-top">
                 尋覓咖啡的靈魂
                 <br />
                 歡迎踏上咖啡心靈的探索之旅
