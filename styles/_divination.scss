@@ -34,11 +34,13 @@
       padding-block: 20px;
       h2 {
         color: $color--success;
-        margin-bottom: 20px;
       }
       h5 {
-        padding: 20px;
-        line-height: 200%;
+        background-image: url(../public/divination-image/e0874_1.svg);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        padding: 53px 40px 20px 40px;
+        line-height: 150%;
         color: $color--gray1;
         // background-color: #ffffff77;
       }
@@ -406,11 +408,11 @@
     justify-content: center;
     align-items: center;
     padding-block: 60px;
-    background-image: url(../public/divination-image/bg2.png),
-      url(../public/divination-image/wrap12.png);
-    background-position: -17% bottom, right -100px;
+    background-image: url(../public/divination-image/wrap10_680.png),
+      url(../public/divination-image/wrap6.png);
+    background-position: left bottom, right -100px;
     background-repeat: no-repeat;
-    background-size: 30% auto, 40% auto;
+    background-size: auto 70%, auto 80%;
     position: relative;
     background-color: $color--background;
     .resultCard {
@@ -424,6 +426,7 @@
         width: 600px;
       }
     }
+
     .title {
       h2 {
         text-align: center;
@@ -507,12 +510,13 @@
       }
       .textArea {
         text-align: center;
-        padding-block: 20px;
+        padding-block: 5px;
+
         h2 {
           margin-bottom: 0px;
         }
         h5 {
-          padding: 10px;
+          padding: 48px 15px 16px;
         }
       }
       .tarotCard {
