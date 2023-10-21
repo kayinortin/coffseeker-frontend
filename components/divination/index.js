@@ -184,8 +184,6 @@ export default function Divination() {
     }
     canSelect = false
     ans[nowSection - 1] = e.target.innerText
-    e.target.parentElement.classList.remove(`active`)
-    await waittings(300)
     //動畫：文字淡出
     document
       .querySelector(`.desk .game .textArea h2`)
@@ -199,6 +197,10 @@ export default function Divination() {
         .querySelector(`.tarotCard${picks[i]} .content`)
         .classList.remove('canSelect')
     }
+    //點選的卡片翻回去
+    e.target.parentElement.classList.remove(`active`)
+    await waittings(400)
+
     //動畫：卡片翻回去
     for (let i = 0; i < picks.length; i++) {
       document
@@ -308,21 +310,21 @@ export default function Divination() {
             <div className="textArea mb-auto mt-lg-5 mt-2 position-relative">
               <h2 className="focus-in-contract">咖啡占卜</h2>
               <h5 className="focus-in-contract">
-                日安，迷惘的咖啡靈魂。
+                尋覓咖啡的靈魂
                 <br />
-                歡迎進入探索咖啡心靈的奇妙世界。
+                歡迎踏上咖啡心靈的探索之旅
                 <br />
-                這裡將揭示你對咖啡的深層喜好。
+                這裡將揭示你對咖啡的深層喜好
                 <br />
                 準備好了嗎？
                 <br className="d-lg-none" />
-                讓我們開始你的咖啡之旅吧！
+                讓我們開始吧！
               </h5>
               <button
                 className="position-absolute top-100 start-50 translate-middle flip-in-hor-bottom"
                 onClick={handleStart}
               >
-                開始
+                啟程
               </button>
             </div>
             <TarotCard i={1} />
@@ -380,7 +382,7 @@ export default function Divination() {
                 slidesPerView={1}
                 navigation
                 spaceBetween={10}
-                autoplay={{ delay: 3000 }}
+                autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
               >
                 {productData.map((product, i) => {
                   return (

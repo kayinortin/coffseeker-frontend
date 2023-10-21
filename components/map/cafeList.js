@@ -3,6 +3,7 @@ import { IoIosWifi } from 'react-icons/io'
 import { LiaChairSolid } from 'react-icons/lia'
 import { IoEarOutline } from 'react-icons/io5'
 import { PiCoffee } from 'react-icons/pi'
+import Image from 'next/image'
 import {
   BsPlugin,
   BsXLg,
@@ -14,7 +15,20 @@ export default function CafeList({ cafes, handleCafeClick }) {
   return (
     <>
       {cafes.length === 0 ? (
-        <p className="text-center">無資料，請更改篩選條件</p>
+        <div className="text-center">
+          <p className="text-center lh-base">
+            無資料，請重新選擇區域
+            <br />
+            或更改篩選條件
+          </p>
+          <Image
+            className="mt-5 opacity-50"
+            src={'/divination-image/wrap6.png'}
+            alt={'咖啡插圖'}
+            width={300}
+            height={377}
+          />
+        </div>
       ) : (
         <p className="text-end">共{cafes.length}家</p>
       )}
