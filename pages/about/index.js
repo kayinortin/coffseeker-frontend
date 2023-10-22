@@ -22,6 +22,7 @@ export default function About() {
       Swal.fire({
         icon: 'success',
         title: '成功！',
+        iconColor: '#b54b33', //success
         text: '郵件已成功發送！',
       }).then(() => {
         setMessage('')
