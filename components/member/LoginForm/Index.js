@@ -272,11 +272,11 @@ export default function LoginForm() {
     }
   }
   //監聽離開該頁面時關閉Swal
-  useEffect(() => {
-    return () => {
-      Swal.close()
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     Swal.close()
+  //   }
+  // }, [])
   return (
     <>
       <form id="loginForm" className={'form-box'}>
