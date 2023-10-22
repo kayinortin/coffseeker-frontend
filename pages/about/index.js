@@ -33,6 +33,7 @@ export default function About() {
       Swal.fire({
         icon: 'error',
         title: '錯誤！',
+        iconColor: '#1C262C', 
         text: '無法發送郵件！',
       })
     }
