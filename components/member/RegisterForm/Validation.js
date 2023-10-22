@@ -15,7 +15,7 @@ export default function Validation(
     Swal.fire({
       title: error,
       icon: 'error',
-      iconColor: '#b54b33', //error
+      iconColor: '#1c262c', //error
       showConfirmButton: false,
       timer: 1500,
     })
