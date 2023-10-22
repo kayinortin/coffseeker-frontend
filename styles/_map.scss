@@ -68,9 +68,9 @@
   }
   .locateBtn {
     padding: 0;
-    background-color: $color--primary;
+    background-color: $color--white;
     svg {
-      color: #ffffff;
+      color: $color--primary;
       width: 30px;
       height: 30px;
       padding: 5px;
@@ -78,7 +78,7 @@
     &:hover,
     &:active,
     &:focus-visible {
-      background-color: $color--gray3;
+      background-color: $color--gray5;
     }
   }
 }

@@ -17,6 +17,8 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import drinkCoffeeImg from '@/public/divination-image/Animation - 1695799375022.json'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
+
 let cayPlay = false
 export default function Divination() {
   const [gameFinish, setGameFinish] = useState(false)
@@ -226,7 +228,6 @@ export default function Divination() {
         .querySelector(`.tarotCard${i}`)
         .classList.remove(`tarotCard${i}Active`)
     }
-    await waittings(500)
     //接續下個題目
     if (nowSection < 3) {
       nowSection += 1
@@ -234,8 +235,7 @@ export default function Divination() {
       cayPlay = false
       start(sections[nowSection])
     } else {
-      setAnsArr(ans)
-      setGameFinish(true)
+      showResult()
     }
   }
 
@@ -258,9 +258,19 @@ export default function Divination() {
     )
   }
 
+  //結果運算畫面
+  async function showResult() {
+    await waittings(500)
+    setAnsArr(ans)
+    setGameFinish(true)
+    await waittings(1500)
+    document.querySelector('.loading').classList.add('d-none')
+    document.querySelector('.TarotResult').classList.remove('d-none')
+  }
+
   //塔羅結果生成篩選條件
-  const [ansArr, setAnsArr] = useState([''])
-  const [keyWordArr, setKeyWordArr] = useState([''])
+  const [ansArr, setAnsArr] = useState([])
+  const [keyWordArr, setKeyWordArr] = useState([])
 
   function ansToKeyWord(ansArr) {
     const keyWordSet = new Set()
@@ -345,10 +355,19 @@ export default function Divination() {
   } else {
     return (
       <>
-        <div className="TarotResult">
+        <div className="loading vh-100 w-100 d-flex flex-column justify-content-center align-items-center ">
+          <Lottie
+            play
+            loop
+            style={{ width: 200, height: 200 }}
+            animationData={lottieJson}
+          />
+          <h3 className="mt-5">探索者為您尋覓中…</h3>
+        </div>
+        <div className="TarotResult d-none">
           <div className="result">
             <div className="container d-flex justify-content-center">
-              <div className="resultCard d-lg-flex">
+              <div className="resultCard  d-lg-flex">
                 <Lottie
                   play
                   loop
@@ -358,14 +377,15 @@ export default function Divination() {
                 <div className="title">
                   <h2>測驗結果</h2>
                   <p>
-                    當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
+                    塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
                     <br />
                     <div className="my-3">
                       <div className="">今日為您推薦的咖啡關鍵字是：</div>
-
-                      {keyWordArr.map((v, i) => {
-                        return <span key={i}>#{v}</span>
-                      })}
+                      <div className="mt-3">
+                        {keyWordArr.map((v, i) => {
+                          return <span key={i}>#{v}</span>
+                        })}
+                      </div>
                     </div>
                     祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
                   </p>
