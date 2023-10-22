@@ -442,7 +442,8 @@ function Checkout({ step, handleNextStep, setStep }) {
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="卡號"
+                      maxlength="19"
+                      placeholder="信用卡號碼"
                       aria-label="CardNumber"
                       aria-describedby="addon-wrapping"
                     />
@@ -458,8 +459,9 @@ function Checkout({ step, handleNextStep, setStep }) {
                   </div>
                   <div className="cardInfo">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
+                      maxlength="7"
                       placeholder="有效期限（ＭＭ/YY）"
                       aria-label="CardDate"
                       aria-describedby="addon-wrapping"
@@ -469,6 +471,7 @@ function Checkout({ step, handleNextStep, setStep }) {
                     <input
                       type="number"
                       class="form-control"
+                      maxlength="3"
                       placeholder="安全碼"
                       aria-label="securityCode"
                       aria-describedby="addon-wrapping"

@@ -71,19 +71,21 @@ export default function Divination() {
     if (cayPlay === true) {
       return false
     }
-    document
-      .querySelector(`.desk .game .textArea h2`)
-      .classList.remove('blur-out-expand')
-    document
-      .querySelector(`.desk .game .textArea h5`)
-      .classList.remove('blur-out-expand')
+
     //textArea替換
     document.querySelector(`.desk .game .textArea h2`).innerText = section.h2
     document.querySelector(`.desk .game .textArea h5`).innerText = section.h6
 
+    document
+      .querySelector(`.desk .game .textArea h2`)
+      .classList.remove('scale-out-top')
+    document
+      .querySelector(`.desk .game .textArea h5`)
+      .classList.remove('scale-out-top')
+
     picks = getRandomNumbers(1, 10, 4)
     cayPlay = true
-    await waittings(1000)
+    await waittings(1500)
     //動畫：展開卡片
     for (let i = 1; i <= 10; i++) {
       document
@@ -169,10 +171,10 @@ export default function Divination() {
       .classList.add('d-none')
     document
       .querySelector(`.desk .game .textArea h2`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     document
       .querySelector(`.desk .game .textArea h5`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     await waittings(500)
     start(sections[nowSection])
   }
@@ -184,22 +186,23 @@ export default function Divination() {
     }
     canSelect = false
     ans[nowSection - 1] = e.target.innerText
-    console.log(ans)
-    e.target.parentElement.classList.remove(`active`)
-    await waittings(300)
     //動畫：文字淡出
     document
       .querySelector(`.desk .game .textArea h2`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     document
       .querySelector(`.desk .game .textArea h5`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     //動畫：取消可選取樣式
     for (let i = 0; i < picks.length; i++) {
       document
         .querySelector(`.tarotCard${picks[i]} .content`)
         .classList.remove('canSelect')
     }
+    //點選的卡片翻回去
+    e.target.parentElement.classList.remove(`active`)
+    await waittings(400)
+
     //動畫：卡片翻回去
     for (let i = 0; i < picks.length; i++) {
       document
@@ -230,7 +233,6 @@ export default function Divination() {
       picks = []
       cayPlay = false
       start(sections[nowSection])
-      await waittings(500)
     } else {
       setAnsArr(ans)
       setGameFinish(true)
@@ -284,7 +286,6 @@ export default function Divination() {
       const word = ansToKeyWord(ansArr)
       setKeyWordArr(word)
       const keyWord = word.join()
-      console.log('keyWord:' + keyWord)
       const fetchData = async () => {
         try {
           const res = await axios.get(
@@ -308,23 +309,23 @@ export default function Divination() {
           <div className="mask"></div>
           <div className="game">
             <div className="textArea mb-auto mt-lg-5 mt-2 position-relative">
-              <h2 className="focus-in-contract">咖啡占卜</h2>
-              <h5 className="focus-in-contract">
-                日安，迷惘的咖啡靈魂。
+              <h2 className="scale-in-top">咖啡占卜</h2>
+              <h5 className="scale-in-top">
+                尋覓咖啡的靈魂
                 <br />
-                歡迎進入探索咖啡心靈的奇妙世界。
+                歡迎踏上咖啡心靈的探索之旅
                 <br />
-                這裡將揭示你對咖啡的深層喜好。
+                這裡將揭示你對咖啡的深層喜好
                 <br />
                 準備好了嗎？
                 <br className="d-lg-none" />
-                讓我們開始你的咖啡之旅吧！
+                讓我們開始吧！
               </h5>
               <button
                 className="position-absolute top-100 start-50 translate-middle flip-in-hor-bottom"
                 onClick={handleStart}
               >
-                開始
+                啟程
               </button>
             </div>
             <TarotCard i={1} />
@@ -382,7 +383,7 @@ export default function Divination() {
                 slidesPerView={1}
                 navigation
                 spaceBetween={10}
-                autoplay={{ delay: 3000 }}
+                autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
               >
                 {productData.map((product, i) => {
                   return (
