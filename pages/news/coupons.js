@@ -85,7 +85,7 @@ export default function Coupons() {
       } else {
         // 已領取過，顯示提示訊息
         Swal.fire({
-          title: '此優惠券已經領取過',
+          title: '優惠券已經領取過',
           icon: 'warning',
           iconColor: '#1C262C',
           confirmButtonText: '確定',
