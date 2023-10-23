@@ -141,7 +141,7 @@ export default function RegisterForm() {
           <div className={'form-check d-flex align-items-center'}>
             <input
               type="checkbox"
-              className={'check-input me-3'}
+              className={'check-input border border-dark me-3'}
               id="exampleCheck2"
               onClick={() => {
                 if (allowContract) {
