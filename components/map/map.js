@@ -21,6 +21,7 @@ import 'leaflet/dist/leaflet.css'
 import { FaMapMarkerAlt, FaGlobeAmericas, FaCity } from 'react-icons/fa'
 import { IoIosWifi } from 'react-icons/io'
 import { FaArrowsLeftRightToLine } from 'react-icons/fa6'
+import { LuExternalLink } from 'react-icons/lu'
 import { LiaChairSolid } from 'react-icons/lia'
 import { IoEarOutline } from 'react-icons/io5'
 import { TbCurrentLocation } from 'react-icons/tb'
@@ -504,10 +505,12 @@ export default function Map() {
           </div>
           <div className="googleMapLink mt-3 text-end">
             <a
+              className="icon-link icon-link-hover"
               href={`https://www.google.com/maps/search/${cafeData.address}+${cafeData.name}`}
               target="_blank"
             >
               在GoogleMap打開
+              <LuExternalLink />
             </a>
           </div>
         </div>
@@ -625,7 +628,7 @@ export default function Map() {
     if (allCafeData !== null)
       Swal.fire({
         title:
-          '<h5 class="lh-base">歡迎來到咖啡地圖<br/>尋找最適合的咖啡角落！</h5><hr/><h6 class="lh-base">請選擇想要前往的城市<br/>或是點擊開始定位顯示附近的咖啡廳。</h6>',
+          '<h5 class="lh-base">歡迎來到咖啡地圖<br/>尋找最適合的咖啡角落！</h5><hr/><h6 class="lh-base">請選擇想要前往的城市<br/>或是使用定位顯示附近的咖啡廳。</h6>',
         input: 'select',
         inputOptions: inputOptions,
         inputValue: 'taoyuan', // 設定桃園為默認選項
@@ -635,7 +638,7 @@ export default function Map() {
           style: 'width:55%',
         },
         confirmButtonText: '前往',
-        denyButtonText: '開始定位',
+        denyButtonText: '附近搜索',
         customClass: {
           actions: 'd-flex position-relative mapSwalAction ',
           confirmButton: 'mapSwalCityBtn position-absolute',
@@ -684,6 +687,8 @@ export default function Map() {
               defaultValue={''}
               onChange={(e) => HandleChangeCity(e)}
               ref={selectCityRef}
+              name={'選擇城市'}
+              aria-label={'選擇城市'}
             >
               <option disabled value="">
                 城市
@@ -702,7 +707,11 @@ export default function Map() {
             <div>
               <FaArrowsLeftRightToLine />
             </div>
-            <select onChange={(e) => HandleChangeDistance(e)}>
+            <select
+              onChange={(e) => HandleChangeDistance(e)}
+              name={'選擇顯示距離'}
+              aria-label={'選擇顯示距離'}
+            >
               <option value={3}>附近 3公里</option>
               <option value={2}>附近 2公里</option>
               <option value={1}>附近 1公里</option>
@@ -713,6 +722,8 @@ export default function Map() {
             id="location"
             type="button"
             onClick={LocateBtn}
+            title={'啟動定位'}
+            aria-label={'啟動定位'}
           >
             <TbCurrentLocation />
           </button>
