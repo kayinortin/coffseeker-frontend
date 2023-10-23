@@ -80,7 +80,7 @@ function Checkout({ step, handleNextStep, setStep }) {
       Swal.fire({
         icon: 'warning',
         iconColor: '#1C262C',
-        title: '請填寫收件人資訊',
+        title: '請填寫收件人資訊與付款資料',
         text: '很抱歉，如果您未填寫我們將無法為您送出訂單',
       })
     } else {
