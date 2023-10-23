@@ -18,6 +18,7 @@ export default function SendMessage() {
       Swal.fire({
         icon: 'success',
         title: '成功！',
+        iconColor: '#b54b33',
         text: '郵件已成功發送！',
       }).then(() => {
         setMessage('')
@@ -28,6 +29,7 @@ export default function SendMessage() {
       Swal.fire({
         icon: 'error',
         title: '錯誤！',
+        iconColor: '#1C262C',
         text: '無法發送郵件！',
       })
     }
