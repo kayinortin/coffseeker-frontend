@@ -5,6 +5,8 @@ import Swal from 'sweetalert2'
 import { useUser } from '@/context/UserInfo'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
 import Cookies from 'js-cookie'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 export default function OrderListTable({
   orderBy,
@@ -13,7 +15,7 @@ export default function OrderListTable({
   setTotalPage,
 }) {
   const [orderData, setOrderData] = useState(null)
-
+  const [loading, setLoading] = useState(true)
   const { userData, setUserData } = useUser()
   const checkToken = Cookies.get('accessToken')
 
@@ -28,9 +30,10 @@ export default function OrderListTable({
       }
     }
     fetchData()
-  }, [])
+  }, [checkToken, setUserData, userData])
 
   useEffect(() => {
+    setLoading(true)
     const fetchOrders = async () => {
       if (userData) {
         try {
@@ -42,13 +45,16 @@ export default function OrderListTable({
           console.log(response)
           setOrderData(response.data.orders)
           setTotalPage(response.data.totalPage)
+          setTimeout(() => {
+            setLoading(false)
+          }, 200)
         } catch (error) {
           console.error('錯誤:', error)
         }
       }
     }
     fetchOrders()
-  }, [userData, orderBy, currentPage])
+  }, [userData, orderBy, currentPage, setTotalPage])
 
   const thead = ['訂單日期', '訂單總額', '訂單狀態', '付款方式', '訂單明細']
 
@@ -75,6 +81,15 @@ export default function OrderListTable({
           {orderData ? (
             orderData.length == 0 ? (
               <div className={'text-center py-5'}>尚未成立任何訂單</div>
+            ) : loading ? (
+              <div className={'d-flex justify-content-center p-3'}>
+                <Lottie
+                  play
+                  loop
+                  style={{ width: 140, height: 140 }}
+                  animationData={lottieJson}
+                />
+              </div>
             ) : (
               orderData.map((v) => (
                 <div key={v.id}>

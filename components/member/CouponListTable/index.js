@@ -6,6 +6,8 @@ import { useUser } from '@/context/UserInfo'
 import { FetchUserData } from '../FetchDatas/FetchUserData'
 import Cookies from 'js-cookie'
 import CouponItems from './CouponItems'
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
 
 export default function CouponListTable({
   orderBy,
@@ -14,41 +16,46 @@ export default function CouponListTable({
   setTotalPage,
 }) {
   const [couponData, setCouponData] = useState(null)
+  const [loading, setLoading] = useState(true)
   const { userData, setUserData } = useUser()
   const checkToken = Cookies.get('accessToken')
-
   useEffect(() => {
     const fetchData = async () => {
-      if (!userData) {
+      if (userData === null) {
         if (checkToken) {
           const fetchUser = await FetchUserData()
-          // console.log('fetchUser是是是 ', fetchUser)
           await setUserData(fetchUser)
         }
       }
     }
     fetchData()
-  }, [])
+  }, [checkToken, setUserData, userData])
 
   useEffect(() => {
+    setLoading(true)
     const fetchOrders = async () => {
       if (userData) {
-        try {
-          const userId = userData.id
-          const response = await axios.get(
-            `http://localhost:3005/api/coupons/getCouponPages/${userId}/${orderBy}/${currentPage}`
-          )
-          // 獲得指定使用者的所有訂單
-          console.log(response)
-          setCouponData(response.data.coupons)
-          setTotalPage(response.data.totalPage)
-        } catch (error) {
-          console.error('錯誤:', error)
+        const userId = userData.id
+        if (userId) {
+          try {
+            const response = await axios.get(
+              `http://localhost:3005/api/coupons/getCouponPages/${userId}/${orderBy}/${currentPage}`
+            )
+            // 獲得指定使用者的所有優惠券
+            console.log(response)
+            setCouponData(response.data.coupons)
+            setTotalPage(response.data.totalPage)
+            setTimeout(() => {
+              setLoading(false)
+            }, 300)
+          } catch (error) {
+            console.error('錯誤:', error)
+          }
         }
       }
     }
     fetchOrders()
-  }, [userData, orderBy, currentPage])
+  }, [userData, orderBy, currentPage, setTotalPage])
   return (
     <>
       <form className={'table-box'}>
@@ -57,12 +64,25 @@ export default function CouponListTable({
             優惠券
           </div>
           <div className="p-3 p-lg-5">
-            <div className={'d-flex flex-wrap jusify-content-between'}>
+            <div
+              className={`d-flex ${
+                loading
+                  ? 'w-100 justify-content-center'
+                  : 'flex-wrap jusify-content-between'
+              }`}
+            >
               {couponData ? (
                 couponData.length == 0 ? (
                   <div className={'text-center py-5'}>
                     您還沒有優惠券！請關注最新消息領取優惠券喔！
                   </div>
+                ) : loading ? (
+                  <Lottie
+                    play
+                    loop
+                    style={{ width: 140, height: 140 }}
+                    animationData={lottieJson}
+                  />
                 ) : (
                   couponData.map((v, i) => <CouponItems key={i} coupon={v} />)
                 )

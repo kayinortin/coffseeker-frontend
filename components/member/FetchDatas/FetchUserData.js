@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export async function FetchUserData() {
   const accessToken = Cookies.get('accessToken')
-  console.log('Fetch accessToken:', accessToken)
+  // console.log('Fetch accessToken:', accessToken)
 
   if (!accessToken) {
     return false
@@ -23,7 +23,7 @@ export async function FetchUserData() {
     }
 
     const data = await response.json()
-    console.log(data)
+    // console.log(data)
     return data.user
   } catch (error) {
     console.error('Error fetching profile:', error)

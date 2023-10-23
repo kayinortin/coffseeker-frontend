@@ -3,9 +3,9 @@ import { FaTicket } from 'react-icons/fa6'
 import Link from 'next/link'
 
 export default function CouponItems({ coupon }) {
-  useEffect(() => {
-    console.log(coupon)
-  }, [])
+  // useEffect(() => {
+  //   console.log(coupon)
+  // }, [])
   return (
     <>
       {/*  */}
@@ -25,8 +25,13 @@ export default function CouponItems({ coupon }) {
             }
           >
             <div className="d-flex justify-content-between align-items-center">
-              <span className={'title col-8 col-lg-auto'}>{coupon.coupon_name}</span>
-              <Link href="/product" className={'border-0 p-2 link col-4 col-lg-auto'}>
+              <span className={'title col-8 col-lg-auto'}>
+                {coupon.coupon_name}
+              </span>
+              <Link
+                href="/product"
+                className={'border-0 p-2 link col-4 col-lg-auto'}
+              >
                 前往商城
               </Link>
             </div>
