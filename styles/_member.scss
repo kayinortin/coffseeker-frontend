@@ -350,3 +350,19 @@
     }
   }
 }
+.order-loading-cover{
+  border: 1px solid black;
+  position: absolute;
+  height: 70vh;
+  background-color: #F0EBE2;
+}
+
+.order-loading{
+  
+  left: calc(50% - 70px);
+  top: calc(50% - 70px);
+}
+
+.coupon-loading{
+  height: 75vh;
+}

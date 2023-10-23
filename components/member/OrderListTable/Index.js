@@ -21,7 +21,7 @@ export default function OrderListTable({
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!userData) {
+      if (userData === null || userData.providerId) {
         if (checkToken) {
           const fetchUser = await FetchUserData()
           // console.log('fetchUser是是是 ', fetchUser)
@@ -47,7 +47,7 @@ export default function OrderListTable({
           setTotalPage(response.data.totalPage)
           setTimeout(() => {
             setLoading(false)
-          }, 200)
+          }, 300)
         } catch (error) {
           console.error('錯誤:', error)
         }
@@ -61,8 +61,16 @@ export default function OrderListTable({
   return (
     <>
       <div className={'table-box'}>
-        <div className={'border border-dark'}>
-          <div className={'form-title border-bottom border-dark p-3 d-flex'}>
+        <div
+          className={`border  position-relative ${
+            loading ? '' : 'border-dark'
+          }`}
+        >
+          <div
+            className={`form-title   ${
+              loading ? 'border' : 'border-bottom'
+            } border-dark p-3 d-flex`}
+          >
             <span className={'col-4'}>歷史訂單</span>
             {/* 桌機Table Head */}
             <div
@@ -81,21 +89,26 @@ export default function OrderListTable({
           {orderData ? (
             orderData.length == 0 ? (
               <div className={'text-center py-5'}>尚未成立任何訂單</div>
-            ) : loading ? (
-              <div className={'d-flex justify-content-center p-3'}>
-                <Lottie
-                  play
-                  loop
-                  style={{ width: 140, height: 140 }}
-                  animationData={lottieJson}
-                />
-              </div>
             ) : (
-              orderData.map((v) => (
-                <div key={v.id}>
-                  <OrderDetailOpened order={v} />
-                </div>
-              ))
+              <>
+                {loading ? (
+                  <div className={`order-loading-cover w-100 `}>
+                    <div className={'position-absolute order-loading'}>
+                      <Lottie
+                        play
+                        loop
+                        style={{ width: 140, height: 140 }}
+                        animationData={lottieJson}
+                      />
+                    </div>
+                  </div>
+                ) : null}
+                {orderData.map((v) => (
+                  <div className={loading ? 'd-none' : 'd-block'} key={v.id}>
+                    <OrderDetailOpened order={v} />
+                  </div>
+                ))}
+              </>
             )
           ) : (
             <div className={'text-center py-5'}>資料讀取中</div>

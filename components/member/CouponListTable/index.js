@@ -21,9 +21,10 @@ export default function CouponListTable({
   const checkToken = Cookies.get('accessToken')
   useEffect(() => {
     const fetchData = async () => {
-      if (userData === null) {
+      if (userData === null || userData.providerId) {
         if (checkToken) {
           const fetchUser = await FetchUserData()
+          console.log('fetchUser', fetchUser)
           await setUserData(fetchUser)
         }
       }
@@ -36,6 +37,8 @@ export default function CouponListTable({
     const fetchOrders = async () => {
       if (userData) {
         const userId = userData.id
+        console.log('是這個嗎', userData)
+        console.log(userData.id)
         if (userId) {
           try {
             const response = await axios.get(
@@ -84,7 +87,11 @@ export default function CouponListTable({
                     animationData={lottieJson}
                   />
                 ) : (
-                  couponData.map((v, i) => <CouponItems key={i} coupon={v} />)
+                  <>
+                    {couponData.map((v, i) => (
+                      <CouponItems key={i} coupon={v} />
+                    ))}
+                  </>
                 )
               ) : (
                 <div>資料讀取中</div>
