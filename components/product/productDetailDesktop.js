@@ -196,7 +196,7 @@ export default function ProductDetailDesktop({ pid }) {
             <div className="d-flex justify-content-between mt-3">
               <div className="container ed-detail-left">
                 <div className="ed-image-gallery">
-                  <Image
+                  <img
                     src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${images[mainImageIndex]}`}
                     alt={`${name}`}
                     className="ed-image-main"
@@ -208,7 +208,7 @@ export default function ProductDetailDesktop({ pid }) {
                     {images.map((image, index) => {
                       if (index === mainImageIndex) return null
                       return (
-                        <Image
+                        <img
                           key={index}
                           src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${image}`}
                           alt={`Product ${index}`}
