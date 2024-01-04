@@ -35,7 +35,7 @@ export default function ProductItem(props) {
             href={`/product/${id}`}
             onClick={handleShow}
           >
-            <Image
+            <img
               src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${image_main}`}
               alt={name}
               className="card-img-top"
