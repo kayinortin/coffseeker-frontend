@@ -150,7 +150,7 @@ export default function ProductDetailMobile({ pid }) {
             <div className="d-flex flex-column mt-3">
               <div className="ed-detail-left">
                 <div className="ed-image-gallery">
-                  <Image
+                  <img
                     src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${images[mainImageIndex]}`}
                     alt={`${name}`}
                     className="ed-image-main"
@@ -162,7 +162,7 @@ export default function ProductDetailMobile({ pid }) {
                     {images.map((image, index) => {
                       if (index === mainImageIndex) return null
                       return (
-                        <Image
+                        <img
                           key={index}
                           src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${image}`}
                           alt={`Product ${index}`}
