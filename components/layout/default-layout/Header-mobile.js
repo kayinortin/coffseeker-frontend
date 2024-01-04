@@ -89,7 +89,9 @@ export default function HeaderMobile(props) {
           }}
         />
         <label htmlFor="menuToggle" className="ed-navbar__toggle">
-          <i className="fas fa-bars ed-navbar__icon"></i>
+          <h6>
+            <i className="fas fa-bars ed-navbar__icon"></i>
+          </h6>
         </label>
         <Link className="ed-navbar__font ed-navbar__logo" href="/">
           {!isTop || isFullScreen ? (
