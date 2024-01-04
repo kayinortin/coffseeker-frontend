@@ -39,7 +39,7 @@ export default function OrderListTable({
         try {
           const userId = userData.id
           const response = await axios.get(
-            `http://localhost:3005/api/order/userOrders/${userId}/${orderBy}/${currentPage}`
+            `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/order/userOrders/${userId}/${orderBy}/${currentPage}`
           )
           // 獲得指定使用者的所有訂單
           console.log(response)

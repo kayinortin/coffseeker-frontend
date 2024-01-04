@@ -81,7 +81,7 @@ export default function LoginForm() {
 
     try {
       const response = await axios.post(
-        'http://localhost:3005/api/auth-jwt/login',
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/login`,
         formData
       )
       console.log('伺服器回應:', response.data)
@@ -169,7 +169,7 @@ export default function LoginForm() {
     if (authJWT.isAuth) return
 
     const res = await axios.post(
-      'http://localhost:3005/api/google-login/jwt',
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/google-login/jwt`,
       providerData,
       {
         withCredentials: true,
@@ -216,7 +216,7 @@ export default function LoginForm() {
     if (authJWT.isAuth) return
 
     const res = await axios.post(
-      'http://localhost:3005/api/facebook-login/jwt',
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/facebook-login/jwt`,
       providerData,
       {
         withCredentials: true,
@@ -244,7 +244,7 @@ export default function LoginForm() {
 
     // 伺服器logout
     const res = await axios.post(
-      'http://localhost:3005/api/auth-jwt/logout',
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/logout`,
       {},
       {
         withCredentials: true,

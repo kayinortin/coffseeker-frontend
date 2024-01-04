@@ -30,7 +30,7 @@ const TopHits = (props) => {
   useEffect(() => {
     const FetchedCourse = async () => {
       try {
-        const response = await axios.get('http://localhost:3005/api/course')
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course`)
 
         const courses = response.data.courses
 

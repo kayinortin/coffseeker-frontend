@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { BreadCrumbs, BreadCrumbsMobile } from './BreadCrumbs'
-import {  useCourses } from '@/context/course'
+import { useCourses } from '@/context/course'
 import axios from 'axios'
 import { useShow } from '../../context/showProductDetail'
 import CourseDetailFavIcon from '@/components/course/CourseDetailFavIcon'
@@ -27,35 +27,27 @@ export default function CoursePic({ pid }) {
     teacher_specialty: 0,
   }
 
-  const [detailData, setDetailData]=useState(INITIAL_DATA)
-  const {
-    id,
-    course_name,
-    course_image,
-    course_subpics
-  }=detailData
-  
+  const [detailData, setDetailData] = useState(INITIAL_DATA)
+  const { id, course_name, course_image, course_subpics } = detailData
 
-  useEffect(()=>{
-    const getDetail=async()=>{
-      if(pid){
-        let response=await axios.get(
-          `http://localhost:3005/api/course/${pid}`
+  useEffect(() => {
+    const getDetail = async () => {
+      if (pid) {
+        let response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course/${pid}`
         )
-        const details=response.data
+        const details = response.data
 
-        setDetailData({...details})
-        if(response.data.course_subpics){
+        setDetailData({ ...details })
+        if (response.data.course_subpics) {
           setImages(JSON.parse(response.data.course_subpics))
         }
       }
     }
-    if(pid){
+    if (pid) {
       getDetail()
     }
-  },[pid])
-
-  
+  }, [pid])
 
   return (
     <>
@@ -74,21 +66,22 @@ export default function CoursePic({ pid }) {
             />
             <CourseDetailFavIcon id={pid} />
             <div className="ed-image-row">
-              {
-                images.map((pic, index) => {
-                  if (index === mainImageIndex) return null
-                  return (
-                    <Image
-                      key={index}
-                      src={`/${pic}`}
-                      alt={selectedCourse.course_name}
-                      width={100}
-                      height={100}
-                      className="ed-image-small"
-                      onClick={()=>{setMainImageIndex(index)}}
-                    />
-                  )
-                })}
+              {images.map((pic, index) => {
+                if (index === mainImageIndex) return null
+                return (
+                  <Image
+                    key={index}
+                    src={`/${pic}`}
+                    alt={selectedCourse.course_name}
+                    width={100}
+                    height={100}
+                    className="ed-image-small"
+                    onClick={() => {
+                      setMainImageIndex(index)
+                    }}
+                  />
+                )
+              })}
             </div>
           </div>
         </div>

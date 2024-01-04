@@ -17,7 +17,7 @@ export default function News() {
   const fetchNewsData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3005/api/news?sortBy=${currentSort}&page=${currentPage}&itemsPerPage=${itemsPerPage}`
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news?sortBy=${currentSort}&page=${currentPage}&itemsPerPage=${itemsPerPage}`
       )
 
       if (response.ok) {

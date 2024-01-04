@@ -268,13 +268,16 @@ export default function Explore() {
     <>
       {/* 時令咖啡 */}
       <div>
-        <button className="timeline-btn" onClick={handleClick}>
+        <button
+          className="timeline-btn text-center align-items-center"
+          onClick={handleClick}
+        >
           {showTimeline ? (
             <FaCircleLeft className="ed-icon d-none d-lg-block" />
           ) : (
             <FaCircleRight className="ed-icon d-none d-lg-block" />
           )}
-          {showTimeline ? '歸途' : '探索'}
+          <p className='pt-2'>{showTimeline ? '歸途' : '探索'}</p>
         </button>
       </div>
       {/* 展開側邊欄 */}

@@ -27,7 +27,7 @@ export default function OrderItems({ order }) {
       <div className={'d-none d-lg-flex border-bottom border-dark p-2'}>
         <span className={'col-3 text-center'}>
           <Image
-            src={`http://localhost:3005/uploads/${imgUrl}`}
+            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${imgUrl}`}
             alt="Image Description"
             className={'imgborder'}
             width={100} // 设置图像宽度

@@ -8,7 +8,7 @@ export default function FetchComment({ pid }) {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3005/api/comment?product_id=${pid}`
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/comment?product_id=${pid}`
         )
         const data = await response.json()
 

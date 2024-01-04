@@ -224,7 +224,7 @@ export default function InfoChangeForm() {
 
     try {
       const response = await axios.put(
-        `http://localhost:3005/api/users/${userId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/${userId}`,
         formData
       )
       // console.log(userId)
@@ -242,7 +242,7 @@ export default function InfoChangeForm() {
 
     try {
       const response = await axios.post(
-        'http://localhost:3005/api/auth-jwt/info-change-jwt',
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/info-change-jwt`,
         { id: userId }
       )
       // console.log('成功取得Token', response)

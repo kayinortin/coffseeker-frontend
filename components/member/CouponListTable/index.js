@@ -42,7 +42,7 @@ export default function CouponListTable({
         if (userId) {
           try {
             const response = await axios.get(
-              `http://localhost:3005/api/coupons/getCouponPages/${userId}/${orderBy}/${currentPage}`
+              `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/coupons/getCouponPages/${userId}/${orderBy}/${currentPage}`
             )
             // 獲得指定使用者的所有優惠券
             console.log(response)

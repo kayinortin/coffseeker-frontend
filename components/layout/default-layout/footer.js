@@ -17,7 +17,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3005/api/news`)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news`)
         if (response.data.news) {
           setNewsData(response.data.news)
         }

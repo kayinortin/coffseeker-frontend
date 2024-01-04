@@ -22,7 +22,7 @@ export default function OrderDetailOpened({ order }) {
       try {
         const ordertrackingNumber = order.tracking_number
         const response = await axios.get(
-          `http://localhost:3005/api/order/orderItems/${ordertrackingNumber}`
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/order/orderItems/${ordertrackingNumber}`
         )
         // 獲得指定使用者的所有訂單
         // console.log('Item資料', response.data)

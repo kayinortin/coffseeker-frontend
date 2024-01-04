@@ -42,8 +42,8 @@ import Swal from 'sweetalert2'
 
 //所在地的mark樣式
 const locationMarker = new L.Icon({
-  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-gold.png',
-  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
+  iconUrl: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/map-image/marker-icon-2x-gold.png`,
+  shadowUrl: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/map-image/marker-shadow.png`,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -51,8 +51,8 @@ const locationMarker = new L.Icon({
 })
 //咖啡廳們的mark樣式
 const cafesMarker = new L.Icon({
-  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-grey.png',
-  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
+  iconUrl: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/map-image/marker-icon-2x-grey.png`,
+  shadowUrl: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/map-image/marker-shadow.png`,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -60,8 +60,8 @@ const cafesMarker = new L.Icon({
 })
 //active咖啡廳的mark樣式
 const activeCafeMarker = new L.Icon({
-  iconUrl: 'http://localhost:3000/map-image/marker-icon-2x-blue.png',
-  shadowUrl: 'http://localhost:3000/map-image/marker-shadow.png',
+  iconUrl: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/map-image/marker-icon-2x-blue.png`,
+  shadowUrl: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/map-image/marker-shadow.png`,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],

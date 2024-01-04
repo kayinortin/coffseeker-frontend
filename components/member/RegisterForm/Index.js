@@ -49,7 +49,7 @@ export default function RegisterForm() {
       }
       try {
         const response = await axios.post(
-          `http://localhost:3005/api/users/`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/`,
           formData
         )
         console.log(response)

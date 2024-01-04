@@ -18,7 +18,7 @@ export default function Card({ newsData }) {
                 >
                   <div key={news.news_id} className={`${styles['ei-card']}`}>
                     <img
-                      src={`http://localhost:3005/uploads/${news.news_image}`}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${news.news_image}`}
                       className={`card-img-top img-fluid ${styles['custom-image']}`}
                       alt={news.news_title}
                     />

@@ -59,7 +59,10 @@ function Checkout({ step, handleNextStep, setStep }) {
   function sendOrder(orderData) {
     return new Promise((resolve, reject) => {
       axios
-        .post('http://localhost:3005/api/ordercart/neworder', orderData)
+        .post(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/ordercart/neworder`,
+          orderData
+        )
         .then((response) => {
           console.log('訂單送入後端成功', response.data)
           resolve()
@@ -140,7 +143,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           // console.log(usedCouponId)
           axios
             .put(
-              `http://localhost:3005/api/coupons/updatecoupon/${usedCouponId}`,
+              `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/coupons/updatecoupon/${usedCouponId}`,
               {
                 coupon_valid: 0,
               }
@@ -210,7 +213,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="imgContainer col-lg-2 col-sm-3 p-2">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/${product.image_main}`}
+              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${product.image_main}`}
               alt={product.image_main}
             />
           </div>
@@ -250,7 +253,7 @@ function Checkout({ step, handleNextStep, setStep }) {
           <div className="imgContainer col-lg-2 col-sm-3 p-2">
             <img
               className="img-fluid"
-              src={`http://localhost:3005/uploads/${course.course_image}`}
+              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${course.course_image}`}
               alt={course.course_image}
             />
           </div>

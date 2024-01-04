@@ -6,7 +6,7 @@ export default function NewstDataFetcher({ onDataFetched, page }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3005/api/news?page=${page}`
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news?page=${page}`
         )
         // console.log(response)
         onDataFetched(response.data)

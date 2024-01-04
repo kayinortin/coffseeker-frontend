@@ -9,7 +9,7 @@ export default function CoursePerFetcher({ pid }) {
       // console.log(pid)
       try {
         const response = await axios.get(
-          'http://localhost:3005/api/course/' + pid
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course/` + pid
         )
         // console.log(response.data)
         setSelectedCourse(response.data)

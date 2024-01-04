@@ -10,7 +10,7 @@ export async function FetchUserData() {
   }
 
   try {
-    let response = await fetch('http://localhost:3005/api/auth-jwt/private', {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/private`, {
       method: 'GET', // 或其他你需要的方法
       headers: {
         'Content-Type': 'application/json',

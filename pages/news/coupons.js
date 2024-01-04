@@ -16,7 +16,7 @@ export default function Coupons() {
   useEffect(() => {
     // 獲取優惠券列表
     axios
-      .get('http://localhost:3005/api/news/coupons')
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/coupons`)
       .then((response) => {
         setCoupons(response.data)
 
@@ -31,7 +31,7 @@ export default function Coupons() {
     // 獲取會員已領取的優惠券列表
     if (authJWT.isAuth) {
       axios
-        .get('http://localhost:3005/api/news/userCoupons', {
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/userCoupons`, {
           params: { userId: authJWT.userData.id },
         })
         .then((response) => {
@@ -57,7 +57,7 @@ export default function Coupons() {
       if (!hasRedeemed) {
         // 未領取過，執行領取操作
         axios
-          .post('http://localhost:3005/api/news/addCoupon', {
+          .post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/addCoupon`, {
             couponId,
             userId,
           })

@@ -10,7 +10,7 @@ export async function checkLoginStatus() {
 
   try {
     const response = await fetch(
-      'http://localhost:3005/api/auth-jwt/check-login',
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/check-login`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

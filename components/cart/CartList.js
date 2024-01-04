@@ -20,25 +20,6 @@ export default function CartList({ step, handleNextStep, setStep }) {
   const [discountAmount, setDiscountAmount] = useState(0) //優惠卷金額
   const { authJWT } = useAuthJWT() //取userId
 
-  //優惠卷API
-  // const couponsDataFetch = async (userId) => {
-  //   try {
-  //     const localCoupons = JSON.parse(localStorage.getItem('userCoupons'))
-  //     if (localCoupons) {
-  //       setSelectedCoupon(localCoupons)
-  //     } else {
-  //       const couponResponse = await axios.get(
-  //         `http://localhost:3005/api/coupons/userCoupons/${userId}`
-  //       )
-  //       const couponsData = couponResponse.data.orders
-  //       setSelectedCoupon(Array.isArray(couponsData) ? couponsData : [])
-  //       // 同時將數據保存在本地存儲
-  //       localStorage.setItem('userCoupons', JSON.stringify(couponsData))
-  //     }
-  //   } catch (error) {
-  //     console.error('資料獲取失敗:', error)
-  //   }
-  // }
   const couponsDataFetch = async (userId) => {
     try {
       const localCoupons = JSON.parse(localStorage.getItem('userCoupons'))
@@ -49,7 +30,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
         setSelectedCoupon(validCoupons)
       } else {
         const couponResponse = await axios.get(
-          `http://localhost:3005/api/coupons/userCoupons/${userId}`
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/coupons/userCoupons/${userId}`
         )
         const couponsData = couponResponse.data.orders
         const validCoupons = couponsData.filter(
@@ -292,7 +273,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
         <div className="ratio ratio-1x1">
           <img
             className="img-fluid"
-            src={`http://localhost:3005/uploads/${product.image_main}`}
+            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${product.image_main}`}
             alt={product.image_main}
           />
         </div>
@@ -368,7 +349,7 @@ export default function CartList({ step, handleNextStep, setStep }) {
         <div className="ratio ratio-1x1">
           <img
             className="img-fluid"
-            src={`http://localhost:3005/uploads/${course.course_image}`}
+            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${course.course_image}`}
             alt={course.course_image}
           />
         </div>

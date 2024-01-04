@@ -65,7 +65,7 @@ export default function Favorite() {
     const fetchFavProduct = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3005/api/favorite/my-favorite-product-detail`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/favorite/my-favorite-product-detail`,
           {
             method: 'GET',
             credentials: 'include',
@@ -88,7 +88,7 @@ export default function Favorite() {
     const fetchFavCourse = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3005/api/favorite/my-favorite-course-detail`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/favorite/my-favorite-course-detail`,
           {
             method: 'GET',
             credentials: 'include',

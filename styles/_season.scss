@@ -355,9 +355,11 @@
   color: $color--primary;
   position: fixed;
   left: 0px;
+  width: 46px;
   height: 104vh;
   writing-mode: vertical-lr !important;
   z-index: 5;
+  padding-inline: 10px;
   @media screen and (max-width: $lg) {
     border: 1px solid $color--gray3;
     border-radius: 100%;

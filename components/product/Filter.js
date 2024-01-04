@@ -73,7 +73,7 @@ function Filter(props) {
   const handleFormSubmit = async (e) => {
     e.preventDefault()
 
-    let queryString = `http://localhost:3005/api/products/qs?`
+    let queryString = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/products/qs?`
     queryString += `price_range=${priceRange.join(',')}&`
     if (filterForm.origin.length) {
       queryString += `origin=${filterForm.origin.join(',')}&`
@@ -141,7 +141,9 @@ function Filter(props) {
     })
 
     try {
-      const response = await axios.get('http://localhost:3005/api/products/qs')
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/products/qs`
+      )
       props.onFilter(response.data.data)
     } catch (error) {
       console.error(error)

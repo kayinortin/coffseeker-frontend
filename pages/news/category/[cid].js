@@ -21,7 +21,7 @@ const CategoryNews = () => {
   // 定義函數以發送分類新聞的API請求
   const fetchCategoryNews = (cid, page) => {
     axios
-      .get(`http://localhost:3005/api/news/category/${cid}?page=${page}`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/category/${cid}?page=${page}`)
       .then((response) => {
         console.log('API回應:', response.data)
         setCategoryNews(response.data.news)
@@ -97,7 +97,7 @@ const CategoryNews = () => {
                 >
                   <div key={news.news_id} className={`${styles['ei-card']}`}>
                     <img
-                      src={`http://localhost:3005/uploads/${news.news_image}`}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${news.news_image}`}
                       className={`card-img-top img-fluid ${styles['custom-image']}`}
                       alt={news.news_title}
                     />
