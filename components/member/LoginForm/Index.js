@@ -2,7 +2,6 @@ import React, { useState, createContext, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FaFacebook, FaGoogle, FaEyeSlash, FaEye } from 'react-icons/fa'
-import { FaXTwitter } from 'react-icons/fa6'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useUser } from '@/context/UserInfo'
@@ -82,7 +81,10 @@ export default function LoginForm() {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/login`,
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       )
       console.log('伺服器回應:', response.data)
 
