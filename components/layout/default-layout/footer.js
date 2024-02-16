@@ -96,7 +96,7 @@ export default function Footer() {
                       {newsItem.news_title} &gt;&gt;
                     </Link>
                   </h6>
-                  <p className="footer-p-color">{newsItem.created_at}</p>
+                  <p className="footer-p-color">{newsItem.created_at.split("T")[0]}</p>
                 </div>
               ))}
             </div>

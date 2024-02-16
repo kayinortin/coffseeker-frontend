@@ -54,7 +54,7 @@ const NewsDetail = ({ news, error }) => {
           <h3 className="text-center mb-4 mobile-news-title lh-sm fs-3">
             {news?.news_title}
           </h3>
-          <p className="mb-4 text-end me-3 ei-news-date">{news?.created_at}</p>
+          <p className="mb-4 text-end me-3 ei-news-date">{news?.created_at.split("T")[0]}</p>
           <div className="d-flex justify-content-center">
             {news?.news_image ? (
               <img
