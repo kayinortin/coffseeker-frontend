@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
-import { GrFacebook, GrInstagram } from 'react-icons/gr'
+import { GrInstagram } from 'react-icons/gr'
+import { FaFacebookSquare } from "react-icons/fa";
 
 export default function Footer() {
   function scrollToTop() {
@@ -60,7 +61,7 @@ export default function Footer() {
                     href="https://www.facebook.com/profile.php?id=61552119243260"
                     className="mx-3"
                   >
-                    <GrFacebook
+                    <FaFacebookSquare
                       style={{ fontSize: '40', color: 'var(--bs-gray-700)' }}
                     />
                   </Link>

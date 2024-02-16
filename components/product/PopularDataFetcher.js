@@ -12,6 +12,7 @@ export default function PopularDataFetcher() {
           `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/popular-products`
         )
         const products = productResponse.data.products
+        console.log('products', products);
         setProductsData(products)
       } catch (error) {
         console.error('資料獲取失敗:', error)
