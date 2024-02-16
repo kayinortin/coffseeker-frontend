@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
@@ -92,11 +92,7 @@ export default function HeaderMobile(props) {
           <i className="fas fa-bars ed-navbar__icon"></i>
         </label>
         <Link className="ed-navbar__font ed-navbar__logo" href="/">
-          {!isTop || isFullScreen ? (
-            <img src="/logo-white.png" alt="logo" />
-          ) : (
             <img src="/logo-dark.png" alt="logo" />
-          )}
         </Link>
         <div className={`ed-navbar__menu ${!isTop ? 'ed-navbar--scroll' : ''}`}>
           <ul className="ed-navbar__list">

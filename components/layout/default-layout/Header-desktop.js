@@ -74,11 +74,7 @@ export default function HeaderDesktop(props) {
         <ul className="ed-navbar__items">
           <li className="ed-navbar__item">
             <Link className="ed-navbar__font ed-navbar__logo" href="/">
-              {!isTop || isFullScreen ? (
-                <img src="/logo-white.png" alt="logo" />
-              ) : (
                 <img src="/logo-dark.png" alt="logo" />
-              )}
             </Link>
           </li>
 
