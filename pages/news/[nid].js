@@ -58,7 +58,7 @@ const NewsDetail = ({ news, error }) => {
           <div className="d-flex justify-content-center">
             {news?.news_image ? (
               <img
-                src={`http://localhost:3005/uploads/${news?.news_image}`}
+                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${news?.news_image}`}
                 alt={news?.news_title}
                 className="img-fluid mb-4"
               />
@@ -81,7 +81,7 @@ export async function getServerSideProps(context) {
   const { nid } = params
 
   try {
-    const response = await axios.get(`http://localhost:3005/api/news/${nid}`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/${nid}`)
     if (response.data) {
       return {
         props: { news: response.data },

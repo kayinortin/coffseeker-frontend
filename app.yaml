@@ -1,0 +1,19 @@
+runtime: nodejs20
+env: standard
+instance_class: F1
+
+env_variables:
+  HOSTNAME: "localhost"
+  PORT: "3005"
+  NEXT_PUBLIC_BACKEND_URL: "http://localhost:3005"
+  NEXT_PUBLIC_BACKEND_API_URL: "http://localhost:3005/api"
+  NEXT_PUBLIC_WEBSITE_URL: "http://localhost:3000"
+  NEXT_PUBLIC_ANALYTICS_ID: abcdefghijk
+
+automatic_scaling:
+  min_idle_instances: 1
+  max_idle_instances: automatic
+
+handlers:
+- url: /.*
+  script: auto

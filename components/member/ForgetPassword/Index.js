@@ -65,7 +65,7 @@ export default function ForgetPassword() {
     }
 
     const res = await axios.post(
-      'http://localhost:3005/api/reset-password/otp',
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/reset-password/otp`,
       {
         email,
       }
@@ -113,7 +113,7 @@ export default function ForgetPassword() {
     }
 
     const res = await axios.post(
-      'http://localhost:3005/api/reset-password/reset',
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/reset-password/reset`,
       {
         email,
         token,

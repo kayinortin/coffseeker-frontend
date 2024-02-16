@@ -12,7 +12,7 @@ export default function FavItems({ data, type, handleRemove }) {
 
   if (type === 'product') {
     id = data.id
-    imgUrl = `http://localhost:3005/uploads/${data.image_main}`
+    imgUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${data.image_main}`
     name = data.name
     price = data.price
     addedFavDate = data.addedFavDate

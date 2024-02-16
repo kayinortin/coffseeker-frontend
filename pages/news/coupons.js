@@ -16,7 +16,7 @@ export default function Coupons() {
   useEffect(() => {
     // 獲取優惠券列表
     axios
-      .get('http://localhost:3005/api/news/coupons')
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/coupons`)
       .then((response) => {
         setCoupons(response.data)
 
@@ -31,7 +31,7 @@ export default function Coupons() {
     // 獲取會員已領取的優惠券列表
     if (authJWT.isAuth) {
       axios
-        .get('http://localhost:3005/api/news/userCoupons', {
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/userCoupons`, {
           params: { userId: authJWT.userData.id },
         })
         .then((response) => {
@@ -57,7 +57,7 @@ export default function Coupons() {
       if (!hasRedeemed) {
         // 未領取過，執行領取操作
         axios
-          .post('http://localhost:3005/api/news/addCoupon', {
+          .post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/news/addCoupon`, {
             couponId,
             userId,
           })
@@ -85,7 +85,7 @@ export default function Coupons() {
       } else {
         // 已領取過，顯示提示訊息
         Swal.fire({
-          title: '此優惠券已經領取過',
+          title: '優惠券已經領取過',
           icon: 'warning',
           iconColor: '#1C262C',
           confirmButtonText: '確定',

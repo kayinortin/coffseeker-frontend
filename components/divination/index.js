@@ -17,6 +17,8 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import drinkCoffeeImg from '@/public/divination-image/Animation - 1695799375022.json'
+import lottieJson from '@/public/map-image/logo-anime-30.json'
+
 let cayPlay = false
 export default function Divination() {
   const [gameFinish, setGameFinish] = useState(false)
@@ -71,19 +73,21 @@ export default function Divination() {
     if (cayPlay === true) {
       return false
     }
-    document
-      .querySelector(`.desk .game .textArea h2`)
-      .classList.remove('blur-out-expand')
-    document
-      .querySelector(`.desk .game .textArea h5`)
-      .classList.remove('blur-out-expand')
+
     //textArea替換
     document.querySelector(`.desk .game .textArea h2`).innerText = section.h2
     document.querySelector(`.desk .game .textArea h5`).innerText = section.h6
 
+    document
+      .querySelector(`.desk .game .textArea h2`)
+      .classList.remove('scale-out-top')
+    document
+      .querySelector(`.desk .game .textArea h5`)
+      .classList.remove('scale-out-top')
+
     picks = getRandomNumbers(1, 10, 4)
     cayPlay = true
-    await waittings(1000)
+    await waittings(1500)
     //動畫：展開卡片
     for (let i = 1; i <= 10; i++) {
       document
@@ -169,10 +173,10 @@ export default function Divination() {
       .classList.add('d-none')
     document
       .querySelector(`.desk .game .textArea h2`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     document
       .querySelector(`.desk .game .textArea h5`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     await waittings(500)
     start(sections[nowSection])
   }
@@ -184,22 +188,23 @@ export default function Divination() {
     }
     canSelect = false
     ans[nowSection - 1] = e.target.innerText
-    console.log(ans)
-    e.target.parentElement.classList.remove(`active`)
-    await waittings(300)
     //動畫：文字淡出
     document
       .querySelector(`.desk .game .textArea h2`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     document
       .querySelector(`.desk .game .textArea h5`)
-      .classList.add('blur-out-expand')
+      .classList.add('scale-out-top')
     //動畫：取消可選取樣式
     for (let i = 0; i < picks.length; i++) {
       document
         .querySelector(`.tarotCard${picks[i]} .content`)
         .classList.remove('canSelect')
     }
+    //點選的卡片翻回去
+    e.target.parentElement.classList.remove(`active`)
+    await waittings(400)
+
     //動畫：卡片翻回去
     for (let i = 0; i < picks.length; i++) {
       document
@@ -223,17 +228,14 @@ export default function Divination() {
         .querySelector(`.tarotCard${i}`)
         .classList.remove(`tarotCard${i}Active`)
     }
-    await waittings(500)
     //接續下個題目
     if (nowSection < 3) {
       nowSection += 1
       picks = []
       cayPlay = false
       start(sections[nowSection])
-      await waittings(500)
     } else {
-      setAnsArr(ans)
-      setGameFinish(true)
+      showResult()
     }
   }
 
@@ -256,9 +258,19 @@ export default function Divination() {
     )
   }
 
+  //結果運算畫面
+  async function showResult() {
+    await waittings(500)
+    setAnsArr(ans)
+    setGameFinish(true)
+    await waittings(1500)
+    document.querySelector('.loading').classList.add('d-none')
+    document.querySelector('.TarotResult').classList.remove('d-none')
+  }
+
   //塔羅結果生成篩選條件
-  const [ansArr, setAnsArr] = useState([''])
-  const [keyWordArr, setKeyWordArr] = useState([''])
+  const [ansArr, setAnsArr] = useState([])
+  const [keyWordArr, setKeyWordArr] = useState([])
 
   function ansToKeyWord(ansArr) {
     const keyWordSet = new Set()
@@ -284,7 +296,6 @@ export default function Divination() {
       const word = ansToKeyWord(ansArr)
       setKeyWordArr(word)
       const keyWord = word.join()
-      console.log('keyWord:' + keyWord)
       const fetchData = async () => {
         try {
           const res = await axios.get(
@@ -308,23 +319,23 @@ export default function Divination() {
           <div className="mask"></div>
           <div className="game">
             <div className="textArea mb-auto mt-lg-5 mt-2 position-relative">
-              <h2 className="focus-in-contract">咖啡占卜</h2>
-              <h5 className="focus-in-contract">
-                日安，迷惘的咖啡靈魂。
+              <h2 className="scale-in-top">咖啡占卜</h2>
+              <h5 className="scale-in-top">
+                尋覓咖啡的靈魂
                 <br />
-                歡迎進入探索咖啡心靈的奇妙世界。
+                歡迎踏上咖啡心靈的探索之旅
                 <br />
-                這裡將揭示你對咖啡的深層喜好。
+                這裡將揭示你對咖啡的深層喜好
                 <br />
                 準備好了嗎？
                 <br className="d-lg-none" />
-                讓我們開始你的咖啡之旅吧！
+                讓我們開始吧！
               </h5>
               <button
                 className="position-absolute top-100 start-50 translate-middle flip-in-hor-bottom"
                 onClick={handleStart}
               >
-                開始
+                啟程
               </button>
             </div>
             <TarotCard i={1} />
@@ -344,10 +355,19 @@ export default function Divination() {
   } else {
     return (
       <>
-        <div className="TarotResult">
+        <div className="loading vh-100 w-100 d-flex flex-column justify-content-center align-items-center ">
+          <Lottie
+            play
+            loop
+            style={{ width: 200, height: 200 }}
+            animationData={lottieJson}
+          />
+          <h3 className="mt-5">探索者為您尋覓中…</h3>
+        </div>
+        <div className="TarotResult d-none">
           <div className="result">
             <div className="container d-flex justify-content-center">
-              <div className="resultCard d-lg-flex">
+              <div className="resultCard  d-lg-flex">
                 <Lottie
                   play
                   loop
@@ -357,14 +377,15 @@ export default function Divination() {
                 <div className="title">
                   <h2>測驗結果</h2>
                   <p>
-                    當塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
+                    塔羅牌的啟示下，您的咖啡之旅顯示出您對於獨特風味的追求。
                     <br />
                     <div className="my-3">
                       <div className="">今日為您推薦的咖啡關鍵字是：</div>
-
-                      {keyWordArr.map((v, i) => {
-                        return <span key={i}>#{v}</span>
-                      })}
+                      <div className="mt-3">
+                        {keyWordArr.map((v, i) => {
+                          return <span key={i}>#{v}</span>
+                        })}
+                      </div>
                     </div>
                     祝願您的咖啡之旅充滿令人愉悅的發現和美好時刻。
                   </p>
@@ -382,7 +403,7 @@ export default function Divination() {
                 slidesPerView={1}
                 navigation
                 spaceBetween={10}
-                autoplay={{ delay: 3000 }}
+                autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
               >
                 {productData.map((product, i) => {
                   return (

@@ -93,7 +93,10 @@ export default function OrderList() {
                     onClick={() => {
                       const nextPage = currentPage - 1
                       setCurrentPage(nextPage)
-                      window.scrollTo(0, 0)
+                      window.scrollTo({
+                        top: 0,
+                        left: 0,
+                      })
                     }}
                   >
                     «
@@ -108,7 +111,10 @@ export default function OrderList() {
                         }`}
                         onClick={() => {
                           setCurrentPage(page)
-                          window.scrollTo(0, 0)
+                          window.scrollTo({
+                            top: 0,
+                            left: 0,
+                          })
                         }}
                       >
                         {page}
@@ -129,7 +135,10 @@ export default function OrderList() {
                     onClick={() => {
                       const nextPage = currentPage + 1
                       setCurrentPage(nextPage)
-                      window.scrollTo(0, 0)
+                      window.scrollTo({
+                        top: 0,
+                        left: 0,
+                      })
                     }}
                   >
                     »

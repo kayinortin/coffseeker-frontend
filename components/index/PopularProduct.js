@@ -94,7 +94,7 @@ export default function PopularProducts() {
                   data-aos={aosValue}
                   data-aos-delay={600}
                 >
-                  <Link href="./product/category/1">
+                  <Link href="/product/category/1">
                     <button id="btn2" className="btn my-2 btn-color-2 me-md-3">
                       中度 <br /> 烘焙
                     </button>

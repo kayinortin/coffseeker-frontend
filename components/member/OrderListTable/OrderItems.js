@@ -10,11 +10,11 @@ export default function OrderItems({ order }) {
 
   useEffect(() => {
     let imgUrl = 'images/none-img.png'
-    console.log('order.image', order.image)
+    // console.log('order.image', order.image)
     // 判斷照片欄位有無資料 有就抽取資料 無則設定預設值
     if (order.image !== '' && order.image != 0) {
       const imageArr = JSON.parse(order.image)
-      console.log('Images', imageArr[0])
+      // console.log('Images', imageArr[0])
       imgUrl = imageArr[0]
     }
     setImgUrl(imgUrl)
@@ -27,7 +27,7 @@ export default function OrderItems({ order }) {
       <div className={'d-none d-lg-flex border-bottom border-dark p-2'}>
         <span className={'col-3 text-center'}>
           <Image
-            src={`http://localhost:3005/uploads/${imgUrl}`}
+            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${imgUrl}`}
             alt="Image Description"
             className={'imgborder'}
             width={100} // 设置图像宽度

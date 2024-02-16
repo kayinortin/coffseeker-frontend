@@ -3,7 +3,7 @@ import React from 'react'
 const RemoveFavCourse = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:3005/api/favorite/favorite-course/${id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/favorite/favorite-course/${id}`,
       {
         method: 'DELETE',
         credentials: 'include',

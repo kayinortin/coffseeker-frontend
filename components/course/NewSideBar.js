@@ -18,7 +18,7 @@ function Accordion(props) {
   const handleFormSubmit = async (e) => {
     e.preventDefault()
 
-    let queryString = `http://localhost:3005/api/course/qs?`
+    let queryString = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course/qs?`
     if (filterForm.course_name) {
       queryString += `course_name=${filterForm.course_name.join(',')}&`
     }
@@ -53,7 +53,7 @@ function Accordion(props) {
   const resetFilter = async () => {
     setFilterForm({ course_name: [], course_level_id: [] })
     try {
-      const response = await axios.get('http://localhost:3005/api/course/qs')
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course/qs`)
       props.onFilter(response.data.data)
     } catch (error) {
       console.error(error)

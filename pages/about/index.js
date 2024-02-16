@@ -12,16 +12,20 @@ export default function About() {
   const [email, setEmail] = useState('')
 
   async function handleSubmit() {
-    const response = await fetch('http://localhost:3005/api/email/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, name, email }),
-    })
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/email/send-email`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, name, email }),
+      }
+    )
 
     if (response.ok) {
       Swal.fire({
         icon: 'success',
         title: '成功！',
+        iconColor: '#b54b33', //success
         text: '郵件已成功發送！',
       }).then(() => {
         setMessage('')
@@ -32,6 +36,7 @@ export default function About() {
       Swal.fire({
         icon: 'error',
         title: '錯誤！',
+        iconColor: '#1C262C',
         text: '無法發送郵件！',
       })
     }

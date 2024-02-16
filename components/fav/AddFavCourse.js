@@ -13,7 +13,7 @@ const AddFavCourse = async (id) => {
   })
   try {
     const response = await fetch(
-      `http://localhost:3005/api/favorite/favorite-course`,
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/favorite/favorite-course`,
       {
         method: 'POST',
         credentials: 'include',

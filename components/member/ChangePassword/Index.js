@@ -97,7 +97,7 @@ export default function ChangePassword() {
 
     try {
       const response = await axios.post(
-        `http://localhost:3005/api/users/change-password`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/change-password`,
         formData
       )
       // console.log(response)

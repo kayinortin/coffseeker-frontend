@@ -28,7 +28,7 @@ export default function ProductTopHits(props) {
           onClick={handleShow}
         >
           <img
-            src={`http://localhost:3005/uploads/${image_main}`}
+            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${image_main}`}
             alt={name}
             className="card-img-top"
           />

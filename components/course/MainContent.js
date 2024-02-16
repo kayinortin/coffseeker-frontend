@@ -42,7 +42,7 @@ export default function MainContent({ pid }) {
         try {
           if (pid) {
             const response = await axios.get(
-              `http://localhost:3005/api/course/${pid}`
+              `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course/${pid}`
             )
             const details = response.data
             setDetailData({ ...details })
@@ -88,7 +88,7 @@ export default function MainContent({ pid }) {
                   {/* 網頁版（非手機板）*/}
                   <hr />
                   <img
-                    src="http://localhost:3000/product_detail/banner.png"
+                    src="/product_detail/banner.png"
                     alt="product-detail-banner"
                   />
                   <div className="col-sm-12 text-start">
@@ -176,7 +176,7 @@ export default function MainContent({ pid }) {
           <div className="mx-auto text-center">
             <h5 className="my-3">請先登入再進行評論</h5>
             <div className="my-4">
-              <Link href="http://localhost:3000/member/login">
+              <Link href="/member/login">
                 <button className="ed-addCart">登入會員</button>
               </Link>
             </div>

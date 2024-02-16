@@ -8,7 +8,7 @@ export default function Review({pid}) {
     const fetchComments=async()=>{
       try{
         const response=await fetch(
-          `http://localhost:3005/api/course-comment?course_id=${pid}`
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course-comment?course_id=${pid}`
         )
 
         const fetchedData=await response.json()

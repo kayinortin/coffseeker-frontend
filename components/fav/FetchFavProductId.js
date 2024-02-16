@@ -6,7 +6,7 @@ export default async function FetchFavProductId() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          'http://localhost:3005/api/favorite/my-favorite-product',
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/favorite/my-favorite-product`,
           {
             method: 'GET',
             credentials: 'include',

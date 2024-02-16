@@ -49,7 +49,7 @@ export default function RegisterForm() {
       }
       try {
         const response = await axios.post(
-          `http://localhost:3005/api/users/`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/`,
           formData
         )
         console.log(response)
@@ -141,7 +141,7 @@ export default function RegisterForm() {
           <div className={'form-check d-flex align-items-center'}>
             <input
               type="checkbox"
-              className={'check-input me-3'}
+              className={'check-input border border-dark me-3'}
               id="exampleCheck2"
               onClick={() => {
                 if (allowContract) {

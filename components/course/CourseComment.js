@@ -55,7 +55,7 @@ export default function CourseComment({ totalStars = 5, pid }) {
 
     try {
       const response = await fetch(
-        'http://localhost:3005/api/course-comment/add',
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/course-comment/add`,
         {
           method: 'POST',
           headers: {

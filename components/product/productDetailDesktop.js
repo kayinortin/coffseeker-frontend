@@ -63,7 +63,7 @@ export default function ProductDetailDesktop({ pid }) {
     const getDetail = async () => {
       if (pid) {
         let response = await axios.get(
-          `http://localhost:3005/api/products/${pid}`
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/products/${pid}`
         )
         const details = response.data
 
@@ -196,8 +196,8 @@ export default function ProductDetailDesktop({ pid }) {
             <div className="d-flex justify-content-between mt-3">
               <div className="container ed-detail-left">
                 <div className="ed-image-gallery">
-                  <Image
-                    src={`http://localhost:3005/uploads/${images[mainImageIndex]}`}
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${images[mainImageIndex]}`}
                     alt={`${name}`}
                     className="ed-image-main"
                     width={300}
@@ -208,9 +208,9 @@ export default function ProductDetailDesktop({ pid }) {
                     {images.map((image, index) => {
                       if (index === mainImageIndex) return null
                       return (
-                        <Image
+                        <img
                           key={index}
-                          src={`http://localhost:3005/uploads/${image}`}
+                          src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${image}`}
                           alt={`Product ${index}`}
                           className="ed-image-small"
                           width={100}

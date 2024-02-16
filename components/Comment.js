@@ -55,21 +55,24 @@ export default function Comment({ totalStars = 5, pid }) {
     }
 
     try {
-      const response = await fetch('http://localhost:3005/api/comment/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          product_id: pid,
-          user_id: userData.id,
-          user_email: userData.email,
-          user_name: userData.username,
-          comment: commentText,
-          date: new Date().toISOString().split('T')[0],
-          rating: rating,
-        }),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/comment/add`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            product_id: pid,
+            user_id: userData.id,
+            user_email: userData.email,
+            user_name: userData.username,
+            comment: commentText,
+            date: new Date().toISOString().split('T')[0],
+            rating: rating,
+          }),
+        }
+      )
 
       const data = await response.json()
 

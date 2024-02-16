@@ -24,11 +24,11 @@ export default function InfoChangeForm() {
   const checkToken = Cookies.get('accessToken')
   useEffect(() => {
     async function fetchData() {
-      console.log('Fetch accessToken:', checkToken)
+      // console.log('Fetch accessToken:', checkToken)
 
       if (checkToken) {
         const fetchUser = await FetchUserData()
-        console.log(fetchUser)
+        // console.log(fetchUser)
         if (fetchUser) {
           setUserData(fetchUser)
           setId(fetchUser.id)
@@ -49,7 +49,7 @@ export default function InfoChangeForm() {
           }
         }
       } else {
-        console.log('Cookie不存在')
+        // console.log('Cookie不存在')
         router.push('/member/login')
       }
     }
@@ -224,11 +224,11 @@ export default function InfoChangeForm() {
 
     try {
       const response = await axios.put(
-        `http://localhost:3005/api/users/${userId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/${userId}`,
         formData
       )
-      console.log(userId)
-      console.log(response)
+      // console.log(userId)
+      // console.log(response)
       Swal.fire({
         title: '修改資料成功',
         icon: 'success',
@@ -242,7 +242,7 @@ export default function InfoChangeForm() {
 
     try {
       const response = await axios.post(
-        'http://localhost:3005/api/auth-jwt/info-change-jwt',
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/info-change-jwt`,
         { id: userId }
       )
       // console.log('成功取得Token', response)

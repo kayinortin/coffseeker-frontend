@@ -25,7 +25,7 @@ export default function HeaderDesktop(props) {
   const handleLogout = () => {
     axios
       .post(
-        'http://localhost:3005/api/auth-jwt/logout',
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/logout`,
         {},
         { withCredentials: true }
       )

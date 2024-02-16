@@ -3,6 +3,7 @@ import Link from 'next/link'
 import MemSideBar from '@/components/member/Sidebar/MemSideBar'
 import CouponListTable from '@/components/member/CouponListTable'
 import Head from 'next/head'
+
 export default function Coupon() {
   const [orderBy, setOrderBy] = useState('ASC')
   const [currentPage, setCurrentPage] = useState(1)
@@ -54,8 +55,8 @@ export default function Coupon() {
                   // console.log(orderBy)
                 }}
               >
-                <option value={'DESC'}>有效期限：近到遠</option>
-                <option value={'ASC'}>有效期限：遠到近</option>
+                <option value={'ASC'}>有效期限：近到遠</option>
+                <option value={'DESC'}>有效期限：遠到近</option>
               </select>
             </div>
           </div>
@@ -67,7 +68,7 @@ export default function Coupon() {
             <MemSideBar />
           </div>
           <div className={'col-12 col-lg-9 mb-5'}>
-            <div className={'container d-flex mb-5'}>
+            <div className={'container d-flex mb-1'}>
               <CouponListTable
                 orderBy={orderBy}
                 setOrderBy={setOrderBy}

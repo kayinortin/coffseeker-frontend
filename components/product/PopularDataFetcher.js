@@ -9,7 +9,7 @@ export default function PopularDataFetcher() {
     const fetchData = async () => {
       try {
         const productResponse = await axios.get(
-          'http://localhost:3005/api/popular-products'
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/popular-products`
         )
         const products = productResponse.data.products
         setProductsData(products)
