@@ -35,10 +35,22 @@ def update_pr_description(description):
         "Authorization": f"token {os.environ['GITHUB_TOKEN']}",
         "Accept": "application/vnd.github.v3+json"
     }
-    with open('.github/pull_request_template.md', 'r') as file:
-        template = file.read()
 
-    new_body = template.replace("[此處將被AI生成的描述替換]", description)
+    print(f"Current working directory: {os.getcwd()}")
+    print("Files in current directory:")
+    for root, dirs, files in os.walk('.'):
+        for file in files:
+            print(os.path.join(root, file))
+
+    template_path = '.github/pull_request_template.md'
+    if os.path.exists(template_path):
+        with open(template_path, 'r') as file:
+            template = file.read()
+        new_body = template.replace("[此處將被AI生成的描述替換]", description)
+    else:
+        print(f"Template file not found at {template_path}")
+        new_body = f"## AI Generated Description\n\n{description}\n\n## Additional Information\n\nPlease add any additional information about this pull request."
+
     data = {"body": new_body}
     response = requests.patch(url, headers=headers, data=json.dumps(data))
     print(f"PR update status: {response.status_code}")
