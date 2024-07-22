@@ -33,7 +33,7 @@ def extract_changes_from_diff(diff):
         changes = extract_file_changes(file_change.split('\n'))
 
         if changes:
-            descriptions.append(f"Changes in {file_name}: {', '.join(changes[:3])}")
+            descriptions.append((file_name, changes))
 
     return descriptions
 
@@ -76,9 +76,8 @@ def generate_description(diff):
             descriptions.append("Code adjustments made (details not available)")
 
     summary = f"This PR involves changes in {len(descriptions)} file(s). Main changes:"
-    descriptions.insert(0, summary)
-
-    return "\n".join(f"- {item}" for item in descriptions)
+    detailed_changes = "\n".join(f"- {file_name}:\n  " + "\n  ".join(changes) for file_name, changes in descriptions)
+    return f"{summary}\n{detailed_changes}"
 
 
 def update_pr_description(description):
@@ -115,38 +114,7 @@ def generate_new_body(description, template_path):
     return new_body
 
 
-def create_overall_description(descriptions):
-    added_features = []
-    removed_features = []
-    modified_files = []
-
-    for desc in descriptions:
-        if 'Added' in desc:
-            added_features.append(desc)
-        elif 'Removed' in desc:
-            removed_features.append(desc)
-        else:
-            modified_files.append(desc)
-
-    overall_description = "This PR includes the following changes:\n"
-
-    if added_features:
-        overall_description += "\n### Added Features:\n"
-        overall_description += "\n".join(f"- {feature}" for feature in added_features)
-
-    if removed_features:
-        overall_description += "\n### Removed Features:\n"
-        overall_description += "\n".join(f"- {feature}" for feature in removed_features)
-
-    if modified_files:
-        overall_description += "\n### Modified Files:\n"
-        overall_description += "\n".join(f"- {file}" for file in modified_files)
-
-    return overall_description
-
-
 if __name__ == "__main__":
     diff = get_pr_diff()
-    descriptions = extract_changes_from_diff(diff)
-    overall_description = create_overall_description(descriptions)
-    update_pr_description(overall_description)
+    description = generate_description(diff)
+    update_pr_description(description)
