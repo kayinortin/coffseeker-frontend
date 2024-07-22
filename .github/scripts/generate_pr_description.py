@@ -41,11 +41,11 @@ def generate_description(diff):
                     elif content.startswith('class '):
                         changes.append(f"Create class '{content.split('class ')[1].split('(')[0]}'")
                     elif len(content) < 50 and not content.startswith('#'):
-                        changes.append(f"Add code: {content}")
+                        changes.append(f"Add {content}")
             elif line.startswith('-') and not line.startswith('---'):
                 content = line[1:].strip()
                 if content and len(content) < 50 and not content.startswith('#'):
-                    changes.append(f"Remove code: {content}")
+                    changes.append(f"Remove {content}")
 
         if changes:
             changes = changes[:3]  # Limit to 3 changes per file
