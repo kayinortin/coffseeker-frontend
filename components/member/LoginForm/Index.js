@@ -12,14 +12,8 @@ import { useAuthJWT } from '@/context/useAuthJWT'
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
 import lottieJson from '@/public/map-image/logo-anime-30.json'
 
-// 10/10 尚未完成
-// 1.記住密碼
-// 2.密碼顯示切換
-// 3.拆分component
-
 export default function LoginForm() {
   const { userData, setUserData, isLoggedIn, setIsLoggedIn } = useUser()
-  // 定義表單的值
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
   const [checkPassword, setCheckPassword] = useState(false)
@@ -86,7 +80,6 @@ export default function LoginForm() {
           withCredentials: true,
         }
       )
-      console.log('伺服器回應:', response.data)
 
       if (response.data.code === '200' && response.data.accessToken) {
         Cookies.set('accessToken', response.data.accessToken)
@@ -98,7 +91,7 @@ export default function LoginForm() {
           showConfirmButton: false,
           timer: 3000,
         })
-        // router.push('/member')
+
         let nextUrl = '/member'
         if (router.query.from == '/news/coupons') {
           nextUrl = router.query.from
@@ -130,9 +123,6 @@ export default function LoginForm() {
     })
   }
 
-  // ===================================
-
-  // // google登入相關
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -190,7 +180,7 @@ export default function LoginForm() {
       Swal.fire({
         title: '登入成功，即將跳轉至會員中心',
         icon: 'success',
-        iconColor: '#b54b33', //成功
+        iconColor: '#b54b33',
         showConfirmButton: false,
         timer: 3000,
       })
@@ -205,10 +195,6 @@ export default function LoginForm() {
       })
     }
   }
-
-  // ===================================
-
-  // // Facebook登入相關
 
   useEffect(() => {
     initApp(callbackFBLoginRedirect)
@@ -244,7 +230,6 @@ export default function LoginForm() {
   const logout = async () => {
     logoutFirebase()
 
-    // 伺服器logout
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth-jwt/logout`,
       {},
@@ -258,7 +243,7 @@ export default function LoginForm() {
       Swal.fire({
         title: '登出成功',
         icon: 'success',
-        iconColor: '#b54b33', //成功
+        iconColor: '#b54b33',
         showConfirmButton: false,
         timer: 1500,
       })
@@ -273,12 +258,7 @@ export default function LoginForm() {
       })
     }
   }
-  //監聽離開該頁面時關閉Swal
-  // useEffect(() => {
-  //   return () => {
-  //     Swal.close()
-  //   }
-  // }, [])
+
   return (
     <>
       <form id="loginForm" className={'form-box'}>
@@ -328,16 +308,6 @@ export default function LoginForm() {
                 {checkPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
-            {/* <div className={'form-check ps-0 d-flex align-items-center'}>
-              <input
-                type="checkbox"
-                className={'check-input me-3 rounded-0'}
-                id="exampleCheck1"
-              />
-              <label className={'form-check-label'} htmlFor="exampleCheck1">
-                記住密碼
-              </label>
-            </div> */}
           </div>
         </div>
         <div className={'d-flex justify-content-center mt-4'}>
