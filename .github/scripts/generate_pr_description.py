@@ -16,50 +16,53 @@ def get_pr_diff():
     diff_response = requests.get(diff_url)
     return diff_response.text
 
+import re
+
 def generate_description(diff):
     description = []
     file_changes = re.split(r'diff --git', diff)[1:]
 
     for file_change in file_changes:
         file_name_match = re.search(r'a/(.+) b/(.+)', file_change)
-        if file_name_match:
-            file_name = file_name_match.group(1)
-        else:
+        if not file_name_match:
             continue
-
+        file_name = file_name_match.group(1)
         change_lines = file_change.split('\n')
 
-        file_description = f"在文件 '{file_name}' 中:"
         changes = []
-
         for line in change_lines:
             if line.startswith('+') and not line.startswith('+++'):
                 content = line[1:].strip()
                 if content:
                     if 'import ' in content:
-                        changes.append(f"導入了模塊 {content.split('import ')[1]}")
+                        changes.append(f"Import {content.split('import ')[1]}")
                     elif content.startswith('def '):
-                        changes.append(f"定義了函數 {content.split('def ')[1].split('(')[0]}")
+                        changes.append(f"Add function '{content.split('def ')[1].split('(')[0]}'")
                     elif content.startswith('class '):
-                        changes.append(f"定義了類 {content.split('class ')[1].split('(')[0]}")
+                        changes.append(f"Create class '{content.split('class ')[1].split('(')[0]}'")
                     elif len(content) < 50 and not content.startswith('#'):
-                        changes.append(f"添加了: {content}")
+                        changes.append(f"Add code: {content}")
+            elif line.startswith('-') and not line.startswith('---'):
+                content = line[1:].strip()
+                if content and len(content) < 50 and not content.startswith('#'):
+                    changes.append(f"Remove code: {content}")
 
         if changes:
-            file_description += " " + "; ".join(changes[:3])
-            description.append(file_description)
+            changes = changes[:3]  # Limit to 3 changes per file
+            changes.append(f"in {file_name}")
+            description.append(" and ".join(changes))
 
     if not description:
         files = re.findall(r'\n--- a/(.+)', diff)
         if files:
-            description.append(f"這個 PR 修改了以下文件: {', '.join(files)}")
+            description.append(f"Modify files: {', '.join(files)}")
         else:
-            description.append("這個 PR 包含了一些代碼調整，但無法詳細解析變化。")
+            description.append("Make code adjustments (details not available)")
 
-    summary = f"總結：這個 PR 涉及了 {len(description)} 個文件的變動。主要變更包括："
+    summary = f"This PR involves changes in {len(description)} file(s). Main changes:"
     description.insert(0, summary)
 
-    return "\n".join(description[:6])  # 限制到摘要+最多5個文件描述
+    return "\n".join(f"- {item}" for item in description[:6])
 
 def get_main_action(added_lines, removed_lines):
     if len(added_lines) > len(removed_lines):
