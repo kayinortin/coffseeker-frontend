@@ -3,6 +3,7 @@ import requests
 import json
 import re
 
+
 def get_pr_diff():
     with open(os.environ['GITHUB_EVENT_PATH']) as f:
         event = json.load(f)
@@ -11,66 +12,74 @@ def get_pr_diff():
     url = f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/pulls/{pr_number}"
     headers = {"Authorization": f"token {os.environ['GITHUB_TOKEN']}"}
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     pr_data = response.json()
     diff_url = pr_data['diff_url']
     diff_response = requests.get(diff_url)
+    diff_response.raise_for_status()
     return diff_response.text
 
-import re
 
-def generate_description(diff):
-    description = []
+def extract_changes_from_diff(diff):
     file_changes = re.split(r'diff --git', diff)[1:]
+    descriptions = []
 
     for file_change in file_changes:
         file_name_match = re.search(r'a/(.+) b/(.+)', file_change)
         if not file_name_match:
             continue
-        file_name = file_name_match.group(1)
-        change_lines = file_change.split('\n')
 
-        changes = []
-        for line in change_lines:
-            if line.startswith('+') and not line.startswith('+++'):
-                content = line[1:].strip()
-                if content:
-                    if 'import ' in content:
-                        changes.append(f"Import {content.split('import ')[1]}")
-                    elif content.startswith('def '):
-                        changes.append(f"Add function '{content.split('def ')[1].split('(')[0]}'")
-                    elif content.startswith('class '):
-                        changes.append(f"Create class '{content.split('class ')[1].split('(')[0]}'")
-                    elif len(content) < 50 and not content.startswith('#'):
-                        changes.append(f"Add {content}")
-            elif line.startswith('-') and not line.startswith('---'):
-                content = line[1:].strip()
-                if content and len(content) < 50 and not content.startswith('#'):
-                    changes.append(f"Remove {content}")
+        file_name = file_name_match.group(1)
+        changes = extract_file_changes(file_change.split('\n'))
 
         if changes:
-            changes = changes[:3]  # Limit to 3 changes per file
-            changes.append(f"in {file_name}")
-            description.append(" and ".join(changes))
+            descriptions.append(f"Changes in {file_name}: {', '.join(changes[:3])}")
 
-    if not description:
+    return descriptions
+
+
+def extract_file_changes(change_lines):
+    changes = []
+    for line in change_lines:
+        if line.startswith('+') and not line.startswith('+++'):
+            content = line[1:].strip()
+            if content:
+                changes.extend(describe_added_content(content))
+        elif line.startswith('-') and not line.startswith('---'):
+            content = line[1:].strip()
+            if content and len(content) < 50 and not content.startswith('#'):
+                changes.append(f"Removed {content}")
+    return changes
+
+
+def describe_added_content(content):
+    changes = []
+    if 'import ' in content:
+        changes.append(f"Imported {content.split('import ')[1]}")
+    elif content.startswith('def '):
+        changes.append(f"Added function '{content.split('def ')[1].split('(')[0]}'")
+    elif content.startswith('class '):
+        changes.append(f"Created class '{content.split('class ')[1].split('(')[0]}'")
+    elif len(content) < 50 and not content.startswith('#'):
+        changes.append(f"Added {content}")
+    return changes
+
+
+def generate_description(diff):
+    descriptions = extract_changes_from_diff(diff)
+
+    if not descriptions:
         files = re.findall(r'\n--- a/(.+)', diff)
         if files:
-            description.append(f"Modify files: {', '.join(files)}")
+            descriptions.append(f"Modified files: {', '.join(files)}")
         else:
-            description.append("Make code adjustments (details not available)")
+            descriptions.append("Code adjustments made (details not available)")
 
-    summary = f"This PR involves changes in {len(description)} file(s). Main changes:"
-    description.insert(0, summary)
+    summary = f"This PR involves changes in {len(descriptions)} file(s). Main changes:"
+    descriptions.insert(0, summary)
 
-    return "\n".join(f"- {item}" for item in description[:6])
+    return "\n".join(f"- {item}" for item in descriptions)
 
-def get_main_action(added_lines, removed_lines):
-    if len(added_lines) > len(removed_lines):
-        return "增加了新的功能或內容"
-    elif len(added_lines) < len(removed_lines):
-        return "進行了代碼清理或重構"
-    else:
-        return "對現有功能進行了修改或優化"
 
 def update_pr_description(description):
     with open(os.environ['GITHUB_EVENT_PATH']) as f:
@@ -84,24 +93,60 @@ def update_pr_description(description):
     }
 
     template_path = '.github/pull_request_template.md'
+    new_body = generate_new_body(description, template_path)
+
+    data = {"body": new_body}
+    response = requests.patch(url, headers=headers, data=json.dumps(data))
+    response.raise_for_status()
+
+
+def generate_new_body(description, template_path):
     if os.path.exists(template_path):
         with open(template_path, 'r') as file:
             template = file.read()
         new_body = re.sub(
-            r'(<!-- AI-GENERATE-DESCRIPTION -->).*(\[此處將被AI生成的描述替換\])',
+            r'(<!-- AI-GENERATE-DESCRIPTION -->).*?(?=\[This section will be replaced by an AI-generated description\])',
             r'\1\n' + description,
             template,
             flags=re.DOTALL
         )
     else:
         new_body = f"## AI Generated Description\n\n{description}\n\n## Additional Information\n\nPlease add any additional information about this pull request."
+    return new_body
 
-    data = {"body": new_body}
-    response = requests.patch(url, headers=headers, data=json.dumps(data))
-    if response.status_code != 200:
-        raise Exception(f"Failed to update PR. Status code: {response.status_code}, Response: {response.text}")
+
+def create_overall_description(descriptions):
+    added_features = []
+    removed_features = []
+    modified_files = []
+
+    for desc in descriptions:
+        if 'Added' in desc:
+            added_features.append(desc)
+        elif 'Removed' in desc:
+            removed_features.append(desc)
+        else:
+            modified_files.append(desc)
+
+    overall_description = "This PR includes the following changes:\n"
+
+    if added_features:
+        overall_description += "\n### Added Features:\n"
+        overall_description += "\n".join(f"- {feature}" for feature in added_features)
+
+    if removed_features:
+        overall_description += "\n### Removed Features:\n"
+        overall_description += "\n".join(f"- {feature}" for feature in removed_features)
+
+    if modified_files:
+        overall_description += "\n### Modified Files:\n"
+        overall_description += "\n".join(f"- {file}" for file in modified_files)
+
+    return overall_description
+
 
 if __name__ == "__main__":
     diff = get_pr_diff()
-    description = generate_description(diff)
-    update_pr_description(description)
+    descriptions = extract_changes_from_diff(diff)
+    overall_description = create_overall_description(descriptions)
+    update_pr_description(overall_description)
