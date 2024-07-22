@@ -1,13 +1,9 @@
-## 變更描述
+## Change Description
 <!-- AI-GENERATE-DESCRIPTION -->
-[此處將被AI生成的描述替換]
+[This section will be replaced by an AI-generated description]
 
-## 變更類型
-- [ ] 功能新增
-- [ ] Bug修復
-- [ ] 性能優化
-- [ ] 文檔更新
-
-## 測試
-- [ ] 單元測試
-- [ ] 集成測試
+## Change Type
+- [ ] Feature Addition
+- [ ] Bug Fix
+- [ ] Performance Improvement
+- [ ] Documentation Update
